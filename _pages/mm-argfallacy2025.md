@@ -53,10 +53,6 @@ We use **MM-USED-fallacy** and release a version of the dataset specifically des
 
 Inspired by observations from [Goffredo et al. (2022)](https://www.ijcai.org/proceedings/2022/575) on the benefits of leveraging multiple argument mining tasks for fallacy detection and classification, we also provide additional datasets to encourage multi-task learning. A summary is provided in the table below:  
 
-For argumentative fallacy detection, we will compute the binary F1-score on predicted sentence-level labels. 
-For argumentative fallacy classification, we will compute the macro F1-score on predicted sentence-level labels.
-Metrics will be computed on the hidden test set to determine the best system for each sub-task and input mode.
-
 ---
 
 | **Dataset**       | **Description**                                                                                                                                                                          | **Size**       |
