@@ -75,7 +75,14 @@ For argumentative fallacy classification, we will compute the macro F1-score on 
 Metrics will be computed on the hidden test set to determine the best system for each sub-task and input mode.
 
 # Key Dates (Anywhere on Earth)
-Will be updated soon. 
+
+- **Release of Training Data**: February 25th
+- **Release of Test Set**: Around March 24th
+- **Evaluation Start**: April 14th
+- **Evaluation End**: April 25th
+- **Paper Submission Due**: May 15th
+- **Shared Task Overview Paper Deadline**: June 4th
+- **Workshop**: July 31st
 
 # Submission 
 We be updated soon. 
