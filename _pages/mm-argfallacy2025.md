@@ -81,11 +81,10 @@ Metrics will be computed on the hidden test set to determine the best system for
 - **Evaluation Start**: April 14th
 - **Evaluation End**: April 25th
 - **Paper Submission Due**: May 15th
-- **Shared Task Overview Paper Deadline**: June 4th
 - **Workshop**: July 31st
 
 # Submission 
-We be updated soon. 
+We'll be updated soon. 
 
 
 
