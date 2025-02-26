@@ -84,7 +84,7 @@ Metrics will be computed on the hidden test set to determine the best system for
 - **Workshop**: July 31st
 
 # Submission 
-We'll be updated soon. 
+Will be updated soon. 
 
 
 
