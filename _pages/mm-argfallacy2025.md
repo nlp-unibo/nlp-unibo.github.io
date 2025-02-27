@@ -49,7 +49,7 @@ For each sub-task, participants can leverage the debate context of a given input
 # Data 
 
 
-We use **MM-USED-fallacy** and release a version of the dataset specifically designed for argumentative fallacy detection.   This dataset includes 1,891 sentences from [Haddadan et al.'s (2019)](https://aclanthology.org/P19-1463.pdf) dataset on US presidential elections.  Each sentence is labeled with one of six argumentative fallacy categories, as introduced by [Goffredo et al. (2022)](https://www.ijcai.org/proceedings/2022/575).  
+We use **MM-USED-fallacy** and release a version of the dataset specifically designed for argumentative fallacy detection.   This dataset includes 1,278 sentences from [Haddadan et al.'s (2019)](https://aclanthology.org/P19-1463.pdf) dataset on US presidential elections.  Each sentence is labeled with one of six argumentative fallacy categories, as introduced by [Goffredo et al. (2022)](https://www.ijcai.org/proceedings/2022/575).  
 
 Inspired by observations from [Goffredo et al. (2022)](https://www.ijcai.org/proceedings/2022/575) on the benefits of leveraging multiple argument mining tasks for fallacy detection and classification, we also provide additional datasets to encourage multi-task learning. A summary is provided in the table below:  
 
@@ -57,9 +57,11 @@ Inspired by observations from [Goffredo et al. (2022)](https://www.ijcai.org/pro
 
 | **Dataset**       | **Description**                                                                                                                                                                          | **Size**       |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
+|**MM-USED-fallacy** | A multimodal extension of USElecDeb60to20 dataset, covering US presidential debates (1960-2020). Inlcludes labels for argumentative fallacy detection and argumentative fallacy classification. | 1,278 samples (updated version)| 
+| **MM-USED**        | A multimodal extension of the USElecDeb60to16 dataset, covering US presidential debates (1960–2016). Includes labels for argumentative sentence detection and component classification.   | 23,505 sentences (updated version)|
 | **UKDebates**      | 386 sentences and audio samples from the 2015 UK Prime Ministerial elections. Sentences are labeled for argumentative sentence detection: containing or not containing a claim.           | 386 sentences  |
 | **M-Arg**          | A multimodal dataset for argumentative relation classification from the 2020 US Presidential elections. Sentences are labeled as attacking, supporting, or unrelated to another sentence. | 4,104 pairs    |
-| **MM-USED**        | A multimodal extension of the USElecDeb60to16 dataset, covering US presidential debates (1960–2016). Includes labels for argumentative sentence detection and component classification.   | 26,781 sentences |
+
 
 ---
 
@@ -67,7 +69,62 @@ All datasets will be available through [MAMKit](https://nlp-unibo.github.io/mamk
 
 Since many multimodal datasets cannot release audio samples due to copyright restrictions, MAMKit provides an interface to dynamically build datasets and promote reproducible research.  
 
-Datasets are formatted as `torch.Dataset` objects, containing input values (text, audio, or both) and corresponding task-specific labels. More details about data formats and dataset building are available in MAMKit's documentation.  
+Datasets are formatted as `torch.Dataset` objects, containing input values (text, audio, or both) and corresponding task-specific labels. More details about data formats and dataset building are available in MAMKit's documentation.  ## Retrieving the Data through MAMKit
+
+To retrieve the datasets through MAMKit, you can use the following code interface:
+
+```python
+from mamkit.data.datasets import MMUSEDFallacy, USEDFallacy, UKDebates, MArg
+import logging
+from pathlib import Path
+
+def loading_data_example():
+    base_data_path = Path(__file__).parent.parent.resolve().joinpath('data')
+
+    # MM-USED-fallacy dataset
+    mm_used_fallacy_loader = MMUSEDFallacy(
+        task_name='afc', # Choose between 'afc' or 'afd'               
+        input_mode=InputMode.TEXT_AUDIO, # Choose between TEXT_ONLY, AUDIO_ONLY, or TEXT_AUDIO
+        base_data_path=base_data_path
+    )
+
+    # MM-USED dataset
+    mm_used_loader = MMUSED(
+        task_name='asd',#Choose between 'asd' or 'acc'  
+        input_mode=InputMode.TEXT_AUDIO, # Choose between TEXT_ONLY, AUDIO_ONLY, or TEXT_AUDIO
+        base_data_path=base_data_path
+    )
+
+    # UKDebates dataset
+    uk_debates_loader = UKDebates(
+        task_name='asd', 
+        input_mode=InputMode.TEXT_AUDIO, # Choose between TEXT_ONLY, AUDIO_ONLY, or TEXT_AUDIO
+        base_data_path=base_data_path
+    )
+
+    # M-Arg dataset
+    m_arg_loader = MArg(
+        task_name='arc',
+        input_mode=InputMode.TEXT_AUDIO, # Choose between TEXT_ONLY, AUDIO_ONLY, or TEXT_AUDIO
+        base_data_path=base_data_path
+    )
+```
+
+Each loader is initialized with the appropriate task name (`afc` for argumentative fallacy classification, `asd` for argumentative sentence detection, and 'arc' for argumentative relation classification), input mode (InputMode.TEXT_ONLY, InputMode.AUDIO_ONLY, or InputMode.TEXT_AUDIO), and the base data path.
+
+Ensure that you have MAMKit installed and properly configured in your environment to use these loaders.
+
+For more details, refer to the MAMKit [GitHub repository](https://nlp-unibo.github.io/mamkit/) and [website](https://nlp-unibo.github.io/mamkit/) . 
+
+
+### References
+
+- **MM-USED-fallacy**: [Mancini et al. (2024)](https://aclanthology.org/2024.eacl-short.16.pdf). The version provided through MAMKit includes updated samples, with refinements in the alignment process. This results in a different number of samples compared to the original dataset.
+- **MM-USED**: [Mancini et al. (2022)](https://aclanthology.org/2022.argmining-1.15.pdf). The version provided through MAMKit includes updated samples, with refinements in the alignment process. This results in a different number of samples compared to the original dataset.
+- **UK-Debates**: [Lippi and Torroni (2016)](https://ojs.aaai.org/index.php/AAAI/article/view/10384).
+- **M-Arg**: [Mestre et al. (2021)](https://aclanthology.org/2021.argmining-1.8.pdf).
+
+**Note**: By "updated version," we mean that the datasets have undergone a refinement in the alignment process, which has resulted in adjustments to the number of samples included compared to the original versions published in the referenced papers.
 
 # Evaluation 
 For argumentative fallacy detection, we will compute the binary F1-score on predicted sentence-level labels. 
