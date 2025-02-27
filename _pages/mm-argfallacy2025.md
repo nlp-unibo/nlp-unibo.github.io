@@ -8,13 +8,17 @@ nav: false
 related_publications: false
 ---
 <!-- pages/parkinsons-speech-xai.md -->
-
-<!-- <div class="row">
+<div class="row">
     <div class="col-sm mt-3 mt-md-0">
-        {% include figure.liquid loading="eager" path="assets/img/shared_task/logo.png" title="example image" class="img-fluid rounded z-depth-1 style="width: 20%; height: auto;" %}
+        {% include figure.liquid loading="eager" path="assets/img/shared_task/logo.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
     </div>
-</div> -->
-
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/shared_task/logo.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/shared_task/logo.jpg" title="example image" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 Multimodal Argumentative Fallacy Detection and Classification on Political Debates Shared Task.
 
