@@ -9,6 +9,12 @@ related_publications: false
 ---
 <!-- pages/parkinsons-speech-xai.md -->
 
+<!-- <div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/shared_task/logo.png" title="example image" class="img-fluid rounded z-depth-1 style="width: 20%; height: auto;" %}
+    </div>
+</div> -->
+
 
 Multimodal Argumentative Fallacy Detection and Classification on Political Debates Shared Task.
 
@@ -74,7 +80,8 @@ Datasets are formatted as `torch.Dataset` objects, containing input values (text
 To retrieve the datasets through MAMKit, you can use the following code interface:
 
 ```python
-from mamkit.data.datasets import MMUSEDFallacy, USEDFallacy, UKDebates, MArg
+from mamkit.data.datasets import MMUSEDFallacy, MMUSED, UKDebates, MArg, InputMode
+
 import logging
 from pathlib import Path
 
