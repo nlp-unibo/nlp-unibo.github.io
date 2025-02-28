@@ -9,7 +9,7 @@ last_name:
 contact_note: >
   You can even add a little note about which of these is the best way to reach you.
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
- Webpage of the Language Technologies Lab at the University of Bologna. # add your site description or leave empty
+ Webpage of the Language Technologies Lab at the University of Bologna. 
 footer_text: >
 
 keywords: jekyll, jekyll-theme, academic-website, portfolio-website # add your own keywords or leave empty
