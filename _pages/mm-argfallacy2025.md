@@ -125,7 +125,7 @@ Each loader is initialized with the appropriate task name (`afc` for argumentati
 
 Ensure that you have MAMKit installed and properly configured in your environment to use these loaders.
 
-For more details, refer to the MAMKit [GitHub repository](https://nlp-unibo.github.io/mamkit/) and [website](https://nlp-unibo.github.io/mamkit/) . 
+For more details, refer to the MAMKit [GitHub repository](https://github.com/nlp-unibo/mamkit) and [website](https://nlp-unibo.github.io/mamkit/) . 
 
 
 ### References
