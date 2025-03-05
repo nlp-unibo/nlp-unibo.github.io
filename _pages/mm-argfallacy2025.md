@@ -169,3 +169,18 @@ Will be updated soon.
 
 # Contacts
 **[Join the MM-ArgFallacy2025 Slack Channel!](https://join.slack.com/t/mm-argfallacy2025/shared_invite/zt-2yjct5udc-vbuGSsSelR5FMiopSne~wQ)**
+
+# Credits
+
+<div style="display:flex; justify-content: space-around;">
+<div class="content-wrap about_content">
+    <p>
+        This shared task is partially supported by the project European Commission's NextGeneration EU programme, PNRR -- M4C2 -- Investimento 1.3, Partenariato Esteso, PE00000013 - FAIR - Future Artificial Intelligence Research'' -- Spoke 8 Pervasive AI’’.
+    </p>
+</div>
+
+<div class="card-img col-sm-4">
+        {% include figure.liquid loading="eager" path="assets/img/shared_task/fair blank.png" title="example image" class="img-fluid rounded z-depth-1" %}
+</div>
+</div>
+
