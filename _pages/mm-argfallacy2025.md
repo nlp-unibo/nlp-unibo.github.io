@@ -145,7 +145,7 @@ Metrics will be computed on the hidden test set to determine the best system for
 # Key Dates (Anywhere on Earth)
 
 - **Release of Training Data**: February 25th
-- **Release of Test Set**: ~~March 24th~~ → April 1st
+- **Release of Test Set**: ~~March 24th~~ → April 7th
 - **Evaluation Start**: ~~April 14th~~ → April 21st
 - **Evaluation End**: ~~April 25th~~ → April 30th
 - **Paper Submission Due**: May 15th
