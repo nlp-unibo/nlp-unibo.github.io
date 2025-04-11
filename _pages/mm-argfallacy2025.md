@@ -127,6 +127,48 @@ Ensure that you have MAMKit installed and properly configured in your environmen
 
 For more details, refer to the MAMKit [GitHub repository](https://github.com/nlp-unibo/mamkit) and [website](https://nlp-unibo.github.io/mamkit/) . 
 
+## Test Set Access 🔍
+
+The test set for **mm-argfallacy-2025** is now available! To use it, please:
+
+1. Create a fresh environment  
+2. Install the latest version of `mamkit` (v0.1.2):
+
+```bash
+pip install mamkit
+```
+
+Then, retrieve the data using the following code:
+
+### For **Fallacy Classification** (`afc`):
+```python
+from mamkit.data.datasets import MMUSEDFallacy, InputMode
+from pathlib import Path
+
+def loading_data_example():
+    base_data_path = Path(__file__).parent.parent.resolve().joinpath('data')
+    loader = MMUSEDFallacy(
+        task_name='afc',
+        input_mode=InputMode.TEXT_ONLY,  # or TEXT_AUDIO or AUDIO_ONLY
+        base_data_path=base_data_path
+    )
+    split_info = loader.get_splits('mm-argfallacy-2025')
+```
+
+### For **Fallacy Detection** (`afd`):
+```python
+from mamkit.data.datasets import MMUSEDFallacy, InputMode
+from pathlib import Path
+
+def loading_data_example():
+    base_data_path = Path(__file__).parent.parent.resolve().joinpath('data')
+    loader = MMUSEDFallacy(
+        task_name='afd',
+        input_mode=InputMode.TEXT_ONLY,  # or TEXT_AUDIO or AUDIO_ONLY
+        base_data_path=base_data_path
+    )
+    split_info = loader.get_splits('mm-argfallacy-2025')
+```
 
 ### References
 
