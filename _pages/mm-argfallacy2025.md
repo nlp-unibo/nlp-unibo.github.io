@@ -132,10 +132,19 @@ For more details, refer to the MAMKit [GitHub repository](https://github.com/nlp
 The test set for **mm-argfallacy-2025** is now available! To use it, please:
 
 1. Create a fresh environment  
-2. Install the latest version of `mamkit` (v0.1.2):
+2. Clone the repository and install the requirements:
 
 ```bash
-pip install mamkit
+git clone git@github.com:nlp-unibo/mamkit.git
+cd mamkit
+pip install -r requirements.txt
+pip install --editable .
+```
+
+<ol start="3"> <li>Access MAMKit in your Python code:</li> </ol> 
+
+```python
+import mamkit
 ```
 
 Then, retrieve the data using the following code:
@@ -179,10 +188,78 @@ def loading_data_example():
 
 **Note**: By "updated version," we mean that the datasets have undergone a refinement in the alignment process, which has resulted in adjustments to the number of samples included compared to the original versions published in the referenced papers.
 
-# Evaluation 
-For argumentative fallacy detection, we will compute the binary F1-score on predicted sentence-level labels. 
-For argumentative fallacy classification, we will compute the macro F1-score on predicted sentence-level labels.
-Metrics will be computed on the hidden test set to determine the best system for each sub-task and input mode.
+# Evaluation  
+
+For argumentative fallacy detection, we will compute the binary F1-score on predicted sentence-level labels.  
+For argumentative fallacy classification, we will compute the macro F1-score on predicted sentence-level labels.  
+Metrics will be computed on the hidden test set to determine the best system for each sub-task and input mode.  
+
+Evaluation will be performed via the [CodaLab platform](https://codalab.lisn.upsaclay.fr/competitions/22739).  
+On CodaLab, participants will find the leaderboard, along with the results of the provided baselines.  
+Submission guidelines can be found under the *Evaluation* section of the CodaLab competition page.
+
+🚨 **Important**: In the evaluation website, you will also find a link to a **mandatory participation survey**.  
+Filling out this survey is required in order to participate in the task.  
+We also provide the survey link here for convenience: [https://tinyurl.com/limesurvey-argfallacy](https://tinyurl.com/limesurvey-argfallacy)  
+
+### Baseline Results on Test Set
+
+#### Argumentative Fallacy Classification (AFC) – Macro F1-score
+
+---
+
+| Input Modality | Model                            | F1-Score |
+|----------------|----------------------------------|----------|
+| Text-only      | BiLSTM w/ GloVe                  | 47.21    |
+| Text-only      | RoBERTa                          | 39.25    |
+| Audio-only     | BiLSTM w/ MFCCs                  | 15.82    |
+| Audio-only     | WavLM                            | 6.43     |
+| Text + Audio   | BiLSTM (GloVe + MFCCs)           | 21.91    |
+| Text + Audio   | MM-RoBERTa + WavLM               | 38.16    |
+
+---
+
+#### Argumentative Fallacy Detection (AFD) – Binary F1-score
+
+---
+
+| Input Modality | Model                            | F1-Score |
+|----------------|----------------------------------|----------|
+| Text-only      | BiLSTM w/ GloVe                  | 24.62    |
+| Text-only      | RoBERTa                          | 27.70    |
+| Audio-only     | BiLSTM w/ MFCCs                  | 0.00     |
+| Audio-only     | WavLM                            | 0.00     |
+| Text + Audio   | BiLSTM (GloVe + MFCCs)           | 23.37    |
+| Text + Audio   | MM-RoBERTa + WavLM               | 28.48    |
+
+---
+
+
+# Submission
+
+All evaluated submissions are required to commit to submitting a system description paper. You can choose between two options:
+
+- **Non-Archival Paper**:  
+  A 2-page paper describing your system, with unlimited pages for appendices and bibliography. These papers will *not* be published in the workshop proceedings, but your system will be mentioned in the Overview Paper of the shared task, upon acceptance.
+
+- **Archival Paper**:  
+  A 4-page paper describing your system, also with unlimited pages for appendices and bibliography. These papers *will* be published in the official ACL workshop proceedings and must be presented at the workshop (poster or oral session).  
+  ⚠️ *In accordance with ACL policy, at least one team member must register for the workshop in order to present an archival paper if aaccepted to be published at the ACL proceedings.*
+
+All papers must use the official [ACL style templates](https://github.com/acl-org/acl-style-files), available in both LaTeX and Word. We strongly recommend using the official [Overleaf template](https://www.overleaf.com/project/5f64f1fb97c4c50001b60549) for convenience.
+
+Submissions will be made via a dedicated submission website, which will be published soon.
+
+- 🗓️ **Submissions open**: May 1st, 2025 (the day after the end of the evaluation period)  
+- 🗓️ **Submissions close**: May 15th, 2025 
+- 📢 **Notification of acceptance**: May 20th, 2025  
+- 📝 **Camera-ready deadline**: May 25th, 2025  
+
+**Important notes**:
+- All accepted **archival papers** will be presented during the workshop’s poster session and require at least one registered author.  
+- **Non-archival papers** do *not* require registration and are not presented at the workshop, but their systems will be acknowledged in the Overview Paper.
+
+We look forward to receiving your submissions!
 
 # Key Dates (Anywhere on Earth)
 
@@ -190,11 +267,13 @@ Metrics will be computed on the hidden test set to determine the best system for
 - **Release of Test Set**: ~~March 24th~~ → April 7th
 - **Evaluation Start**: ~~April 14th~~ → April 21st
 - **Evaluation End**: ~~April 25th~~ → April 30th
-- **Paper Submission Due**: May 15th
+- **Paper Submissions Open**: May 1st
+- **Paper Submission Close**: May 15th
+- **Notification of acceptance**: May 20th
+- **Camera-ready Due**: May 25th  
 - **Workshop**: July 31st
 
-# Submission 
-Will be updated soon. 
+
 
 
 
