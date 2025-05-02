@@ -248,7 +248,7 @@ All evaluated submissions are required to commit to submitting a system descript
 
 All papers must use the official [ACL style templates](https://github.com/acl-org/acl-style-files), available in both LaTeX and Word. We strongly recommend using the official [Overleaf template](https://www.overleaf.com/project/5f64f1fb97c4c50001b60549) for convenience.
 
-Submissions will be made via a dedicated submission website, which will be published soon.
+We have sent an email to each team with all the details regarding the system description paper submission for MM-ArgFallacy2025. Please check your inbox (and spam folder just in case).
 
 - 🗓️ **Submissions open**: May 1st, 2025 (the day after the end of the evaluation period)  
 - 🗓️ **Submissions close**: May 15th, 2025 
@@ -260,6 +260,81 @@ Submissions will be made via a dedicated submission website, which will be publi
 - **Non-archival papers** do *not* require registration and are not presented at the workshop, but their systems will be acknowledged in the Overview Paper.
 
 We look forward to receiving your submissions!
+
+## 🏆 Leaderboard – Shared Task Results 
+
+### `AFC Task – Argumentative Fallacy Classification`
+
+#### 📝 Text-only
+
+
+| Rank | Team                  | F1-Macro |
+|------|------------------------|----------|
+| 1    | Team NUST              | 0.4856   |
+| 2    | Baseline BiLSTM        | 0.4721   |
+| 3    | alessiopittiglio       | 0.4444   |
+| 4    | Baseline RoBERTa       | 0.3925   |
+| 5    | Team EvaAdriana        | 0.3746   |
+| 6    | Team CASS              | 0.1432   |
+
+#### 🔊 Audio-only
+
+
+| Rank | Team                      | F1-Macro |
+|------|---------------------------|----------|
+| 1    | alessiopittiglio           | 0.3559   |
+| 2    | Team EvaAdriana            | 0.1858   |
+| 3    | Team NUST                  | 0.1588   |
+| 4    | Baseline BiLSTM + MFCCs    | 0.1582   |
+| 5    | Team CASS                  | 0.0864   |
+| 6    | Baseline WavLM             | 0.0643   |
+
+#### 🔁 Text-Audio
+
+
+| Rank | Team                              | F1-Macro |
+|------|-----------------------------------|----------|
+| 1    | Team NUST                          | 0.4611   |
+| 2    | alessiopittiglio                   | 0.4403   |
+| 3    | Baseline RoBERTa + WavLM           | 0.3816   |
+| 4    | Team EvaAdriana                    | 0.3746   |
+| 5    | Baseline BiLSTM + MFCCs            | 0.2191   |
+| 6    | Team CASS                          | 0.1432   |
+
+---
+
+### `AFD Task – Argumentative Fallacy Detection`
+
+#### 📝 Text-only
+
+
+| Rank | Team                        | F1-Macro |
+|------|-----------------------------|----------|
+| 1    | Baseline RoBERTa            | 0.2770   |
+| 2    | Ambali_Yashovardhan         | 0.2534   |
+| 3    | Baseline BiLSTM             | 0.2462   |
+| 4    | Team EvaAdriana             | 0.2195   |
+
+#### 🔊 Audio-only
+
+
+| Rank | Team                        | F1-Macro |
+|------|-----------------------------|----------|
+| 1    | Ambali_Yashovardhan         | 0.2095   |
+| 2    | Team EvaAdriana             | 0.1690   |
+| 3    | Baseline BiLSTM + MFCCs     | 0.0000   |
+| 4    | Baseline WavLM              | 0.0000   |
+
+#### 🔁 Text-Audio
+
+
+| Rank | Team                              | F1-Macro |
+|------|-----------------------------------|----------|
+| 1    | Baseline RoBERTa + WavLM          | 0.2848   |
+| 2    | Baseline BiLSTM + MFCCs           | 0.2337   |
+| 3    | Ambali_Yashovardhan               | 0.2244   |
+| 4    | Team EvaAdriana                   | 0.1931   |
+
 
 # Key Dates (Anywhere on Earth)
 
