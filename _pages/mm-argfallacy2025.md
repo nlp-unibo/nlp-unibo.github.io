@@ -274,8 +274,7 @@ We look forward to receiving your submissions!
 | 2    | Baseline BiLSTM        | 0.4721   |
 | 3    | alessiopittiglio       | 0.4444   |
 | 4    | Baseline RoBERTa       | 0.3925   |
-| 5    | Team EvaAdriana        | 0.3746   |
-| 6    | Team CASS              | 0.1432   |
+| 5    | Team CASS              | 0.1432   |
 
 #### 🔊 Audio-only
 
@@ -283,11 +282,10 @@ We look forward to receiving your submissions!
 | Rank | Team                      | F1-Macro |
 |------|---------------------------|----------|
 | 1    | alessiopittiglio           | 0.3559   |
-| 2    | Team EvaAdriana            | 0.1858   |
-| 3    | Team NUST                  | 0.1588   |
-| 4    | Baseline BiLSTM + MFCCs    | 0.1582   |
-| 5    | Team CASS                  | 0.0864   |
-| 6    | Baseline WavLM             | 0.0643   |
+| 2    | Team NUST                  | 0.1588   |
+| 3    | Baseline BiLSTM + MFCCs    | 0.1582   |
+| 4    | Team CASS                  | 0.0864   |
+| 5    | Baseline WavLM             | 0.0643   |
 
 #### 🔁 Text-Audio
 
@@ -297,9 +295,8 @@ We look forward to receiving your submissions!
 | 1    | Team NUST                          | 0.4611   |
 | 2    | alessiopittiglio                   | 0.4403   |
 | 3    | Baseline RoBERTa + WavLM           | 0.3816   |
-| 4    | Team EvaAdriana                    | 0.3746   |
-| 5    | Baseline BiLSTM + MFCCs            | 0.2191   |
-| 6    | Team CASS                          | 0.1432   |
+| 4    | Baseline BiLSTM + MFCCs            | 0.2191   |
+| 5    | Team CASS                          | 0.1432   |
 
 ---
 
