@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Preview](readme_preview/ltlab.jpeg)](https://site.unibo.it/nlp/en)
+[![Preview](static/ltlab-people.jpeg)](https://site.unibo.it/nlp/en)
 
 </div>
 
@@ -111,8 +111,10 @@ We have mainly target argumentation tasks for now.
 - [MARGOT](http://margot.disi.unibo.it/) $\rightarrow$ Our tool for mining arguments from text (online web demo).
 - [MAMKit](https://nlp-unibo.github.io/mamkit/) $\rightarrow$ Our toolkit for multimodal argument mining.
 - [CLAUDETTE](http://claudette.eui.eu/index.html) $\rightarrow$ Our tool for analysing consumer contracts and privacy policies.
+- [ACME Chatbot](https://github.com/nlp-unibo/ACME-A-Chatbot-for-Migrants-in-Europe) $\rightarrow$ Our dialogue system that relies on computational argumentation to aid and orient potential asylum applicants.
+- [Cinnamon](https://nlp-unibo.github.io/cinnamon/overview.html) $\rightarrow$ Our lightweight Python package for general-purpose configuration and code logic de-coupling.
  
 ## Template
 
-This github.io page has been built via [al-folio](https://github.com/alshedivat/al-folio) academic template.
+This github.io page has been built via [hugo minimalist academic template](https://github.com/pmichaillat/hugo-website).
 

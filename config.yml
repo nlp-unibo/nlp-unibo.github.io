@@ -1,0 +1,109 @@
+baseURL: "https://nlp-unibo.github.io"
+title: Language Technologies Lab
+theme: PaperMod
+
+enableInlineShortcodes: true
+enableRobotsTXT: true
+pagination:
+  pagerSize: 20
+
+menu:
+    main:
+        - name: Research
+          url: research/
+          weight: 5
+        - name: People
+          url: people/
+          weight: 5
+        - name: News
+          url: news/
+          weight: 3
+        - name: Publications
+          url: publications/
+          weight: 3
+        - name: Projects
+          url: projects/
+          weight: 3
+        - name: Organization
+          url: organization/
+          weight: 3
+        - name: Tools
+          url: tools/
+          weight: 3
+
+params:
+    description: "We are a research group of the Department of Computer Science and Engineering of the University of Bologna. Our focus is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere."
+    author: Language Technologies Lab
+    # googleAnalyticsID: "G-XXXXX"
+    DateFormat: "January 2006"
+    defaultTheme: dark
+    hideFooter: false
+    disableThemeToggle: true
+    ShowShareButtons: false
+    ShowReadingTime: false
+    disableSpecial1stPost: true
+    disableAnchoredHeadings: true
+    ShowPostNavLinks: false
+    ShowBreadCrumbs: false
+    ShowCodeCopyButtons: true
+    ShowAllPagesInArchive: false
+    MainSections: ["research","people","news","publications","projects","organization","tools"]
+    ShowToc: false
+    disableScrollToTop: true
+    TocOpen: true
+    ShowWordCount: false
+    UseHugoToc: true
+    comments: false
+    math: true
+    profileMode:
+          enabled: true
+          title: Language Technologies Lab
+          subtitle: "We are a research group of the Department of Computer Science and Engineering of the University of Bologna. Our focus is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere."
+          imageUrl: "ltlab.png"
+          imageWidth: 160
+          imageHeight: 160
+          buttons:
+          - name: Research
+            url: research/
+          - name: People
+            url: people/
+          - name: News
+            url: news/
+          - name: Publications
+            url: publications/
+          - name: Projects
+            url: projects/
+          - name: Organization
+            url: organization/
+          - name: Tools
+            url: tools/
+
+    socialIcons:
+        - name: GitHub
+          url: https://github.com/nlp-unibo
+        - name: Institutional Website
+          url: https://site.unibo.it/nlp/en
+        - name: Contact
+          url: mailto:p.torroni@unibo.it
+
+    assets:
+        disableScrollBarStyle: true
+    cover:
+        hiddenInList: false
+        hiddenInSingle: true
+    label:
+      text: "Language Technologies Lab"
+      icon: favicon.ico
+      iconHeight: 18
+
+markup:
+    goldmark:
+        renderer:
+            unsafe: true
+    highlight:
+        guessSyntax: true
+        style: autumn 
+    tableOfContents:
+        endLevel: 2
+        ordered: false
+        startLevel: 2
