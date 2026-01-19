@@ -156,18 +156,6 @@ In Findings of the Association for Computational Linguistics: NAACL 2025, pages 
 | [PDF](https://aclanthology.org/2025.findings-naacl.175.pdf)
 
 ### 2024
-**AMELIA-Argument Mining Evaluation on Legal documents in ItAlian: A CALAMITA Challenge**\
-Giulia Grundler, Andrea Galassi, Piera Santin, Alessia Fidelangeli, Federico Galli, Elena Palmieri, Francesca Lagioia, Giovanni Sartor, Paolo Torroni\
-CLiC-it 2024: Tenth Italian Conference on Computational Linguistics\
-[PDF](https://aclanthology.org/2024.clicit-1.124.pdf)
-| [Anthology](https://aclanthology.org/2024.clicit-1.124/)
-
-**Generation and Evaluation of English Grammar Multiple-Choice Cloze Exercises.**\
-Nicolò Donati, Matteo Periani, Paolo Di Natale, Giuseppe Savino, and Paolo Torroni. 2024.\
-In Proceedings of the Tenth Italian Conference on Computational Linguistics (CLiC-it 2024), pages 325–334, Pisa, Italy. CEUR Workshop Proceedings.\
-[PDF](https://aclanthology.org/2024.clicit-1.39.pdf)
-| [Anthology](https://aclanthology.org/2024.clicit-1.39/)
-
 **Detecting Vague Clauses in Privacy Policies: The Analysis of Data Categories Using BERT Models and LLMs**\
 Giulia Grundler, Rūta Liepiņa, Mariaceleste Musicco, Francesca Lagioia, Andrea Galassi, Giovanni Sartor, Paolo Torroni\
 37th International Conference on Legal Knowledge and Information Systems (JURIX), pp. 72 - 83, 2024\
@@ -304,6 +292,12 @@ Marco Lippi and Paolo Torroni\
 ## Workshops
 
 ### 2025
+Luca Moroni, Gianmarco Pappacoda, Edoardo Barba, Simone Conia, Andrea Galassi, Bernardo Magnini, Roberto Navigli, Paolo Torroni, and Roberto Zanoli. 2025. 
+Sustainable Italian LLM Evaluation: Community Perspectives and Methodological Guidelines. 
+In Proceedings of the Eleventh Italian Conference on Computational Linguistics (CLiC-it 2025), pages 747–759, Cagliari, Italy. CEUR Workshop Proceedings.
+[PDF](https://aclanthology.org/2025.clicit-1.71.pdf)
+| [Anthology](https://aclanthology.org/2025.clicit-1.71/)
+
 **Nicolò Donati, Paolo Torroni, and Giuseppe Savino. 2025.**\ 
 Do Large Language Models understand how to be judges?.\
 In Proceedings of the 2nd LUHME Workshop, pages 85–102, Bologna, Italy. UP - Universidade do Porto (https://doi.org/10.21747/978-989-9193-73-4/lan2), LIACC - Laboratório de Inteligência Artificial e Ciência de Computadores da Universidade do Porto, CLUP - Centro de Linguística da Universidade do Porto, UEF - The University of Eastern Finland and UAH - Universidad de Alcalá.\
@@ -337,6 +331,18 @@ Katerina Korre, Federico Ruggeri, and Alberto Barrón-Cedeño. 2024.\
 In Proceedings of the 1st LUHME Workshop, pages 12–19, Santiago de Compostela, Spain. CLUP, Centro de Linguística da Universidade do Porto FLUP - Faculdade de Letras da Universidade do Porto.\
 [PDF](https://aclanthology.org/2024.luhme-1.2.pdf)
 | [Anthology](https://aclanthology.org/2024.luhme-1.2/)
+
+**AMELIA-Argument Mining Evaluation on Legal documents in ItAlian: A CALAMITA Challenge**\
+Giulia Grundler, Andrea Galassi, Piera Santin, Alessia Fidelangeli, Federico Galli, Elena Palmieri, Francesca Lagioia, Giovanni Sartor, Paolo Torroni\
+CLiC-it 2024: Tenth Italian Conference on Computational Linguistics\
+[PDF](https://aclanthology.org/2024.clicit-1.124.pdf)
+| [Anthology](https://aclanthology.org/2024.clicit-1.124/)
+
+**Generation and Evaluation of English Grammar Multiple-Choice Cloze Exercises.**\
+Nicolò Donati, Matteo Periani, Paolo Di Natale, Giuseppe Savino, and Paolo Torroni. 2024.\
+In Proceedings of the Tenth Italian Conference on Computational Linguistics (CLiC-it 2024), pages 325–334, Pisa, Italy. CEUR Workshop Proceedings.\
+[PDF](https://aclanthology.org/2024.clicit-1.39.pdf)
+| [Anthology](https://aclanthology.org/2024.clicit-1.39/)
 
 **MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\ 
 Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
