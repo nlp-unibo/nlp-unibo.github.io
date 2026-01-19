@@ -117,6 +117,11 @@ ACM Transactions on Internet Technology, 2016\
 ## Conferences
 
 ### 2025
+**LMAC-TD: Producing time domain explanations for audio classifiers**\
+Eleonora Mancini, Francesco Paissan, Mirco Ravanelli, Cem Subakan\
+ICASSP 2025-2025 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)\
+[PDF](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=10890448)
+
 **Automated Extraction of Judicial Interpretative Formulas in EU Case Law on VAT**\
 Giulia Grundler, Piera Santin, Alessia Fidangeli, Rachele Mignone, Federico Galli, Andrea Galassi, Giuseppe Contissa, Luigi Di Caro and Paolo Torroni\
 38th International Conference on Legal Knowledge and Information Systems (JURIX), pp. 294-299, 2025\
@@ -134,12 +139,35 @@ Findings of the Association for Computational Linguistics: ACL 2025, pp. 20604�
 [DOI](https://doi.org/10.18653/v1/2025.findings-acl.1059)
 | [PDF](https://aclanthology.org/2025.findings-acl.1059.pdf)
 
+**The CLEF-2025 CheckThat! Lab: Subjectivity, Fact-Checking, Claim Normalization, and Retrieval**\
+Firoj Alam, Julia Maria Struß, Tanmoy Chakraborty, Stefan Dietze, Salim Hafid, Katerina Korre, Arianna Muti, Preslav Nakov, Federico Ruggeri, Sebastian Schellhammer, Vinay Setty, Megha Sundriyal, Konstantin Todorov & Venktesh V.\
+47th European Conference on Information Retrieval (ECIR), 2025\
+[DOI](https://doi.org/10.1007/978-3-031-88720-8_68)
+
 **Detecting Vague Clauses in Italian Privacy Policies using Transformers, LLMs, and Cross-Lingual Techniques**\
 Giulia Grundler, Mariaceleste Musicco, Andrea Galassi, Francesca Lagioia, Rūta Liepiņa, Giorgio Resta, Sara Roccu, Giovanni Sartor and Paolo Torroni\
 28th European Conference on Artificial Intelligence (ECAI), pp. 4594-4602, 2025\
 [DOI](https://doi.org/10.3233/FAIA251362)
 
+**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\ 
+Katerina Korre, Arianna Muti, Federico Ruggeri, and Alberto Barrón-Cedeño. 2025.\
+In Findings of the Association for Computational Linguistics: NAACL 2025, pages 3184–3198, Albuquerque, New Mexico. Association for Computational Linguistics.\
+[DOI](https://doi.org/10.18653/v1/2025.findings-naacl.175)
+| [PDF](https://aclanthology.org/2025.findings-naacl.175.pdf)
+
 ### 2024
+**AMELIA-Argument Mining Evaluation on Legal documents in ItAlian: A CALAMITA Challenge**\
+Giulia Grundler, Andrea Galassi, Piera Santin, Alessia Fidelangeli, Federico Galli, Elena Palmieri, Francesca Lagioia, Giovanni Sartor, Paolo Torroni\
+CLiC-it 2024: Tenth Italian Conference on Computational Linguistics\
+[PDF](https://aclanthology.org/2024.clicit-1.124.pdf)
+| [Anthology](https://aclanthology.org/2024.clicit-1.124/)
+
+**Generation and Evaluation of English Grammar Multiple-Choice Cloze Exercises.**\
+Nicolò Donati, Matteo Periani, Paolo Di Natale, Giuseppe Savino, and Paolo Torroni. 2024.\
+In Proceedings of the Tenth Italian Conference on Computational Linguistics (CLiC-it 2024), pages 325–334, Pisa, Italy. CEUR Workshop Proceedings.\
+[PDF](https://aclanthology.org/2024.clicit-1.39.pdf)
+| [Anthology](https://aclanthology.org/2024.clicit-1.39/)
+
 **Detecting Vague Clauses in Privacy Policies: The Analysis of Data Categories Using BERT Models and LLMs**\
 Giulia Grundler, Rūta Liepiņa, Mariaceleste Musicco, Francesca Lagioia, Andrea Galassi, Giovanni Sartor, Paolo Torroni\
 37th International Conference on Legal Knowledge and Information Systems (JURIX), pp. 72 - 83, 2024\
@@ -276,11 +304,45 @@ Marco Lippi and Paolo Torroni\
 ## Workshops
 
 ### 2025
-**Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates.** 
-Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni. 2025.
-In Proceedings of the 12th Argument mining Workshop, pages 358–368, Vienna, Austria. Association for Computational Linguistics.
+**Nicolò Donati, Paolo Torroni, and Giuseppe Savino. 2025.**\ 
+Do Large Language Models understand how to be judges?.\
+In Proceedings of the 2nd LUHME Workshop, pages 85–102, Bologna, Italy. UP - Universidade do Porto (https://doi.org/10.21747/978-989-9193-73-4/lan2), LIACC - Laboratório de Inteligência Artificial e Ciência de Computadores da Universidade do Porto, CLUP - Centro de Linguística da Universidade do Porto, UEF - The University of Eastern Finland and UAH - Universidad de Alcalá.\
+[PDF](https://aclanthology.org/2025.luhme-1.9.pdf)
+| [Anthology](https://aclanthology.org/2025.luhme-1.9/)
+
+**Investigating the effectiveness of explainability methods in parkinson’s detection from speech**\
+Eleonora Mancini, Francesco Paissan, Paolo Torroni, Mirco Ravanelli, Cem Subakan\
+2025 IEEE International Conference on Acoustics, Speech, and Signal Processing Workshops (ICASSPW)\
+[PDF](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11011035)
+
+**Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates.**\
+Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni. 2025.\
+In Proceedings of the 12th Argument mining Workshop, pages 358–368, Vienna, Austria. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2025.argmining-1.35)
 | [PDF](https://aclanthology.org/2025.argmining-1.35.pdf)
+
+Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, Fact-Checking, Claim Normalization, and Retrieval\
+Firoj Alam, Julia Maria Struß, Tanmoy Chakraborty, Stefan Dietze, Salim Hafid, Katerina Korre, Arianna Muti, Preslav Nakov, Federico Ruggeri, Sebastian Schellhammer, Vinay Setty, Megha Sundriyal, Konstantin Todorov & V. Venktesh\
+Conference and Labs of the Evaluation Forum (CLEF), 2025.\\
+[DOI](https://doi.org/10.1007/978-3-032-04354-2_13)
+
+**Dynamic Demonstrations Selection for Few-Shot Legal Argument Mining**\
+Francesco Alfieri, Giulia Grundler, Francesca Galloni, Rūta Liepiņa, Francesca Lagioia, Andrea Galassi, Paolo Torroni\
+AMELR: First Argument Mining and Empirical Legal Research Workshop\
+[PDF](https://ceur-ws.org/Vol-4089/paper2.pdf)
+
+### 2024
+A Grice-ful Examination of Offensive Language: Using NLP Methods to Assess the Co-operative Principle.\
+Katerina Korre, Federico Ruggeri, and Alberto Barrón-Cedeño. 2024.\
+In Proceedings of the 1st LUHME Workshop, pages 12–19, Santiago de Compostela, Spain. CLUP, Centro de Linguística da Universidade do Porto FLUP - Faculdade de Letras da Universidade do Porto.\
+[PDF](https://aclanthology.org/2024.luhme-1.2.pdf)
+| [Anthology](https://aclanthology.org/2024.luhme-1.2/)
+
+**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\ 
+Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
+In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 69–82, Bangkok, Thailand. Association for Computational Linguistics.\
+[DOI](https://doi.org/10.18653/v1/2024.argmining-1.7)
+| [PDF](https://aclanthology.org/2024.argmining-1.7.pdf)
 
 ### 2023
 **Inception Models for Fashion Image Captioning: An Extensive Study on Multiple Datasets**\
@@ -288,11 +350,28 @@ Mirko Del Moro, Serban Cristian Tudosie, Francesco Vannoni, Andrea Galassi, Fede
 Conference and Labs of the Evaluation Forum (CLEF), pp. 13-14, 2023\
 [DOI](https://doi.org/10.1007/978-3-031-42448-9_1)
 
+**On the Definition of Prescriptive Annotation Guidelines for Language-Agnostic Subjectivity Detection**\
+Federico Ruggeri, Francesco Antici, Andrea Galassi, Katerina Korre, Arianna Muti, Alberto Barrón-Cedeño\
+Sixth Workshop on Narrative Extraction From Texts, Text2Story, 2023\
+[PDF](https://ceur-ws.org/Vol-3370/paper10.pdf)
+
 ### 2022
 **SubjectivITA: An Italian Corpus for Subjectivity Detection in Newspapers**\
 Francesco Antici, Luca Bolognini, Matteo Antonio Inajetovic, Bogdan Ivasiuk, Andrea Galassi, Federico Ruggeri\
 12th Conference and Labs of the Evaluation Forum (CLEF), pp. 40–52, 2021\
 [DOI](https://doi.org/10.1007/978-3-030-85251-1_4)
+
+**Detecting Arguments in CJEU Decisions on Fiscal State Aid.**\ 
+Giulia Grundler, Piera Santin, Andrea Galassi, Federico Galli, Francesco Godano, Francesca Lagioia, Elena Palmieri, Federico Ruggeri, Giovanni Sartor, and Paolo Torroni. 2022.\
+In Proceedings of the 9th Workshop on Argument Mining, pages 143–157, Online and in Gyeongju, Republic of Korea. International Conference on Computational Linguistics.\
+[PDF](https://aclanthology.org/2022.argmining-1.14.pdf)
+| [Anthology](https://aclanthology.org/2022.argmining-1.14/)
+
+**A Sentiment and Emotion Annotated Dataset for Bitcoin Price Forecasting Based on Reddit Posts.**\
+Pavlo Seroyizhko, Zhanel Zhexenova, Muhammad Zohaib Shafiq, Fabio Merizzi, Andrea Galassi, and Federico Ruggeri. 2022.\
+In Proceedings of the Fourth Workshop on Financial Technology and Natural Language Processing (FinNLP), pages 203–210, Abu Dhabi, United Arab Emirates (Hybrid). Association for Computational Linguistics.\
+[DOI](https://doi.org/10.18653/v1/2022.finnlp-1.27)
+| [PDF](https://aclanthology.org/2022.finnlp-1.27.pdf)
 
 ### 2015
 **Argument Mining: A Machine Learning Perspective**\
@@ -302,6 +381,18 @@ Marco Lippi and Paolo Torroni\
 
 
 ## Pre-prints
+
+### 2025
+**TRI-DEP: A Trimodal Comparative Study for Depression Detection Using Speech, Text, and EEG**\
+Annisaa Fitri Nurfidausi, Eleonora Mancini, Paolo Torroni\
+October 2025\
+[PDF](https://arxiv.org/pdf/2510.14922?)
+
+**Leveraging Whisper Embeddings for Audio-based Lyrics Matching**\
+Eleonora Mancini, Joan Serrà, Paolo Torroni, Yuki Mitsufuji\
+October 2025\
+[PDF](https://arxiv.org/pdf/2510.08176?)
+
 
 ### 2024
 **Let Guidelines Guide You: A Prescriptive Guideline-Centered Data Annotation Methodology**\
