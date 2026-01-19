@@ -1,4 +1,4 @@
 ---
 title: "Organization"
-description: "TODO"
+description: "Workshops, shared tasks and other events we have (co-)organized."
 ---

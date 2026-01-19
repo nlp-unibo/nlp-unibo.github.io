@@ -2,7 +2,7 @@
 
 <div align="center">
 
-[![Preview](static/ltlab-people.jpeg)](https://site.unibo.it/nlp/en)
+[![Preview](static/ltlab.png)](https://site.unibo.it/nlp/en)
 
 </div>
 
