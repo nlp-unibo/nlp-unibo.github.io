@@ -10,18 +10,20 @@ cover:
     alt: "Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates"
     relative: true
 editPost:
-    URL: "https://github.com/federicoruggeri/hugo-website"
-    Text: "CLEF"
+    URL: "https://nlp-unibo.github.io/organization/2025argfallacy"
+    Text: "MM-ArgFallacy2025"
 
 ---
 
 ---
 
-<p float="left">
-  <img src="content/organization/2025argfallacy/argfallacy.webp" width="33%" />
-  <img src="content/organization/2025argfallacy/argfallacy.webp" width="33%" />
-  <img src="content/organization/2025argfallacy/argfallacy.webp" width="33%" />
-</p>
+<table>
+  <tr>
+    <td><img src="argfallacy.webp"/></td>
+    <td><img src="argfallacy.webp"/></td>
+    <td><img src="argfallacy.webp"/></td>
+  </tr>
+</table>
 
 Multimodal Argumentative Fallacy Detection and Classification on Political Debates Shared Task.
 
@@ -354,13 +356,32 @@ We look forward to receiving your submissions!
 
 # Task Organizers 
 
-<div class="row row-cols-2 projects pt-3 pb-3">
-  {% include static/people_horizontal.html name="Eleonora Mancini" affiliation="Language Technologies Lab, University of Bologna, Italy" url="https://helemanc.github.io/" img="/assets/img/people/eleonora_mancini.jpeg" %}
-  {% include static/people_horizontal.html name="Federico Ruggeri" affiliation="Language Technologies Lab, University of Bologna, Italy" url="https://www.unibo.it/sitoweb/federico.ruggeri6" img="/assets/img/people/fede.png" %}
-  {% include static/people_horizontal.html name="Paolo Torroni" affiliation="Language Technologies Lab, University of Bologna, Italy" url="https://www.unibo.it/sitoweb/p.torroni/en" img="/assets/img/people/paolo.png" %}
-  {% include static/people_horizontal.html name="Serena Villata" affiliation="Inria-I3S WIMMICS Laboratoire I3S, CNRS, Sophia Antipolis, France" url="https://webusers.i3s.unice.fr/~villata/Home.html" img="assets/img/people/serena_villata.jpg" %}
-</div>
-
+<table>
+  <tr>
+    <td style="width: 20%;"><img src="eleonora_mancini.jpeg" height="20%"/></td>
+    <td style="width: 30%;">
+      <a href="https://helemanc.github.io/"><bold><h2>Eleonora Mancini</h2></bold></a>
+      Language Technologies Lab, University of Bologna, Italy
+    </td>
+    <td style="width: 20%;"><img src="federico_ruggeri.jpg"/></td>
+    <td style="width: 30%;">
+      <a href="https://federicoruggeri.github.io/"><bold><h2>Federico Ruggeri</h2></bold></a>
+      Language Technologies Lab, University of Bologna, Italy
+    </td>
+  </tr>
+  <tr>
+    <td style="width: 20%;"><img src="serena_villata.jpg" height="20%"/></td>
+    <td style="width: 30%;">
+      <a href="https://webusers.i3s.unice.fr/~villata/Home.html"><bold><h2>Serena Villata</h2></bold></a>
+      Inria-I3S WIMMICS Laboratoire I3S, CNRS, Sophia Antipolis, France
+    </td>
+    <td style="width: 20%;"><img src="paolo.png"/></td>
+    <td style="width: 30%;">
+      <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><bold><h2>Paolo Torroni</h2></bold></a>
+      Language Technologies Lab, University of Bologna, Italy
+    </td>
+  </tr>
+</table>
 
 
 # Contacts
@@ -398,15 +419,12 @@ Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni. 2025. Ove
 
 # Credits
 
-<div style="display:flex; justify-content: space-around;">
-<div class="content-wrap about_content">
-    <p>
-        This shared task is partially supported by the project European Commission's NextGeneration EU programme, PNRR -- M4C2 -- Investimento 1.3, Partenariato Esteso, PE00000013 - FAIR - Future Artificial Intelligence Research'' -- Spoke 8 Pervasive AI’’.
-    </p>
-</div>
 
-<div class="card-img col-sm-4">
-  <img src="content/organization/2025argfallacy/eulogo.svg" class="img-fluid rounded z-depth-1" width="650px" height="90px" />
-</div>
-</div>
+<table>
+  <tr>
+    <td style="width: 80%;">This shared task is partially supported by the project European Commission's NextGeneration EU programme, PNRR -- M4C2 -- Investimento 1.3, Partenariato Esteso, PE00000013 - FAIR - Future Artificial Intelligence Research'' -- Spoke 8 Pervasive AI’’.</td>
+    <td style="width: 25%;"><img src="eulogo.svg"/></td>
+  </tr>
+</table>
+
 
