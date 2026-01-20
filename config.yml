@@ -2,10 +2,11 @@ baseURL: "https://nlp-unibo.github.io"
 title: Language Technologies Lab
 theme: PaperMod
 
+enableEmoji: true
 enableInlineShortcodes: true
 enableRobotsTXT: true
 pagination:
-  pagerSize: 20
+  pagerSize: 40
 
 menu:
     main:
@@ -36,11 +37,11 @@ params:
     author: Language Technologies Lab
     # googleAnalyticsID: "G-XXXXX"
     DateFormat: "January 2006"
-    defaultTheme: dark
+    defaultTheme: auto
     hideFooter: false
-    disableThemeToggle: true
+    disableThemeToggle: false
     ShowShareButtons: false
-    ShowReadingTime: false
+    ShowReadingTime: true
     disableSpecial1stPost: true
     disableAnchoredHeadings: true
     ShowPostNavLinks: false
@@ -49,7 +50,7 @@ params:
     ShowAllPagesInArchive: false
     MainSections: ["research","people","news","publications","projects","organization","tools"]
     ShowToc: false
-    disableScrollToTop: true
+    disableScrollToTop: false
     TocOpen: true
     ShowWordCount: false
     UseHugoToc: true
@@ -81,10 +82,10 @@ params:
     socialIcons:
         - name: GitHub
           url: https://github.com/nlp-unibo
+        - name: Email
+          url: mailto:p.torroni@unibo.it
         - name: Institutional Website
           url: https://site.unibo.it/nlp/en
-        - name: Contact
-          url: mailto:p.torroni@unibo.it
 
     assets:
         disableScrollBarStyle: true
@@ -97,12 +98,51 @@ params:
       iconHeight: 18
 
 markup:
+    blackFriday:
+      angledQuotes: false
+      extensions: null
+      extensionsMask: null
+      footnoteAnchorPrefix: ""
+      footnoteReturnLinkContents: ""
+      fractions: true
+      hrefTargetBlank: false
+      latexDashes: true
+      nofollowLinks: false
+      noreferrerLinks: false
+      plainIDAnchors: true
+      skipHTML: false
+      smartDashes: true
+      smartypants: true
+      smartypantsQuotesNBSP: false
+      taskLists: true
+    defaultMarkdownHandler: goldmark
     goldmark:
-        renderer:
-            unsafe: true
+      extensions:
+        definitionList: true
+        footnote: true
+        linkify: true
+        strikethrough: true
+        table: true
+        taskList: true
+        typographer: true
+      parser:
+        attribute: true
+        autoHeadingID: true
+        autoHeadingIDType: github
+      renderer:
+        hardWraps: false
+        unsafe: true
+        xHTML: false
     highlight:
-        guessSyntax: true
-        style: autumn 
+      codeFences: true
+      guessSyntax: true
+      hl_Lines: ""
+      lineNoStart: 1
+      lineNos: false
+      lineNumbersInTable: true
+      noClasses: true
+      style: autumn
+      tabWidth: 4
     tableOfContents:
         endLevel: 2
         ordered: false

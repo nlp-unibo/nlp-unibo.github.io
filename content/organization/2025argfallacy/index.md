@@ -358,24 +358,24 @@ We look forward to receiving your submissions!
 
 <table>
   <tr>
-    <td style="width: 20%;"><img src="eleonora_mancini.jpeg" height="20%"/></td>
+    <td style="width: 20%;"><img src="../../people/eleonora_mancini.jpeg" height="20%"/></td>
     <td style="width: 30%;">
       <a href="https://helemanc.github.io/"><bold><h2>Eleonora Mancini</h2></bold></a>
       Language Technologies Lab, University of Bologna, Italy
     </td>
-    <td style="width: 20%;"><img src="federico_ruggeri.jpg"/></td>
+    <td style="width: 20%;"><img src="../../people/federico_ruggeri.jpg"/></td>
     <td style="width: 30%;">
       <a href="https://federicoruggeri.github.io/"><bold><h2>Federico Ruggeri</h2></bold></a>
       Language Technologies Lab, University of Bologna, Italy
     </td>
   </tr>
   <tr>
-    <td style="width: 20%;"><img src="serena_villata.jpg" height="20%"/></td>
+    <td style="width: 20%;"><img src="../../people/serena_villata.jpg" height="20%"/></td>
     <td style="width: 30%;">
       <a href="https://webusers.i3s.unice.fr/~villata/Home.html"><bold><h2>Serena Villata</h2></bold></a>
       Inria-I3S WIMMICS Laboratoire I3S, CNRS, Sophia Antipolis, France
     </td>
-    <td style="width: 20%;"><img src="paolo_torroni.png"/></td>
+    <td style="width: 20%;"><img src="../../people/paolo_torroni.jpeg"/></td>
     <td style="width: 30%;">
       <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><bold><h2>Paolo Torroni</h2></bold></a>
       Language Technologies Lab, University of Bologna, Italy

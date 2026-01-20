@@ -2,6 +2,7 @@
 title: "Publications"
 date: 2026-01-19
 hidemeta: true
+showToc: true
 description: "Current list of publications of our group."
 ---
 
