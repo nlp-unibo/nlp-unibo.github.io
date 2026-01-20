@@ -2,6 +2,7 @@
 title: "Projects"
 date: 2026-01-19
 hidemeta: true
+showToc: true
 description: "National and International research projects we took part in."
 ---
 

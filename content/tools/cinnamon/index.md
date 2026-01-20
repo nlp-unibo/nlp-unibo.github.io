@@ -2,7 +2,7 @@
 title: "Cinnamon"
 date: 2024-03-01
 tags: ["Software","Cinnamon","Python","Programming", "Research"]
-author: "Federico Ruggeri"
+author: "LT-Lab"
 description: "Cinnamon is a simple framework for general-purpose configuration and code logic de-coupling" 
 summary: "Cinnamon is a simple framework for general-purpose configuration and code logic de-coupling" 
 cover:

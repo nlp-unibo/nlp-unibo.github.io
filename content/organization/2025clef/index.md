@@ -10,7 +10,7 @@ cover:
     alt: "Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, fact-checking, claim normalization, and retrieval"
     relative: true
 editPost:
-    URL: "https://github.com/federicoruggeri/hugo-website"
+    URL: "https://checkthat.gitlab.io/clef2025/"
     Text: "CLEF"
 
 ---

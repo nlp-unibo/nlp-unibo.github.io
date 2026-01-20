@@ -10,7 +10,7 @@ cover:
     alt: "Overview of the CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness"
     relative: true
 editPost:
-    URL: "https://github.com/federicoruggeri/hugo-website"
+    URL: "https://checkthat.gitlab.io/clef2024/"
     Text: "CLEF"
 
 ---
@@ -19,7 +19,7 @@ editPost:
 
 ##### Resources
 
-+ [CheckThat! 2025](https://checkthat.gitlab.io/clef2024/)
++ [CheckThat! 2024](https://checkthat.gitlab.io/clef2024/)
 + [Paper](paper.pdf)
 
 ---

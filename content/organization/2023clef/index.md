@@ -10,7 +10,7 @@ cover:
     alt: "Overview of the CLEF–2023 CheckThat! Lab on Checkworthiness, Subjectivity, Political Bias, Factuality, and Authority of News Articles and Their Source"
     relative: true
 editPost:
-    URL: "https://github.com/federicoruggeri/hugo-website"
+    URL: "https://checkthat.gitlab.io/clef2023/"
     Text: "CLEF"
 
 ---
@@ -19,7 +19,7 @@ editPost:
 
 ##### Resources
 
-+ [CheckThat! 2025](https://checkthat.gitlab.io/clef2023/)
++ [CheckThat! 2023](https://checkthat.gitlab.io/clef2023/)
 + [Paper](paper.pdf)
 
 ---

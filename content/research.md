@@ -2,6 +2,7 @@
 title: "Research"
 date: 2026-01-19
 hidemeta: true
+showToc: true
 description: "Our research topics."
 ---
 

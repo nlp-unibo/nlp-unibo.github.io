@@ -12,25 +12,25 @@ menu:
     main:
         - name: Research
           url: research/
-          weight: 5
+          weight: 1
         - name: People
           url: people/
-          weight: 5
+          weight: 2
         - name: News
           url: news/
           weight: 3
         - name: Publications
           url: publications/
-          weight: 3
+          weight: 4
         - name: Projects
           url: projects/
-          weight: 3
+          weight: 5
         - name: Organization
           url: organization/
-          weight: 3
+          weight: 6
         - name: Tools
           url: tools/
-          weight: 3
+          weight: 7
 
 params:
     description: "We are a research group of the Department of Computer Science and Engineering of the University of Bologna. Our focus is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere."
