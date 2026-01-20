@@ -375,7 +375,7 @@ We look forward to receiving your submissions!
       <a href="https://webusers.i3s.unice.fr/~villata/Home.html"><bold><h2>Serena Villata</h2></bold></a>
       Inria-I3S WIMMICS Laboratoire I3S, CNRS, Sophia Antipolis, France
     </td>
-    <td style="width: 20%;"><img src="paolo.png"/></td>
+    <td style="width: 20%;"><img src="paolo_torroni.png"/></td>
     <td style="width: 30%;">
       <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><bold><h2>Paolo Torroni</h2></bold></a>
       Language Technologies Lab, University of Bologna, Italy
