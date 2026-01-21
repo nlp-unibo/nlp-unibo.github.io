@@ -1,4 +1,4 @@
 ---
 title: "News"
-description: "TODO"
+description: "News from our group"
 ---

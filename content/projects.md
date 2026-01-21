@@ -82,7 +82,7 @@ European Network of Human-Centered Artificial Intelligence\
 We coordinate the Humane-AI-Net activities for the University of Bologna and work on several projects: the micro-project Ethical Chatbots, the micro-project Promoting Fairness and Diversity in Speech Datasets for Affective Computing, the micro-project  A Transparent and Explainable Dialogue System for Immigration Services, the macro-project "Learning with LLMs: Supporting complex reasons, planning & argumentation applied to provide educational guidance".*
 
 
-### 2019
+### 2017
 
 **[CLAUDETTE](http://claudette.eui.eu/)**\
 automated CLAUse DETectEr\
