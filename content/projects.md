@@ -93,6 +93,8 @@ privacy policies, to evaluate their compliance with EU’s unfair contractual te
 and personal data protection law (GDPR), using machine learning and grammar-based
 approaches.*
 
+------
+
 ## National Projects
 
 ### 2024

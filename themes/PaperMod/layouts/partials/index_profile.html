@@ -53,6 +53,27 @@
             {{- end }}
         </div>
         {{- end }}
-    </div>
+
+                <hr style="margin: 2px 0; border: none; border-top: 1px solid #616161;">
+
+        <div class="post-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <h3 style="margin: 0;">Latest News</h3>
+                <a href="/news/" style="text-decoration: none; font-size: 0.8em; margin-left: 0px; text-align: right;">📰 View All→</a>
+            </div>
+            <hr style="margin: 5px 0 15px 0; border: none; border-top: 1px solid #616161;">
+            <div style="font-size: 0.85em; line-height: 1.4;">
+                {{ $newsContent := readFile "short_news.md" }}
+                {{ $newsLines := split $newsContent "\n" }}
+                {{ $count := 0 }}
+                {{ range $newsLines }}
+                    {{ if and (hasPrefix . "**") (lt $count 5) }}
+                        {{ . | markdownify }}<br>
+                        {{ $count = add $count 1 }}
+                    {{ end }}
+                {{ end }}
+            </div>
+        </div>
+
     {{- end}}
 </div>

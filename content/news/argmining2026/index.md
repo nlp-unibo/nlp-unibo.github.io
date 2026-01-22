@@ -1,6 +1,6 @@
 ---
 title: "The 13th Workshop on Argument Mining and Reasoning Co-located with ACL 2026" 
-date: 2025-07-01
+date: 2025-10-01
 tags: ["natural language processing", "workhsop", "argument mining", "reasoning"]
 author: ["Mohamed Elaraby", "Annette Hautli-Janisz", "John Lawrence", "Elena Musi", "Julia Romberg", "Federico Ruggeri"]
 description: "The 2026 edition of the ArgMining workshop therefore places a special focus on understanding and evaluating arguments in both human and machine reasoning." 

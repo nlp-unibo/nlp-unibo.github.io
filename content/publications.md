@@ -44,6 +44,8 @@ Marco Lippi and Paolo Torroni\
 Expert Systems with Applications, 65:292-303, 2016\
 [DOI](https://doi.org/10.1016/j.eswa.2016.08.050)
 
+------
+
 ## Journals
 
 ### 2025
@@ -112,8 +114,7 @@ Marco Lippi and Paolo Torroni\
 ACM Transactions on Internet Technology, 2016\
 [DOI](https://doi.org/10.1145/2850417)
 
-
-
+------
 
 ## Conferences
 
@@ -287,7 +288,7 @@ Marco Lippi and Paolo Torroni\
 24th International Joint Conference on Artificial Intelligence (IJCAI), pp. 185-191, 2015\
 [PDF](https://www.ijcai.org/Proceedings/15/Papers/033.pdf)
 
-
+------
 
 
 ## Workshops
@@ -386,6 +387,8 @@ Marco Lippi and Paolo Torroni\
 3rd International Workshop on Theory and Applications of Formal Argumentation (TAFA), pp. 163-176, 2015\
 [DOI](https://doi.org/10.1007/978-3-319-28460-6_10)
 
+
+------
 
 ## Pre-prints
 

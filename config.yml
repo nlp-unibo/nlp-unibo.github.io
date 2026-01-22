@@ -6,7 +6,7 @@ enableEmoji: true
 enableInlineShortcodes: true
 enableRobotsTXT: true
 pagination:
-  pagerSize: 40
+  pagerSize: 20
 
 menu:
     main:
@@ -25,19 +25,22 @@ menu:
         - name: Projects
           url: projects/
           weight: 5
-        - name: Organization
-          url: organization/
+        - name: Events
+          url: events/
           weight: 6
         - name: Tools
           url: tools/
           weight: 7
+        - name: Tags
+          url: tags/
+          weight: 8
 
 params:
     description: "We are a research group of the Department of Computer Science and Engineering of the University of Bologna. Our focus is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere."
     author: Language Technologies Lab
     # googleAnalyticsID: "G-XXXXX"
     DateFormat: "January 2006"
-    defaultTheme: auto
+    defaultTheme: dark
     hideFooter: false
     disableThemeToggle: false
     ShowShareButtons: false
@@ -48,7 +51,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["research","people","news","publications","projects","organization","tools"]
+    MainSections: ["research","people","news","publications","projects","events","tools"]
     ShowToc: false
     disableScrollToTop: false
     TocOpen: true
@@ -74,10 +77,12 @@ params:
             url: publications/
           - name: Projects
             url: projects/
-          - name: Organization
-            url: organization/
+          - name: Events
+            url: events/
           - name: Tools
             url: tools/
+          - name: Tags
+            url: tags/
 
     socialIcons:
         - name: GitHub

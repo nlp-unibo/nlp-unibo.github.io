@@ -37,6 +37,8 @@ For instance, which kind of patterns are associated with certain argumentative c
 LLMs and reasoning are hot topics that are currently vastly being investigated.
 Though, there are still few attempts that aim to use argumentation as a resource for assessing reasoning in LLMs. 
 
+---------
+
 ## Legal Analytics
 
 ### Argumentation and Argument Schema 
@@ -75,6 +77,7 @@ We have developed some methods to project labels from similar documents written 
 The automatic retrieval of legal documents and knowledge based on a similarity metric.
 This also link to the argumentation topic if we use arguments (either quantitatively or qualitatively) to compare and rank retrieved documents. 
 
+------
 
 ## Speech
 
