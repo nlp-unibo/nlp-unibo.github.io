@@ -1,9 +1,17 @@
 ---
-title: "Research"
-date: 2026-01-19
-hidemeta: true
+title: "Research Vision"
+date: 2026-01-23
+tags: ["Research","Vision", "Argument Mining","Legal Analytics","Speech"]
+author: "LT-Lab"
+description: "Our academic research vision." 
+summary: "Our academic research vision." 
+cover:
+    image: "vision.jpg"
+    alt: "Research Vision"
+    relative: true
 showToc: true
-description: "Our research topics."
+disableAnchoredHeadings: false
+
 ---
 
 

@@ -182,6 +182,12 @@ Joint International Conference on Computational Linguistics, Language Resources 
 [PDF](https://aclanthology.org/2024.lrec-main.25.pdf)
 | [Anthology](https://aclanthology.org/2024.lrec-main.25)
 
+**PejorativITy: Disambiguating Pejorative Epithets to Improve Misogyny Detection in Italian Tweets**\
+Arianna Muti, Federico Ruggeri, Cagri Toraman, Lorenzo Musetti, Samuel Algherini, Silvia Ronchi, Gianmarco Saretto, Caterina Zapparoli, Alberto Barrón-Cedeño.\
+In Proceedings of the 2024 Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING 2024), pages 12700–12711, Torino, Italia. ELRA and ICCL.\
+[PDF](https://aclanthology.org/2024.lrec-main.1112.pdf)
+| [Anthology](https://aclanthology.org/2024.lrec-main.1112)
+
 **The CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness**\
 Alberto Barrón-Cedeño, Firoj Alam, Tanmoy Chakraborty, Tamer Elsayed, Preslav Nakov, Piotr Przybyła, Julia Maria Struß, Fatima Haouari, Maram Hasanain, Federico Ruggeri, Xingyi Song, Reem Suwaileh\\
 46th European Conference on Information Retrieval (ECIR), 2024\
@@ -364,6 +370,19 @@ Sixth Workshop on Narrative Extraction From Texts, Text2Story, 2023\
 [PDF](https://ceur-ws.org/Vol-3370/paper10.pdf)
 
 ### 2022
+
+**Combining WordNet and Word Embeddings in Data Augmentation for Legal Texts**\
+Sezen Perçin, Andrea Galassi, Francesca Lagioia, Federico Ruggeri, Piera Santin, Giovanni Sartor, Paolo Torroni.\
+Workshop on Natural Legal Language Processing (NLLP@EMNLP), pp. 47–52, 2022.\
+[DOI](https://doi.org/10.18653/v1/2022.nllp-1.4)
+| [PDF](https://aclanthology.org/2022.nllp-1.4.pdf)
+
+**Multimodal Argument Mining: A Case Study in Political Debates**\
+Eleonora Mancini, Federico Ruggeri, Andrea Galassi, and Paolo Torroni.\
+In Proceedings of the 9th Workshop on Argument Mining, pages 158–170, Online and in Gyeongju, Republic of Korea. International Conference on Computational Linguistics, 2022.\
+[PDF](https://aclanthology.org/2022.argmining-1.15.pdf)
+| [Anthology](https://aclanthology.org/2022.argmining-1.15)
+
 **SubjectivITA: An Italian Corpus for Subjectivity Detection in Newspapers**\
 Francesco Antici, Luca Bolognini, Matteo Antonio Inajetovic, Bogdan Ivasiuk, Andrea Galassi, Federico Ruggeri\
 12th Conference and Labs of the Evaluation Forum (CLEF), pp. 40–52, 2021\
