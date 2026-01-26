@@ -9,39 +9,39 @@ description: "Current list of publications of our group."
 ## Highlights
 
 **Is It Worth Using LLMs for Unfair Clause Detection in Terms of Service?**\
-Marco Panarelli, Andrea Galassi, Francesca Lagioia, Rūta Liepiņa, Marco Lippi, Przemysław Pałka, Giovanni Sartor\
-20th International Conference on Artificial Intelligence and Law (ICAIL), pp. 139-149, 2025\
-:trophy: Awarded the "Peter Jackson" Award for Best Innovative Application Paper\
+Marco Panarelli, Andrea Galassi, Francesca Lagioia, Rūta Liepiņa, Marco Lippi, Przemysław Pałka, Giovanni Sartor.\
+20th International Conference on Artificial Intelligence and Law (ICAIL), pp. 139-149, 2025.\
+:trophy: Awarded the "Peter Jackson" Award for Best Innovative Application Paper.\
 [DOI](https://dl.acm.org/doi/10.1145/3769126.3769218)
 | [PDF](https://dl.acm.org/doi/pdf/10.1145/3769126.3769218)
 
 **Promoting the Responsible Development of Speech Datasets for Mental Health and Neurological Disorders Research**\
-Eleonora Mancini, Ana Tanevska, Andrea Galassi, Alessio Galatolo, Federico Ruggeri, Paolo Torroni\
-Journal of Artificial Intelligence Research (JAIR), 82:937-972, 2025\
+Eleonora Mancini, Ana Tanevska, Andrea Galassi, Alessio Galatolo, Federico Ruggeri, Paolo Torroni.\
+Journal of Artificial Intelligence Research (JAIR), 82:937-972, 2025.\
 [DOI](https://doi.org/10.1613/jair.1.16406)
 | [PDF](https://jair.org/index.php/jair/article/view/16406/27137)
 
 **Unfair clause detection in terms of service across multiple languages**\
-Andrea Galassi, Francesca Lagioia, Agnieszka Jabłonowska, and Marco Lippi\
-Artificial Intelligence and Law, 2024\
+Andrea Galassi, Francesca Lagioia, Agnieszka Jabłonowska, and Marco Lippi.\
+Artificial Intelligence and Law, 2024.\
 [DOI](https://doi.org/10.1007/s10506-024-09398-7)
 | [PDF](https://link.springer.com/content/pdf/10.1007/s10506-024-09398-7.pdf)
 
 **Multimodal Fallacy Classification in Political Debates**\
-Eleonora Mancini, Federico Ruggeri, Paolo Torroni\
-18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), pp. 170–178, 2024\
+Eleonora Mancini, Federico Ruggeri, Paolo Torroni.\
+18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), pp. 170–178, 2024.\
 [DOI](https://doi.org/10.18653/v1/2024.eacl-short.16)
 | [PDF](https://aclanthology.org/2024.eacl-short.16.pdf)
 
 **Attention in Natural Language Processing**\
-Andrea Galassi, Marco Lippi, and Paolo Torroni\
-IEEE Transactions on Neural Networks and Learning Systems 32(10), pp 4291-4308, 2021\
+Andrea Galassi, Marco Lippi, and Paolo Torroni.\
+IEEE Transactions on Neural Networks and Learning Systems 32(10), pp 4291-4308, 2021.\
 [DOI](https://doi.org/10.1109/TNNLS.2020.3019893)
 | [PDF](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=9194070)
 
 **MARGOT: A web server for argumentation mining**\
-Marco Lippi and Paolo Torroni\
-Expert Systems with Applications, 65:292-303, 2016\
+Marco Lippi and Paolo Torroni.\
+Expert Systems with Applications, 65:292-303, 2016.\
 [DOI](https://doi.org/10.1016/j.eswa.2016.08.050)
 
 ------
@@ -151,7 +151,7 @@ Giulia Grundler, Mariaceleste Musicco, Andrea Galassi, Francesca Lagioia, Rūta 
 28th European Conference on Artificial Intelligence (ECAI), pp. 4594-4602, 2025\
 [DOI](https://doi.org/10.3233/FAIA251362)
 
-**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\ 
+**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\
 Katerina Korre, Arianna Muti, Federico Ruggeri, and Alberto Barrón-Cedeño. 2025.\
 In Findings of the Association for Computational Linguistics: NAACL 2025, pages 3184–3198, Albuquerque, New Mexico. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2025.findings-naacl.175)
@@ -189,8 +189,8 @@ In Proceedings of the 2024 Joint International Conference on Computational Lingu
 | [Anthology](https://aclanthology.org/2024.lrec-main.1112)
 
 **The CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness**\
-Alberto Barrón-Cedeño, Firoj Alam, Tanmoy Chakraborty, Tamer Elsayed, Preslav Nakov, Piotr Przybyła, Julia Maria Struß, Fatima Haouari, Maram Hasanain, Federico Ruggeri, Xingyi Song, Reem Suwaileh\\
-46th European Conference on Information Retrieval (ECIR), 2024\
+Alberto Barrón-Cedeño, Firoj Alam, Tanmoy Chakraborty, Tamer Elsayed, Preslav Nakov, Piotr Przybyła, Julia Maria Struß, Fatima Haouari, Maram Hasanain, Federico Ruggeri, Xingyi Song, Reem Suwaileh.\
+46th European Conference on Information Retrieval (ECIR), 2024.\
 [DOI](https://doi.org/10.1007/978-3-031-56069-9_62)
 
 **TWOLAR: a TWO-step LLM-Augmented distillation method for passage Reranking**\
@@ -300,15 +300,17 @@ Marco Lippi and Paolo Torroni\
 ## Workshops
 
 ### 2025
-Luca Moroni, Gianmarco Pappacoda, Edoardo Barba, Simone Conia, Andrea Galassi, Bernardo Magnini, Roberto Navigli, Paolo Torroni, and Roberto Zanoli. 2025. 
-Sustainable Italian LLM Evaluation: Community Perspectives and Methodological Guidelines. 
-In Proceedings of the Eleventh Italian Conference on Computational Linguistics (CLiC-it 2025), pages 747–759, Cagliari, Italy. CEUR Workshop Proceedings.
+
+**Sustainable Italian LLM Evaluation: Community Perspectives and Methodological Guidelines**\
+Luca Moroni, Gianmarco Pappacoda, Edoardo Barba, Simone Conia, Andrea Galassi, Bernardo Magnini, Roberto Navigli, Paolo Torroni, and Roberto Zanoli. 2025.\
+In Proceedings of the Eleventh Italian Conference on Computational Linguistics (CLiC-it 2025), pages 747–759, Cagliari, Italy. CEUR Workshop Proceedings.\
 [PDF](https://aclanthology.org/2025.clicit-1.71.pdf)
 | [Anthology](https://aclanthology.org/2025.clicit-1.71/)
 
-**Nicolò Donati, Paolo Torroni, and Giuseppe Savino. 2025.**\ 
-Do Large Language Models understand how to be judges?.\
-In Proceedings of the 2nd LUHME Workshop, pages 85–102, Bologna, Italy. UP - Universidade do Porto (https://doi.org/10.21747/978-989-9193-73-4/lan2), LIACC - Laboratório de Inteligência Artificial e Ciência de Computadores da Universidade do Porto, CLUP - Centro de Linguística da Universidade do Porto, UEF - The University of Eastern Finland and UAH - Universidad de Alcalá.\
+
+**Do Large Language Models understand how to be judges?**\
+Nicolò Donati, Paolo Torroni, and Giuseppe Savino. 2025.\
+In Proceedings of the 2nd LUHME Workshop, pages 85–102, Bologna, Italy. UP - Universidade do Porto, LIACC - Laboratório de Inteligência Artificial e Ciência de Computadores da Universidade do Porto, CLUP - Centro de Linguística da Universidade do Porto, UEF - The University of Eastern Finland and UAH - Universidad de Alcalá.\
 [PDF](https://aclanthology.org/2025.luhme-1.9.pdf)
 | [Anthology](https://aclanthology.org/2025.luhme-1.9/)
 
@@ -318,14 +320,14 @@ Eleonora Mancini, Francesco Paissan, Paolo Torroni, Mirco Ravanelli, Cem Subakan
 [PDF](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=11011035)
 
 **Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates.**\
-Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni. 2025.\
-In Proceedings of the 12th Argument mining Workshop, pages 358–368, Vienna, Austria. Association for Computational Linguistics.\
+Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni.\
+In Proceedings of the 12th Argument mining Workshop, pages 358–368, Vienna, Austria. Association for Computational Linguistics, 2025.\
 [DOI](https://doi.org/10.18653/v1/2025.argmining-1.35)
 | [PDF](https://aclanthology.org/2025.argmining-1.35.pdf)
 
-Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, Fact-Checking, Claim Normalization, and Retrieval\
-Firoj Alam, Julia Maria Struß, Tanmoy Chakraborty, Stefan Dietze, Salim Hafid, Katerina Korre, Arianna Muti, Preslav Nakov, Federico Ruggeri, Sebastian Schellhammer, Vinay Setty, Megha Sundriyal, Konstantin Todorov & V. Venktesh\
-Conference and Labs of the Evaluation Forum (CLEF), 2025.\\
+**Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, Fact-Checking, Claim Normalization, and Retrieval**\
+Firoj Alam, Julia Maria Struß, Tanmoy Chakraborty, Stefan Dietze, Salim Hafid, Katerina Korre, Arianna Muti, Preslav Nakov, Federico Ruggeri, Sebastian Schellhammer, Vinay Setty, Megha Sundriyal, Konstantin Todorov & V. Venktesh.\
+Conference and Labs of the Evaluation Forum (CLEF), 2025.\
 [DOI](https://doi.org/10.1007/978-3-032-04354-2_13)
 
 **Dynamic Demonstrations Selection for Few-Shot Legal Argument Mining**\
@@ -334,7 +336,7 @@ AMELR: First Argument Mining and Empirical Legal Research Workshop\
 [PDF](https://ceur-ws.org/Vol-4089/paper2.pdf)
 
 ### 2024
-A Grice-ful Examination of Offensive Language: Using NLP Methods to Assess the Co-operative Principle.\
+**A Grice-ful Examination of Offensive Language: Using NLP Methods to Assess the Co-operative Principle.**\
 Katerina Korre, Federico Ruggeri, and Alberto Barrón-Cedeño. 2024.\
 In Proceedings of the 1st LUHME Workshop, pages 12–19, Santiago de Compostela, Spain. CLUP, Centro de Linguística da Universidade do Porto FLUP - Faculdade de Letras da Universidade do Porto.\
 [PDF](https://aclanthology.org/2024.luhme-1.2.pdf)
@@ -388,7 +390,7 @@ Francesco Antici, Luca Bolognini, Matteo Antonio Inajetovic, Bogdan Ivasiuk, And
 12th Conference and Labs of the Evaluation Forum (CLEF), pp. 40–52, 2021\
 [DOI](https://doi.org/10.1007/978-3-030-85251-1_4)
 
-**Detecting Arguments in CJEU Decisions on Fiscal State Aid.**\ 
+**Detecting Arguments in CJEU Decisions on Fiscal State Aid.**\
 Giulia Grundler, Piera Santin, Andrea Galassi, Federico Galli, Francesco Godano, Francesca Lagioia, Elena Palmieri, Federico Ruggeri, Giovanni Sartor, and Paolo Torroni. 2022.\
 In Proceedings of the 9th Workshop on Argument Mining, pages 143–157, Online and in Gyeongju, Republic of Korea. International Conference on Computational Linguistics.\
 [PDF](https://aclanthology.org/2022.argmining-1.14.pdf)

@@ -34,7 +34,7 @@ Few existing corpora both offer argument annotation layers and speech data regar
 
 **References:** 
 
-**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\ 
+**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\
 Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
 In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 69–82, Bangkok, Thailand. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2024.argmining-1.7)
@@ -87,7 +87,7 @@ We are in close contact with teams of legal experts who can provide their expert
 
 ### - Transformers and LLMs for the detection and classification of unfair clauses -
 
-**Description:**\  
+**Description:**  
 For several years, we have been working on tools for the automatic detection of unfair clauses in Terms of Services and Privacy Policies documents in the English language (see CLAUDETTE and PRIMA [Projects page](\projects)).
 We have already conducted several studies on this topic, and we are interested in applying new effective methods and techniques. 
 Right now, we are focused on LLMs, but we are also interested in alternative techniques.
@@ -149,9 +149,9 @@ However, properly integrating this type of information is particularly challengi
 The standard approach for training a machine learning model on a task is to provide an annotated dataset $(\mathcal{X}, \mathcal{Y})$.
 The dataset is built by providing unlabeled data $\mathcal{X}$ to a group of annotators previously trained on a set of annotation guidelines $\mathcal{G}$.
 Annotators label data $\mathcal{X}$ via a given class set $\mathcal{C}$.
-The main issue of this approach is that annotators define the mapping from data \mathcal{X} to the class set \mathcal{C} via the guidelines \mathcal{G}, while machine learning models are trained to learn the same mapping without guidelines \mathcal{G}.
-Consequently, these models can learn any kind of mapping from \mathcal{X} to \mathcal{C} that better fits given data.
-Our idea is to directly provide guidelines \mathcal{G} to models without any access to class labels during training.
+The main issue of this approach is that annotators define the mapping from data $\mathcal{X}$ to the class set $\mathcal{C}$ via the guidelines $\mathcal{G}$, while machine learning models are trained to learn the same mapping without guidelines $\mathcal{G}$.
+Consequently, these models can learn any kind of mapping from $\mathcal{X}$ to $\mathcal{C}$ that better fits given data.
+Our idea is to directly provide guidelines $\mathcal{G}$ to models without any access to class labels during training.
 
 **Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
 
@@ -173,7 +173,7 @@ Our aim is to evaluate how machine learning model are affected by different defi
 
 **References:**
 
-**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\ 
+**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\
 Katerina Korre, Arianna Muti, Federico Ruggeri, and Alberto Barrón-Cedeño. 2025.\
 In Findings of the Association for Computational Linguistics: NAACL 2025, pages 3184–3198, Albuquerque, New Mexico. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2025.findings-naacl.175)
@@ -188,7 +188,7 @@ We are mainly focused on interpretability by design in text classification.
 
 Current topics of interest:
 
-**Selective Rationalization:**\ 
+**Selective Rationalization:**\
 The process of learning by providing highlights as explanations is denoted as selective rationalization. 
 Highlights are a subset of input texts meant to be interpretable by a user and faithfully describe the inference process of a classification model. 
 A popular architecture for selective rationalization is the Select-then-Predict Pipeline (SPP): a generator selects the rationale to be fed to a predictor. 
