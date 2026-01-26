@@ -25,7 +25,7 @@ Marco Panarelli, Andrea Galassi, Francesca Lagioia, Rūta Liepiņa, Marco Lippi,
 | [PDF](https://dl.acm.org/doi/pdf/10.1145/3769126.3769218)
 
 ### 2024
-**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\ 
+**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\
 Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
 In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 69–82, Bangkok, Thailand. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2024.argmining-1.7)
@@ -34,7 +34,7 @@ In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 6
 ### 2023
 **TeamUnibo at SemEval-2023 Task 6: A transformer based approach to Rhetorical Roles prediction and NER in Legal Texts**\
 Yuri Noviello, Enrico Pallotta, Flavio Pinzarrone, and Giuseppe Tanzi.\
-17th International Workshop on Semantic Evaluation (SemEval-2023), pp. 275–284, 2023.
+17th International Workshop on Semantic Evaluation (SemEval-2023), pp. 275–284, 2023.\
 [DOI](https://doi.org/10.18653/v1/2023.semeval-1.37)
 | [PDF](https://aclanthology.org/2023.semeval-1.37.pdf)
 
@@ -71,7 +71,7 @@ Francesco Antici, Luca Bolognini, Matteo Antonio Inajetovic, Bogdan Ivasiuk, And
 ### 2024
 **Enhancing Document Parsing And Question Answering Through Optimized Table Parsing**\
 Marta Stella.\
-July 2024.\
+July 2024.
 
 **Development of an LLM-based System for the Generation of Multiple-choice English Grammar Exercises**\
 Matteo Periani.\

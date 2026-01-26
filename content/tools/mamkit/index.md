@@ -39,7 +39,7 @@ In Proceedings of the 12th Argument mining Workshop, pages 358–368, Vienna, Au
 
 ### 2024
 
-**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\ 
+**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\
 Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
 In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 69–82, Bangkok, Thailand. Association for Computational Linguistics.\
 [DOI](https://doi.org/10.18653/v1/2024.argmining-1.7)
