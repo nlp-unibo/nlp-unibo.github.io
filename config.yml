@@ -1,6 +1,6 @@
 baseURL: "https://nlp-unibo.github.io"
 title: Language Technologies Lab
-theme: PaperMod
+theme: ["hugo-redirect", "PaperMod"]
 
 enableEmoji: true
 enableInlineShortcodes: true
