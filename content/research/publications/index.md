@@ -1,10 +1,17 @@
 ---
 title: "Publications"
-date: 2026-01-19
-hidemeta: true
+date: 2026-02-13
+tags: ["Research","Publications", "Argument Mining","Legal Analytics","Speech"]
+description: "Our academic publications in conferences, journals, workshops, and pre-prints." 
+summary: "Our academic publications in conferences, journals, workshops, and pre-prints." 
+cover:
+    image: "publications.jpg"
+    alt: "Publications"
+    relative: true
 showToc: true
-description: "Current list of publications of our group."
+disableAnchoredHeadings: false
 ---
+
 
 ## Highlights
 

@@ -1,4 +1,4 @@
 ---
 title: "Research"
-description: "Research vision, topics and proposals for students"
+description: "Research vision and publications"
 ---

@@ -19,8 +19,8 @@ menu:
         - name: News
           url: news/
           weight: 3
-        - name: Publications
-          url: publications/
+        - name: For Students
+          url: students/
           weight: 4
         - name: Projects
           url: projects/
@@ -51,7 +51,7 @@ params:
     ShowBreadCrumbs: false
     ShowCodeCopyButtons: true
     ShowAllPagesInArchive: false
-    MainSections: ["research","people","news","publications","projects","events","tools"]
+    MainSections: ["research","people","news","for students","projects","events","tools"]
     ShowToc: false
     disableScrollToTop: false
     TocOpen: true
@@ -73,8 +73,8 @@ params:
             url: people/
           - name: News
             url: news/
-          - name: Publications
-            url: publications/
+          - name: For Students
+            url: students/
           - name: Projects
             url: projects/
           - name: Events
@@ -88,7 +88,7 @@ params:
         - name: GitHub
           url: https://github.com/nlp-unibo
         - name: Email
-          url: mailto:p.torroni@unibo.it
+          url: mailto:unibo.nlp@gmail.com
         - name: Institutional Website
           url: https://site.unibo.it/nlp/en
 

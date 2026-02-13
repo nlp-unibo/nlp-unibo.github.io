@@ -104,38 +104,6 @@ We are interested in applying both the most recent NLP techniques and also hybri
 
 -----
 
-## Knowledge Graphs and LLMs
-
-A Knowledge Graph is a graph structure used to represent the Knowledge contained in a Knowledge Base. 
-In this representation, real world entities (e.g. objects, facts, events) are represented as nodes and their relationships as edges.
-Knowledge Graphs provide for a compact, usable and human-readable world representation, they are however of discrete nature (hard to work with deep learning). 
-Moreover, KGs are subject to a number of challenges (e.g. entity alignment, ontologies mismatches, etc.) that renders them hard to work with especially during evaluation.
-Investigating methods to integrate KGs and LLMs, especially in the field of NLP and from a computational linguistic point of view could potentially enhance LLMs capabilities in lacking fields such as reasoning and maintaining consistency.
-
-### - Knowledge Extraction -
-
-**Description:**\
-Given a text in natural language extract a Knowledge Graph using Language Models. 
-The key point for this project is to extract relevant information from text and produce a valid (and useful) knowledge base. 
-Open problems: integration with ontologies, new concepts, unknown concepts.
-
-**Contact:** [Gianmarco Pappacoda](mailto:gianmarco.pappacoda@unibo.it)
-
-### - Knowledge Injection -
-
-**Description:**\
-Given a Knowledge Graph and a Language Models, explore methods for enhancing the Language Model's responses with factual knowledge contained in the Knowledge Graph. 
-Possible applications: question answering and information retrieval systems.
-
-**Contact:** [Gianmarco Pappacoda](mailto:gianmarco.pappacoda@unibo.it)
- 
-### - Ontology learning -
-
-**Description:**\
-Given a text and a Language Model, learn the corresponding ontology describing entities and relationships.
-
-**Contact:** [Gianmarco Pappacoda](mailto:gianmarco.pappacoda@unibo.it)
-
 ## Unstructured Knowledge Integration
 
 We are interested in developing deep learning models that are capable of employing knowledge in the form of natural language. 
