@@ -64,6 +64,9 @@ He has a long-standing collaboration with members of the Language Technologies L
 Junior Assistant Professor (RTD-A) at the University of Bologna
 <br/><br/>
 
+Deputy Director of the Language Technologies Lab
+<br/>
+
 :envelope: <a href="mailto:a.galassi@unibo.it">a.galassi@unibo.it</a>
 <br/><br/>
 
@@ -79,6 +82,10 @@ He has worked as a Post-doc Research Fellow on the <a href="https://www.ai4eu.eu
 | [Google Scholar](https://scholar.google.com/citations?user=OnzdCscAAAAJ)
 | [Scopus](https://www.scopus.com/authid/detail.uri?authorId=57196712506)
 | [WoS](https://www.webofscience.com/wos/author/record/1361415)
+<br/><br/>
+
+[X/Twitter](https://twitter.com/aGalaxy42) |
+[LinkedIn](https://www.linkedin.com/in/a-galassi/)
     </td>
   </tr>
 </table>
@@ -106,6 +113,9 @@ In the past, he has participated in several national and international projects 
 | [Unibo](https://www.unibo.it/sitoweb/federico.ruggeri6/en)
 | [ORCID](https://orcid.org/0000-0002-1697-8586)
 | [Google Scholar](https://scholar.google.com/citations?user=moOd0BwAAAAJ&hl=en)
+<br/><br/>
+
+[LinkedIn](https://www.linkedin.com/in/federico-ruggeri-a87647145/)
     </td>
   </tr>
   <tr>
@@ -128,6 +138,9 @@ In addition, she works as a teaching assistant at University of Bologna.
 | [Unibo](https://www.unibo.it/sitoweb/e.mancini)
 | [ORCID](https://orcid.org/0000-0001-9205-3289)
 | [Google Scholar](https://scholar.google.com/citations?user=1Qk3rogAAAAJ&hl=en&oi=ao)
+<br/><br/>
+
+[LinkedIn](https://www.linkedin.com/in/eleonora-mancini/)
     </td>
   </tr>
   <tr>
