@@ -89,8 +89,6 @@ params:
           url: https://github.com/nlp-unibo
         - name: Email
           url: mailto:unibo.nlp@gmail.com
-        - name: Institutional Website
-          url: https://site.unibo.it/nlp/en
 
     assets:
         disableScrollBarStyle: true
