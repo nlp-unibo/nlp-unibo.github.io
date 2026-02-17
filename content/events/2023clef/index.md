@@ -6,7 +6,7 @@ author: ["Alberto Barrón-Cedeño", "Firoj Alam", "Andrea Galassi", "Giovanni Da
 description: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). " 
 summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). " 
 cover:
-    image: "paper.png"
+    image: "content/events/2023clef.png"
     alt: "Overview of the CLEF–2023 CheckThat! Lab on Checkworthiness, Subjectivity, Political Bias, Factuality, and Authority of News Articles and Their Source"
     relative: true
 editPost:

@@ -6,7 +6,7 @@ author: ["Eleonora Mancini", "Federico Ruggeri", "Serena Villata", "Paolo Torron
 description: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025." 
 summary: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025." 
 cover:
-    image: "paper.png"
+    image: "content/events/2025argfallacy.png"
     alt: "Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates"
     relative: true
 editPost:

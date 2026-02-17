@@ -6,7 +6,7 @@ author: ["Alberto Barrón-Cedeño", "Firoj Alam", "Julia Maria Struß", "Preslav
 description: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). " 
 summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). " 
 cover:
-    image: "paper.png"
+    image: "content/events/2024clef.png"
     alt: "Overview of the CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness"
     relative: true
 editPost:

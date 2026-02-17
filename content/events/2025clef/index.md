@@ -6,7 +6,7 @@ author: [Alberto Barrón-Cedeño, Firoj Alam, Julia Maria Struß, Preslav Nakov,
 description: "This paper presents the eighth edition of the CheckThat! lab, part of the 2025 Conference and Labs of the Evaluation Forum (CLEF)." 
 summary: "This paper presents the eighth edition of the CheckThat! lab, part of the 2025 Conference and Labs of the Evaluation Forum (CLEF)." 
 cover:
-    image: "paper.png"
+    image: "content/events/2025clef.png"
     alt: "Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, fact-checking, claim normalization, and retrieval"
     relative: true
 editPost:
