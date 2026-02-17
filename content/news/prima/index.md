@@ -6,7 +6,7 @@ author: ["Federico Ruggeri", "Andrea Galassi", "Giulia Grundler", "Paolo Torroni
 description: "PRIMA: PRivacy Infringements Machine-Advice" 
 summary: "PRIMA: PRivacy Infringements Machine-Advice" 
 cover:
-    image: "prima.jpeg"
+    image: "content/news/prima.jpeg"
     alt: "PRIMA: PRivacy Infringements Machine-Advice - Final Conference"
     relative: true
 editPost:

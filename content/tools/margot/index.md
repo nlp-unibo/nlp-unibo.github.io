@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "MARGOT is a web server for the automatic extraction of arguments from text." 
 summary: "MARGOT is a web server for the automatic extraction of arguments from text." 
 cover:
-    image: "margot.png"
+    image: "content/tools/margot.png"
     alt: "MARGOT"
     relative: true
 showToc: true

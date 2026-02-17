@@ -6,7 +6,7 @@ author: ["Federico Ruggeri", "Andrea Galassi", "Giulia Grundler", "Paolo Torroni
 description: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorithmic Discrimination Through Norms and Technologies." 
 summary: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorithmic Discrimination Through Norms and Technologies." 
 cover:
-    image: "equal.png"
+    image: "content/news/equal.png"
     alt: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorithmic Discrimination Through Norms and Technologies"
     relative: true
 editPost:

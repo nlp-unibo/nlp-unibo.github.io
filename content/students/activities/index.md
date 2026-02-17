@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "A selection of publications, master theses, project works, and other activities carried out by AI master students under our supervision." 
 summary: "A selection of publications, master theses, project works, and other activities carried out by AI master students under our supervision." 
 cover:
-    image: "supervised-activities.jpg"
+    image: "content/students/supervised-activities.jpg"
     alt: "Student Activities and Resources"
     relative: true
 showToc: true

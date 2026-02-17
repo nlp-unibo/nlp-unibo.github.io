@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "CLAUDETTE empowers consumers and civil society by ultimately creating user-end tools enabling everyone to quickly assess fairness of consumer contracts and privacy policies one has to accept before using online platforms." 
 summary: "CLAUDETTE empowers consumers and civil society by ultimately creating user-end tools enabling everyone to quickly assess fairness of consumer contracts and privacy policies one has to accept before using online platforms." 
 cover:
-    image: "claudette.png"
+    image: "content/tools/claudette.png"
     alt: "CLAUDETTE"
     relative: true
 showToc: true

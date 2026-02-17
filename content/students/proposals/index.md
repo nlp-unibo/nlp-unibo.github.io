@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "Research proposals of our interest." 
 summary: "Research proposals of our interest." 
 cover:
-    image: "proposals.jpg"
+    image: "content/students/proposals.jpg"
     alt: "Research Proposals"
     relative: true
 showToc: true

@@ -5,7 +5,7 @@ tags: ["Research","Publications", "Argument Mining","Legal Analytics","Speech"]
 description: "Our academic publications in conferences, journals, workshops, and pre-prints." 
 summary: "Our academic publications in conferences, journals, workshops, and pre-prints." 
 cover:
-    image: "publications.jpg"
+    image: "content/research/publications.jpg"
     alt: "Publications"
     relative: true
 showToc: true

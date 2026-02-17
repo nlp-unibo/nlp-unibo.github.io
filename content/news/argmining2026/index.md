@@ -6,7 +6,7 @@ author: ["Mohamed Elaraby", "Annette Hautli-Janisz", "John Lawrence", "Elena Mus
 description: "The 2026 edition of the ArgMining workshop therefore places a special focus on understanding and evaluating arguments in both human and machine reasoning." 
 summary: "The 2026 edition of the ArgMining workshop therefore places a special focus on understanding and evaluating arguments in both human and machine reasoning." 
 cover:
-    image: "argmining2026.png"
+    image: "content/news/argmining2026.png"
     alt: "The 13th Workshop on Argument Mining and Reasoning Co-located with ACL 2026"
     relative: true
 editPost:

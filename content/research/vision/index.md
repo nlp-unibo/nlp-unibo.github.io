@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "Our academic research vision." 
 summary: "Our academic research vision." 
 cover:
-    image: "vision.jpg"
+    image: "content/research/vision.jpg"
     alt: "Research Vision"
     relative: true
 showToc: true

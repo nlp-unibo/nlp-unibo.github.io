@@ -6,7 +6,7 @@ author: ["Federico Ruggeri"]
 description: "The workshop investigates LLMs applications in the legal domain, with a focus on performance, explainability and reasoning." 
 summary: "The workshop investigates LLMs applications in the legal domain, with a focus on performance, explainability and reasoning." 
 cover:
-    image: "alma-ai.png"
+    image: "content/news/alma-ai.png"
     alt: "ALMA-AI | Workshop LLM: a debate on technical experiences"
     relative: true
 editPost:

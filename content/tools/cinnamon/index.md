@@ -6,7 +6,7 @@ author: "LT-Lab"
 description: "Cinnamon is a simple framework for general-purpose configuration and code logic de-coupling" 
 summary: "Cinnamon is a simple framework for general-purpose configuration and code logic de-coupling" 
 cover:
-    image: "cinnamon.jpg"
+    image: "content/tools/cinnamon.jpg"
     alt: "Cinnamon"
     relative: true
 showToc: true
