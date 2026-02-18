@@ -10,7 +10,7 @@ description: "Meet the team!"
 
 <table>
   <tr>
-    <td style="width: 40%;"><img src="paolo_torroni.jpeg" width="80%" height="100%"/></td>
+    <td style="width: 40%;"><img src="paolo_torroni.jpeg" width="80%"/></td>
     <td style="width: 60%;">
       <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><bold><h2>Paolo Torroni</h2></bold></a>
 Associate Professor at the University of Bologna
