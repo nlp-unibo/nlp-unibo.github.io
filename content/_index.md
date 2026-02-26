@@ -18,7 +18,11 @@ sections:
         We are a research group of the Department of Computer Science and Engineering of the University of Bologna.
         
         Our **focus** is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere.
-  
+      link:
+          icon: graduation-cap
+          icon_pack: fas
+          text: Join Us
+          url: ../contact/  
   - block: collection
     content:
       title: Latest News

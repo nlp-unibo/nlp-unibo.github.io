@@ -18,7 +18,7 @@ marketing:
     site_type: Organization
     local_business_type: ''
     org_name: ''
-    description: 'A highly-customizable Hugo research group theme powered by Wowchemy website builder.'
+    description: 'Official website of the Language Technologies Lab.'
     twitter: 'GetResearchDev'
   analytics:
     google_analytics: ''
@@ -72,7 +72,7 @@ features:
   privacy_pack:
     enable: false
   repository:
-    url: 'https://github.com/<username>/<repository>'
+    url: 'https://github.com/nlp-unibo'
     content_dir: content
     branch: main
   avatar:
@@ -91,7 +91,7 @@ features:
       category: ''
       category_id: ''
   search:
-    provider: wowchemy
+    provider: unibo
     algolia:
       app_id: ''
       api_key: ''
