@@ -13,7 +13,7 @@ sections:
       text: ""
       filters:
         folders:
-          - highlights
+          - publication_highlights
     design:
       view: citation
       columns: '1'
@@ -23,7 +23,7 @@ sections:
       text: ""
       filters:
         folders:
-          - journals
+          - publication_journals
     design:
       view: citation
       columns: '1'
@@ -33,7 +33,7 @@ sections:
       text: ""
       filters:
         folders:
-          - conferences
+          - publication_conferences
     design:
       view: citation
       columns: '1'
@@ -43,7 +43,7 @@ sections:
       text: ""
       filters:
         folders:
-          - workshops
+          - publication_workshops
     design:
       view: citation
       columns: '1'
@@ -53,7 +53,7 @@ sections:
       text: ""
       filters:
         folders:
-          - preprints
+          - publication_preprints
     design:
       view: citation
       columns: '1'
