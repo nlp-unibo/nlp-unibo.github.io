@@ -3,12 +3,13 @@
 # Documentation: https://docs.hugoblox.com/
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-# Search
-
-search:
-  enable: true
-  suggestions: []      # Optional: trending searches
-  quick_actions: []    # Optional: quick links in modal
+content:
+  search:
+    enable: true
+    suggestions: [ ]      # Optional: trending searches
+    quick_actions: [ ]    # Optional: quick links in modal
+  toc:
+    enable: true
 
 # Appearance
 

@@ -4,9 +4,6 @@
 #   The weight parameter defines the order that the links will appear in.
 
 main:
-  - name: Tour
-    url: tour
-    weight: 10
   - name: Research
     url: research
     weight: 11
@@ -31,6 +28,3 @@ main:
   - name: Tools
     url: tools
     weight: 45
-  - name: Contact
-    url: contact
-    weight: 60
