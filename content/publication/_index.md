@@ -49,7 +49,7 @@ sections:
       columns: '1'
   - block: collection
     content:
-      title: Pre-prints
+      title: Preprints
       text: ""
       filters:
         folders:

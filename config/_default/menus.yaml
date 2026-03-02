@@ -26,7 +26,7 @@ main:
     url: projects
     weight: 36
   - name: Events
-    url: event
+    url: events
     weight: 40
   - name: Tools
     url: tools

@@ -3,14 +3,12 @@
 # Documentation: https://docs.hugoblox.com/
 # This file is formatted using YAML syntax - learn more at https://learnxinyminutes.com/docs/yaml/
 
-hugoblox:
-  header:
-    search: true
+# Search
 
-  search:
-    enable: true
-    suggestions: []      # Optional: trending searches
-    quick_actions: []    # Optional: quick links in modal
+search:
+  enable: true
+  suggestions: []      # Optional: trending searches
+  quick_actions: []    # Optional: quick links in modal
 
 # Appearance
 
@@ -41,6 +39,7 @@ marketing:
 # Site header
 
 header:
+  search: true
   navbar:
     enable: true
     align: r
@@ -77,7 +76,7 @@ features:
       - r
       - latex
   math:
-    enable: false
+    enable: true
   privacy_pack:
     enable: false
   repository:

@@ -1,3 +1,5 @@
 ---
-title: Highlights
+title: Preprints
+
+view: citation
 ---

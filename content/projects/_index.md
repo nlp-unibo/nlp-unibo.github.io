@@ -13,7 +13,7 @@ sections:
         folders:
           - projects_international
     design:
-      view: masonry
+      view: card
       columns: '1'
   - block: collection
     content:
@@ -23,6 +23,6 @@ sections:
         folders:
           - projects_national
     design:
-      view: masonry
+      view: card
       columns: '1'
 ---

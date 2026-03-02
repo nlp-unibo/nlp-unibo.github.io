@@ -1,3 +1,5 @@
 ---
 title: Highlights
+
+view: citation
 ---

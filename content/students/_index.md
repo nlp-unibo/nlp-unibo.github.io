@@ -14,6 +14,16 @@ banner:
 sections:
   - block: collection
     content:
+      title: Research Proposals
+      text: ""
+      filters:
+        folders:
+          - students_proposals
+    design:
+      view: card
+      columns: '1'
+  - block: collection
+    content:
       title: Publications
       text: ""
       filters:

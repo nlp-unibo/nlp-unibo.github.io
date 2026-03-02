@@ -1,3 +1,5 @@
 ---
 title: Conferences
+
+view: citation
 ---

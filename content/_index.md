@@ -18,11 +18,17 @@ sections:
         We are a research group of the Department of Computer Science and Engineering of the University of Bologna.
         
         Our **focus** is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere.
-      link:
-          icon: graduation-cap
-          icon_pack: fas
-          text: Join Us
-          url: ../contact/  
+        
+        {{% cta cta_link="./people/" cta_text="Meet the team →" %}}
+      button:
+        text: test
+        url: /people
+      primary_action:
+        text: Get Started
+        url: /about/
+      secondary_action:
+        text: Learn More
+        url: /docs/
   - block: collection
     content:
       title: Latest News
@@ -30,57 +36,23 @@ sections:
       text:
       count: 5
       filters:
-        author: ''
-        category: ''
-        exclude_featured: false
-        publication_type: ''
-        tag: ''
+        folders:
+          - news
       offset: 0
       order: desc
-      page_type: post
+      page_type: news
     design:
       view: card
       columns: '1'
-  
-  - block: markdown
-    content:
-      title:
-      subtitle: ''
-      text:
-    design:
-      columns: '1'
-      background:
-        image: 
-          filename: coders.jpg
-          filters:
-            brightness: 1
-          parallax: false
-          position: center
-          size: cover
-          text_color_light: true
-      spacing:
-        padding: ['20px', '0', '20px', '0']
-      css_class: fullscreen
-
   - block: collection
     content:
       title: Latest Preprints
       text: ""
-      count: 5
+      count: 2
       filters:
         folders:
-          - publication
-        publication_type: 'article'
+          - publication_preprints
     design:
       view: citation
-      columns: '1'
-
-  - block: markdown
-    content:
-      title:
-      subtitle:
-      text: |
-        {{% cta cta_link="./people/" cta_text="Meet the team →" %}}
-    design:
       columns: '1'
 ---
