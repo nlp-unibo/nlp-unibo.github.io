@@ -28,3 +28,6 @@ main:
   - name: Tools
     url: tools
     weight: 45
+  - name: Tags
+    url: tags
+    weight: 50
