@@ -1,6 +1,5 @@
 ---
-title: 'Unfair clause detection in terms of service across multiple languages: Unfair
-  clause detection in terms of service across...'
+title: 'Unfair clause detection in terms of service across multiple languages'
 
 # Authors
 # A YAML list of author names

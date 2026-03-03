@@ -7,7 +7,7 @@ title: Explaining Potentially Unfair Clauses to the Consumer with the CLAUDETTE 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
 - Ruta Liepina
-- \textbfFederico Ruggeri
+- Federico Ruggeri
 - Francesca Lagioia
 - Marco Lippi
 - Kasper Drazewski

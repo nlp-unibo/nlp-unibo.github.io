@@ -49,7 +49,11 @@ abstract: We develop novel annotation guidelines for sentence-level subjectivity
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+- workshop
+- subjectivity detection
+- CLEF
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false

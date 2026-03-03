@@ -7,7 +7,7 @@ title: 'Multimodal Argument Mining: A Case Study in Political Debates'
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
 - Eleonora Mancini
-- \textbfFederico Ruggeri
+- Federico Ruggeri
 - Andrea Galassi
 - Paolo Torroni
 

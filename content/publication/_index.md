@@ -9,6 +9,7 @@ view: citation
 sections:
   - block: collection
     content:
+      count: 0
       title: Highlights
       text: ""
       filters:

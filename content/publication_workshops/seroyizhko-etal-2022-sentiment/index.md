@@ -55,7 +55,13 @@ abstract: Cryptocurrencies have gained enormous momentum in finance and are nowa
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+- workshop
+- sentiment analysis
+- financial
+- price forecasting
+- FinNLP
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -45,7 +45,13 @@ abstract: Creating balanced labeled textual corpora for complex tasks, like lega
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+- workshop
+- data augmentation
+- word embeddings
+- wordnet
+- legal
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false

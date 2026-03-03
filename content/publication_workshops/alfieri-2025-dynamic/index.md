@@ -40,7 +40,8 @@ abstract: ''
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+  - student publication
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -7,7 +7,7 @@ title: Deep Learning for Detecting and Explaining Unfairness in Consumer Contrac
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
 - Francesca Lagioia
-- \textbfFederico Ruggeri
+- Federico Ruggeri
 - Kasper Drazewski
 - Marco Lippi
 - Hans-Wolfgang Micklitz

@@ -48,7 +48,13 @@ abstract: Multimodal Argument Mining (MAM) is a recent area of research aiming t
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+- workshop
+- toolkit
+- MAMKit
+- argument mining
+- multimodal
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false

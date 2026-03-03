@@ -6,7 +6,7 @@ title: Tree-Constrained Graph Neural Networks For Argument Mining
 # If you created a profile for a user (e.g. the default `admin` user at `content/authors/admin/`), 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
-- \textbfFederico Ruggeri
+- Federico Ruggeri
 - Marco Lippi
 - Paolo Torroni
 

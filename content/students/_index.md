@@ -27,8 +27,8 @@ sections:
       title: Publications
       text: ""
       filters:
-        folders:
-          - students_publications
+        tag: "student publication"
+
     design:
       view: citation
       columns: '1'

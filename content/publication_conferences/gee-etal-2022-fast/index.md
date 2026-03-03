@@ -42,7 +42,12 @@ abstract: Real-world business applications require a trade-off between language 
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags:
+- industry track
+- vocabulary transfer
+- language models
+- model compression
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false
