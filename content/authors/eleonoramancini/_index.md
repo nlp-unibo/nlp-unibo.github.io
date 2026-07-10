@@ -45,7 +45,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'e.mancini@unibo.it'
+    link: 'mailto:e.mancini@unibo.it'
   - icon: github
     icon_pack: fab
     link: https://github.com/helemanc

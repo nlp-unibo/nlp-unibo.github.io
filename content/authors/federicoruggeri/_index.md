@@ -45,7 +45,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'federico.ruggeri6@unibo.it'
+    link: 'mailto:federico.ruggeri6@unibo.it'
   - icon: github
     icon_pack: fab
     link: https://github.com/federicoruggeri

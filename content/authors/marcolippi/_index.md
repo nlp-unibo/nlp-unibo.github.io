@@ -43,7 +43,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'marco.lippi@unifi.it'
+    link: 'mailto:marco.lippi@unifi.it'
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?hl=en&user=R3taHbIAAAAJ

@@ -44,7 +44,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'a.galassi@unibo.it'
+    link: 'mailto:a.galassi@unibo.it'
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?user=OnzdCscAAAAJ

@@ -43,7 +43,7 @@ education:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'giulia.grundler2@unibo.it'
+    link: 'mailto:giulia.grundler2@unibo.it'
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?user=60j_-AwAAAAJ
