@@ -329,7 +329,7 @@ Do not merge while **Validate content and build** is failing. Open failed check,
 
 ## Publishing
 
-Merging into `hugoblox-template` automatically starts the **Deploy Hugo site to Pages** workflow.
+Merging into `hugoblox-template` automatically starts the **Deploy Hugo site to Pages** workflow. Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
 
 After merging:
 
@@ -337,6 +337,7 @@ After merging:
 2. Select latest **Deploy Hugo site to Pages** run.
 3. Wait for build and deploy jobs to finish with green checks.
 4. Verify changed page at <https://nlp.unibo.it/>.
+5. Confirm <http://nlp.unibo.it/> redirects to HTTPS.
 
 If automatic run fails to start, open workflow and use **Run workflow** with `hugoblox-template`. Do not publish from old `hugo` branch.
 
