@@ -1,0 +1,9 @@
+.venv/
+.tools/
+.build/
+public/
+resources/_gen/
+.hugo_build.lock
+assets/jsconfig.json
+__pycache__/
+*.py[cod]
