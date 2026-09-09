@@ -25,9 +25,9 @@ marketing:
   seo:
     site_type: Organization
     local_business_type: ''
-    org_name: ''
+    org_name: 'Language Technologies Lab, University of Bologna'
     description: 'Official website of the Language Technologies Lab.'
-    twitter: 'GetResearchDev'
+    twitter: ''
   analytics:
     google_analytics: ''
     baidu_tongji: ''
@@ -54,7 +54,7 @@ header:
 
 footer:
   copyright:
-    notice: '© {year} Me. This work is licensed under {license}'
+    notice: '© {year} Language Technologies Lab, University of Bologna. This work is licensed under {license}'
     license:
       enable: true
       allow_derivatives: false
@@ -81,7 +81,7 @@ features:
   privacy_pack:
     enable: false
   repository:
-    url: 'https://github.com/nlp-unibo'
+    url: 'https://github.com/nlp-unibo/nlp-unibo.github.io'
     content_dir: content
     branch: hugoblox-template
   avatar:
