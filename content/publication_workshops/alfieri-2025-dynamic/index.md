@@ -9,7 +9,7 @@ authors:
 - Francesco Alfieri
 - Giulia Grundler
 - Francesca Galloni
-- Ruta Liepina
+- Rūta Liepiņa
 - Francesca Lagioia
 - Andrea Galassi
 - Paolo Torroni
