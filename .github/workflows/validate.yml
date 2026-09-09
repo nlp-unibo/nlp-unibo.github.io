@@ -1,0 +1,47 @@
+name: Validate website
+
+on:
+  pull_request:
+    branches: ["hugoblox-template"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: "validate-${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate content and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Restore website toolchain cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .tools
+            .build/go-mod-cache
+          key: website-tools-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('scripts/site.py', '.github/workflows/hugo.yml', 'go.mod', 'go.sum') }}
+
+      - name: Sync Python environment
+        run: uv sync --locked
+
+      - name: Validate content and production build
+        run: uv run --locked python scripts/site.py check
