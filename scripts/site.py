@@ -32,6 +32,22 @@ TOOLS = ROOT / ".tools"
 BUILD = ROOT / ".build"
 GO_VERSION = "1.24.3"
 NODE_PACKAGES = ("lightningcss", "@tailwindcss/oxide", "sass-embedded", "pagefind")
+CONTENT_TYPES = {
+    "news": ("news", "news"),
+    "event": ("events", "event"),
+    "person": ("authors", "person"),
+    "national-project": ("projects_national", "project"),
+    "international-project": ("projects_international", "project"),
+    "research": ("research", "research"),
+    "tool": ("tools", "tool"),
+    "bachelors-thesis": ("students_bscs", "bachelors-thesis"),
+    "masters-thesis": ("students_mscs", "masters-thesis"),
+    "publication-highlight": ("publication_highlights", "publication-highlight"),
+    "journal": ("publication_journals", "publication-journal"),
+    "conference": ("publication_conferences", "publication-conference"),
+    "workshop": ("publication_workshops", "publication-workshop"),
+    "preprint": ("publication_preprints", "publication-preprint"),
+}
 
 
 def run(command: list[str], *, env: dict[str, str] | None = None) -> None:
@@ -240,6 +256,57 @@ def validate_configuration() -> None:
     print(f"Hugo versions aligned at {workflow_version}.")
 
 
+def validate_archetypes() -> None:
+    env, hugo, _ = environment()
+    content_dir = BUILD / "archetype-check"
+    if content_dir.exists():
+        shutil.rmtree(content_dir)
+    content_dir.mkdir(parents=True)
+    try:
+        for content_type, (section, kind) in CONTENT_TYPES.items():
+            relative_path = f"{section}/template-check"
+            command = [
+                str(hugo),
+                "new",
+                "content",
+                "--contentDir",
+                str(content_dir),
+                "--kind",
+                kind,
+                relative_path,
+            ]
+            result = subprocess.run(
+                command,
+                cwd=ROOT,
+                env=env,
+                text=True,
+                capture_output=True,
+            )
+            if result.returncode != 0:
+                raise RuntimeError(
+                    f"Archetype {kind!r} failed for {content_type!r}:\n{result.stderr}"
+                )
+            filename = "_index.md" if content_type == "person" else "index.md"
+            page = content_dir / relative_path / filename
+            if not page.exists():
+                raise RuntimeError(f"Archetype {kind!r} did not create {page}")
+            text = page.read_text(encoding="utf-8")
+            metadata = yaml.safe_load(text.split("---", 2)[1])
+            if not isinstance(metadata, dict) or metadata.get("draft") is not True:
+                raise RuntimeError(f"Archetype {kind!r} must create draft content")
+            if content_type in {
+                "publication-highlight",
+                "journal",
+                "conference",
+                "workshop",
+                "preprint",
+            } and not page.with_name("cite.bib").exists():
+                raise RuntimeError(f"Archetype {kind!r} did not create cite.bib")
+    finally:
+        shutil.rmtree(content_dir, ignore_errors=True)
+    print(f"Validated {len(CONTENT_TYPES)} content archetypes.")
+
+
 def build() -> None:
     env, hugo, _ = environment()
     destination = BUILD / "public"
@@ -257,6 +324,19 @@ def serve() -> None:
     run([str(hugo), "server", "--buildFuture", "--disableFastRender"], env=env)
 
 
+def new_content(content_type: str, slug: str) -> None:
+    if content_type not in CONTENT_TYPES:
+        available = ", ".join(CONTENT_TYPES)
+        raise SystemExit(f"Unknown content type {content_type!r}. Choose one of: {available}")
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
+    section, kind = CONTENT_TYPES[content_type]
+    env, hugo, _ = environment()
+    relative_path = f"{section}/{slug}"
+    run([str(hugo), "new", "content", "--kind", kind, relative_path], env=env)
+    print(f"Created content/{relative_path}. Replace every TODO and remove draft only when ready.")
+
+
 def clean() -> None:
     if BUILD.exists():
         shutil.rmtree(BUILD)
@@ -265,20 +345,32 @@ def clean() -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("command", choices=("setup", "content", "build", "check", "serve", "clean"))
+    parser.add_argument(
+        "command",
+        choices=("setup", "content", "templates", "build", "check", "serve", "new", "clean"),
+    )
+    parser.add_argument("content_type", nargs="?", help="Content type for the new command")
+    parser.add_argument("slug", nargs="?", help="Lowercase, hyphen-separated slug for the new command")
     args = parser.parse_args()
     if args.command == "setup":
         setup()
     elif args.command == "content":
         validate_front_matter()
+    elif args.command == "templates":
+        validate_archetypes()
     elif args.command == "build":
         build()
     elif args.command == "check":
         validate_front_matter()
         validate_configuration()
+        validate_archetypes()
         build()
     elif args.command == "serve":
         serve()
+    elif args.command == "new":
+        if args.content_type is None or args.slug is None:
+            parser.error("new requires CONTENT_TYPE and SLUG")
+        new_content(args.content_type, args.slug)
     elif args.command == "clean":
         clean()
 
