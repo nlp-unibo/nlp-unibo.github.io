@@ -18,7 +18,7 @@ The workshop will be co-located with ACL 2026 and held in San Diego, United Stat
 ## Useful Links
 
 + [Workshop Page](https://argmining-org.github.io/2026/)
-+ [e-Mail](argmining.org@gmail.com)
++ [Email](mailto:argmining.org@gmail.com)
 + [Github](https://github.com/argmining-org)
 + [X/Twitter](https://x.com/ArgminingOrg)
 + [Bluesky](https://bsky.app/profile/argminingorg.bsky.social)
