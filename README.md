@@ -86,6 +86,37 @@ Important rules:
 - Use standard Markdown links for external pages: `[ACL](https://www.aclweb.org/)`.
 - Copy a nearby, working page of the same type before creating a page from scratch. Existing fields differ by content type.
 
+## Creating new content from templates
+
+Use repository archetypes instead of copying old entries. Generator creates page bundle in correct directory, fills title and date, and marks page `draft: true`:
+
+```bash
+uv run python scripts/site.py new TYPE slug
+```
+
+Available types:
+
+```text
+news                     event
+person                   research
+tool                     national-project
+international-project    bachelors-thesis
+masters-thesis           publication-highlight
+journal                  conference
+workshop                 preprint
+```
+
+Examples:
+
+```bash
+uv run python scripts/site.py new news acl-2026
+uv run python scripts/site.py new person maria-rossi
+uv run python scripts/site.py new international-project example-project
+uv run python scripts/site.py new conference rossi-etal-2026-example
+```
+
+Slugs must contain lowercase letters, numbers, and hyphens only. Replace every `TODO`, add page files such as avatars or PDFs, preview page, then remove `draft: true` when ready to publish. Publication templates also create `cite.bib`.
+
 ## Updating existing content
 
 1. Find the relevant `index.md` under `content/`.
@@ -98,7 +129,7 @@ Do not rename a page directory without good reason: its name usually forms part 
 
 ## Adding news or events
 
-Create `content/news/<slug>/index.md` or `content/events/<slug>/index.md`.
+Use `new news <slug>` or `new event <slug>`. This creates `content/news/<slug>/index.md` or `content/events/<slug>/index.md`.
 
 ```markdown
 ---
@@ -126,9 +157,9 @@ Place `programme.pdf` and other page-specific files in the same directory. A lis
 
 ## Adding or updating a team member
 
-Each profile lives at `content/authors/<firstname-lastname>/_index.md`. Avatar lives in the same directory and must be named `avatar.jpg` or `avatar.png`.
+Each profile lives at `content/authors/<firstname-lastname>/_index.md`. Avatar lives in same directory and must be named `avatar.jpg` or `avatar.png`.
 
-Fastest method: copy an existing profile, then update every personal field. Important fields include:
+Run `new person <firstname-lastname>`, then update every personal field. Important fields include:
 
 - `title`, `first_name`, and `last_name`
 - `role`
@@ -151,7 +182,7 @@ Use group spelling and capitalization exactly as shown. Check email addresses an
 
 ## Adding a project, research area, tool, or thesis
 
-Copy an existing entry from matching section and update it:
+Use matching `new` content type, then update generated entry:
 
 - National project: `content/projects_national/<slug>/index.md`
 - International project: `content/projects_international/<slug>/index.md`
@@ -173,7 +204,7 @@ content/publication_conferences/paper-slug/
 └── featured.jpg        # optional
 ```
 
-Start by copying a recent entry from same publication section. Update at least:
+Use matching publication generator (`journal`, `conference`, `workshop`, `preprint`, or `publication-highlight`). Update at least:
 
 - `title`
 - `authors`
@@ -254,6 +285,9 @@ Available commands:
 # Validate YAML front matter only (fast)
 uv run python scripts/site.py content
 
+# Verify every content archetype generates a valid draft bundle
+uv run python scripts/site.py templates
+
 # Create production build and Pagefind index under .build/public
 uv run python scripts/site.py build
 
@@ -285,8 +319,9 @@ Every pull request targeting `hugoblox-template` automatically runs **Validate w
 1. Creates locked uv environment.
 2. Validates YAML front matter under `content/`.
 3. Checks Hugo version stays aligned across deployment configurations.
-4. Builds production site with pinned Hugo version used for deployment.
-5. Generates Pagefind search index.
+4. Generates and validates every content archetype.
+5. Builds production site with pinned Hugo version used for deployment.
+6. Generates Pagefind search index.
 
 Do not merge while **Validate content and build** is failing. Open failed check, inspect first meaningful error, push fix to same branch, and wait for rerun.
 
