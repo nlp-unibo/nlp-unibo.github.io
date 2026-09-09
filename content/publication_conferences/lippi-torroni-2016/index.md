@@ -71,5 +71,3 @@ links:
 - name: URL
   url: https://ojs.aaai.org/index.php/AAAI/article/view/10384
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

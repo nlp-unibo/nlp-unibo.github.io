@@ -75,5 +75,3 @@ links:
 - name: URL
   url: https://arxiv.org/pdf/2406.14099v2
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

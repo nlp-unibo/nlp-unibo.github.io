@@ -78,5 +78,3 @@ projects: []
 ---
 
 :trophy: Awarded the Honorable Mention in the Best Paper Award Consideration
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

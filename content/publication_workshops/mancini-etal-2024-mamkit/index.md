@@ -91,5 +91,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2024.argmining-1.7
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

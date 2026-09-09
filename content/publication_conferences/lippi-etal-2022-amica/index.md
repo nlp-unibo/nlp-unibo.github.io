@@ -80,5 +80,3 @@ links:
 - name: URL
   url: https://doi.org/10.24963/ijcai.2022/857
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

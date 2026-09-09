@@ -99,5 +99,3 @@ links:
 - name: URL
   url: https://www.frontiersin.org/articles/10.3389/fpubh.2022.945181
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

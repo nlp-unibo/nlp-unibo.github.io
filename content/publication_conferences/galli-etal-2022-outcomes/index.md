@@ -79,5 +79,3 @@ links:
 - name: URL
   url: https://doi.org/10.3233/FAIA220465
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.
