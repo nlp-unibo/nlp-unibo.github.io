@@ -10,4 +10,4 @@ summary: "This special issue seeks to advance these developments by bringing tog
 
 + [Website Page](https://nlp.unibo.it/am-in-law-specialissue/)
 + [AI & Law Collection](https://link.springer.com/collections/jdcfbbcfce)
-+ [Contact](federico.ruggeri6@unibo.it)
++ [Contact](mailto:federico.ruggeri6@unibo.it)

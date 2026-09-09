@@ -282,7 +282,7 @@ Open <http://localhost:1313/>. Preview includes pages whose publication date is 
 Available commands:
 
 ```bash
-# Validate YAML front matter only (fast)
+# Validate content metadata, slugs, placeholders, local links, and asset sizes (fast)
 uv run python scripts/site.py content
 
 # Verify every content archetype generates a valid draft bundle
@@ -317,11 +317,13 @@ Then open pull request against `hugoblox-template`.
 Every pull request targeting `hugoblox-template` automatically runs **Validate website**. This read-only workflow:
 
 1. Creates locked uv environment.
-2. Validates YAML front matter under `content/`.
-3. Checks Hugo version stays aligned across deployment configurations.
-4. Generates and validates every content archetype.
-5. Builds production site with pinned Hugo version used for deployment.
-6. Generates Pagefind search index.
+2. Validates YAML front matter and required fields under `content/`.
+3. Rejects invalid or duplicate slugs, visible placeholders, and broken local links.
+4. Rejects individual assets larger than 5 MiB and reports future publication dates.
+5. Checks Hugo version stays aligned across deployment configurations.
+6. Generates and validates every content archetype.
+7. Builds production site with pinned Hugo version used for deployment.
+8. Generates Pagefind search index.
 
 Do not merge while **Validate content and build** is failing. Open failed check, inspect first meaningful error, push fix to same branch, and wait for rerun.
 
@@ -347,7 +349,7 @@ Before merging:
 - [ ] YAML front matter parses and indentation uses spaces.
 - [ ] Title, author names, dates, venue, DOI, and URLs are correct.
 - [ ] No private data, credentials, drafts, or copyrighted files were added accidentally.
-- [ ] Images have sensible dimensions and file sizes.
+- [ ] Images have sensible dimensions; every image or PDF is at most 5 MiB.
 - [ ] Local `uv run python scripts/site.py check` succeeds.
 - [ ] GitHub **Validate content and build** check succeeds.
 - [ ] Changed page looks correct on desktop and mobile.
