@@ -6,7 +6,7 @@ title: Generation and Evaluation of English Grammar Multiple-Choice Cloze Exerci
 # If you created a profile for a user (e.g. the default `admin` user at `content/authors/admin/`), 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
-- Nicolò Donati
+- nicolo-donati
 - Matteo Periani
 - Paolo Di Natale
 - Giuseppe Savino

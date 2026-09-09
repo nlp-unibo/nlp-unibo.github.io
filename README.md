@@ -318,7 +318,7 @@ Every pull request targeting `hugoblox-template` automatically runs **Validate w
 
 1. Creates locked uv environment.
 2. Validates YAML front matter and required fields under `content/`.
-3. Rejects invalid or duplicate slugs, visible placeholders, and broken local links.
+3. Rejects invalid or duplicate slugs, inconsistent author names, visible placeholders, and broken local links.
 4. Rejects individual assets larger than 5 MiB and reports future publication dates.
 5. Checks Hugo version stays aligned across deployment configurations.
 6. Generates and validates every content archetype.

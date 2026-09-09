@@ -23,6 +23,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+import unicodedata
 import urllib.request
 from urllib.parse import unquote
 
@@ -306,6 +307,11 @@ def content_date(value: object) -> date | None:
     return None
 
 
+def content_slug(value: str) -> str:
+    ascii_value = unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode()
+    return re.sub(r"[^a-z0-9]+", "-", ascii_value.lower()).strip("-")
+
+
 def local_link_targets(path: Path, body: str) -> list[tuple[str, list[Path]]]:
     clean_body = re.sub(r"<!--.*?-->", "", body, flags=re.DOTALL)
     clean_body = re.sub(r"```.*?```", "", clean_body, flags=re.DOTALL)
@@ -346,6 +352,7 @@ def validate_content_quality() -> None:
     checked_pages = 0
     checked_links = 0
     content_root = ROOT / "content"
+    author_names: dict[str, tuple[str, Path]] = {}
 
     for section, required_fields in REQUIRED_FIELDS.items():
         section_dir = content_root / section
@@ -370,6 +377,25 @@ def validate_content_quality() -> None:
             for field in required_fields:
                 if metadata.get(field) in (None, "", []):
                     failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
+            if section == "authors" and isinstance(metadata.get("title"), str):
+                expected_slug = content_slug(metadata["title"])
+                if slug != expected_slug:
+                    failures.append(
+                        f"{directory.relative_to(ROOT)}: author slug must be {expected_slug!r}"
+                    )
+
+            for author in metadata.get("authors", []):
+                if not isinstance(author, str):
+                    continue
+                author_slug = content_slug(author)
+                if author_slug in author_names and author_names[author_slug][0] != author:
+                    first_name, first_page = author_names[author_slug]
+                    failures.append(
+                        f"{page.relative_to(ROOT)}: author {author!r} conflicts with "
+                        f"{first_name!r} in {first_page.relative_to(ROOT)}"
+                    )
+                else:
+                    author_names[author_slug] = (author, page)
 
             is_draft = metadata.get("draft") is True
             if not is_draft:

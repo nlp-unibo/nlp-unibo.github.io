@@ -6,7 +6,7 @@ title: Explaining Potentially Unfair Clauses to the Consumer with the CLAUDETTE 
 # If you created a profile for a user (e.g. the default `admin` user at `content/authors/admin/`), 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
-- Ruta Liepina
+- Rūta Liepiņa
 - Federico Ruggeri
 - Francesca Lagioia
 - Marco Lippi

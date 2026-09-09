@@ -22,7 +22,7 @@
 
 [build.environment]
   # Keep aligned with .github/workflows/hugo.yml.
-  HUGO_VERSION = "0.147.2"
+  HUGO_VERSION = "0.166.0"
   GO_VERSION = "1.21.5"
   NODE_VERSION = "22"
   PNPM_FLAGS = "--no-frozen-lockfile"
