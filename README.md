@@ -11,7 +11,7 @@ Source repository for the [Language Technologies Lab website](https://nlp.unibo.
 5. Commit and push your branch.
 6. Open a pull request against `hugoblox-template` and ask another lab member to review it.
 7. Merge only after checking text, links, dates, images, and build results.
-8. Deploy from the GitHub **Actions** page as described in [Publishing](#publishing).
+8. Monitor automatic deployment from GitHub **Actions** as described in [Publishing](#publishing).
 
 For small text corrections, the whole workflow can be completed in GitHub's web interface. Do not edit generated files or the published website directly.
 
@@ -279,18 +279,16 @@ Then open pull request against `hugoblox-template`.
 
 ## Publishing
 
-Current repository configuration uses `hugoblox-template` as default branch, but automatic push trigger in `.github/workflows/hugo.yml` still targets `hugo`. Therefore, merging into `hugoblox-template` does **not** currently publish automatically.
+Merging into `hugoblox-template` automatically starts the **Deploy Hugo site to Pages** workflow.
 
 After merging:
 
 1. Open repository's **Actions** tab.
-2. Select **Deploy Hugo site to Pages**.
-3. Select **Run workflow**.
-4. Choose `hugoblox-template` and start workflow.
-5. Wait for build and deploy jobs to finish with green checks.
-6. Verify changed page at <https://nlp.unibo.it/>.
+2. Select latest **Deploy Hugo site to Pages** run.
+3. Wait for build and deploy jobs to finish with green checks.
+4. Verify changed page at <https://nlp.unibo.it/>.
 
-Do not publish from old `hugo` branch. Maintainers may later change workflow trigger to `hugoblox-template` to restore automatic deployment.
+If automatic run fails to start, open workflow and use **Run workflow** with `hugoblox-template`. Do not publish from old `hugo` branch.
 
 ## Review checklist
 
