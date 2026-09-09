@@ -83,7 +83,7 @@ features:
   repository:
     url: 'https://github.com/nlp-unibo'
     content_dir: content
-    branch: main
+    branch: hugoblox-template
   avatar:
     gravatar: false
     shape: circle
@@ -115,7 +115,7 @@ features:
 
 extensions:
   decap_cms:
-    branch: main
+    branch: hugoblox-template
     local_backend: false
   academicons:
     enable: true
