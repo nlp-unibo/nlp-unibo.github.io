@@ -257,7 +257,7 @@ uv run python scripts/site.py content
 # Create production build and Pagefind index under .build/public
 uv run python scripts/site.py build
 
-# Validate front matter, build site, and generate search index
+# Validate front matter and configuration, build site, and generate search index
 uv run python scripts/site.py check
 
 # Remove generated build and caches; keep downloaded tools
@@ -284,8 +284,9 @@ Every pull request targeting `hugoblox-template` automatically runs **Validate w
 
 1. Creates locked uv environment.
 2. Validates YAML front matter under `content/`.
-3. Builds production site with same pinned Hugo version used for deployment.
-4. Generates Pagefind search index.
+3. Checks Hugo version stays aligned across deployment configurations.
+4. Builds production site with pinned Hugo version used for deployment.
+5. Generates Pagefind search index.
 
 Do not merge while **Validate content and build** is failing. Open failed check, inspect first meaningful error, push fix to same branch, and wait for rerun.
 

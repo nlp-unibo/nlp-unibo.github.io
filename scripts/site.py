@@ -225,6 +225,21 @@ def validate_front_matter() -> None:
     print(f"Validated YAML front matter in {checked} content files ({skipped} without front matter skipped).")
 
 
+def validate_configuration() -> None:
+    workflow_version = read_hugo_version()
+    netlify = (ROOT / "netlify.toml").read_text(encoding="utf-8")
+    match = re.search(r'^\s*HUGO_VERSION\s*=\s*"([0-9.]+)"\s*$', netlify, re.MULTILINE)
+    if not match:
+        raise RuntimeError("Cannot find HUGO_VERSION in netlify.toml")
+    netlify_version = match.group(1)
+    if workflow_version != netlify_version:
+        raise RuntimeError(
+            "Hugo version mismatch: "
+            f"GitHub Actions uses {workflow_version}, Netlify uses {netlify_version}"
+        )
+    print(f"Hugo versions aligned at {workflow_version}.")
+
+
 def build() -> None:
     env, hugo, _ = environment()
     destination = BUILD / "public"
@@ -260,6 +275,7 @@ def main() -> None:
         build()
     elif args.command == "check":
         validate_front_matter()
+        validate_configuration()
         build()
     elif args.command == "serve":
         serve()
