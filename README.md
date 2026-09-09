@@ -10,8 +10,9 @@ Source repository for the [Language Technologies Lab website](https://nlp.unibo.
 4. Preview the site locally when possible.
 5. Commit and push your branch.
 6. Open a pull request against `hugoblox-template` and ask another lab member to review it.
-7. Merge only after checking text, links, dates, images, and build results.
-8. Monitor automatic deployment from GitHub **Actions** as described in [Publishing](#publishing).
+7. Wait for **Validate content and build** check to pass.
+8. Merge only after checking text, links, dates, images, and build results.
+9. Monitor automatic deployment from GitHub **Actions** as described in [Publishing](#publishing).
 
 For small text corrections, the whole workflow can be completed in GitHub's web interface. Do not edit generated files or the published website directly.
 
@@ -277,6 +278,17 @@ git push -u origin news/acl-2026
 
 Then open pull request against `hugoblox-template`.
 
+## Pull-request validation
+
+Every pull request targeting `hugoblox-template` automatically runs **Validate website**. This read-only workflow:
+
+1. Creates locked uv environment.
+2. Validates YAML front matter under `content/`.
+3. Builds production site with same pinned Hugo version used for deployment.
+4. Generates Pagefind search index.
+
+Do not merge while **Validate content and build** is failing. Open failed check, inspect first meaningful error, push fix to same branch, and wait for rerun.
+
 ## Publishing
 
 Merging into `hugoblox-template` automatically starts the **Deploy Hugo site to Pages** workflow.
@@ -301,6 +313,7 @@ Before merging:
 - [ ] No private data, credentials, drafts, or copyrighted files were added accidentally.
 - [ ] Images have sensible dimensions and file sizes.
 - [ ] Local `uv run python scripts/site.py check` succeeds.
+- [ ] GitHub **Validate content and build** check succeeds.
 - [ ] Changed page looks correct on desktop and mobile.
 - [ ] Links and downloads work.
 - [ ] Pull request targets `hugoblox-template`.
