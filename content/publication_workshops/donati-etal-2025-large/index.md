@@ -89,5 +89,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2025.luhme-1.9/
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

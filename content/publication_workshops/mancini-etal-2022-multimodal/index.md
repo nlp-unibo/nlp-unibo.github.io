@@ -74,5 +74,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2022.argmining-1.15
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

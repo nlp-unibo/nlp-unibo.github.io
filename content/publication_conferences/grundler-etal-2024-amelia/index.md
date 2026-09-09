@@ -86,5 +86,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2024.clicit-1.124/
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

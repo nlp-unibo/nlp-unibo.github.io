@@ -79,5 +79,3 @@ links:
 - name: URL
   url: https://www.frontiersin.org/journals/big-data/articles/10.3389/fdata.2019.00052
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

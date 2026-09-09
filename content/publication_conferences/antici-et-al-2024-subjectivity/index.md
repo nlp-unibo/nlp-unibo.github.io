@@ -90,5 +90,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2024.lrec-main.25
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

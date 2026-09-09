@@ -87,5 +87,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2024.luhme-1.2/
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.

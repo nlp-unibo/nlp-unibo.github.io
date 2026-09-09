@@ -79,5 +79,3 @@ links:
 - name: URL
   url: https://aclanthology.org/2020.coling-main.79/
 ---
-
-Add the **full text** or **supplementary notes** for the publication here using Markdown formatting.
