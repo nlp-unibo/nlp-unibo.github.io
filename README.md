@@ -16,6 +16,19 @@ Source repository for the [Language Technologies Lab website](https://nlp.unibo.
 
 For small text corrections, the whole workflow can be completed in GitHub's web interface. Do not edit generated files or the published website directly.
 
+## Review and emergency policy
+
+Every pull request requires approval from one repository code owner and the **Validate content and build** status check.
+Code owners are listed in `.github/CODEOWNERS`, and GitHub requests their review automatically.
+The author cannot approve their own pull request, so another maintainer must review each change.
+Resolve review threads and push follow-up fixes before merging.
+
+Routine updates always follow the contribution workflow above.
+An emergency is limited to an active outage, security incident, privacy exposure, or similarly urgent risk to the live site.
+Emergency changes still use a focused pull request, code-owner approval, and the required validation check whenever GitHub is operational.
+If those controls prevent urgent risk mitigation, a repository administrator may temporarily amend the ruleset, record the reason and exact change in the pull request, restore the ruleset immediately afterward, and request retrospective review.
+Deadlines and delayed content publication are not emergencies.
+
 ## Repository structure
 
 | Path | Purpose |
