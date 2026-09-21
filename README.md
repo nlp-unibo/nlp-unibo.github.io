@@ -9,7 +9,7 @@ Source repository for the [Language Technologies Lab website](https://nlp.unibo.
 3. Edit or add files under `content/`.
 4. Preview the site locally when possible.
 5. Commit and push your branch.
-6. Open a pull request against `hugoblox-template` and ask another lab member to review it.
+6. Open a pull request against `hugoblox-template` and request review when another maintainer is active or the change needs specialist input.
 7. Wait for **Validate content and build** check to pass.
 8. Merge only after checking text, links, dates, images, and build results.
 9. Monitor automatic deployment from GitHub **Actions** as described in [Publishing](#publishing).
@@ -18,14 +18,14 @@ For small text corrections, the whole workflow can be completed in GitHub's web 
 
 ## Review and emergency policy
 
-Every pull request requires approval from one repository code owner and the **Validate content and build** status check.
-Code owners are listed in `.github/CODEOWNERS`, and GitHub requests their review automatically.
-The author cannot approve their own pull request, so another maintainer must review each change.
-Resolve review threads and push follow-up fixes before merging.
+The repository currently has one active maintainer, so pull requests require zero approvals and the **Validate content and build** status check.
+Code owners are listed in `.github/CODEOWNERS`, but code-owner review is not required while maintenance remains a solo activity.
+When a second maintainer becomes active, increase the ruleset to one required code-owner approval and require another maintainer to review each change.
+Resolve review threads and push follow-up fixes before merging whenever a review takes place.
 
 Routine updates always follow the contribution workflow above.
 An emergency is limited to an active outage, security incident, privacy exposure, or similarly urgent risk to the live site.
-Emergency changes still use a focused pull request, code-owner approval, and the required validation check whenever GitHub is operational.
+Emergency changes still use a focused pull request and the required validation check whenever GitHub is operational.
 If those controls prevent urgent risk mitigation, a repository administrator may temporarily amend the ruleset, record the reason and exact change in the pull request, restore the ruleset immediately afterward, and request retrospective review.
 Deadlines and delayed content publication are not emergencies.
 
