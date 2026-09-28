@@ -59,5 +59,5 @@ user_groups:
 
 Eleonora Mancini obtained her M.S. degree in Artificial Intelligence from University of Bologna in 2021, with a dissertation on disruptive situations detection on public transports through Speech Emotion Recognition. 
 Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech recognition. 
-She is currently a PhD student of the Department of Computer Science and Engineering of University of Bologna (DISI) - Language Technologies Lab, working on multimodal argument mining, explainability in multimodal natural language processing and vague clauses detection in privacy policies. 
+She is a Postdoctoral Research Fellow at the Department of Computer Science and Engineering (DISI) of the University of Bologna, in the Language Technologies Lab, where she obtained her PhD in 2026. She works on multimodal argument mining, explainability in multimodal natural language processing, and vague clause detection in privacy policies.
 In addition, she works as a teaching assistant at University of Bologna.

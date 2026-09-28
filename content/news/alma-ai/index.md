@@ -10,14 +10,13 @@ summary: "The workshop investigates LLM applications in the legal domain, with a
 
 ## Workshop Abstract
 
-La diffusione dei Large Language Model in ogni ambito delle attività umane ha reso necessario valutare lo stato dell’arte, i limiti, gli ostacoli e le barriere che questa potente tecnologia offre. 
-I rapidi aggiornamenti di queste tecnologie impongono di allargare gli orizzonti degli obiettivi di ricerca e delle metodologie. 
-Le capacità di reasoning degli Agentic AI indicano nuove sfide. 
-Tuttavia, sempre più emerge la necessità di valutare in quali ambiti queste tecnologie possano produrre un reale valore aggiunto e quando invece, anche considerando l’uso delle risorse necessarie, sia meglio adottare approcci più tradizionali.
-Emerge quindi il tema di come valutare i modelli messi a confronto fra loro (benchmarking). 
-Gli aspetti tecnici si intersecano con quelli etici, giuridici, di sostenibilità, di efficacia, nonché di spiegabilità dei passaggi di reasoning. 
-Il workshop intende investigare questi temi, con particolare riguardo alle applicazioni nell’ambito del diritto dove il linguaggio è un pilastro costitutivo della disciplina. 
-Il dibattito è utile a definire anche le aspettative future delle quali le istituzioni, come i Parlamenti e le pubbliche amministrazioni, potranno avvantaggiarsi senza tuttavia ignorare rischi e false illusioni.
+The spread of Large Language Models across every area of human activity makes it necessary to assess the state of the art, limits, obstacles, and barriers of this powerful technology.
+Rapid updates to these technologies require broader research goals and methods, and the reasoning capabilities of agentic AI raise new challenges.
+It is increasingly important to assess where these technologies add real value and where, also considering the resources they need, more traditional approaches are preferable.
+This raises the question of how to compare models (benchmarking).
+Technical aspects intersect with ethical, legal, sustainability, effectiveness, and explainability concerns about reasoning steps.
+The workshop investigates these themes, with particular attention to law, where language is a founding pillar of the discipline.
+The debate also helps define what institutions such as parliaments and public administrations can expect to gain, without ignoring risks and false illusions.
 
 ## Federico Ruggeri's speech
 

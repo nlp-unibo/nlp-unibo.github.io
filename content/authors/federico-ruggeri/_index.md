@@ -12,7 +12,7 @@ organizations:
   - name: University of Bologna
     url: 'https://federicoruggeri.github.io/'
 
-bio: The aim of my research is to devise Natural Language Processing (NLP) systems that learn to generate, distill, and use knowledge from unstructured text.
+bio: His research aims to devise Natural Language Processing (NLP) systems that learn to generate, distill, and use knowledge from unstructured text.
 
 interests:
   - Artificial Intelligence
@@ -59,6 +59,6 @@ user_groups:
 
 Federico obtained his PhD from the University of Bologna in 2022 with the thesis *"Towards Integrating Unstructured Knowledge in Natural Language Processing"*.
 During his PhD, he defined the notion of Unstructured Knowledge Integration (UKI) and investigated its applications in the fields of Legal Analytics and Argument Mining.
-He holds the position of Postdoc Research Fellow at the Computer Science and Engineering Department (DISI) of the University of Bologna and mainly researches knowledge extraction and Neuro-symbolic solutions for UKI.
+He holds the position of Postdoctoral Research Fellow at the Computer Science and Engineering Department (DISI) of the University of Bologna and mainly researches knowledge extraction and Neuro-symbolic solutions for UKI.
 He is currently supervising two BI-REX national projects concerning integrating LLMs in industrial use cases.
 In the past, he has participated in several national and international projects focusing on the definition of interpretable and efficient NLP systems.

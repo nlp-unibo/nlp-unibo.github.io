@@ -57,4 +57,4 @@ Andrea is a Junior assistant professor (RTD-A) at the University of Bologna. He 
 Andrea obtained his PhD from the University of Bologna in 2021 with a dissertation on the integration of deep neural networks and symbolic knowledge.
 He spent research periods abroad at Stanford and Imperial College London, and is Visiting Professor at the Université Catholique de Lille. 
 He is an expert in deep learning architectures for natural language processing.
-He has worked as a Post-doc Research Fellow on the [Humane-AI-Net](https://www.humane-ai.eu/) ICT-48 European project on human-centric ethical AI, on the [StairwAI](https://stairwai.nws.cs.unibo.it/about-project/) ICT-49 project on the development of horizontal matchmaking services, and has covered the role of Adjunct Professor at the University of Bologna.
+He has worked as a Postdoctoral Research Fellow on the [Humane-AI-Net](https://www.humane-ai.eu/) ICT-48 European project on human-centric ethical AI, on the [StairwAI](https://stairwai.nws.cs.unibo.it/about-project/) ICT-49 project on the development of horizontal matchmaking services, and has covered the role of Adjunct Professor at the University of Bologna.

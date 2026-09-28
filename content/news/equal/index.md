@@ -3,7 +3,7 @@ title: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorithm
 date: 2026-01-23
 tags: ["natural language processing", "workshop", "EquAl", "project", "legal", "event"]
 
-summary: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorithmic Discrimination Through Norms and Technologies." 
+summary: "The EquAl final conference discussed how norms and technologies can promote fairness and counter algorithmic discrimination."
 
 ---
 

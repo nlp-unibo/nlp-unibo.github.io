@@ -3,7 +3,7 @@ title: "PRIMA: PRivacy Infringements Machine-Advice - Final Conference"
 date: 2026-01-12
 tags: ["natural language processing", "workshop", "PRIMA", "project", "legal", "event"]
 
-summary: "PRIMA: PRivacy Infringements Machine-Advice" 
+summary: "The PRIMA final conference presented methods and tools for the automated analysis of privacy policies and the assessment of their lawfulness."
 
 ---
 

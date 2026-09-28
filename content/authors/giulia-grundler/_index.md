@@ -12,7 +12,7 @@ organizations:
   - name: University of Bologna
     url: 'https://www.unibo.it/sitoweb/giulia.grundler2/en'
 
-bio: Her concerns applying research machine learning and natural language processing methods for multi-lingual legal analytics in the context of the European and national legal frameworks.
+bio: Her research concerns applying machine learning and natural language processing methods to multilingual legal analytics in the context of the European and national legal frameworks.
 
 interests:
   - Artificial Intelligence
@@ -46,4 +46,4 @@ user_groups:
   - Research Fellows
 ---
 
-Giulia graduated cum laude in Computer Engineering in 2021 and joined the lab as a research assistant with the ADELE project, a European DG JUSTICE project whose objective is to develop machine learning and natural language processing methods for multi-lingual legal analytics in the context of the European and national legal frameworks.
+Giulia graduated cum laude in Computer Engineering in 2021 and joined the lab as a Research Fellow on the ADELE project, a European DG JUSTICE project that develops machine learning and natural language processing methods for multilingual legal analytics.

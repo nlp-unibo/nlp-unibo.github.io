@@ -44,9 +44,6 @@ user_groups:
   - PhD Students
 ---
 
-Nicolò Donati is a dedicated PhD student that joined the team in 2023. 
-He holds a Master's degree in Artificial Intelligence from the esteemed University of Bologna, where he also completed his Bachelor's degree in Computer Engineering.
-His academic journey has been marked by a profound commitment to the field of NLP. 
-Nicolò's research interests primarily revolve around textual generation and retrieval augmented generation, the topic of his master thesis. 
-Through his studies, he aims to contribute to the advancement of language processing techniques and their applications, exploring innovative ways to enhance the generation and retrieval of text.
-As a driven scholar, Nicolò is passionate about leveraging the power of artificial intelligence to solve complex problems and push the boundaries of what is possible in the realm of language understanding and generation.
+Nicolò Donati is a PhD student who joined the lab in 2023.
+He holds a Master's degree in Artificial Intelligence and a Bachelor's degree in Computer Engineering from the University of Bologna.
+His research focuses on text generation and retrieval-augmented generation, the topic of his master's thesis.
