@@ -51,7 +51,8 @@ sections:
       count: 2
       filters:
         folders:
-          - publication_preprints
+          - publication
+        category: Preprint
     design:
       view: citation
       columns: '1'

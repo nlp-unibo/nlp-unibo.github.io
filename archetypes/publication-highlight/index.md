@@ -29,6 +29,8 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
+categories:
+  - Highlight
 ---
 
 <!-- Add optional supplementary text here. -->
