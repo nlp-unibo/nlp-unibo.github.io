@@ -6,7 +6,7 @@ date: '{{ now.Format "2006-01-02" }}'
 draft: true
 doi: ""
 publication_types:
-  - article
+  - thesis
 publication: ""
 publication_short: ""
 abstract: "TODO: Add thesis abstract."

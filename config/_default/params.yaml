@@ -100,7 +100,7 @@ features:
       category: ''
       category_id: ''
   search:
-    provider: unibo
+    provider: ''
     algolia:
       app_id: ''
       api_key: ''
@@ -114,9 +114,6 @@ features:
 # Extensions
 
 extensions:
-  decap_cms:
-    branch: hugoblox-template
-    local_backend: false
   academicons:
     enable: true
 

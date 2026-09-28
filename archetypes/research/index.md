@@ -5,6 +5,8 @@ draft: true
 tags:
   - research
 summary: "TODO: Add a one-sentence research-area summary."
+# Font Awesome 5 solid icon shown on the homepage research tile, such as comments or balance-scale
+icon: "TODO: icon name"
 ---
 
 TODO: Introduce research area.

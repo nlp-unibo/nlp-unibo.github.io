@@ -114,7 +114,7 @@ content/publication/rossi-etal-2026-example/
 | `title` | The paper title, without LaTeX commands such as `\textbf` |
 | `authors` | One author per line, starting with `- `. Write lab members exactly as their profile title, for example `Federico Ruggeri`, so that their names appear in bold and link to their profiles |
 | `date` and `publishDate` | The publication date as `YYYY-MM-DD` |
-| `publication_types` | `article-journal`, `paper-conference`, `chapter`, or `manuscript` for a preprint |
+| `publication_types` | `article-journal` for a journal paper, `paper-conference` for a conference or workshop paper, `article` for a preprint, or `chapter` for a book chapter |
 | `publication` | The full venue name, for example `Proceedings of ACL 2026` |
 | `categories` | Exactly one of `Highlight`, `Journal`, `Conference`, `Workshop`, or `Preprint`. It selects the list on the Publications page |
 | `abstract` | The abstract |
@@ -154,6 +154,7 @@ Our paper has been accepted at ACL 2026.
 
 The homepage shows the five most recent news items automatically.
 A news item with a future date stays hidden until that date.
+The site rebuilds every day at 04:00 UTC, so the item appears on the morning of its date.
 
 ### Add an event
 
@@ -205,6 +206,8 @@ content/proposals/legal/
 
 1. Copy an existing proposal folder inside the right topic, for example `content/proposals/legal/am/`, and give it a new name.
 2. Set `title`, `date`, `summary`, and `tags`.
+   Validation requires `title`, `date`, and `summary`.
+   A topic `_index.md` needs `title` and `summary`.
 3. Write the body with a **Description**, a **Contact** line, and optional **References**.
    Write each contact as an email link, for example `[Maria Rossi](mailto:maria.rossi@unibo.it)`.
 
@@ -293,7 +296,8 @@ Open the **Actions** tab to follow the **Deploy Hugo site to Pages** run, then c
 ### Work on your computer
 
 The first setup installs everything the site needs into this folder, including the exact Hugo version used by GitHub.
-It requires [Git](https://git-scm.com/), [uv](https://docs.astral.sh/uv/getting-started/installation/), and a current [Node.js](https://nodejs.org/) LTS release.
+It requires [Git](https://git-scm.com/) and [uv](https://docs.astral.sh/uv/getting-started/installation/), and it runs on Linux and macOS.
+On Windows, use the [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install) and run every command inside it.
 
 ```bash
 git clone https://github.com/nlp-unibo/nlp-unibo.github.io.git
@@ -354,6 +358,13 @@ The table below explains the most frequent messages.
 | `author slug must be '...'` | A member's folder name does not match their `title`. Rename the new folder as shown |
 | `author '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
 | `exceeds 5 MiB asset limit` | Compress the image or PDF, then upload it again |
+| `contains example domain` or `contains example email` | A template link or address such as `example.org` is still there. Replace it with the real one |
+| `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
+| `missing page index` | The folder has no `index.md` (or `_index.md` for a member or a proposal topic). Check the file name |
+| `pages must be folders with an index.md` | A page was saved as `name.md` directly in a section. Move it to `name/index.md` |
+| `repeated key ...` | The same field appears twice in the front matter. Keep one of them |
+| Warning `future publication date` | The page is valid but stays hidden until its date |
+| Warning `missing cite.bib` | The publication has no BibTeX file, so its Cite button is empty. Add `cite.bib` |
 | A YAML error with a line number | The front matter layout is broken. Check tabs, indentation, quotes, and both `---` lines near that line |
 
 The following problems produce no message.
@@ -391,7 +402,10 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
 | `archetypes/` | Templates used by `site.py new` |
 | `scripts/site.py` | Setup, preview, validation, and build commands |
+| `scripts/test_site.py` | Self-checks for the validator, run by the pull-request workflow |
+| `content/mm-argfallacy/` | Redirect from a shared-task short link to its event page |
 | `.github/workflows/` | Pull-request validation (`validate.yml`) and deployment (`hugo.yml`) |
+| `.github/pull_request_template.md`, `.github/CODEOWNERS` | Pull-request checklist and code owners |
 
 ### Categories
 
@@ -415,25 +429,27 @@ When moving a published page, keep its old path under `aliases`, so that externa
 
 | Command | Effect |
 | --- | --- |
-| `uv run python scripts/site.py setup` | Download the pinned Hugo, Go, and Node tools into the ignored `.tools/` folder |
+| `uv run python scripts/site.py setup` | Download the pinned Hugo and Go versions into the ignored `.tools/` folder |
 | `uv run python scripts/site.py serve` | Start the local preview, including drafts and future pages |
 | `uv run python scripts/site.py new TYPE SLUG` | Create a draft page from a template |
-| `uv run python scripts/site.py content` | Validate front matter, slugs, categories, placeholders, local links, and asset sizes |
+| `uv run python scripts/site.py content` | Validate front matter, slugs, required fields, categories, publication types, placeholders, local links, and asset sizes |
 | `uv run python scripts/site.py templates` | Verify that every template generates a valid draft |
-| `uv run python scripts/site.py build` | Build the production site and its search index under `.build/public` |
+| `uv run python scripts/site.py build` | Build the production site under `.build/public` |
 | `uv run python scripts/site.py check` | Run every validation, then the production build |
 | `uv run python scripts/site.py clean` | Remove build output and caches, and keep the downloaded tools |
+| `uv run python scripts/test_site.py` | Run the self-checks of the validator's link parser and front-matter loader |
 
 The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, and `preprint`.
 Research proposals and opportunities have no template, so contributors copy an existing entry.
 
-The Hugo version comes from `.github/workflows/hugo.yml`, and `check` verifies that `netlify.toml` uses the same version.
+The Hugo version comes from `.github/workflows/hugo.yml`, so local and GitHub builds always use the same version.
 The production build uses its own resource folder, so `check` can run while the preview is open.
 
 ### Validation and deployment
 
 Every pull request to `hugoblox-template` runs **Validate website**, which executes `site.py check` with the locked Python environment.
-Merging into `hugoblox-template` runs **Deploy Hugo site to Pages**, which builds the site and its Pagefind search index and publishes them.
+Merging into `hugoblox-template` runs **Deploy Hugo site to Pages**, which builds and publishes the site.
+The same workflow also runs every day at 04:00 UTC, so pages with a future date appear once that date arrives.
 If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `hugoblox-template`.
 Do not publish from the old `hugo` branch.
 Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.

@@ -1,7 +1,7 @@
 ---
-title: "TODO: Full name"
-first_name: "TODO"
-last_name: "TODO"
+title: '{{ replace .Name "-" " " | title }}'
+first_name: "TODO: First name"
+last_name: "TODO: Last name"
 superuser: false
 draft: true
 

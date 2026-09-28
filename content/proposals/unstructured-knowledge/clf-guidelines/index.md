@@ -8,6 +8,7 @@ summary: "Train classifiers with guidelines only, without the need for classific
 
 aliases:
   - /proposals_uki/clf_guidelines/
+  - /proposals/unstructured-knowledge/clf_guidelines/
 ---
 
 **Description:**\
