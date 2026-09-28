@@ -8,6 +8,8 @@ tags:
 
 summary: The development of automatic tools for handling and digesting speech data, often in conjuction with other modalities like text.
 
+# Font Awesome icon shown on the homepage research tile
+icon: microphone-alt
 ---
 
 ### Argumentation 

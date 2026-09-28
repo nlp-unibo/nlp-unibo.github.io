@@ -16,6 +16,22 @@ sections:
         Our **focus** is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere.
 
         {{% cta cta_link="./people/" cta_text="Meet the team →" %}}
+  - block: markdown
+    id: stats
+    content:
+      title:
+      text: '{{< site-stats >}}'
+    design:
+      columns: '1'
+      spacing:
+        padding: ['20px', '0', '20px', '0']
+  - block: markdown
+    id: research
+    content:
+      title: Research
+      text: '{{< section-tiles "research" >}}'
+    design:
+      columns: '1'
   - block: collection
     content:
       title: Latest News

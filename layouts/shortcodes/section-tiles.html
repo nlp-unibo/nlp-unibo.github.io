@@ -1,0 +1,14 @@
+{{/* One tile per page of the given section, with the Font Awesome `icon` from its front matter. */}}
+{{- with site.GetPage (.Get 0) -}}
+<div class="lt-tiles">
+  {{- range .RegularPages.ByWeight }}
+  <a class="lt-tile" href="{{ .RelPermalink }}">
+    {{- with .Params.icon }}<i class="fas fa-{{ . }} lt-tile-icon" aria-hidden="true"></i>{{ end }}
+    <span class="lt-tile-title">{{ .Title }}</span>
+    <span class="lt-tile-summary">{{ .Summary | plainify | truncate 140 }}</span>
+  </a>
+  {{- end }}
+</div>
+{{- else -}}
+  {{- errorf "section-tiles: section %q not found in %s" (.Get 0) .Page.File.Path -}}
+{{- end -}}

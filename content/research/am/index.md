@@ -8,6 +8,8 @@ tags:
   
 summary: The automatic extraction and identification of argumentative structures from text. Such argumentative structures include the premise, conclusions, the argument scheme and the relationship between arguments.
 
+# Font Awesome icon shown on the homepage research tile
+icon: comments
 ---
 
 ### Argumentative Fallacies 
