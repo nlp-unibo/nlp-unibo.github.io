@@ -266,6 +266,11 @@ Homepage content and collections are defined in `content/_index.md`. Collection 
 
 Top navigation lives in `config/_default/menus.yaml`. Lower `weight` values appear earlier. Test navigation changes locally before merging.
 
+An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`, as News and Events do under **News & Events**.
+The full menu fits in one line from 1280px.
+Narrower screens use the collapsed menu, which `assets/scss/template.scss` extends from the theme's 992px breakpoint.
+Check the menu at 1280px after adding an entry, and shorten a label or move it into a dropdown if the line wraps.
+
 Changes outside `content/` can affect whole site. Ask repository maintainer for review before changing `config/`, `layouts/`, `go.mod`, or GitHub Actions workflow.
 
 ## Editing through GitHub website
