@@ -1,20 +1,13 @@
 ---
 title: 'CLIC-it'
 
-date: '2026-02-27'
-
 tags:
   - challenge
   - CLIC
   - language:italian
   - computational linguistics
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
-url_project: 'https://clic2024.ilc.cnr.it/'
+url_project: 'https://clic2025.unica.it/'
 categories:
   - Challenge
 aliases:

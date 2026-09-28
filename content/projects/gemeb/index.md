@@ -9,11 +9,8 @@ tags:
   - generative models
   - LLMs
 
+summary: "The project develops ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy."
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://bi-rex.it/quarto-bando-bi-rex/'
 categories:
   - National project
@@ -21,4 +18,4 @@ aliases:
   - /projects_national/gemeb/
 ---
 
-The project developing ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy.
+The project develops ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy.

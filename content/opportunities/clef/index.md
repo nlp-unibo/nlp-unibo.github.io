@@ -1,18 +1,11 @@
 ---
 title: 'CLEF'
 
-date: '2026-02-27'
-
 tags:
   - challenge
   - CLEF
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
-url_project: 'https://clef2026.clef-initiative.eu/'
+url_project: 'https://clef2027.clef-initiative.eu/'
 categories:
   - Challenge
 aliases:

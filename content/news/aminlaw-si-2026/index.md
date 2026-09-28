@@ -2,7 +2,7 @@
 title: "[AI & Law Journal] Special Issue on Argument Mining in the Legal Domain" 
 date: 2026-08-01
 tags: ["news", "AI & Law", "journal", "special issue"]
-summary: "This special issue seeks to advance these developments by bringing together contributions that explore both foundational and applied aspects of legal argument mining." 
+summary: "The Artificial Intelligence and Law journal special issue on Argument Mining in the Legal Domain invites contributions on both foundational and applied aspects of legal argument mining."
 
 ---
 

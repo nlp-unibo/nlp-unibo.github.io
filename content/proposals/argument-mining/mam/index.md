@@ -4,10 +4,6 @@ date: 2026-03-02
 
 tags: ["MAM", "argument mining", "speech", "multimodal"]
 
-description: "Make use of speech information (e.g. prosody) to enhance the set of features that can be used to detect arguments. 
-Speech can either be represented by means of ad-hoc feature extraction methods (e.g. MFCC) or via end-to-end architectures. 
-Few existing corpora both offer argument annotation layers and speech data regarding a given text document."
-
 summary: "Make use of speech information (e.g. prosody) to enhance the set of features that can be used to detect arguments."
 
 aliases:

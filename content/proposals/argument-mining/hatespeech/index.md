@@ -4,9 +4,6 @@ date: 2026-03-02
 
 tags: ["LLMs", "argument mining", "hate speech", "reasoning"]
 
-description: "Hate speech often lies on implicit content and subtle reasoning nuances. 
-Our idea is to apply argumentative reasoning to hate speech to make implicit content explicit in order to define more interpretable and user-friendly hate speech detection systems."
-
 summary: "Apply argumentative reasoning to hate speech to make implicit content explicit"
 
 aliases:
@@ -14,7 +11,7 @@ aliases:
 ---
 
 **Description:**\
-Hate speech often lies on implicit content and subtle reasoning nuances. 
+Hate speech often relies on implicit content and subtle reasoning nuances. 
 Our idea is to apply argumentative reasoning to hate speech to make implicit content explicit in order to define more interpretable and user-friendly hate speech detection systems.
 
 **Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it), [Arianna Muti](mailto:arianna.muti@unibocconi.it)

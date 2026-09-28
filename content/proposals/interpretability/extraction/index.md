@@ -21,6 +21,6 @@ This can be done with LLMs (e.g., prompting techniques) or other solutions.
 **References:**
 
 **A Game Theoretic Approach to Class-wise Selective Rationalization**\
-Shiyu Chang, Yang Zhang, Mo Yu, Tommi S. Jaakkola.
+Shiyu Chang, Yang Zhang, Mo Yu, Tommi S. Jaakkola.\
 33rd Conference on Neural Information Processing Systems (NeurIPS), Vancouver, Canada, 2019.\
 [PDF](https://papers.neurips.cc/paper_files/paper/2019/file/5ad742cd15633b26fdce1b80f7b39f7c-Paper.pdf)

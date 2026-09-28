@@ -14,7 +14,7 @@ aliases:
 **Description:**\
 There are several techniques for transforming text into abstract structured content (AMR graphs, Parse trees, etc...). 
 We are interested in applying rationalization in these contexts by also enforcing some structural constraints depending on the given scenario of application.
-The constraints describe which type of allowed structured the rationalization system can extract. 
+The constraints describe which type of allowed structures the rationalization system can extract. 
 In the case of tree kernels, these structures are different types of trees.
 
 **Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)

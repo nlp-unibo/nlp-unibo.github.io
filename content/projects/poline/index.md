@@ -9,10 +9,6 @@ tags:
 
 summary: POLINE aims at developing an AI-powered pilot tool for the retrieval and analysis of judicial principles of law in the CJEU and national case-law in Value Added Tax (VAT).
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://site.unibo.it/poline/en'
 categories:
   - International project

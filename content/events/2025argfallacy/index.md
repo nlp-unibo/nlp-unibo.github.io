@@ -2,22 +2,23 @@
 title: "Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates" 
 date: 2025-07-01
 tags: ["natural language processing", "shared task", "arg-fallacy", "argument mining", "fallacy classification", "fallacy detection", "political debates", "multimodal"]
-author: ["Eleonora Mancini", "Federico Ruggeri", "Serena Villata", "Paolo Torroni"]
-description: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025." 
+authors:
+  - "Eleonora Mancini"
+  - "Federico Ruggeri"
+  - "Serena Villata"
+  - "Paolo Torroni"
 summary: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025."
 ---
 
 <table>
   <tr>
     <td><img src="argfallacy.webp"/></td>
-    <td><img src="argfallacy.webp"/></td>
-    <td><img src="argfallacy.webp"/></td>
   </tr>
 </table>
 
 Multimodal Argumentative Fallacy Detection and Classification on Political Debates Shared Task.
 
-Co-located with The [12th Workshop on Argument Mining](https://argmining-org.github.io/2025/) in Vienna, Austria.
+Co-located with the [12th Workshop on Argument Mining](https://argmining-org.github.io/2025/) in Vienna, Austria.
 
 
 # Overview
@@ -62,7 +63,7 @@ Inspired by observations from [Goffredo et al. (2022)](https://www.ijcai.org/pro
 
 | **Dataset**       | **Description**                                                                                                                                                                          | **Size**       |
 |--------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|
-|**MM-USED-fallacy** | A multimodal extension of USElecDeb60to20 dataset, covering US presidential debates (1960-2020). Inlcludes labels for argumentative fallacy detection and argumentative fallacy classification. | 1,278 samples (updated version)| 
+|**MM-USED-fallacy** | A multimodal extension of USElecDeb60to20 dataset, covering US presidential debates (1960-2020). Includes labels for argumentative fallacy detection and argumentative fallacy classification. | 1,278 samples (updated version)| 
 | **MM-USED**        | A multimodal extension of the USElecDeb60to16 dataset, covering US presidential debates (1960–2016). Includes labels for argumentative sentence detection and component classification.   | 23,505 sentences (updated version)|
 | **UKDebates**      | 386 sentences and audio samples from the 2015 UK Prime Ministerial elections. Sentences are labeled for argumentative sentence detection: containing or not containing a claim.           | 386 sentences  |
 | **M-Arg**          | A multimodal dataset for argumentative relation classification from the 2020 US Presidential elections. Sentences are labeled as attacking, supporting, or unrelated to another sentence. | 4,104 pairs    |
@@ -70,11 +71,13 @@ Inspired by observations from [Goffredo et al. (2022)](https://www.ijcai.org/pro
 
 ---
 
-All datasets will be available through [MAMKit](https://nlp-unibo.github.io/mamkit/).  
+All datasets are available through [MAMKit](https://nlp-unibo.github.io/mamkit/).  
 
 Since many multimodal datasets cannot release audio samples due to copyright restrictions, MAMKit provides an interface to dynamically build datasets and promote reproducible research.  
 
-Datasets are formatted as `torch.Dataset` objects, containing input values (text, audio, or both) and corresponding task-specific labels. More details about data formats and dataset building are available in MAMKit's documentation.  ## Retrieving the Data through MAMKit
+Datasets are formatted as `torch.Dataset` objects, containing input values (text, audio, or both) and corresponding task-specific labels. More details about data formats and dataset building are available in MAMKit's documentation.
+
+## Retrieving the Data through MAMKit
 
 To retrieve the datasets through MAMKit, you can use the following code interface:
 
@@ -124,7 +127,7 @@ For more details, refer to the MAMKit [GitHub repository](https://github.com/nlp
 
 ## Test Set Access 🔍
 
-The test set for **mm-argfallacy-2025** is now available! To use it, please:
+The test set for **mm-argfallacy-2025** was released on April 7th, 2025. To use it:
 
 1. Create a fresh environment  
 2. Clone the repository and install the requirements:
@@ -185,16 +188,16 @@ def loading_data_example():
 
 # Evaluation  
 
-For argumentative fallacy detection, we will compute the binary F1-score on predicted sentence-level labels.  
-For argumentative fallacy classification, we will compute the macro F1-score on predicted sentence-level labels.  
-Metrics will be computed on the hidden test set to determine the best system for each sub-task and input mode.  
+For argumentative fallacy detection, we computed the binary F1-score on predicted sentence-level labels.  
+For argumentative fallacy classification, we computed the macro F1-score on predicted sentence-level labels.  
+Metrics were computed on the hidden test set to determine the best system for each sub-task and input mode.  
 
-Evaluation will be performed via the [CodaLab platform](https://codalab.lisn.upsaclay.fr/competitions/22739).  
-On CodaLab, participants will find the leaderboard, along with the results of the provided baselines.  
+Evaluation was performed via the [CodaLab platform](https://codalab.lisn.upsaclay.fr/competitions/22739).  
+On CodaLab, participants can find the leaderboard, along with the results of the provided baselines.  
 Submission guidelines can be found under the *Evaluation* section of the CodaLab competition page.
 
-🚨 **Important**: In the evaluation website, you will also find a link to a **mandatory participation survey**.  
-Filling out this survey is required in order to participate in the task.  
+🚨 **Important**: The evaluation website also linked to a **mandatory participation survey**.  
+Filling out this survey was required in order to participate in the task.  
 We also provide the survey link here for convenience: [https://tinyurl.com/limesurvey-argfallacy](https://tinyurl.com/limesurvey-argfallacy)  
 
 ### Baseline Results on Test Set
@@ -232,18 +235,18 @@ We also provide the survey link here for convenience: [https://tinyurl.com/limes
 
 # Submission
 
-All evaluated submissions are required to commit to submitting a system description paper. You can choose between two options:
+All evaluated submissions were required to commit to submitting a system description paper. Teams could choose between two options:
 
 - **Non-Archival Paper**:  
-  A 2-page paper describing your system, with unlimited pages for appendices and bibliography. These papers will *not* be published in the workshop proceedings, but your system will be mentioned in the Overview Paper of the shared task, upon acceptance.
+  A 2-page paper describing the system, with unlimited pages for appendices and bibliography. These papers were *not* published in the workshop proceedings, but the system was mentioned in the Overview Paper of the shared task, upon acceptance.
 
 - **Archival Paper**:  
-  A 4-page paper describing your system, also with unlimited pages for appendices and bibliography. These papers *will* be published in the official ACL workshop proceedings and must be presented at the workshop (poster or oral session).  
-  ⚠️ *In accordance with ACL policy, at least one team member must register for the workshop in order to present an archival paper if aaccepted to be published at the ACL proceedings.*
+  A 4-page paper describing the system, also with unlimited pages for appendices and bibliography. These papers *were* published in the official ACL workshop proceedings and had to be presented at the workshop (poster or oral session).  
+  ⚠️ *In accordance with ACL policy, at least one team member had to register for the workshop in order to present an archival paper if accepted to be published at the ACL proceedings.*
 
-All papers must use the official [ACL style templates](https://github.com/acl-org/acl-style-files), available in both LaTeX and Word. We strongly recommend using the official [Overleaf template](https://www.overleaf.com/project/5f64f1fb97c4c50001b60549) for convenience.
+All papers had to use the official [ACL style templates](https://github.com/acl-org/acl-style-files), available in both LaTeX and Word. We strongly recommended using the official [Overleaf template](https://www.overleaf.com/project/5f64f1fb97c4c50001b60549) for convenience.
 
-We have sent an email to each team with all the details regarding the system description paper submission for MM-ArgFallacy2025. Please check your inbox (and spam folder just in case).
+We sent an email to each team with all the details regarding the system description paper submission for MM-ArgFallacy2025.
 
 - 🗓️ **Submissions open**: May 1st, 2025 (the day after the end of the evaluation period)  
 - 🗓️ **Submissions close**: May 15th, 2025 
@@ -251,10 +254,8 @@ We have sent an email to each team with all the details regarding the system des
 - 📝 **Camera-ready deadline**: May 25th, 2025  
 
 **Important notes**:
-- All accepted **archival papers** will be presented during the workshop’s poster session and require at least one registered author.  
-- **Non-archival papers** do *not* require registration and are not presented at the workshop, but their systems will be acknowledged in the Overview Paper.
-
-We look forward to receiving your submissions!
+- All accepted **archival papers** were presented during the workshop’s poster session and required at least one registered author.  
+- **Non-archival papers** did *not* require registration and were not presented at the workshop, but their systems were acknowledged in the Overview Paper.
 
 ## 🏆 Leaderboard – Shared Task Results 
 
@@ -330,15 +331,15 @@ We look forward to receiving your submissions!
 
 # Key Dates (Anywhere on Earth)
 
-- **Release of Training Data**: February 25th
-- **Release of Test Set**: ~~March 24th~~ → April 7th
-- **Evaluation Start**: ~~April 14th~~ → April 21st
-- **Evaluation End**: ~~April 25th~~ → April 30th
-- **Paper Submissions Open**: May 1st
-- **Paper Submission Close**: May 15th
-- **Notification of acceptance**: May 20th
-- **Camera-ready Due**: May 25th  
-- **Workshop**: July 31st
+- **Release of Training Data**: February 25th, 2025
+- **Release of Test Set**: ~~March 24th, 2025~~ → April 7th, 2025
+- **Evaluation Start**: ~~April 14th, 2025~~ → April 21st, 2025
+- **Evaluation End**: ~~April 25th, 2025~~ → April 30th, 2025
+- **Paper Submissions Open**: May 1st, 2025
+- **Paper Submission Close**: May 15th, 2025
+- **Notification of acceptance**: May 20th, 2025
+- **Camera-ready Due**: May 25th, 2025  
+- **Workshop**: July 31st, 2025
 
 
 
@@ -350,24 +351,24 @@ We look forward to receiving your submissions!
   <tr>
     <td style="width: 20%;"><img src="emancini.png"/></td>
     <td style="width: 30%;">
-      <a href="https://helemanc.github.io/"><bold><h2>Eleonora Mancini</h2></bold></a>
+      <a href="https://helemanc.github.io/"><h2>Eleonora Mancini</h2></a>
       Language Technologies Lab, University of Bologna, Italy
     </td>
     <td style="width: 20%;"><img src="fruggeri.png"/></td>
     <td style="width: 30%;">
-      <a href="https://federicoruggeri.github.io/"><bold><h2>Federico Ruggeri</h2></bold></a>
+      <a href="https://federicoruggeri.github.io/"><h2>Federico Ruggeri</h2></a>
       Language Technologies Lab, University of Bologna, Italy
     </td>
   </tr>
   <tr>
     <td style="width: 20%;"><img src="svillata.jpg" height="20%"/></td>
     <td style="width: 30%;">
-      <a href="https://webusers.i3s.unice.fr/~villata/Home.html"><bold><h2>Serena Villata</h2></bold></a>
+      <a href="https://webusers.i3s.unice.fr/~villata/Home.html"><h2>Serena Villata</h2></a>
       Inria-I3S WIMMICS Laboratoire I3S, CNRS, Sophia Antipolis, France
     </td>
     <td style="width: 20%;"><img src="ptorroni.png"/></td>
     <td style="width: 30%;">
-      <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><bold><h2>Paolo Torroni</h2></bold></a>
+      <a href="https://www.unibo.it/sitoweb/p.torroni/en/"><h2>Paolo Torroni</h2></a>
       Language Technologies Lab, University of Bologna, Italy
     </td>
   </tr>
@@ -412,7 +413,7 @@ Eleonora Mancini, Federico Ruggeri, Serena Villata, and Paolo Torroni. 2025. Ove
 
 <table>
   <tr>
-    <td style="width: 80%;">This shared task is partially supported by the project European Commission's NextGeneration EU programme, PNRR -- M4C2 -- Investimento 1.3, Partenariato Esteso, PE00000013 - FAIR - Future Artificial Intelligence Research'' -- Spoke 8 Pervasive AI’’.</td>
+    <td style="width: 80%;">This shared task is partially supported by the project European Commission's NextGeneration EU programme, PNRR - M4C2 - Investimento 1.3, Partenariato Esteso, PE00000013 - "FAIR - Future Artificial Intelligence Research" - Spoke 8 "Pervasive AI".</td>
     <td style="width: 25%;"><img src="eulogo.svg"/></td>
   </tr>
 </table>

@@ -30,7 +30,7 @@ sections:
       title: Master thesis
       text: |-
         **Who can apply.**
-        The master thesis activity is reserved to students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
+        The master thesis activity is reserved for students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
 
         **Description.**
         A master thesis is a research activity on one of the topics listed in our [research proposals](/students/#proposals).
@@ -56,7 +56,7 @@ sections:
       title: Project work
       text: |-
         **Who can apply.**
-        The project work activity is reserved to students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
+        The project work activity is reserved for students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
 
         **Description.**
         A project work is a 3 CFU activity.

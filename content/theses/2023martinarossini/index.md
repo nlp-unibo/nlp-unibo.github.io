@@ -1,7 +1,7 @@
 ---
 title: "Prompting techniques for Natural Language Generation in the Medical Domain"
 authors:
-  - Martina Rossini
+- Martina Rossini
 
 date: "2023-03-01"
 doi: ""
@@ -9,7 +9,7 @@ doi: ""
 # Publication type.
 # Accepts a single type but formatted as a YAML list (for Hugo requirements).
 # Enter a publication type from the CSL standard.
-publication_types: ["article"]
+publication_types: ["thesis"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""

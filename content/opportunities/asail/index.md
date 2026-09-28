@@ -1,17 +1,10 @@
 ---
 title: 'ASAIL'
 
-date: '2026-02-27'
-
 tags:
   - ASAIL
   - legal
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://sites.google.com/view/asail/asail-home'
 categories:
   - Academic workshop

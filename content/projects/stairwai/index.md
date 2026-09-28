@@ -10,10 +10,6 @@ tags:
 
 summary: The StairwAI project targets low-tech users with the goal of facilitating their engagement on the AI4EU on-demand Platform.
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://cordis.europa.eu/project/id/101017142'
 categories:
   - International project

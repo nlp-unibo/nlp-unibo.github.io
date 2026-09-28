@@ -1,7 +1,7 @@
 ---
 title: "Comprehensive study of clinical entity extraction and classification using Large Language Models"
 authors:
-  - Michele Faedi
+- Michele Faedi
 
 date: "2023-12-01"
 doi: ""
@@ -9,7 +9,7 @@ doi: ""
 # Publication type.
 # Accepts a single type but formatted as a YAML list (for Hugo requirements).
 # Enter a publication type from the CSL standard.
-publication_types: ["article"]
+publication_types: ["thesis"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""

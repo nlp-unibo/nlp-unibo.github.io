@@ -1,18 +1,11 @@
 ---
 title: 'ArgMining'
 
-date: '2026-02-27'
-
 tags:
   - workshop
   - argument mining
   - reasoning
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://argmining-org.github.io/'
 categories:
   - Academic workshop

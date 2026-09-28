@@ -4,7 +4,7 @@ date: 2026-03-02
 
 tags: ["text classification", "uki", "LLMs", "guidelines-only", 'GCAM']
 
-summary: "Train classifiers with guidelines only, without the need of classification labels during training"
+summary: "Train classifiers with guidelines only, without the need for classification labels during training"
 
 aliases:
   - /proposals_uki/clf_guidelines/

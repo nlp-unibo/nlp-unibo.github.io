@@ -15,12 +15,12 @@ icon: comments
 ### Argumentative Fallacies 
 
 The detection and classification of argumentative fallacies.
-Fallacy constitute an important aspect of argumentation because they require substantial reasoning capabilities to be spotted, thus, representing a valuable challenge for machine learning models. 
+Fallacies constitute an important aspect of argumentation because they require substantial reasoning capabilities to be spotted, thus, representing a valuable challenge for machine learning models. 
 
 
 ### Multimodality 
 
-We have worked in evaluating the combination of audio and text modalities.
+We have worked on evaluating the combination of audio and text modalities.
 Does audio modality provide any benefit in addressing argument mining tasks? 
 
 
@@ -37,5 +37,5 @@ For instance, which kind of patterns are associated with certain argumentative c
 
 ### Reasoning in LLMs 
 
-LLMs and reasoning are hot topics that are currently vastly being investigated.
-Though, there are still few attempts that aim to use argumentation as a resource for assessing reasoning in LLMs.
+LLMs and reasoning are hot topics that are widely investigated.
+However, there are still few attempts that aim to use argumentation as a resource for assessing reasoning in LLMs.

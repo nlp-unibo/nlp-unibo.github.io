@@ -2,11 +2,24 @@
 title: "Overview of the CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness" 
 date: 2024-09-01
 tags: ["natural language processing", "shared task", "clef", "subjectivity detection"]
-author: ["Alberto Barrón-Cedeño", "Firoj Alam", "Julia Maria Struß", "Preslav Nakov", "Tanmoy Chakraborty", "Tamer Elsayed", "Piotr Przybyła", "Tommaso Caselli", "Giovanni Da San Martino", "Fatima Haouari", "Maram Hasanain", "Chengkai Li", "Jakub Piskorski", "Federico Ruggeri", "Xingyi Song", "Reem Suwaileh"]
-description: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). " 
-summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). "
----
-
+authors:
+  - "Alberto Barrón-Cedeño"
+  - "Firoj Alam"
+  - "Julia Maria Struß"
+  - "Preslav Nakov"
+  - "Tanmoy Chakraborty"
+  - "Tamer Elsayed"
+  - "Piotr Przybyła"
+  - "Tommaso Caselli"
+  - "Giovanni Da San Martino"
+  - "Fatima Haouari"
+  - "Maram Hasanain"
+  - "Chengkai Li"
+  - "Jakub Piskorski"
+  - "Federico Ruggeri"
+  - "Xingyi Song"
+  - "Reem Suwaileh"
+summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF)."
 ---
 
 ##### Resources
@@ -24,7 +37,7 @@ We describe the seventh edition of the CheckThat! lab, part of the 2024 Conferen
 
 ##### Citation
 
-Alberto Barrón-Cedeño, Firoj Alam, Julia Maria Struß, Preslav Nakov, Tanmoy Chakraborty, Tamer Elsayed, Piotr Przyby￿a, Tommaso Caselli, Giovanni Da San Martino, Fatima Haouari, et al. Overview of the clef-2024 checkthat! lab: check-worthiness, subjectivity, persuasion, roles, authorities, and adversarial robustness. In International Conference of the Cross-Language Evaluation Forum for European Languages, pages 28–52. Springer, 2024.
+Alberto Barrón-Cedeño, Firoj Alam, Julia Maria Struß, Preslav Nakov, Tanmoy Chakraborty, Tamer Elsayed, Piotr Przybyła, Tommaso Caselli, Giovanni Da San Martino, Fatima Haouari, et al. Overview of the clef-2024 checkthat! lab: check-worthiness, subjectivity, persuasion, roles, authorities, and adversarial robustness. In International Conference of the Cross-Language Evaluation Forum for European Languages, pages 28–52. Springer, 2024.
 
 
 ```latex

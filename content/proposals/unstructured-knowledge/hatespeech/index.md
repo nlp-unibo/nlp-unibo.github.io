@@ -12,8 +12,8 @@ aliases:
 
 **Description:**\
 What is attributable as abusive or hate speech depends on the given socio-cultural context. 
-The same text might be reputed offensive by a certain culture, allowed by another, and, in the most extreme case, legally prosecutable by a third one. 
-Our aim is to evaluate how machine learning model are affected by different definitions of abusive and hate speech to promote awareness in developing accurate abusive speech detection systems.
+The same text might be deemed offensive by a certain culture, allowed by another, and, in the most extreme case, legally prosecutable by a third one. 
+Our aim is to evaluate how machine learning models are affected by different definitions of abusive and hate speech to promote awareness in developing accurate abusive speech detection systems.
 
 **Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it), [Katerina Korre](mailto:k.korre@athenarc.gr), [Arianna Muti](mailto:arianna.muti@unibocconi.it)
 

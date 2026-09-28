@@ -9,11 +9,8 @@ tags:
   - generative models
   - LLMs
 
+summary: "The project uses LLMs to integrate unstructured knowledge into industrial pipelines to speed up production and foster technical advancement."
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://bi-rex.it/quarto-bando-bi-rex/'
 categories:
   - National project

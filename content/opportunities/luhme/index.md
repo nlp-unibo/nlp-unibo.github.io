@@ -1,18 +1,11 @@
 ---
 title: 'LUHME'
 
-date: '2026-02-27'
-
 tags:
   - LUHME
   - language understanding
   - linguistics
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://luhme.up.pt/'
 categories:
   - Academic workshop

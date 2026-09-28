@@ -1,7 +1,7 @@
 ---
 title: "A Neurosymbolic Framework for Markov Logic Networks"
 authors:
-  - Arcangelo Alberico
+- Arcangelo Alberico
 
 date: "2021-10-01"
 doi: ""
@@ -9,7 +9,7 @@ doi: ""
 # Publication type.
 # Accepts a single type but formatted as a YAML list (for Hugo requirements).
 # Enter a publication type from the CSL standard.
-publication_types: ["article"]
+publication_types: ["thesis"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""

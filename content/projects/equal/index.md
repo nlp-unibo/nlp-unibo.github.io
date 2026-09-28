@@ -11,10 +11,6 @@ tags:
 
 summary: The EquAl project addresses algorithmic evaluations, decisions, and predictions, to promote fairness and counter discrimination affecting individuals and groups.
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://site.unibo.it/equal/en/equal_project'
 categories:
   - National project
@@ -23,7 +19,7 @@ aliases:
 ---
 
 The EquAl project addresses algorithmic evaluations, decisions, and predictions, to promote fairness and counter discrimination affecting individuals and groups.
-The research project fundedis  by the EU Commission under the NextGenerationEU program and the Italian Ministry of Education, University and Research. (PRIN 2022. Ref. prot. n.: 2022KFLF3E-001 - CUP J53D23005560001)
+The research project is funded by the EU Commission under the NextGenerationEU program and the Italian Ministry of Education, University and Research. (PRIN 2022. Ref. prot. n.: 2022KFLF3E-001 - CUP J53D23005560001)
 EquAl aims (i) to provide an understanding of the concepts of algorithmic unfairness and discrimination, bridging the notions adopted in social sciences, law, statistics, and artificial intelligence. 
 (ii) To identify the ways in which algorithmic unfairness originates and spreads in different social contexts, affecting individuals and groups, and particularly to identify the cases in which algorithmic unfairness leads to prohibited discrimination.
 (iii) To analyse the ways in which the law currently addresses algorithmic discrimination and propose appropriate measures to implement or upgrade the existing regulatory framework.

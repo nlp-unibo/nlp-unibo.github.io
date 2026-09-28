@@ -2,7 +2,7 @@
 title: Interpretability
 
 view: masonry
-summary: We are interested in developing interpretable models. An interpretable model exposes means for identifying the process that leads from an input to a prediction. We are mainly focused on interpretability by design in text classification.
+summary: "We are interested in developing interpretable models. An interpretable model exposes means for identifying the process that leads from an input to a prediction."
 aliases:
   - /proposals_interpretability/
   - /students_proposals/interpretability/
@@ -21,5 +21,3 @@ It has been shown that SPP suffers from local minima derived by suboptimal inter
 **Knowledge Extraction:**\
 The process of extracting interpretable knowledge from data-driven processes. 
 Our aim is to distill common knowledge from several examples when addressing a downstream task.
-
-<br/>

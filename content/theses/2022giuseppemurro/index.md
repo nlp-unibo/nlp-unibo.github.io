@@ -1,7 +1,7 @@
 ---
-title: "SynBA: A contextualized Synonim-Based adversarial Attack for text classification"
+title: "SynBA: A contextualized Synonym-Based adversarial Attack for text classification"
 authors:
-  - Giuseppe Murro
+- Giuseppe Murro
 
 date: "2022-12-01"
 doi: ""
@@ -9,7 +9,7 @@ doi: ""
 # Publication type.
 # Accepts a single type but formatted as a YAML list (for Hugo requirements).
 # Enter a publication type from the CSL standard.
-publication_types: ["article"]
+publication_types: ["thesis"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
