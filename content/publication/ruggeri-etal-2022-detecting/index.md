@@ -26,7 +26,7 @@ publication_types:
 - article-journal
 
 # Publication name and optional abbreviated publication name.
-publication: '*Artif. Intell. Law*'
+publication: '*Artificial Intelligence and Law*'
 publication_short: ''
 
 doi: 10.1007/s10506-021-09288-2

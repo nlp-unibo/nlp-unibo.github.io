@@ -13,7 +13,6 @@ authors:
 - Francesca Lagioia
 - Andrea Galassi
 - Paolo Torroni
-- ' others'
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list
@@ -30,7 +29,7 @@ publication_types:
 - paper-conference
 
 # Publication name and optional abbreviated publication name.
-publication: '*CEUR WORKSHOP PROCEEDINGS*'
+publication: '*Proceedings of the First Argument Mining and Empirical Legal Research Workshop (AMELR 2025)*'
 publication_short: ''
 
 doi: ''
@@ -41,7 +40,7 @@ abstract: ''
 summary: ''
 
 tags:
-  - student publication
+- student publication
 
 # Display this page in a list of Featured pages?
 featured: false

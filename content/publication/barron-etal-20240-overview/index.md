@@ -17,7 +17,12 @@ authors:
 - Tommaso Caselli
 - Giovanni Da San Martino
 - Fatima Haouari
-- ' others'
+- Maram Hasanain
+- Chengkai Li
+- Jakub Piskorski
+- Federico Ruggeri
+- Xingyi Song
+- Reem Suwaileh
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list
@@ -34,11 +39,10 @@ publication_types:
 - paper-conference
 
 # Publication name and optional abbreviated publication name.
-publication: '*International Conference of the Cross-Language Evaluation Forum for
-  European Languages*'
+publication: '*Experimental IR Meets Multilinguality, Multimodality, and Interaction - 15th International Conference of the CLEF Association, CLEF 2024*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-031-71908-0_2
 
 abstract: ''
 
@@ -79,7 +83,7 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Workshop
+  - Conference
 aliases:
   - /publication_workshops/barron-etal-20240-overview/
 ---

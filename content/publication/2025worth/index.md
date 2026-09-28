@@ -11,7 +11,7 @@ authors:
 - Giovanni Sartor
 
 date: "2025-01-01"
-doi: "https://dl.acm.org/doi/10.1145/3769126.3769218"
+doi: "10.1145/3769126.3769218"
 
 # Schedule page publish date (NOT publication's date).
 publishDate: "2025-01-01"

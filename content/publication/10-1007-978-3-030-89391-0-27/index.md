@@ -28,7 +28,7 @@ publication_types:
 publication: '*Logic and Argumentation*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-030-89391-0_27
 
 abstract: Dialogue systems are widely used in AI to support timely and interactive
   communication with users. We propose a general-purpose dialogue system architecture
@@ -73,7 +73,7 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Journal
+  - Conference
 aliases:
   - /publication_journals/10-1007-978-3-030-89391-0-27/
 ---

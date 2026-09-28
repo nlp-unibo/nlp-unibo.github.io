@@ -36,9 +36,19 @@ abstract: ''
 summary: ''
 
 tags:
-- Task analysis;Computer architecture;Bit error rate;Multitasking;Residual neural
-  networks;Computational modeling;Annotations;Argument mining;residual networks;neural
-  attention;multi-task learning;ensemble learning;natural language processing
+- task analysis
+- computer architecture
+- bit error rate
+- multitasking
+- residual neural networks
+- computational modeling
+- annotations
+- argument mining
+- residual networks
+- neural attention
+- multi-task learning
+- ensemble learning
+- natural language processing
 
 # Display this page in a list of Featured pages?
 featured: false

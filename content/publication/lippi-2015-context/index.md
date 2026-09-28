@@ -8,7 +8,6 @@ title: Context-Independent Claim Detection for Argument Mining
 authors:
 - Marco Lippi
 - Paolo Torroni
-- ' others'
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list

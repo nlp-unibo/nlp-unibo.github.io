@@ -27,7 +27,7 @@ publication_types:
 publication: '*Expert Systems with Applications*'
 publication_short: ''
 
-doi: https://doi.org/10.1016/j.eswa.2016.08.050
+doi: 10.1016/j.eswa.2016.08.050
 
 abstract: Argumentation mining is a recent challenge concerning the automatic extraction
   of arguments from unstructured textual corpora. Argumentation mining technologies
@@ -44,7 +44,7 @@ abstract: Argumentation mining is a recent challenge concerning the automatic ex
 summary: ''
 
 tags:
-- Argumentation mining
+- argumentation mining
 
 # Display this page in a list of Featured pages?
 featured: false

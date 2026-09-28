@@ -29,7 +29,7 @@ publication_types:
 publication: '*Advances in Information Retrieval*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-031-56027-9_29
 
 abstract: 'In this paper, we present TWOLAR: a two-stage pipeline for passage reranking
   based on the distillation of knowledge from Large Language Models (LLM). TWOLAR

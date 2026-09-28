@@ -39,12 +39,12 @@ publication_types:
 publication: '*Advances in Information Retrieval*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-031-28241-6_59
 
 abstract: 'The five editions of the CheckThat! lab so far have focused on the main
   tasks of the information verification pipeline: check-worthiness, evidence retrieval
   and pairing, and verification. The 2023 edition of the lab zooms into some of the
-  problems and---for the first time---it offers five tasks in seven languages (Arabic,
+  problems and — for the first time — it offers five tasks in seven languages (Arabic,
   Dutch, English, German, Italian, Spanish, and Turkish): Task 1 asks to determine
   whether an item, text or a text plus an image, is check-worthy; Task 2 requires
   to assess whether a text snippet is subjective or not; Task 3 looks for estimating

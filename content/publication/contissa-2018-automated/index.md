@@ -12,7 +12,7 @@ authors:
 - Francesca Lagioia
 - Marco Lippi
 - Hans-Wolfgang Micklitz
-- Przemyslaw Palka
+- Przemysław Pałka
 - Giovanni Sartor
 - Paolo Torroni
 
@@ -28,13 +28,13 @@ publishDate: '2026-03-02T12:28:22.175072Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- chapter
+- paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: '*Legal Knowledge and Information Systems*'
 publication_short: ''
 
-doi: ''
+doi: 10.3233/978-1-61499-935-5-51
 
 abstract: ''
 

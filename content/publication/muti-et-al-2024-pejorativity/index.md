@@ -36,7 +36,7 @@ publication: '*Proceedings of the 2024 Joint International Conference on Computa
   Linguistics, Language Resources and Evaluation (LREC-COLING 2024)*'
 publication_short: ''
 
-doi: ''
+doi: 10.63317/3gjo4kk28fq8
 
 abstract: 'Misogyny is often expressed through figurative language. Some neutral words
   can assume a negative connotation when functioning as pejorative epithets. Disambiguating
@@ -49,7 +49,7 @@ abstract: 'Misogyny is often expressed through figurative language. Some neutral
   words with univocal terms. Our experimental results, both on our corpus and on two
   popular benchmarks on Italian tweets, show that both approaches lead to a major
   classification improvement, indicating that word sense disambiguation is a promising
-  preliminary step for misogyny detection. Furthermore, we investigate LLMs′ understanding
+  preliminary step for misogyny detection. Furthermore, we investigate LLMs'' understanding
   of pejorative epithets by means of contextual word embeddings analysis and prompting.'
 
 # Summary. An optional shortened abstract.

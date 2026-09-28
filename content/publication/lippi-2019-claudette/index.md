@@ -33,7 +33,7 @@ publication_types:
 publication: '*Artificial Intelligence and Law*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/s10506-019-09243-2
 
 abstract: ''
 

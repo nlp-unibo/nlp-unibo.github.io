@@ -27,7 +27,7 @@ publication_types:
 publication: '*Theory and Applications of Formal Argumentation*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-319-28460-6_10
 
 abstract: Argument mining has recently become a hot topic, attracting the interests
   of several and diverse research communities, ranging from artificial intelligence,

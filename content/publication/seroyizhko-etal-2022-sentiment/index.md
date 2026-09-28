@@ -33,11 +33,11 @@ publication: '*Proceedings of the Fourth Workshop on Financial Technology and Na
   Language Processing (FinNLP)*'
 publication_short: ''
 
-doi: ''
+doi: 10.18653/v1/2022.finnlp-1.27
 
 abstract: Cryptocurrencies have gained enormous momentum in finance and are nowadays
   commonly adopted as a medium of exchange for online payments. After recent events
-  during which GameStop′s stocks were believed to be influenced by WallStreetBets
+  during which GameStop's stocks were believed to be influenced by WallStreetBets
   subReddit, Reddit has become a very hot topic on the cryptocurrency market. The
   influence of public opinions on cryptocurrency price trends has inspired researchers
   on exploring solutions that integrate such information in crypto price change forecasting.
@@ -47,7 +47,7 @@ abstract: Cryptocurrencies have gained enormous momentum in finance and are nowa
   a novel Bitcoin Reddit Sentiment Dataset, a ready-to-use dataset annotated with
   state-of-the-art sentiment and emotion recognition. The dataset contains pre-processed
   Reddit posts and comments about Bitcoin from several domain-related subReddits along
-  with Bitcoin′s financial data. We evaluate several widely adopted neural architectures
+  with Bitcoin's financial data. We evaluate several widely adopted neural architectures
   for crypto price change forecasting. Our results show controversial benefits of
   sentiment and emotion features advocating for more sophisticated social media integration
   techniques. We make our dataset publicly available for research.
@@ -56,7 +56,6 @@ abstract: Cryptocurrencies have gained enormous momentum in finance and are nowa
 summary: ''
 
 tags:
-- workshop
 - sentiment analysis
 - financial
 - price forecasting

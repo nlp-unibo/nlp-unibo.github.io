@@ -24,7 +24,7 @@ publication_types:
 - article-journal
 
 # Publication name and optional abbreviated publication name.
-publication: '*ACM Trans. Internet Technol.*'
+publication: '*ACM Transactions on Internet Technology*'
 publication_short: ''
 
 doi: 10.1145/2850417
@@ -43,7 +43,7 @@ abstract: 'Argumentation mining aims at automatically extracting structured argu
 summary: ''
 
 tags:
-- Argumentation mining
+- argumentation mining
 - artificial intelligence
 - computational linguistics
 - knowledge representation

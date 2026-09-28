@@ -8,10 +8,10 @@ title: 'The force awakens: Artificial intelligence for consumer law'
 authors:
 - Marco Lippi
 - Giuseppe Contissa
-- Agnieszka Jablonowska
+- Agnieszka Jabłonowska
 - Francesca Lagioia
 - Hans-Wolfgang Micklitz
-- Przemyslaw Palka
+- Przemysław Pałka
 - Giovanni Sartor
 - Paolo Torroni
 
@@ -30,10 +30,10 @@ publication_types:
 - article-journal
 
 # Publication name and optional abbreviated publication name.
-publication: '*Journal of artificial intelligence research*'
+publication: '*Journal of Artificial Intelligence Research*'
 publication_short: ''
 
-doi: ''
+doi: 10.1613/jair.1.11519
 
 abstract: ''
 

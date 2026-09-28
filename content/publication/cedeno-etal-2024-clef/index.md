@@ -48,12 +48,12 @@ abstract: 'The first five editions of the CheckThat! lab focused on the main tas
   In this new edition, we focus on new problems and —for the first time— we propose
   six tasks in fifteen languages (Arabic, Bulgarian, English, Dutch, French, Georgian,
   German, Greek, Italian, Polish, Portuguese, Russian, Slovene, Spanish, and code-mixed
-  Hindi-English): Task&nbsp;1 estimation of check-worthiness (the only task that has
-  been present in all CheckThat! editions), Task&nbsp;2 identification of subjectivity
-  (a follow up of CheckThat! 2023 edition), Task&nbsp;3 identification of persuasion
-  (a follow up of SemEval 2023), Task&nbsp;4 detection of hero, villain, and victim
-  from memes (a follow up of CONSTRAINT&nbsp;2022), Task&nbsp;5 Rumor Verification
-  using Evidence from Authorities (a first), and Task&nbsp;6 robustness of credibility
+  Hindi-English): Task 1 estimation of check-worthiness (the only task that has
+  been present in all CheckThat! editions), Task 2 identification of subjectivity
+  (a follow up of CheckThat! 2023 edition), Task 3 identification of persuasion
+  (a follow up of SemEval 2023), Task 4 detection of hero, villain, and victim
+  from memes (a follow up of CONSTRAINT 2022), Task 5 Rumor Verification
+  using Evidence from Authorities (a first), and Task 6 robustness of credibility
   assessment with adversarial examples (a first). These tasks represent challenging
   classification and retrieval problems at the document and at the span level, including
   multilingual and multimodal settings.'

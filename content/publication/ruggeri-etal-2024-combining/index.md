@@ -14,7 +14,7 @@ authors:
 # A YAML list of notes for each author in the above `authors` list
 author_notes: []
 
-date: '2024-01-01'
+date: '2021-10-01'
 
 # Date to publish webpage (NOT necessarily Bibtex publication's date).
 publishDate: '2026-02-27T15:56:06.376606Z'
@@ -22,10 +22,10 @@ publishDate: '2026-02-27T15:56:06.376606Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- article-journal
+- article
 
 # Publication name and optional abbreviated publication name.
-publication: '*ArXiv*'
+publication: '*arXiv*'
 publication_short: ''
 
 doi: ''
@@ -70,8 +70,6 @@ image:
 projects: []
 links:
 - name: arXiv
-  url: https://arxiv.org/abs/2110.00125
-- name: URL
   url: https://arxiv.org/abs/2110.00125
 categories:
   - Preprint
