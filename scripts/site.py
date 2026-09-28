@@ -531,7 +531,7 @@ def build() -> None:
 
 def serve() -> None:
     env, hugo, _ = environment()
-    run([str(hugo), "server", "--buildFuture", "--disableFastRender"], env=env)
+    run([str(hugo), "server", "--buildFuture", "--disableFastRender", "--cleanDestinationDir"], env=env)
 
 
 def new_content(content_type: str, slug: str) -> None:
