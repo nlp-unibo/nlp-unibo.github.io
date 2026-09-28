@@ -22,6 +22,9 @@ main:
   - name: Projects
     url: projects
     weight: 36
+  - name: Work with us
+    url: work-with-us
+    weight: 38
   - name: Events
     url: events
     weight: 40
