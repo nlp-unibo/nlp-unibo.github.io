@@ -39,13 +39,11 @@ Deadlines and delayed content publication are not emergencies.
 | `content/news/` | News posts |
 | `content/events/` | Event pages |
 | `content/research/` | Research-area pages |
-| `content/projects_national/` | National projects |
-| `content/projects_international/` | International projects |
+| `content/projects/` | All projects; `categories` selects International or National |
 | `content/publication/` | All publications; `categories` selects their list |
-| `content/students_bscs/` | Bachelor's theses |
-| `content/students_mscs/` | Master's theses |
-| `content/students_proposals/` | Thesis proposals grouped by topic |
-| `content/students_workshops/` | Student workshop pages |
+| `content/theses/` | Master's and bachelor's theses; `categories` selects the list |
+| `content/proposals/` | Research proposals, one folder per topic |
+| `content/opportunities/` | Challenges and academic workshops suggested to students |
 | `content/tools/` | Lab tools and software |
 | `config/_default/menus.yaml` | Top navigation menu |
 | `config/_default/hugo.yaml` | Site title, URL, and core Hugo settings |
@@ -193,14 +191,42 @@ Use group spelling and capitalization exactly as shown. Check email addresses an
 
 Use matching `new` content type, then update generated entry:
 
-- National project: `content/projects_national/<slug>/index.md`
-- International project: `content/projects_international/<slug>/index.md`
+- National or international project: `content/projects/<slug>/index.md`
 - Research area: `content/research/<slug>/index.md`
 - Tool: `content/tools/<slug>/index.md`
-- Bachelor's thesis: `content/students_bscs/<year-and-student>/index.md`
-- Master's thesis: `content/students_mscs/<year-and-student>/index.md`
+- Bachelor's or master's thesis: `content/theses/<year-and-student>/index.md`
 
 Keep section `_index.md` files unchanged unless changing section title, layout, filters, or ordering.
+
+Projects, theses, and challenge or workshop entries use one `categories` value to select their list, like publications.
+The generator fills it for projects and theses.
+Allowed values are the following:
+
+| Folder | `categories` values |
+| --- | --- |
+| `content/projects/` | `International project`, `National project` |
+| `content/theses/` | `Master thesis`, `Bachelor thesis` |
+| `content/opportunities/` | `Challenge`, `Academic workshop` |
+
+Validation rejects a missing or unknown value.
+
+## Adding a research proposal
+
+Each research topic is a folder under `content/proposals/`.
+Its `_index.md` holds the topic title, the `summary` shown on the For Students page, and the topic description.
+Each proposal is a page bundle inside its topic folder:
+
+```text
+content/proposals/legal/
+├── _index.md
+├── am/index.md
+└── unfairclauses/index.md
+```
+
+To add a proposal, copy an existing proposal bundle in the same topic and edit it.
+Name the supervisors in its **Contact** line as `mailto:` links.
+To add a topic, create a new folder with an `_index.md`.
+The For Students page lists every topic folder automatically.
 
 ## Adding a publication
 

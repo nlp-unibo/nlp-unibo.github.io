@@ -39,12 +39,12 @@ CONTENT_TYPES = {
     "news": ("news", "news"),
     "event": ("events", "event"),
     "person": ("authors", "person"),
-    "national-project": ("projects_national", "project"),
-    "international-project": ("projects_international", "project"),
+    "national-project": ("projects", "project-national"),
+    "international-project": ("projects", "project-international"),
     "research": ("research", "research"),
     "tool": ("tools", "tool"),
-    "bachelors-thesis": ("students_bscs", "bachelors-thesis"),
-    "masters-thesis": ("students_mscs", "masters-thesis"),
+    "bachelors-thesis": ("theses", "bachelors-thesis"),
+    "masters-thesis": ("theses", "masters-thesis"),
     "publication-highlight": ("publication", "publication-highlight"),
     "journal": ("publication", "publication-journal"),
     "conference": ("publication", "publication-conference"),
@@ -56,16 +56,20 @@ REQUIRED_FIELDS = {
     "news": ("title", "date", "summary"),
     "events": ("title", "date"),
     "research": ("title", "date", "summary"),
-    "projects_national": ("title", "date"),
-    "projects_international": ("title", "date"),
+    "projects": ("title", "date", "categories"),
+    "opportunities": ("title", "categories"),
     "tools": ("title", "date", "summary"),
-    "students_bscs": ("title", "authors", "date", "publication_types"),
-    "students_mscs": ("title", "authors", "date", "publication_types"),
+    "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
 }
 PUBLICATION_SECTIONS = {"publication"}
-# Each value selects one list on the Publications page.
-PUBLICATION_CATEGORIES = {"Highlight", "Journal", "Conference", "Workshop", "Preprint"}
+# Each `categories` value selects one list on the section's landing page.
+SECTION_CATEGORIES = {
+    "publication": {"Highlight", "Journal", "Conference", "Workshop", "Preprint"},
+    "projects": {"International project", "National project"},
+    "theses": {"Master thesis", "Bachelor thesis"},
+    "opportunities": {"Challenge", "Academic workshop"},
+}
 PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),
     "example email": re.compile(r"\btest@example\.org\b", re.IGNORECASE),
@@ -415,10 +419,10 @@ def validate_content_quality() -> None:
 
             if section in PUBLICATION_SECTIONS and not (directory / "cite.bib").exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
-            if section in PUBLICATION_SECTIONS and not is_draft:
+            if section in SECTION_CATEGORIES and not is_draft:
                 categories = metadata.get("categories") or []
-                if len(categories) != 1 or categories[0] not in PUBLICATION_CATEGORIES:
-                    allowed = ", ".join(sorted(PUBLICATION_CATEGORIES))
+                if len(categories) != 1 or categories[0] not in SECTION_CATEGORIES[section]:
+                    allowed = ", ".join(sorted(SECTION_CATEGORIES[section]))
                     failures.append(
                         f"{page.relative_to(ROOT)}: categories must be exactly one of {allowed}"
                     )
@@ -522,6 +526,8 @@ def build() -> None:
     if destination.exists():
         shutil.rmtree(destination)
     destination.parent.mkdir(parents=True, exist_ok=True)
+    # A separate resource directory keeps --gc from deleting files a running preview server uses.
+    env["HUGO_RESOURCEDIR"] = str(BUILD / "resources")
     run([str(hugo), "--gc", "--minify", "--destination", str(destination)], env=env)
     pagefind = TOOLS / "node" / "node_modules" / ".bin" / "pagefind"
     run([str(pagefind), "--site", str(destination)], env=env)

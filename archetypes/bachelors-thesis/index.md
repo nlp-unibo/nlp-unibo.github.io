@@ -15,4 +15,6 @@ tags:
   - bachelor thesis
   - student
 url_pdf: ""
+categories:
+  - Bachelor thesis
 ---
