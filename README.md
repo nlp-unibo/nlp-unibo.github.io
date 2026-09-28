@@ -451,7 +451,6 @@ Every pull request to `hugoblox-template` runs **Validate website**, which execu
 Merging into `hugoblox-template` runs **Deploy Hugo site to Pages**, which builds and publishes the site.
 The same workflow also runs every day at 04:00 UTC, so pages with a future date appear once that date arrives.
 If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `hugoblox-template`.
-Do not publish from the old `hugo` branch.
 Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
 
 ### Review and emergency policy
@@ -477,3 +476,9 @@ The collapsed menu between 992px and 1279px repeats the theme's mobile navbar ru
 Two files depend on theme internals and need attention when upgrading Hugo Blox.
 First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with category badges, so re-sync it with the new theme file.
 Second, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
+
+### License
+
+The repository and the website are licensed under CC BY-NC-ND 4.0, as stated in the site footer and in `LICENSE`.
+Code derived from the Hugo Blox template keeps its MIT License, and the Inter font keeps the SIL Open Font License.
+The footer license is configured under `footer.copyright.license` in `config/_default/params.yaml`, so change both places together.
