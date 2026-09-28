@@ -26,9 +26,6 @@ education:
     - course: PhD in Computer Science and Engineering
       institution: University of Florence
       year: 2010
-    - course: Associate Professor
-      institution: University of Florence
-      year: 2020
 
 social:
   - icon: envelope
@@ -49,7 +46,7 @@ user_groups:
 Marco obtained his PhD in 2010 with a thesis on statistical learning for relational and structured data which received a best PhD dissertation award. 
 He has been a visiting scholar at Université Pierre & Marie Curie and at Aalborg University.
 He held research positions at the universities of Florence, Siena, Bologna, and Modena and Reggio Emilia, where he became an associate professor in 2020.
-He is now an associate professor at the University of Florence.
+He is now an associate professor at the University of Florence (Unifi).
 He is a visiting fellow of the European University Institute. 
 He is an expert in machine learning and deep learning, with applications in many domains including natural language processing. 
 He has a long-standing collaboration with members of the Language Technologies Lab through joint research projects and the co-supervision of PhD and master students.

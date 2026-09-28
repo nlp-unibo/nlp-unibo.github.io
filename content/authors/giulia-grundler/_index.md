@@ -6,7 +6,7 @@ last_name: Grundler
 
 superuser: false
 
-role: Research Fellow
+role: PhD Student
 
 organizations:
   - name: University of Bologna
@@ -26,9 +26,6 @@ education:
     - course: Msc in Computer Engineering
       institution: University of Bologna
       year: 2021
-    - course: Research Fellow
-      institution: University of Bologna
-      year: 2021
 
 social:
   - icon: envelope
@@ -43,7 +40,8 @@ email: 'giulia.grundler2@unibo.it'
 highlight_name: true
 
 user_groups:
-  - Research Fellows
+  - PhD Students
 ---
 
 Giulia graduated cum laude in Computer Engineering in 2021 and joined the lab as a Research Fellow on the ADELE project, a European DG JUSTICE project that develops machine learning and natural language processing methods for multilingual legal analytics.
+She is now a PhD student in the Language Technologies Lab.
