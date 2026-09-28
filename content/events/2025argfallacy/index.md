@@ -2,8 +2,11 @@
 title: "Overview of MM-ArgFallacy2025 on Multimodal Argumentative Fallacy Detection and Classification in Political Debates" 
 date: 2025-07-01
 tags: ["natural language processing", "shared task", "arg-fallacy", "argument mining", "fallacy classification", "fallacy detection", "political debates", "multimodal"]
-author: ["Eleonora Mancini", "Federico Ruggeri", "Serena Villata", "Paolo Torroni"]
-description: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025." 
+authors:
+  - "Eleonora Mancini"
+  - "Federico Ruggeri"
+  - "Serena Villata"
+  - "Paolo Torroni"
 summary: "We present an overview of the MM-ArgFallacy2025 shared task on Multimodal Argumentative Fallacy Detection and Classification in Political Debates, co-located with the 12th Workshop on Argument Mining at ACL 2025."
 ---
 

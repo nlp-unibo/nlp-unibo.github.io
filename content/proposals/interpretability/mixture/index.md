@@ -13,7 +13,7 @@ aliases:
 
 **Description:**\
 Mixture of Experts (MoE) is a technique whereby several models are trained on the same data, each specializing in a certain subset. 
-MoE have been shown to be successful in a variety of applications and their original formulation dates back early 2000s. 
+MoE have been shown to be successful in a variety of applications and their original formulation dates back to the early 1990s. 
 The idea is to understand whether we can develop a MoE model for selective rationalization to address interlocking.
 
 **Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)

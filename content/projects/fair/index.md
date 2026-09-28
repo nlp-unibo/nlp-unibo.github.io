@@ -10,7 +10,7 @@ tags:
 
 url_project: 'https://fondazione-fair.it/'
 categories:
-  - International project
+  - National project
 aliases:
   - /projects_international/fair/
 ---
