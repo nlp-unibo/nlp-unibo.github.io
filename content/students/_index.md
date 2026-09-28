@@ -2,6 +2,9 @@
 title: For Students
 type: landing
 
+aliases:
+  - /students_publications/
+
 # Listing view
 view: compact
 
@@ -12,16 +15,12 @@ banner:
 
 # Page sections
 sections:
-  - block: collection
+  - block: markdown
     id: proposals
     content:
       title: Research Proposals
-      text: ""
-      filters:
-        folders:
-          - students_proposals
+      text: '{{< section-cards "proposals" >}}'
     design:
-      view: card
       columns: '1'
   - block: collection
     content:
@@ -39,7 +38,8 @@ sections:
       text: ""
       filters:
         folders:
-          - students_mscs
+          - theses
+        category: Master thesis
     design:
       view: citation
       columns: '1'
@@ -49,7 +49,8 @@ sections:
       text: ""
       filters:
         folders:
-          - students_bscs
+          - theses
+        category: Bachelor thesis
     design:
       view: citation
       columns: '1'
@@ -60,7 +61,8 @@ sections:
       text: "There are many other international challenges held every year. Developing models and techniques to tackle past or ongoing challenges may be good proposals for project works. <br/><br/>"
       filters:
         folders:
-          - students_challenges
+          - opportunities
+        category: Challenge
     design:
       view: masonry
       columns: '1'
@@ -71,7 +73,8 @@ sections:
       text: "Academic workshops discussing topics and proposing shared tasks of our interest. <br/><br/>"
       filters:
         folders:
-          - students_workshops
+          - opportunities
+        category: Academic workshop
     design:
       view: masonry
       columns: '1'

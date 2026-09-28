@@ -15,4 +15,6 @@ tags:
   - master thesis
   - student
 url_pdf: ""
+categories:
+  - Master thesis
 ---
