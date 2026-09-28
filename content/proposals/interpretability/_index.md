@@ -21,5 +21,3 @@ It has been shown that SPP suffers from local minima derived by suboptimal inter
 **Knowledge Extraction:**\
 The process of extracting interpretable knowledge from data-driven processes. 
 Our aim is to distill common knowledge from several examples when addressing a downstream task.
-
-<br/>

@@ -11,10 +11,6 @@ tags:
 
 summary: The EquAl project addresses algorithmic evaluations, decisions, and predictions, to promote fairness and counter discrimination affecting individuals and groups.
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://site.unibo.it/equal/en/equal_project'
 categories:
   - National project

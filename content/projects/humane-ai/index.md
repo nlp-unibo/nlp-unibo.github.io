@@ -10,10 +10,6 @@ tags:
 
 summary: H2020-funded initiative focuses on developing trustworthy, ethical AI through the Humane-AI-Net network, managing projects that range from educational LLMs to fairness in affective computing.
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://www.humane-ai.eu/'
 categories:
   - International project

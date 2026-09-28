@@ -8,12 +8,7 @@ tags:
   - legal
   - legal analytics
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
-url_project: 'https://dsg.unibo.it/it/ricerca/progetti-di-ricerca/progetti-nazionali-e-di-ateneo/prin2017-laila-legal-analytics-for-italian-law'
+url_project: 'https://dsg.unibo.it/it/ricerca/progetti-di-ricerca/progetti-conclusi/prin2017-laila-legal-analytics-for-italian-law'
 categories:
   - National project
 aliases:

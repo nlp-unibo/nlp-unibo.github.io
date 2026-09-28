@@ -19,4 +19,4 @@ For several years, we have been working on tools for the automatic detection of 
 We have already conducted several studies on this topic, and we are interested in applying new effective methods and techniques. 
 Right now, we are focused on LLMs, but we are also interested in alternative techniques.
 
-**Contact:** [Andrea Galassi](mailto:galassi@unibo.it), [Marco Lippi](mailto:marco.lippi@unifi.it)
+**Contact:** [Andrea Galassi](mailto:a.galassi@unibo.it), [Marco Lippi](mailto:marco.lippi@unifi.it)

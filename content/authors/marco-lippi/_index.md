@@ -1,23 +1,17 @@
 ---
-# Display name
 title: Marco Lippi
 
-# Full Name (for SEO)
 first_name: Marco
 last_name: Lippi
 
-# Is this the primary user of the site?
 superuser: false
 
-# Role/position
 role: Associate Professor
 
-# Organizations/Affiliations
 organizations:
   - name: University of Firenze
     url: 'https://cercachi.unifi.it/p-doc2-0-0-A-3f2b3a31392e2a-0.html'
 
-# Short bio (displayed in user profile at end of posts)
 bio: He is an expert in machine learning and deep learning, with applications in many domains including natural language processing.
 
 interests:
@@ -36,10 +30,6 @@ education:
       institution: University of Firenze
       year: 2020
 
-# Social/Academic Networking
-# For available icons, see: https://docs.hugoblox.com/getting-started/page-builder/#icons
-#   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
-#   form "mailto:your-email@example.com" or "#contact" for contact widget.
 social:
   - icon: envelope
     icon_pack: fas
@@ -47,21 +37,11 @@ social:
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?hl=en&user=R3taHbIAAAAJ
-    
-# Link to a PDF of your resume/CV from the About widget.
-# To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
-# - icon: cv
-#   icon_pack: ai
-#   link: files/cv.pdf
 
-# Enter email to display Gravatar (if Gravatar enabled in Config)
 email: 'marco.lippi@unifi.it'
 
-# Highlight the author in author lists? (true/false)
 highlight_name: true
 
-# Organizational groups that you belong to (for People widget)
-#   Set this to `[]` or comment out if you are not using People widget.
 user_groups:
   - Academic Members
 ---

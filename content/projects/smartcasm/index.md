@@ -9,11 +9,6 @@ tags:
   - generative models
   - LLMs
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://bi-rex.it/quarto-bando-bi-rex/'
 categories:
   - National project

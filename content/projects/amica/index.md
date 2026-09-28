@@ -9,11 +9,6 @@ tags:
   - argument mining
   - argument search
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'http://amica.unimore.it/'
 categories:
   - National project

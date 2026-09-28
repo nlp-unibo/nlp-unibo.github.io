@@ -10,10 +10,6 @@ tags:
 
 summary: CLAUDETTE is an interdisciplinary research project hosted at the Law Department of the European University Institute.
 
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'http://claudette.eui.eu/'
 categories:
   - International project

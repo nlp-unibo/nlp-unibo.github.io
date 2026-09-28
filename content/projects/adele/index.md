@@ -10,11 +10,6 @@ tags:
   
 summary: Project ADELE is premised on the ongoing paradigm shift towards cognitive computing and human-centered AI which is transforming many socio-economic activities, including justice.
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://site.unibo.it/adele/en'
 categories:
   - International project

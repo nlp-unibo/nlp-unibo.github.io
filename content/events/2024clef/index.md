@@ -7,8 +7,6 @@ description: "We describe the seventh edition of the CheckThat! lab, part of the
 summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF). "
 ---
 
----
-
 ##### Resources
 
 + [CheckThat! 2024](https://checkthat.gitlab.io/clef2024/)

@@ -8,11 +8,6 @@ tags:
   - sustainable development goals
   - education
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
 url_project: 'https://www.forumpachallenge.it/premio_pa_colori/alma-gaie-alma-sustainable-development-goals-artificial-intelligence-enhanced/'
 categories:
   - National project

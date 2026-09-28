@@ -58,7 +58,7 @@ sections:
     id: challenges
     content:
       title: International contests, benchmarks, and challenges
-      text: "There are many other international challenges held every year. Developing models and techniques to tackle past or ongoing challenges may be good proposals for project works. <br/><br/>"
+      text: "There are many other international challenges held every year. Developing models and techniques to tackle past or ongoing challenges may be good proposals for project works."
       filters:
         folders:
           - opportunities
@@ -70,7 +70,7 @@ sections:
     id: workshops
     content:
       title: Workshops
-      text: "Academic workshops discussing topics and proposing shared tasks of our interest. <br/><br/>"
+      text: "Academic workshops discussing topics and proposing shared tasks of our interest."
       filters:
         folders:
           - opportunities

@@ -13,5 +13,3 @@ At the same time, it typically requires a human with a high level of specializat
 In this context, we are involved in multiple projects (e.g., CLAUDETTE, ADELE, LAILA, POLINE, PRIMA), which address tasks such as: argument mining, summarization, outcome prediction, detection of unfair clauses, information extraction, and cross-lingual knowledge transfer.
 Our purpose is to research and develop tools that can meaningfully impact the community.
 We are in close contact with teams of legal experts who can provide their expertise, and we have access to reserved datasets that can be used to develop automatic tools.
-
-<br/>

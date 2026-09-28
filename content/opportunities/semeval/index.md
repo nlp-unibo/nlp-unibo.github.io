@@ -1,19 +1,12 @@
 ---
 title: 'SemEval'
 
-date: '2026-02-27'
-
 tags:
   - challenge
   - SemEval
   - semantic evaluation
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
-url_project: 'https://semeval.github.io/SemEval2026/'
+url_project: 'https://semeval.github.io/SemEval2027/'
 categories:
   - Challenge
 aliases:

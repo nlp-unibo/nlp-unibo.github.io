@@ -1,19 +1,12 @@
 ---
 title: 'EVALITA'
 
-date: '2026-02-27'
-
 tags:
   - challenge
   - evalita
   - language:italian
 
-
-# Custom links (uncomment lines below)
-# links:
-# - name: Custom Link
-#   url: http://example.org
-url_project: 'https://www.evalita.it/2026/tasks'
+url_project: 'https://www.evalita.it/campaigns/evalita-2026/tasks/'
 categories:
   - Challenge
 aliases:
