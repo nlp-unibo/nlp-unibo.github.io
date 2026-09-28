@@ -451,7 +451,6 @@ Every pull request to `hugoblox-template` runs **Validate website**, which execu
 Merging into `hugoblox-template` runs **Deploy Hugo site to Pages**, which builds and publishes the site.
 The same workflow also runs every day at 04:00 UTC, so pages with a future date appear once that date arrives.
 If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `hugoblox-template`.
-Do not publish from the old `hugo` branch.
 Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
 
 ### Review and emergency policy
