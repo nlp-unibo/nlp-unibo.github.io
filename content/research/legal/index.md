@@ -9,6 +9,8 @@ tags:
 
 summary: The process of automatically understanding and extracting legal knowledge from legal documents.
 
+# Font Awesome icon shown on the homepage research tile
+icon: balance-scale
 ---
 
 ### Argumentation and Argument Schema 

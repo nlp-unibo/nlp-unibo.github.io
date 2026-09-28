@@ -1,0 +1,29 @@
+# Language Technologies Lab colors, taken from the lab logo (assets/media/ltlab.png).
+name = "LT Lab"
+
+[light]
+  primary = "#105080"
+  link = "#105080"
+  link_hover = "#003060"
+
+  menu_primary = "#fff"
+  menu_text = "#003060"
+  menu_text_active = "#105080"
+  menu_title = "#003060"
+
+  home_section_odd = "rgb(255, 255, 255)"
+  home_section_even = "rgb(246, 248, 251)"
+
+[dark]
+  primary = "#60c0e0"
+  link = "#60c0e0"
+  link_hover = "#9ad8ec"
+
+  background = "#0d1a2a"
+  home_section_odd = "#0d1a2a"
+  home_section_even = "#112236"
+
+  menu_primary = "#0d1a2a"
+  menu_text = "#dbe7f3"
+  menu_text_active = "#60c0e0"
+  menu_title = "#ffffff"

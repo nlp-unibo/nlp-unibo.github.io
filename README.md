@@ -49,6 +49,12 @@ Deadlines and delayed content publication are not emergencies.
 | `config/_default/hugo.yaml` | Site title, URL, and core Hugo settings |
 | `config/_default/params.yaml` | Theme and site-feature settings |
 | `assets/media/` | Shared images, including homepage assets |
+| `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
+| `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
+| `assets/scss/template.scss` | Site-wide style rules layered over the theme |
+| `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
+| `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (homepage research tiles), and `site-stats` (homepage figures) |
+| `layouts/partials/views/citation.html` | Theme citation view plus category badges; re-sync it when upgrading Hugo Blox |
 | `.github/workflows/hugo.yml` | GitHub Pages build and deployment workflow |
 
 Most content entries are **page bundles**: one directory containing an `index.md` file and any files used only by that page.
@@ -192,7 +198,7 @@ Use group spelling and capitalization exactly as shown. Check email addresses an
 Use matching `new` content type, then update generated entry:
 
 - National or international project: `content/projects/<slug>/index.md`
-- Research area: `content/research/<slug>/index.md`
+- Research area: `content/research/<slug>/index.md`, with a Font Awesome 5 `icon` name for its homepage tile, such as `comments`
 - Tool: `content/tools/<slug>/index.md`
 - Bachelor's or master's thesis: `content/theses/<year-and-student>/index.md`
 

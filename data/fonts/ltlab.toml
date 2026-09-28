@@ -1,0 +1,9 @@
+# Inter is served from static/fonts/inter/, so pages make no request to a font provider.
+name = "LT Lab"
+
+google_fonts = ""
+
+heading_font = "Inter"
+body_font = "Inter"
+nav_font = "Inter"
+mono_font = ""

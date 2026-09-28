@@ -1,11 +1,425 @@
-// Make page header alignment consistent with widget page header alignment
-.universal-wrapper h1 {
-  text-align: center;
+// Brand palette from the lab logo; data/themes/ltlab.toml sets the theme colors from the same values.
+$lt-navy: #003060;
+$lt-blue: #105080;
+$lt-sky: #60c0e0;
+$lt-orange: #f09010;
+$lt-border: #e3e8ef;
+$lt-muted: #5b6b7d;
+
+// Inter is self-hosted, so pages make no request to a font provider.
+@each $style in normal, italic {
+  @font-face {
+    font-family: "Inter";
+    font-style: $style;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url("/fonts/inter/inter-latin-wght-#{$style}.woff2") format("woff2-variations");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: $style;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url("/fonts/inter/inter-latin-ext-wght-#{$style}.woff2") format("woff2-variations");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
 }
 
-// Center the CTA shortcode button
+// Typography
+body {
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.article-title,
+.section-heading h1 {
+  color: $lt-navy;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.dark {
+  h1, h2, h3, h4, h5, h6,
+  .article-title,
+  .section-heading h1 {
+    color: #f1f5fa;
+  }
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+// Page and section titles are left-aligned with a short orange rule below them
+.universal-wrapper h1,
+.section-heading h1 {
+  text-align: left;
+}
+
+.section-heading {
+  text-align: left !important;
+
+  h1 {
+    font-size: 1.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  h1::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 3px;
+    margin-top: 0.6rem;
+    border-radius: 2px;
+    background: $lt-orange;
+  }
+}
+
+.home-section {
+  padding: 70px 0;
+}
+
+// Cards use a thin border and a subtle hover state instead of shadows
+.card-simple,
+.view-card .card-simple {
+  border: 1px solid $lt-border;
+  border-radius: 10px;
+  box-shadow: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    border-color: $lt-blue;
+    transform: translateY(-2px);
+  }
+}
+
+.dark .card-simple {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: transparent;
+
+  &:hover {
+    border-color: $lt-sky;
+  }
+}
+
+.article-metadata,
+.article-date {
+  color: $lt-muted;
+  font-size: 0.85rem;
+}
+
+// Citation lists separate entries with a hairline
+.view-citation .pub-list-item {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid $lt-border;
+}
+
+.dark .view-citation .pub-list-item {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+// Buttons
+.btn-outline-primary {
+  border-radius: 6px;
+}
+
+.see-all a {
+  font-weight: 600;
+}
+
+// Hero: compact and brand-colored; the CTA reads as the primary action
+.wg-hero {
+  .hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .hero-lead {
+    color: #33475b;
+  }
+}
+
+.dark .wg-hero .hero-lead {
+  color: #c9d6e3;
+}
+
 .cta-group {
   justify-content: center;
+  flex-wrap: wrap;
+  margin-left: 0;
+  margin-right: 0;
+
+  @include media-breakpoint-up(md) {
+    justify-content: flex-start;
+  }
+}
+
+.cta-group .btn {
+  background: $lt-orange;
+  border-color: $lt-orange;
+  color: $lt-navy !important;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+
+  &:hover {
+    background: darken($lt-orange, 6%);
+    border-color: darken($lt-orange, 6%);
+  }
+}
+
+// The logo has a white background, so it sits in a rounded tile above the hero backdrop
+.wg-hero img {
+  border-radius: 16px;
+  box-shadow: 0 18px 40px -24px rgba($lt-navy, 0.45);
+}
+
+// Hero backdrop: a soft brand gradient with a faint dot grid
+#section-hero {
+  background:
+    radial-gradient(circle at 1px 1px, rgba($lt-blue, 0.12) 1px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.22), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba($lt-orange, 0.10), transparent 50%),
+    #fff;
+}
+
+.dark #section-hero {
+  background:
+    radial-gradient(circle at 1px 1px, rgba($lt-sky, 0.10) 1px, transparent 0) 0 0 / 22px 22px,
+    radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.14), transparent 55%),
+    radial-gradient(ellipse at 10% 90%, rgba($lt-orange, 0.08), transparent 50%),
+    #0d1a2a;
+}
+
+// Homepage figures, computed by the site-stats shortcode
+.lt-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.1rem 0.5rem;
+    border: 1px solid $lt-border;
+    border-radius: 12px;
+    text-decoration: none !important;
+    transition: border-color 0.15s ease;
+
+    &:hover {
+      border-color: $lt-blue;
+    }
+  }
+}
+
+.lt-stats-value {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: $lt-navy;
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-stats-label {
+  margin-top: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.dark {
+  .lt-stats a {
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  .lt-stats-value {
+    color: #f1f5fa;
+  }
+
+  .lt-stats-label {
+    color: #9fb2c6;
+  }
+}
+
+// Research tiles, rendered by the section-tiles shortcode
+.lt-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.lt-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid $lt-border;
+  border-radius: 12px;
+  color: inherit !important;
+  text-decoration: none !important;
+  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    border-color: $lt-blue;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 24px -14px rgba($lt-navy, 0.45);
+  }
+}
+
+.lt-tile-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 10px;
+  background: rgba($lt-sky, 0.18);
+  color: $lt-blue;
+  font-size: 1.15rem;
+}
+
+.lt-tile-title {
+  font-size: 1.15rem;
+  font-weight: 650;
+  color: $lt-navy;
+}
+
+.lt-tile-summary {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $lt-muted;
+}
+
+.dark {
+  .lt-tile {
+    border-color: rgba(255, 255, 255, 0.12);
+
+    &:hover {
+      border-color: $lt-sky;
+    }
+  }
+
+  .lt-tile-icon {
+    background: rgba($lt-sky, 0.14);
+    color: $lt-sky;
+  }
+
+  .lt-tile-title {
+    color: #f1f5fa;
+  }
+
+  .lt-tile-summary {
+    color: #9fb2c6;
+  }
+}
+
+// Category badges in citation lists
+.lt-badge {
+  display: inline-block;
+  margin-right: 0.45rem;
+  padding: 0.12rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+  text-transform: uppercase;
+  vertical-align: 0.12em;
+  color: #fff;
+  background: $lt-blue;
+}
+
+.lt-badge-highlight { background: $lt-orange; color: $lt-navy; }
+.lt-badge-journal { background: $lt-navy; }
+.lt-badge-conference { background: $lt-blue; }
+.lt-badge-workshop { background: $lt-sky; color: $lt-navy; }
+.lt-badge-preprint,
+.lt-badge-bachelor-thesis,
+.lt-badge-master-thesis { background: #e6ebf1; color: #33475b; }
+
+.dark {
+  .lt-badge-journal { background: #2a5a8a; }
+  .lt-badge-preprint,
+  .lt-badge-bachelor-thesis,
+  .lt-badge-master-thesis { background: #243447; color: #c9d6e3; }
+}
+
+// Year headings inserted by assets/js/ltlab.js in long citation lists
+.lt-year {
+  margin: 1.8rem 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: $lt-muted;
+}
+
+// Translucent navbar that gains a hairline once the page scrolls
+#navbar-main {
+  background-color: rgba(255, 255, 255, 0.82) !important;
+  -webkit-backdrop-filter: saturate(180%) blur(10px);
+  backdrop-filter: saturate(180%) blur(10px);
+  box-shadow: none;
+  transition: box-shadow 0.2s ease;
+
+  &.lt-scrolled {
+    box-shadow: 0 1px 0 $lt-border;
+  }
+}
+
+.dark #navbar-main {
+  background-color: rgba(13, 26, 42, 0.82) !important;
+
+  &.lt-scrolled {
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+}
+
+// Scroll reveal, added by assets/js/ltlab.js only when motion is allowed
+.lt-reveal {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.lt-reveal.lt-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card-simple,
+  .lt-tile {
+    transition: none;
+  }
+}
+
+.site-footer {
+  border-top: 1px solid $lt-border;
+  color: $lt-muted;
+  font-size: 0.85rem;
+}
+
+.dark .site-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 // Categories only select the list a page appears in, so the metadata line does not show them
