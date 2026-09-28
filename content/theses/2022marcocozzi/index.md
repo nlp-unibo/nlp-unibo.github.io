@@ -1,7 +1,7 @@
 ---
 title: "Using semantic entities to improve the distillation of transformers"
 authors:
-  - Marco Cozzi
+- Marco Cozzi
 
 date: "2022-03-01"
 doi: ""
@@ -9,7 +9,7 @@ doi: ""
 # Publication type.
 # Accepts a single type but formatted as a YAML list (for Hugo requirements).
 # Enter a publication type from the CSL standard.
-publication_types: ["article"]
+publication_types: ["thesis"]
 
 # Publication name and optional abbreviated publication name.
 publication: ""
