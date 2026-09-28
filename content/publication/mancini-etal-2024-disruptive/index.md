@@ -29,7 +29,7 @@ publication_types:
 publication: '*Intelligent Systems with Applications*'
 publication_short: ''
 
-doi: https://doi.org/10.1016/j.iswa.2023.200305
+doi: 10.1016/j.iswa.2023.200305
 
 abstract: Disruptive situations are emotionally-charged events diverging from ordinary
   behavior, like people fighting or screaming. Public transports are one type of social
@@ -54,11 +54,11 @@ abstract: Disruptive situations are emotionally-charged events diverging from or
 summary: ''
 
 tags:
-- Speech emotion recognition
-- Affective computing
-- Natural language processing
-- Machine learning
-- Data augmentation
+- speech emotion recognition
+- affective computing
+- natural language processing
+- machine learning
+- data augmentation
 
 # Display this page in a list of Featured pages?
 featured: false

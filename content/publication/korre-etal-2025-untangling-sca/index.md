@@ -24,13 +24,13 @@ publishDate: '2026-02-27T15:55:53.544293Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- article-journal
+- paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: '*Findings of the Association for Computational Linguistics: NAACL 2025*'
 publication_short: ''
 
-doi: ''
+doi: 10.18653/v1/2025.findings-naacl.175
 
 abstract: 'Hate speech relies heavily on cultural influences, leading to varying individual
   interpretations. For that reason, we propose a Semantic Componential Analysis (SCA)
@@ -38,7 +38,7 @@ abstract: 'Hate speech relies heavily on cultural influences, leading to varying
   We create the first dataset of hate speech definitions encompassing 493 definitions
   from more than 100 cultures, drawn from five key domains: online dictionaries, academic
   research, Wikipedia, legal texts, and online platforms. By decomposing these definitions
-  into semantic components,our analysis reveals significant variation across definitions,
+  into semantic components, our analysis reveals significant variation across definitions,
   yet many domains borrow definitions from one another without taking into account
   the target culture. We conduct zero-shot model experiments using our proposed dataset,
   employing three popular open-sourced LLMs to understand the impact of different

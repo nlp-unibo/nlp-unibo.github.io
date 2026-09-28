@@ -56,10 +56,10 @@ abstract: Argument structure prediction aims to identify the relations between a
 summary: ''
 
 tags:
-- Argument Mining
+- argument mining
 - CJEU decisions
-- Legal Argument
-- Link Prediction
+- legal argument
+- link prediction
 
 # Display this page in a list of Featured pages?
 featured: false

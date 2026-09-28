@@ -6,10 +6,9 @@ title: Constraint Detection in Natural Language Problem Descriptions
 # If you created a profile for a user (e.g. the default `admin` user at `content/authors/admin/`), 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
-- ZEYNEP KIZILTAN
+- Zeynep Kiziltan
 - Marco Lippi
 - Paolo Torroni
-- ' others'
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list

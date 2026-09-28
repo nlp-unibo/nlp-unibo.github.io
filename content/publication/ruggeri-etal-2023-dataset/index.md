@@ -34,7 +34,7 @@ doi: 10.18653/v1/2023.acl-long.425
 abstract: With recent advances in question-answering models, various datasets have
   been collected to improve and study the effectiveness of these models on scientific
   texts. Questions and answers in these datasets explore a scientific paper by seeking
-  factual information from the paper′s content. However, these datasets do not tackle
+  factual information from the paper's content. However, these datasets do not tackle
   the argumentative content of scientific papers, which is of huge importance in persuasiveness
   of a scientific discussion. We introduce ArgSciChat, a dataset of 41 argumentative
   dialogues between scientists on 20 NLP papers. The unique property of our dataset

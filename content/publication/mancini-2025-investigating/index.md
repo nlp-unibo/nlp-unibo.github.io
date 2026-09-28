@@ -1,5 +1,5 @@
 ---
-title: Investigating the effectiveness of explainability methods in parkinson’s detection
+title: Investigating the effectiveness of explainability methods in Parkinson’s detection
   from speech
 
 # Authors
@@ -32,7 +32,7 @@ publication: '*2025 IEEE International Conference on Acoustics, Speech, and Sign
   Processing Workshops (ICASSPW)*'
 publication_short: ''
 
-doi: ''
+doi: 10.1109/icasspw65056.2025.11011035
 
 abstract: ''
 
@@ -73,7 +73,7 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Conference
+  - Workshop
 aliases:
   - /publication_conferences/mancini-2025-investigating/
 ---

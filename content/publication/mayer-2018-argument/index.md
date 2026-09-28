@@ -1,17 +1,16 @@
 ---
-title: Argument mining on clinical trials
+title: Argument Mining on Clinical Trials
 
 # Authors
 # A YAML list of author names
 # If you created a profile for a user (e.g. the default `admin` user at `content/authors/admin/`), 
 # write the username (folder name) here, and it will be replaced with their full name and linked to their profile.
 authors:
-- T Mayer
-- E Cabrio
-- M Lippi
-- P Torroni
-- S Villata
-- ' others'
+- Tobias Mayer
+- Elena Cabrio
+- Marco Lippi
+- Paolo Torroni
+- Serena Villata
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list
@@ -25,13 +24,13 @@ publishDate: '2026-03-02T12:28:22.166808Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- article-journal
+- paper-conference
 
 # Publication name and optional abbreviated publication name.
-publication: '*FRONTIERS IN ARTIFICIAL INTELLIGENCE AND APPLICATIONS*'
+publication: '*Computational Models of Argument*'
 publication_short: ''
 
-doi: ''
+doi: 10.3233/978-1-61499-906-5-137
 
 abstract: ''
 

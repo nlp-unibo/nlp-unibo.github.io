@@ -15,7 +15,7 @@ authors:
 # A YAML list of notes for each author in the above `authors` list
 author_notes: []
 
-date: '2026-01-01'
+date: '2026-05-01'
 
 # Date to publish webpage (NOT necessarily Bibtex publication's date).
 publishDate: '2026-03-02T12:28:22.228519Z'
@@ -23,13 +23,13 @@ publishDate: '2026-03-02T12:28:22.228519Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- manuscript
+- paper-conference
 
 # Publication name and optional abbreviated publication name.
-publication: ''
+publication: '*ICASSP 2026 - 2026 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)*'
 publication_short: ''
 
-doi: ''
+doi: 10.1109/icassp55912.2026.11461231
 
 abstract: ''
 
@@ -72,10 +72,8 @@ projects: []
 links:
 - name: arXiv
   url: https://arxiv.org/abs/2510.08176
-- name: URL
-  url: https://arxiv.org/abs/2510.08176
 categories:
-  - Preprint
+  - Conference
 aliases:
   - /publication_preprints/mancini-2026-leveragingwhisperembeddingsaudiobased/
 ---

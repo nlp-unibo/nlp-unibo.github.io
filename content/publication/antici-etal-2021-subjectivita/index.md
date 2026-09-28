@@ -77,7 +77,7 @@ links:
 - name: URL
   url: https://doi.org/10.1007/978-3-030-85251-1_4
 categories:
-  - Workshop
+  - Conference
 aliases:
   - /publication_workshops/antici-etal-2021-subjectivita/
 ---

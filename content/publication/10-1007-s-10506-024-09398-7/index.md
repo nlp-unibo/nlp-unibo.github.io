@@ -26,7 +26,7 @@ publication_types:
 - article-journal
 
 # Publication name and optional abbreviated publication name.
-publication: '*Artif. Intell. Law*'
+publication: '*Artificial Intelligence and Law*'
 publication_short: ''
 
 doi: 10.1007/s10506-024-09398-7
@@ -52,10 +52,10 @@ abstract: 'Most of the existing natural language processing systems for legal te
 summary: ''
 
 tags:
-- Multilingualism
-- Terms of service
-- Unfair clause detection
-- Machine translation
+- multilingualism
+- terms of service
+- unfair clause detection
+- machine translation
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -34,22 +34,21 @@ publication_short: ''
 doi: ''
 
 abstract: English grammar Multiple-Choice Cloze (MCC) exercises are crucial for improving
-  learners' grammatical proficiency andcomprehension skills. However, creating these
-  exercises is labour-intensive and requires expert knowledge. Effective MCCexercises
-  must be contextually relevant and engaging, incorporating distractors---plausible
-  but incorrect alternatives---tobalance difficulty and maintain learner motivation.
-  Despite the increasing interest in utilizing large language models (LLMs)in education,
+  learners' grammatical proficiency and comprehension skills. However, creating these
+  exercises is labour-intensive and requires expert knowledge. Effective MCC exercises
+  must be contextually relevant and engaging, incorporating distractors — plausible but incorrect alternatives — to balance difficulty and maintain learner motivation.
+  Despite the increasing interest in utilizing large language models (LLMs) in education,
   their application in generating English grammar MCC exercises is still limited.
-  Previous methods typicallyimpose constraints on LLMs, producing grammatically correct
-  yet uncreative results. This paper explores the potentialof LLMs to independently
+  Previous methods typically impose constraints on LLMs, producing grammatically correct
+  yet uncreative results. This paper explores the potential of LLMs to independently
   generate diverse and contextually relevant MCC exercises without predefined limitations.
-  Wehypothesize that LLMs can craft self-contained sentences that foster learner′s
-  communicative competence. Our analysisof existing MCC exercise datasets revealed
-  issues of diversity, completeness, and correctness. Furthermore, we addressthe lack
+  We hypothesize that LLMs can craft self-contained sentences that foster learner's
+  communicative competence. Our analysis of existing MCC exercise datasets revealed
+  issues of diversity, completeness, and correctness. Furthermore, we address the lack
   of a standardized automatic metric for evaluating the quality of generated exercises.
-  Our contributions includedeveloping an LLM-based solution for generating MCC exercises,
-  curating a comprehensive dataset spanning 19 grammartopics, and proposing an automatic
-  metric validated against human expert evaluations. This work aims to advance theautomatic
+  Our contributions include developing an LLM-based solution for generating MCC exercises,
+  curating a comprehensive dataset spanning 19 grammar topics, and proposing an automatic
+  metric validated against human expert evaluations. This work aims to advance the automatic
   generation of English grammar MCC exercises, enhancing both their quality and creativity.
 
 # Summary. An optional shortened abstract.

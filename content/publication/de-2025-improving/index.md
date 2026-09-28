@@ -34,7 +34,7 @@ publication_types:
 publication: '*Intelligenza Artificiale*'
 publication_short: ''
 
-doi: ''
+doi: 10.1177/17248035241297789
 
 abstract: ''
 

@@ -29,7 +29,7 @@ publication_types:
 - article-journal
 
 # Publication name and optional abbreviated publication name.
-publication: '*J. Artif. Intell. Res.*'
+publication: '*Journal of Artificial Intelligence Research*'
 publication_short: ''
 
 doi: 10.1613/JAIR.1.16406

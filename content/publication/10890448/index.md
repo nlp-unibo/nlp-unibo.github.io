@@ -38,8 +38,17 @@ abstract: ''
 summary: ''
 
 tags:
-- Measurement;Source separation;Neural networks;Transformers;Acoustics;Decoding;Time-domain
-  analysis;Speech processing;Neural Network Explanations;Explainable Deep Learning;Interpretability
+- measurement
+- source separation
+- neural networks
+- transformers
+- acoustics
+- decoding
+- time-domain analysis
+- speech processing
+- neural network explanations
+- explainable deep learning
+- interpretability
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -32,21 +32,20 @@ publication_types:
 publication: '*Proceedings of the Natural Legal Language Processing Workshop 2022*'
 publication_short: ''
 
-doi: ''
+doi: 10.18653/v1/2022.nllp-1.4
 
 abstract: Creating balanced labeled textual corpora for complex tasks, like legal
   analysis, is a challenging and expensive process that often requires the collaboration
-  of domain experts.To address this problem, we propose a data augmentation method
-  based on the combination of GloVe word embeddings and the WordNet ontology.We present
+  of domain experts. To address this problem, we propose a data augmentation method
+  based on the combination of GloVe word embeddings and the WordNet ontology. We present
   an example of application in the legal domain, specifically on decisions of the
-  Court of Justice of the European Union.Our evaluation with human experts confirms
+  Court of Justice of the European Union. Our evaluation with human experts confirms
   that our method is more robust than the alternatives.
 
 # Summary. An optional shortened abstract.
 summary: ''
 
 tags:
-- workshop
 - data augmentation
 - word embeddings
 - wordnet
@@ -88,7 +87,7 @@ links:
 - name: URL
   url: https://aclanthology.org/2022.nllp-1.4
 categories:
-  - Conference
+  - Workshop
 aliases:
   - /publication_conferences/percin-etal-2022-combining/
 ---

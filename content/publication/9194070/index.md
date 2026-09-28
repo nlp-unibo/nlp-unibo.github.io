@@ -36,9 +36,17 @@ abstract: ''
 summary: ''
 
 tags:
-- Task analysis;Computer architecture;Visualization;Neural networks;Natural language
-  processing;Taxonomy;Computational modeling;Natural language processing (NLP);neural
-  attention;neural networks;review;survey
+- task analysis
+- computer architecture
+- visualization
+- neural networks
+- natural language processing
+- taxonomy
+- computational modeling
+- natural language processing (NLP)
+- neural attention
+- review
+- survey
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -10,7 +10,7 @@ authors:
 - Francesca Lagioia
 - Marco Lippi
 - Hans-Wolfgang Micklitz
-- Przemyslaw Palka
+- Przemysław Pałka
 - Giovanni Sartor
 - Paolo Torroni
 

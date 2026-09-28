@@ -29,13 +29,13 @@ publishDate: '2026-03-02T12:28:22.126872Z'
 # Publication type.
 # A single CSL publication type but formatted as a YAML list (for Hugo requirements).
 publication_types:
-- chapter
+- paper-conference
 
 # Publication name and optional abbreviated publication name.
 publication: '*Legal Knowledge and Information Systems*'
 publication_short: ''
 
-doi: ''
+doi: 10.3233/faia251600
 
 abstract: ''
 

@@ -77,7 +77,7 @@ links:
 - name: URL
   url: https://doi.org/10.1007/978-3-031-42448-9_1
 categories:
-  - Workshop
+  - Conference
 aliases:
   - /publication_workshops/delmoro-etal-2023-inception-fashion/
 ---

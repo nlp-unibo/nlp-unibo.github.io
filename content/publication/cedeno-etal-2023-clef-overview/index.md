@@ -88,7 +88,7 @@ links:
 - name: URL
   url: https://doi.org/10.1007/978-3-031-42448-9_20
 categories:
-  - Workshop
+  - Conference
 aliases:
   - /publication_workshops/cedeno-etal-2023-clef-overview/
 ---

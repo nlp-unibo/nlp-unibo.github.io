@@ -28,7 +28,7 @@ publication_types:
 publication: '*Intelligent Systems with Applications*'
 publication_short: ''
 
-doi: https://doi.org/10.1016/j.iswa.2022.200113
+doi: 10.1016/j.iswa.2022.200113
 
 abstract: Dialogue systems are a class of increasingly popular AI-based solutions
   to support timely and interactive communication with users in many domains. Due
@@ -47,11 +47,11 @@ abstract: Dialogue systems are a class of increasingly popular AI-based solution
 summary: ''
 
 tags:
-- Dialogue systems
-- Argumentation
-- Data protection
-- Explainable AI
-- Trustworthy AI
+- dialogue systems
+- argumentation
+- data protection
+- explainable AI
+- trustworthy AI
 
 # Display this page in a list of Featured pages?
 featured: false

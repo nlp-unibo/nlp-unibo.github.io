@@ -17,7 +17,10 @@ authors:
 - Preslav Nakov
 - Federico Ruggeri
 - Sebastian Schellhammer
-- ' others'
+- Vinay Setty
+- Megha Sundriyal
+- Konstantin Todorov
+- V. Venktesh
 
 # Author notes (such as 'Equal Contribution')
 # A YAML list of notes for each author in the above `authors` list
@@ -34,11 +37,10 @@ publication_types:
 - paper-conference
 
 # Publication name and optional abbreviated publication name.
-publication: '*International Conference of the Cross-Language Evaluation Forum for
-  European Languages*'
+publication: '*Experimental IR Meets Multilinguality, Multimodality, and Interaction - 16th International Conference of the CLEF Association, CLEF 2025*'
 publication_short: ''
 
-doi: ''
+doi: 10.1007/978-3-032-04354-2_13
 
 abstract: ''
 
@@ -79,7 +81,7 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Workshop
+  - Conference
 aliases:
   - /publication_workshops/alam-etal-2025-overview/
 ---
