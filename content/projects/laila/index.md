@@ -8,6 +8,8 @@ tags:
   - legal
   - legal analytics
 
+summary: "The project applies Legal Analytics methods to legislation, contracts, and judgments to extract legal knowledge, infer relationships, and produce data-driven forecasts."
+
 url_project: 'https://dsg.unibo.it/it/ricerca/progetti-di-ricerca/progetti-conclusi/prin2017-laila-legal-analytics-for-italian-law'
 categories:
   - National project

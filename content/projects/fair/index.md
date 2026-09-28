@@ -8,6 +8,8 @@ tags:
   - ethics
   - fairness
 
+summary: "The FAIR project aims to contribute to addressing the research questions, methodologies, models, technologies, and ethical and legal rules to build AI systems capable of interacting and collaborating with humans."
+
 url_project: 'https://fondazione-fair.it/'
 categories:
   - National project

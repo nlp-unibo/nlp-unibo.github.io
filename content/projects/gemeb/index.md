@@ -9,6 +9,8 @@ tags:
   - generative models
   - LLMs
 
+summary: "The project develops ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy."
+
 url_project: 'https://bi-rex.it/quarto-bando-bi-rex/'
 categories:
   - National project

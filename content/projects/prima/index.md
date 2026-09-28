@@ -8,6 +8,8 @@ tags:
   - legal
   - privacy policies
 
+summary: "PRIMA studies the law and practice of privacy policies, develops methods and techniques for their automated analysis, and implements a prototype to assess their lawfulness."
+
 url_project: 'https://site.unibo.it/prima/en/project'
 categories:
   - National project

@@ -9,6 +9,8 @@ tags:
   - argument mining
   - argument search
 
+summary: "The AMICA project exploited the argumentative content of the scientific literature on Covid-19 to improve the retrieval of relevant and reliable articles."
+
 url_project: 'http://amica.unimore.it/'
 categories:
   - National project
