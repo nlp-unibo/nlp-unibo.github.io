@@ -1,11 +1,194 @@
-// Make page header alignment consistent with widget page header alignment
-.universal-wrapper h1 {
-  text-align: center;
+// Brand palette from the lab logo; data/themes/ltlab.toml sets the theme colors from the same values.
+$lt-navy: #003060;
+$lt-blue: #105080;
+$lt-sky: #60c0e0;
+$lt-orange: #f09010;
+$lt-border: #e3e8ef;
+$lt-muted: #5b6b7d;
+
+// Inter is self-hosted, so pages make no request to a font provider.
+@each $style in normal, italic {
+  @font-face {
+    font-family: "Inter";
+    font-style: $style;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url("/fonts/inter/inter-latin-wght-#{$style}.woff2") format("woff2-variations");
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  }
+
+  @font-face {
+    font-family: "Inter";
+    font-style: $style;
+    font-display: swap;
+    font-weight: 100 900;
+    src: url("/fonts/inter/inter-latin-ext-wght-#{$style}.woff2") format("woff2-variations");
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  }
 }
 
-// Center the CTA shortcode button
+// Typography
+body {
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6,
+.article-title,
+.section-heading h1 {
+  color: $lt-navy;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.dark {
+  h1, h2, h3, h4, h5, h6,
+  .article-title,
+  .section-heading h1 {
+    color: #f1f5fa;
+  }
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+// Page and section titles are left-aligned with a short orange rule below them
+.universal-wrapper h1,
+.section-heading h1 {
+  text-align: left;
+}
+
+.section-heading {
+  text-align: left !important;
+
+  h1 {
+    font-size: 1.9rem;
+    margin-bottom: 0.4rem;
+  }
+
+  h1::after {
+    content: "";
+    display: block;
+    width: 2.5rem;
+    height: 3px;
+    margin-top: 0.6rem;
+    border-radius: 2px;
+    background: $lt-orange;
+  }
+}
+
+.home-section {
+  padding: 70px 0;
+}
+
+// Cards use a thin border and a subtle hover state instead of shadows
+.card-simple,
+.view-card .card-simple {
+  border: 1px solid $lt-border;
+  border-radius: 10px;
+  box-shadow: none;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    border-color: $lt-blue;
+    transform: translateY(-2px);
+  }
+}
+
+.dark .card-simple {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: transparent;
+
+  &:hover {
+    border-color: $lt-sky;
+  }
+}
+
+.article-metadata,
+.article-date {
+  color: $lt-muted;
+  font-size: 0.85rem;
+}
+
+// Citation lists separate entries with a hairline
+.view-citation .pub-list-item {
+  padding: 0.9rem 0;
+  border-bottom: 1px solid $lt-border;
+}
+
+.dark .view-citation .pub-list-item {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+// Buttons
+.btn-outline-primary {
+  border-radius: 6px;
+}
+
+.see-all a {
+  font-weight: 600;
+}
+
+// Hero: compact and brand-colored; the CTA reads as the primary action
+.wg-hero {
+  .hero-title {
+    font-size: clamp(2.2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .hero-lead {
+    color: #33475b;
+  }
+}
+
+.dark .wg-hero .hero-lead {
+  color: #c9d6e3;
+}
+
 .cta-group {
   justify-content: center;
+  flex-wrap: wrap;
+  margin-left: 0;
+  margin-right: 0;
+
+  @include media-breakpoint-up(md) {
+    justify-content: flex-start;
+  }
+}
+
+.cta-group .btn {
+  background: $lt-orange;
+  border-color: $lt-orange;
+  color: $lt-navy !important;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  padding: 0.6rem 1.3rem;
+  border-radius: 8px;
+
+  &:hover {
+    background: darken($lt-orange, 6%);
+    border-color: darken($lt-orange, 6%);
+  }
+}
+
+// The logo has a white background, so dark mode shows it as a rounded tile
+.dark .wg-hero img {
+  border-radius: 14px;
+}
+
+// Footer
+.site-footer {
+  border-top: 1px solid $lt-border;
+  color: $lt-muted;
+  font-size: 0.85rem;
+}
+
+.dark .site-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 // Categories only select the list a page appears in, so the metadata line does not show them

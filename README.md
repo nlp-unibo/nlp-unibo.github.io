@@ -49,6 +49,9 @@ Deadlines and delayed content publication are not emergencies.
 | `config/_default/hugo.yaml` | Site title, URL, and core Hugo settings |
 | `config/_default/params.yaml` | Theme and site-feature settings |
 | `assets/media/` | Shared images, including homepage assets |
+| `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
+| `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
+| `assets/scss/template.scss` | Site-wide style rules layered over the theme |
 | `.github/workflows/hugo.yml` | GitHub Pages build and deployment workflow |
 
 Most content entries are **page bundles**: one directory containing an `index.md` file and any files used only by that page.
