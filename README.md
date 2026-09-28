@@ -316,7 +316,7 @@ Preview during editing:
 uv run python scripts/site.py serve
 ```
 
-Open <http://localhost:1313/>. Preview includes pages whose publication date is in future.
+Open <http://localhost:1313/>. Preview includes drafts and pages whose publication date is in future. Neither appears on the published site.
 
 Available commands:
 
