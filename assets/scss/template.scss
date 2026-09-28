@@ -84,8 +84,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 // Cards use a thin border and a subtle hover state instead of shadows
-.card-simple,
-.view-card .card-simple {
+.card-simple {
   border: 1px solid $lt-border;
   border-radius: 10px;
   box-shadow: none;
@@ -113,12 +112,12 @@ h1, h2, h3, h4, h5, h6,
 }
 
 // Citation lists separate entries with a hairline
-.view-citation .pub-list-item {
+.pub-list-item.view-citation {
   padding: 0.9rem 0;
   border-bottom: 1px solid $lt-border;
 }
 
-.dark .view-citation .pub-list-item {
+.dark .pub-list-item.view-citation {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -170,8 +169,8 @@ h1, h2, h3, h4, h5, h6,
   border-radius: 8px;
 
   &:hover {
-    background: darken($lt-orange, 6%);
-    border-color: darken($lt-orange, 6%);
+    background: lighten($lt-orange, 6%);
+    border-color: lighten($lt-orange, 6%);
   }
 }
 
@@ -349,6 +348,10 @@ h1, h2, h3, h4, h5, h6,
 .lt-badge-preprint,
 .lt-badge-bachelor-thesis,
 .lt-badge-master-thesis { background: #e6ebf1; color: #33475b; }
+.lt-badge-international-project,
+.lt-badge-academic-workshop { background: $lt-sky; color: $lt-navy; }
+.lt-badge-national-project,
+.lt-badge-challenge { background: $lt-navy; }
 
 .dark {
   .lt-badge-journal { background: #2a5a8a; }
@@ -364,6 +367,10 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 700;
   letter-spacing: 0.04em;
   color: $lt-muted;
+}
+
+.dark .lt-year {
+  color: #9fb2c6;
 }
 
 // Translucent navbar that gains a hairline once the page scrolls
@@ -387,22 +394,30 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
-// Scroll reveal, added by assets/js/ltlab.js only when motion is allowed
+// Scroll reveal, added by assets/js/ltlab.js only when motion is allowed.
+// It animates `translate`, so the `transform` hover lift of cards and tiles still works.
 .lt-reveal {
   opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  translate: 0 12px;
+  transition: opacity 0.5s ease, translate 0.5s ease, transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .lt-reveal.lt-visible {
   opacity: 1;
-  transform: none;
+  translate: none;
+}
+
+@media print {
+  .lt-reveal {
+    opacity: 1;
+    translate: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .lt-reveal {
     opacity: 1;
-    transform: none;
+    translate: none;
     transition: none;
   }
 

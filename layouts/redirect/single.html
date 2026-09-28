@@ -1,1 +1,5 @@
-{{- template "alias.html" (dict "Permalink" .Params.target) -}}
+{{- with .Params.target -}}
+  {{- template "alias.html" (dict "Permalink" .) -}}
+{{- else -}}
+  {{- errorf "redirect: %s has no target" .File.Path -}}
+{{- end -}}

@@ -15,7 +15,7 @@
     items.forEach((item) => {
       if (item.dataset.year === year) return;
       year = item.dataset.year;
-      const heading = document.createElement("h3");
+      const heading = document.createElement("h2");
       heading.className = "lt-year";
       heading.textContent = year;
       item.before(heading);
@@ -24,7 +24,8 @@
 
   // Sections fade in once; the stylesheet disables this for reduced motion.
   if (!("IntersectionObserver" in window) || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const targets = document.querySelectorAll(".home-section .container, .lt-tile, .card-simple");
+  // The hero is excluded because it is already visible when the script runs.
+  const targets = document.querySelectorAll(".home-section:not(#section-hero) .container, .lt-tile, .card-simple");
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;

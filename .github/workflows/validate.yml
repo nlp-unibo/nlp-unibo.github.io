@@ -22,11 +22,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
       - name: Set up uv
         uses: astral-sh/setup-uv@v6
         with:
@@ -42,6 +37,9 @@ jobs:
 
       - name: Sync Python environment
         run: uv sync --locked
+
+      - name: Run validator self-checks
+        run: uv run --locked python scripts/test_site.py
 
       - name: Validate content and production build
         run: uv run --locked python scripts/site.py check

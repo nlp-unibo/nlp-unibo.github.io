@@ -7,7 +7,8 @@ date: '{{ now.Format "2006-01-02" }}'
 publishDate: '{{ now.Format "2006-01-02" }}'
 draft: true
 publication_types:
-  - article
+  # article-journal for a journal paper, paper-conference for a conference or workshop paper
+  - article-journal
 publication: "TODO: Venue"
 publication_short: ""
 doi: ""

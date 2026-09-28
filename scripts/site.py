@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
-"""Bootstrap and validate the LT Lab Hugo site through uv.
+"""Bootstrap, preview, validate, and build the LT Lab Hugo site through uv.
 
 Usage:
     uv run python scripts/site.py setup
     uv run python scripts/site.py serve
+    uv run python scripts/site.py new TYPE SLUG
+    uv run python scripts/site.py content
+    uv run python scripts/site.py templates
+    uv run python scripts/site.py build
     uv run python scripts/site.py check
+    uv run python scripts/site.py clean
 """
 
 from __future__ import annotations
@@ -34,7 +39,6 @@ ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / ".tools"
 BUILD = ROOT / ".build"
 GO_VERSION = "1.24.3"
-NODE_PACKAGES = ("lightningcss", "@tailwindcss/oxide", "sass-embedded", "pagefind")
 CONTENT_TYPES = {
     "news": ("news", "news"),
     "event": ("events", "event"),
@@ -54,15 +58,19 @@ CONTENT_TYPES = {
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "role", "email", "user_groups"),
     "news": ("title", "date", "summary"),
-    "events": ("title", "date"),
+    "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
-    "projects": ("title", "date", "categories"),
+    "projects": ("title", "date", "summary", "categories"),
     "opportunities": ("title", "categories"),
-    "tools": ("title", "date", "summary"),
+    "tools": ("title", "date", "summary", "target"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
+    "proposals": ("title", "date", "summary"),
 }
-PUBLICATION_SECTIONS = {"publication"}
+# Proposals nest one folder per topic, whose _index.md needs these fields, around the proposal bundles.
+TOPIC_FIELDS = ("title", "summary")
+# publication_types values that the theme can label.
+PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter", "thesis", "report", "book"}
 # Each `categories` value selects one list on the section's landing page.
 SECTION_CATEGORIES = {
     "publication": {"Highlight", "Journal", "Conference", "Workshop", "Preprint"},
@@ -74,7 +82,7 @@ PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),
     "example email": re.compile(r"\btest@example\.org\b", re.IGNORECASE),
     "example domain": re.compile(r"\bexample\.org\b", re.IGNORECASE),
-    "TODO marker": re.compile(r"\bTODO:\s*", re.IGNORECASE),
+    "TODO marker": re.compile(r"\bTODO\b"),
     "publication boilerplate": re.compile(r"Add the \*\*full text\*\*", re.IGNORECASE),
 }
 MAX_ASSET_BYTES = 5 * 1024 * 1024
@@ -130,7 +138,7 @@ def platform_names() -> tuple[str, str, str]:
     arch = arches[machine]
     if system not in {"linux", "darwin"}:
         raise RuntimeError(f"Unsupported operating system: {system}")
-    return system, arch, "hugo.exe" if system == "windows" else "hugo"
+    return system, arch, "hugo"
 
 
 def ensure_hugo() -> Path:
@@ -141,8 +149,9 @@ def ensure_hugo() -> Path:
     if executable.exists():
         return executable
 
+    # macOS releases ship only as an installer package, which the system tar can unpack.
     if system == "darwin":
-        archive_name = f"hugo_extended_{version}_darwin-universal.tar.gz"
+        archive_name = f"hugo_extended_{version}_darwin-universal.pkg"
     else:
         archive_name = f"hugo_extended_{version}_{system}-{arch}.tar.gz"
     release_url = f"https://github.com/gohugoio/hugo/releases/download/v{version}"
@@ -159,8 +168,12 @@ def ensure_hugo() -> Path:
         archive = Path(temporary) / archive_name
         download(f"{release_url}/{archive_name}", archive)
         verify_sha256(archive, checksum)
-        with tarfile.open(archive, "r:gz") as bundle:
-            bundle.extractall(install_dir, filter="data")
+        if system == "darwin":
+            run(["tar", "-xf", str(archive), "-C", temporary, "Payload"])
+            run(["tar", "-xf", str(Path(temporary) / "Payload"), "-C", str(install_dir), "hugo"])
+        else:
+            with tarfile.open(archive, "r:gz") as bundle:
+                bundle.extractall(install_dir, filter="data")
     executable.chmod(executable.stat().st_mode | stat.S_IXUSR)
     return executable
 
@@ -197,39 +210,11 @@ def ensure_go() -> Path:
     return executable
 
 
-def ensure_node_tools() -> Path:
-    npm = shutil.which("npm")
-    if npm is None:
-        raise RuntimeError("npm is required. Install current Node.js LTS, then rerun setup.")
-    prefix = TOOLS / "node"
-    pagefind = prefix / "node_modules" / ".bin" / "pagefind"
-    if not pagefind.exists():
-        prefix.mkdir(parents=True, exist_ok=True)
-        run(
-            [
-                npm,
-                "install",
-                "--prefix",
-                str(prefix),
-                "--no-save",
-                "--no-package-lock",
-                *NODE_PACKAGES,
-            ]
-        )
-    return prefix
-
-
 def environment() -> tuple[dict[str, str], Path, Path]:
     hugo = ensure_hugo()
     go = ensure_go()
-    node_prefix = ensure_node_tools()
     env = os.environ.copy()
-    tool_paths = [
-        str(hugo.parent),
-        str(go.parent),
-        str(node_prefix / "node_modules" / ".bin"),
-    ]
-    env["PATH"] = os.pathsep.join(tool_paths + [env.get("PATH", "")])
+    env["PATH"] = os.pathsep.join([str(hugo.parent), str(go.parent), env.get("PATH", "")])
     env["GOMODCACHE"] = str(BUILD / "go-mod-cache")
     env["HUGO_CACHEDIR"] = str(BUILD / "hugo-cache")
     return env, hugo, go
@@ -239,25 +224,36 @@ def setup() -> None:
     env, hugo, go = environment()
     run([str(hugo), "version"], env=env)
     run([str(go), "version"], env=env)
-    run(["node", "--version"], env=env)
     print("Local toolchain ready.")
+
+
+class UniqueKeyLoader(yaml.SafeLoader):
+    """SafeLoader that rejects repeated keys, which PyYAML would otherwise overwrite silently."""
+
+    def construct_mapping(self, node: yaml.MappingNode, deep: bool = False) -> dict:
+        keys = [self.construct_object(key, deep=deep) for key, _ in node.value]
+        repeated = sorted({str(key) for key in keys if keys.count(key) > 1})
+        if repeated:
+            raise yaml.constructor.ConstructorError(
+                None, None, f"repeated key {', '.join(repeated)}", node.start_mark
+            )
+        return super().construct_mapping(node, deep=deep)
 
 
 def validate_front_matter() -> None:
     failures: list[str] = []
     checked = 0
-    skipped = 0
     for path in sorted((ROOT / "content").rglob("*.md")):
-        text = path.read_text(encoding="utf-8")
+        text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
         if not text.startswith("---\n"):
-            skipped += 1
+            failures.append(f"{path.relative_to(ROOT)}: missing YAML front matter between --- lines")
             continue
         closing = text.find("\n---", 4)
         if closing == -1:
             failures.append(f"{path.relative_to(ROOT)}: missing closing YAML delimiter")
             continue
         try:
-            metadata = yaml.safe_load(text[4:closing])
+            metadata = yaml.load(text[4:closing], Loader=UniqueKeyLoader)
             if metadata is not None and not isinstance(metadata, dict):
                 failures.append(f"{path.relative_to(ROOT)}: front matter must be a YAML mapping")
         except yaml.YAMLError as error:
@@ -268,11 +264,11 @@ def validate_front_matter() -> None:
         for failure in failures:
             print(f"- {failure}", file=sys.stderr)
         raise SystemExit(1)
-    print(f"Validated YAML front matter in {checked} content files ({skipped} without front matter skipped).")
+    print(f"Validated YAML front matter in {checked} content files.")
 
 
 def read_page(path: Path) -> tuple[dict, str]:
-    text = path.read_text(encoding="utf-8")
+    text = path.read_text(encoding="utf-8").replace("\r\n", "\n")
     if not text.startswith("---\n"):
         return {}, text
     closing = text.find("\n---", 4)
@@ -308,13 +304,26 @@ def content_slug(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", ascii_value.lower()).strip("-")
 
 
+# Site paths that Hugo generates from taxonomies rather than from content folders.
+TAXONOMY_PREFIXES = ("/author/", "/authors/", "/tag/", "/category/", "/publication-type/")
+EMAIL = re.compile(r"[^/\s]+@[^/\s]+\.[a-z]{2,}", re.IGNORECASE)
+
+
+def strip_code(text: str) -> str:
+    text = re.sub(r"<!--.*?-->", "", text, flags=re.DOTALL)
+    text = re.sub(r"(```|~~~).*?\1", "", text, flags=re.DOTALL)
+    return re.sub(r"`[^`\n]*`", "", text)
+
+
 def local_link_targets(path: Path, body: str) -> list[tuple[str, list[Path]]]:
-    clean_body = re.sub(r"<!--.*?-->", "", body, flags=re.DOTALL)
-    clean_body = re.sub(r"```.*?```", "", clean_body, flags=re.DOTALL)
+    clean_body = strip_code(body)
     raw_targets = [
-        match.group(1).strip("<>")
-        for match in re.finditer(r"!?\[[^\]]*\]\(\s*([^\s)]+)", clean_body)
+        match.group(1) or match.group(2)
+        for match in re.finditer(r"!?\[[^\]]*\]\(\s*(?:<([^>]+)>|([^\s)]+))", clean_body)
     ]
+    raw_targets.extend(
+        match.group(1) for match in re.finditer(r"^\s{0,3}\[[^\]]+\]:\s*<?([^\s>]+)>?", clean_body, re.MULTILINE)
+    )
     raw_targets.extend(
         match.group(1)
         for match in re.finditer(r"(?:src|href)=[\"']([^\"']+)[\"']", clean_body, re.IGNORECASE)
@@ -326,7 +335,7 @@ def local_link_targets(path: Path, body: str) -> list[tuple[str, list[Path]]]:
         if re.match(r"^[a-z][a-z0-9+.-]*:", raw_target, re.IGNORECASE):
             continue
         target = unquote(raw_target.split("#", 1)[0].split("?", 1)[0])
-        if not target:
+        if not target or target.startswith(TAXONOMY_PREFIXES):
             continue
         if target.startswith("/"):
             relative = target.lstrip("/")
@@ -342,6 +351,20 @@ def local_link_targets(path: Path, body: str) -> list[tuple[str, list[Path]]]:
     return results
 
 
+def section_pages(section: str) -> list[tuple[Path, Path, tuple[str, ...]]]:
+    """Return (bundle folder, page file, required fields) for every entry of a validated section."""
+    entries = []
+    for directory in sorted(path for path in (ROOT / "content" / section).iterdir() if path.is_dir()):
+        if section == "proposals":
+            entries.append((directory, directory / "_index.md", TOPIC_FIELDS))
+            for child in sorted(path for path in directory.iterdir() if path.is_dir()):
+                entries.append((child, child / "index.md", REQUIRED_FIELDS[section]))
+        else:
+            page = directory / ("_index.md" if section == "authors" else "index.md")
+            entries.append((directory, page, REQUIRED_FIELDS[section]))
+    return entries
+
+
 def validate_content_quality() -> None:
     failures: list[str] = []
     warnings: list[str] = []
@@ -350,37 +373,31 @@ def validate_content_quality() -> None:
     content_root = ROOT / "content"
     author_names: dict[str, tuple[str, Path]] = {}
 
-    for section, required_fields in REQUIRED_FIELDS.items():
-        section_dir = content_root / section
-        seen_slugs: dict[str, str] = {}
-        for directory in sorted(path for path in section_dir.iterdir() if path.is_dir()):
+    for section in REQUIRED_FIELDS:
+        for stray in sorted((content_root / section).glob("*.md")):
+            if stray.name != "_index.md":
+                failures.append(f"{stray.relative_to(ROOT)}: pages must be folders with an index.md")
+        for directory, page, required_fields in section_pages(section):
             slug = directory.name
-            normalized_slug = slug.casefold()
             if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
                 failures.append(f"{directory.relative_to(ROOT)}: invalid slug {slug!r}")
-            if normalized_slug in seen_slugs:
-                failures.append(
-                    f"{directory.relative_to(ROOT)}: case-insensitive duplicate of {seen_slugs[normalized_slug]}"
-                )
-            seen_slugs[normalized_slug] = str(directory.relative_to(ROOT))
-
-            page = directory / ("_index.md" if section == "authors" else "index.md")
             if not page.exists():
                 failures.append(f"{directory.relative_to(ROOT)}: missing page index")
                 continue
             metadata, body = read_page(page)
             checked_pages += 1
+            is_draft = metadata.get("draft") is True
             for field in required_fields:
                 if metadata.get(field) in (None, "", []):
                     failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
-            if section == "authors" and isinstance(metadata.get("title"), str):
+            if section == "authors" and not is_draft and isinstance(metadata.get("title"), str):
                 expected_slug = content_slug(metadata["title"])
                 if slug != expected_slug:
                     failures.append(
                         f"{directory.relative_to(ROOT)}: author slug must be {expected_slug!r}"
                     )
 
-            for author in metadata.get("authors", []):
+            for author in metadata.get("authors") or []:
                 if not isinstance(author, str):
                     continue
                 author_slug = content_slug(author)
@@ -393,11 +410,11 @@ def validate_content_quality() -> None:
                 else:
                     author_names[author_slug] = (author, page)
 
-            is_draft = metadata.get("draft") is True
+            bib = directory / "cite.bib"
             if not is_draft:
-                visible_text = "\n".join(metadata_strings(metadata))
-                visible_text += "\n" + re.sub(r"<!--.*?-->", "", body, flags=re.DOTALL)
-                visible_text = re.sub(r"```.*?```", "", visible_text, flags=re.DOTALL)
+                visible_text = "\n".join(metadata_strings(metadata)) + "\n" + strip_code(body)
+                if bib.exists():
+                    visible_text += "\n" + bib.read_text(encoding="utf-8")
                 for name, pattern in PLACEHOLDER_PATTERNS.items():
                     if pattern.search(visible_text):
                         failures.append(f"{page.relative_to(ROOT)}: contains {name}")
@@ -410,15 +427,24 @@ def validate_content_quality() -> None:
 
             for raw_target, candidates in local_link_targets(page, body):
                 checked_links += 1
-                if "@" in raw_target:
+                if any(candidate.exists() for candidate in candidates):
+                    continue
+                if EMAIL.fullmatch(raw_target):
                     failures.append(
                         f"{page.relative_to(ROOT)}: email link {raw_target!r} must start with mailto:"
                     )
-                elif not any(candidate.exists() for candidate in candidates):
+                else:
                     failures.append(f"{page.relative_to(ROOT)}: local link {raw_target!r} does not exist")
 
-            if section in PUBLICATION_SECTIONS and not (directory / "cite.bib").exists():
+            if section == "publication" and not bib.exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
+            if section in {"publication", "theses"} and not is_draft:
+                types = metadata.get("publication_types") or []
+                if len(types) != 1 or types[0] not in PUBLICATION_TYPES:
+                    allowed = ", ".join(sorted(PUBLICATION_TYPES))
+                    failures.append(
+                        f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
+                    )
             if section in SECTION_CATEGORIES and not is_draft:
                 categories = metadata.get("categories") or []
                 if len(categories) != 1 or categories[0] not in SECTION_CATEGORIES[section]:
@@ -452,21 +478,6 @@ def validate_content_quality() -> None:
         f"Validated {checked_pages} content entries, {checked_links} local links, "
         f"and {checked_assets} assets."
     )
-
-
-def validate_configuration() -> None:
-    workflow_version = read_hugo_version()
-    netlify = (ROOT / "netlify.toml").read_text(encoding="utf-8")
-    match = re.search(r'^\s*HUGO_VERSION\s*=\s*"([0-9.]+)"\s*$', netlify, re.MULTILINE)
-    if not match:
-        raise RuntimeError("Cannot find HUGO_VERSION in netlify.toml")
-    netlify_version = match.group(1)
-    if workflow_version != netlify_version:
-        raise RuntimeError(
-            "Hugo version mismatch: "
-            f"GitHub Actions uses {workflow_version}, Netlify uses {netlify_version}"
-        )
-    print(f"Hugo versions aligned at {workflow_version}.")
 
 
 def validate_archetypes() -> None:
@@ -507,14 +518,16 @@ def validate_archetypes() -> None:
             metadata = yaml.safe_load(text.split("---", 2)[1])
             if not isinstance(metadata, dict) or metadata.get("draft") is not True:
                 raise RuntimeError(f"Archetype {kind!r} must create draft content")
-            if content_type in {
-                "publication-highlight",
-                "journal",
-                "conference",
-                "workshop",
-                "preprint",
-            } and not page.with_name("cite.bib").exists():
+            if section == "publication" and not page.with_name("cite.bib").exists():
                 raise RuntimeError(f"Archetype {kind!r} did not create cite.bib")
+            categories = metadata.get("categories") or []
+            if section in SECTION_CATEGORIES and (
+                len(categories) != 1 or categories[0] not in SECTION_CATEGORIES[section]
+            ):
+                raise RuntimeError(f"Archetype {kind!r} has an invalid categories value {categories!r}")
+            types = metadata.get("publication_types") or []
+            if section in {"publication", "theses"} and (len(types) != 1 or types[0] not in PUBLICATION_TYPES):
+                raise RuntimeError(f"Archetype {kind!r} has an invalid publication_types value {types!r}")
     finally:
         shutil.rmtree(content_dir, ignore_errors=True)
     print(f"Validated {len(CONTENT_TYPES)} content archetypes.")
@@ -529,8 +542,6 @@ def build() -> None:
     # A separate resource directory keeps --gc from deleting files a running preview server uses.
     env["HUGO_RESOURCEDIR"] = str(BUILD / "resources")
     run([str(hugo), "--gc", "--minify", "--destination", str(destination)], env=env)
-    pagefind = TOOLS / "node" / "node_modules" / ".bin" / "pagefind"
-    run([str(pagefind), "--site", str(destination)], env=env)
     print(f"Production build ready at {destination}")
 
 
@@ -579,7 +590,6 @@ def main() -> None:
     elif args.command == "check":
         validate_front_matter()
         validate_content_quality()
-        validate_configuration()
         validate_archetypes()
         build()
     elif args.command == "serve":

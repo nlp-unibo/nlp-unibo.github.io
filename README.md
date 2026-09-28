@@ -1,428 +1,479 @@
 # Language Technologies Lab website
 
-Source repository for the [Language Technologies Lab website](https://nlp.unibo.it/). The site is built with [Hugo](https://gohugo.io/) and Hugo Blox, then deployed to GitHub Pages.
+This repository holds the source of the [Language Technologies Lab website](https://nlp.unibo.it/).
+Every page of the site is a text file in this repository.
+When a change is merged, GitHub rebuilds the site with [Hugo](https://gohugo.io/) and the Hugo Blox theme, then publishes it on GitHub Pages.
 
-## Quick contribution workflow
+This guide is written for lab members without web development experience.
+Part 1 explains the few ideas you need.
+Part 2 gives one recipe for each kind of content, such as a publication or a news item.
+Part 3 explains how to publish a change, and Part 4 lists common problems.
+Part 5 is a reference for maintainers.
 
-1. Start from the `hugoblox-template` branch. This is the repository's current default branch and source of truth.
-2. Create a branch for your change. Use a descriptive name such as `news/acl-2026` or `people/add-maria-rossi`.
-3. Edit or add files under `content/`.
-4. Preview the site locally when possible.
-5. Commit and push your branch.
-6. Open a pull request against `hugoblox-template` and request review when another maintainer is active or the change needs specialist input.
-7. Wait for **Validate content and build** check to pass.
-8. Merge only after checking text, links, dates, images, and build results.
-9. Monitor automatic deployment from GitHub **Actions** as described in [Publishing](#publishing).
+## Contents
 
-For small text corrections, the whole workflow can be completed in GitHub's web interface. Do not edit generated files or the published website directly.
+- [Part 1. Before you start](#part-1-before-you-start)
+- [Part 2. Recipes](#part-2-recipes)
+  - [Add a publication](#add-a-publication)
+  - [Add a news item](#add-a-news-item)
+  - [Add an event](#add-an-event)
+  - [Add or update a team member](#add-or-update-a-team-member)
+  - [Add a thesis](#add-a-thesis)
+  - [Add a research proposal](#add-a-research-proposal)
+  - [Add a project](#add-a-project)
+  - [Add a challenge or workshop suggestion](#add-a-challenge-or-workshop-suggestion)
+  - [Add a research area](#add-a-research-area)
+  - [Add a tool](#add-a-tool)
+  - [Publish the Work with us page](#publish-the-work-with-us-page)
+  - [Edit the homepage or the menu](#edit-the-homepage-or-the-menu)
+- [Part 3. Publish your change](#part-3-publish-your-change)
+- [Part 4. Common problems](#part-4-common-problems)
+- [Part 5. Maintainer reference](#part-5-maintainer-reference)
 
-## Review and emergency policy
+## Part 1. Before you start
+
+### What you need
+
+You need a GitHub account with write access to this repository.
+Ask the maintainer for access if you do not have it.
+No installation is required for most changes, because GitHub's website can create and edit files.
+
+### Six ideas that explain the whole site
+
+A **page bundle** is a folder that holds one page.
+It contains a file named `index.md` and any image or PDF used only by that page.
+For example, a news item lives in `content/news/acl-2026/index.md`.
+
+The **slug** is the name of that folder, such as `acl-2026`.
+It becomes part of the web address, so the page above appears at `https://nlp.unibo.it/news/acl-2026/`.
+Use lowercase letters, numbers, and hyphens only.
+Do not rename a folder after publication, because every existing link to it would break.
+
+The **front matter** is the block at the top of `index.md`, between two lines that contain only `---`.
+It stores the page details, such as the title and the date, as `name: value` lines.
+The text below the second `---` is the page body.
+
+**Markdown** is the plain-text format of the body.
+Write `**bold**` for **bold**, `*italic*` for *italic*, `## Heading` for a heading, `- item` for a list item, and `[text](https://example.org/)` for a link.
+
+A **draft** is a page whose front matter contains `draft: true`.
+Drafts appear in a local preview but never on the published site.
+
+A **pull request** is a proposal to change the site.
+GitHub checks it automatically, and the site changes only after the pull request is merged.
+
+### Rules for front matter
+
+Front matter uses YAML, which is sensitive to layout.
+Follow these rules to avoid most errors.
+
+1. Indent with spaces, never with tabs.
+2. Keep the indentation of lists exactly as in the example you copy.
+3. Write dates as `YYYY-MM-DD`, for example `2026-05-20`.
+4. Put quotes around a value that contains a colon, a hash sign, or other punctuation, for example `title: "LLMs: a survey"`.
+5. Never delete either `---` line.
+
+### Two ways to work
+
+The GitHub website is enough for text changes, new pages, and image uploads.
+You cannot preview the site there, but the automatic check catches most mistakes.
+
+Your own computer lets you preview every change before publication.
+It needs a one-time setup, described in [Work on your computer](#work-on-your-computer).
+
+Each recipe below works in both ways.
+The fastest start on the GitHub website is to copy an existing page of the same kind and edit it.
+
+## Part 2. Recipes
+
+Every recipe ends with the same step: publish the change through a pull request, as described in [Part 3](#part-3-publish-your-change).
+
+### Add a publication
+
+Every publication lives in its own folder under `content/publication/`.
+A folder name such as `rossi-etal-2026-example` works well: first author, `etal`, year, and one keyword.
+
+```text
+content/publication/rossi-etal-2026-example/
+├── index.md       the page
+├── cite.bib       the BibTeX record behind the Cite button
+└── featured.jpg   an optional image
+```
+
+1. Create the folder and `index.md`.
+   On the GitHub website, open any folder in `content/publication/`, copy its `index.md`, and paste it into a new file named `content/publication/<your-slug>/index.md`.
+   On your computer, run `uv run python scripts/site.py new conference rossi-etal-2026-example`.
+   Replace `conference` with `journal`, `workshop`, `preprint`, or `publication-highlight` as needed.
+2. Fill in the fields in the table below, and delete every `TODO` text.
+3. Create `cite.bib` in the same folder and paste the complete BibTeX record.
+   Do not add a `note` field with internal ratings, because readers download this file.
+4. Remove the `draft: true` line when the entry is ready.
+
+| Field | What to write |
+| --- | --- |
+| `title` | The paper title, without LaTeX commands such as `\textbf` |
+| `authors` | One author per line, starting with `- `. Write lab members exactly as their profile title, for example `Federico Ruggeri`, so that their names appear in bold and link to their profiles |
+| `date` and `publishDate` | The publication date as `YYYY-MM-DD` |
+| `publication_types` | `article-journal` for a journal paper, `paper-conference` for a conference or workshop paper, `article` for a preprint, or `chapter` for a book chapter |
+| `publication` | The full venue name, for example `Proceedings of ACL 2026` |
+| `categories` | Exactly one of `Highlight`, `Journal`, `Conference`, `Workshop`, or `Preprint`. It selects the list on the Publications page |
+| `abstract` | The abstract |
+| `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
+| `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
+| `tags` | Topic keywords. Add `student publication` to show the paper on the For Students page |
+
+A `Highlight` publication appears only under Highlights, never in its venue list.
+Leave `featured: false` unchanged, because the Highlight category replaces it.
+
+### Add a news item
+
+1. Create `content/news/<slug>/index.md`, for example `content/news/acl-2026/index.md`.
+   Copy an existing news item, or run `uv run python scripts/site.py new news acl-2026`.
+2. Set `title`, `date`, and `summary`.
+   The summary is the one sentence shown on the homepage and in the news list.
+3. Write the text below the front matter.
+4. Optionally upload `featured.jpg` or `featured.png` to the same folder as the listing image, and PDFs to link from the text.
+
+```markdown
+---
+title: "Paper accepted at ACL 2026"
+date: 2026-05-20
+tags:
+  - news
+  - paper
+summary: "Our paper on argument mining has been accepted at ACL 2026."
+---
+
+Our paper has been accepted at ACL 2026.
+
+## Useful links
+
+- [Conference website](https://2026.aclweb.org/)
+- [Programme](programme.pdf)
+```
+
+The homepage shows the five most recent news items automatically.
+A news item with a future date stays hidden until that date.
+The site rebuilds every day at 04:00 UTC, so the item appears on the morning of its date.
+
+### Add an event
+
+1. Create `content/events/<slug>/index.md`, for example `content/events/2026clef/index.md`.
+   Copy an existing event, or run `uv run python scripts/site.py new event 2026clef`.
+2. Set `title`, `date`, `summary`, and `tags`.
+3. Describe the event in the body, and link its website and any PDF placed in the same folder.
+
+### Add or update a team member
+
+Each member has a folder in `content/authors/` named after the full name in lowercase with hyphens, for example `content/authors/maria-rossi/`.
+The folder contains `_index.md`, with an underscore, and a photo named `avatar.jpg` or `avatar.png`.
+
+1. Copy the folder of an existing member, or run `uv run python scripts/site.py new person maria-rossi`.
+2. Set `title` to the full name exactly as it appears in publications, for example `Maria Rossi`.
+   The folder name must match it: validation rejects `maria-rossi` for a profile titled `Mario Rossi`.
+3. Set `first_name`, `last_name`, `role`, `bio`, `interests`, `email`, and the `social` links.
+4. Set `user_groups` to one of `Head`, `Academic Members`, `Research Fellows`, or `PhD Students`, with this exact spelling.
+   The group selects the section of the People page.
+5. Keep `highlight_name: true`, which shows the member in bold in author lists.
+6. Upload a square photo as `avatar.jpg` or `avatar.png`, at most 5 MiB.
+
+To remove a former member from the People page, set their `user_groups` to `Alumni`.
+The People page shows only the four groups above, and validation requires a group.
+Keep the folder, because their publications still link to it.
+
+### Add a thesis
+
+1. Create `content/theses/<year><name>/index.md`, for example `content/theses/2026mariarossi/index.md`.
+   Copy an existing thesis, or run `uv run python scripts/site.py new masters-thesis 2026mariarossi`.
+   Use `bachelors-thesis` for a bachelor's thesis.
+2. Set `title`, `authors` with the student's name, and `date` as the graduation date.
+3. Keep `categories` as `Master thesis` or `Bachelor thesis`.
+   It selects the list on the For Students page.
+4. Set `url_pdf` to the thesis record, for example its AMS Laurea page, when it exists.
+
+### Add a research proposal
+
+Research proposals are grouped by topic under `content/proposals/`.
+Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
+The For Students page shows one card per topic automatically.
+
+```text
+content/proposals/legal/
+├── _index.md          the topic: title, summary, description
+├── am/index.md        one proposal
+└── unfairclauses/index.md
+```
+
+1. Copy an existing proposal folder inside the right topic, for example `content/proposals/legal/am/`, and give it a new name.
+2. Set `title`, `date`, `summary`, and `tags`.
+   Validation requires `title`, `date`, and `summary`.
+   A topic `_index.md` needs `title` and `summary`.
+3. Write the body with a **Description**, a **Contact** line, and optional **References**.
+   Write each contact as an email link, for example `[Maria Rossi](mailto:maria.rossi@unibo.it)`.
+
+To add a new topic, create a folder such as `content/proposals/new-topic/` with an `_index.md`.
+Copy the `_index.md` of an existing topic and replace its title, summary, and description.
+
+### Add a project
+
+1. Create `content/projects/<slug>/index.md`, for example `content/projects/amica/index.md`.
+   Copy an existing project, or run `uv run python scripts/site.py new national-project amica`.
+   Use `international-project` for an international project.
+2. Set `title`, `date` as the project start, `summary`, and `url_project` as the project website.
+3. Keep `categories` as `International project` or `National project`.
+   It selects the list on the Projects page.
+4. Describe the goals, the partners, and the lab's role in the body.
+
+### Add a challenge or workshop suggestion
+
+The For Students page suggests international challenges and academic workshops as project-work topics.
+
+1. Copy an existing folder in `content/opportunities/`, for example `content/opportunities/semeval/`.
+2. Set `title`, `tags`, and `url_project` as the website of the challenge or workshop.
+3. Set `categories` to `Challenge` or `Academic workshop`.
+4. Describe it in two or three sentences in the body.
+
+### Add a research area
+
+1. Create `content/research/<slug>/index.md`.
+   Copy an existing area, or run `uv run python scripts/site.py new research <slug>`.
+2. Set `title` and `summary`.
+   The summary appears on the homepage tile.
+3. Set `icon` to a [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name, such as `comments` or `balance-scale`.
+4. Describe the topics in the body.
+
+The homepage shows one tile per research area automatically.
+
+### Add a tool
+
+A tool page redirects visitors to the tool's own website.
+
+1. Create `content/tools/<slug>/index.md`.
+   Copy an existing tool, or run `uv run python scripts/site.py new tool <slug>`.
+2. Set `title`, `date`, and `summary`.
+3. Set `target` to the tool's website, and keep `type: redirect`.
+
+### Publish the Work with us page
+
+The Work with us page is written but hidden, because its procedures are still being finalized.
+It lives in `content/work-with-us/index.md` and appears in the local preview at `/work-with-us/`.
+
+1. Delete the `draft: true` line and its comment in `content/work-with-us/index.md`.
+2. In `config/_default/menus.yaml`, remove the `#` at the start of the three `Work with us` lines, and delete the comment above them.
+
+### Edit the homepage or the menu
+
+The homepage is defined in `content/_index.md` as a list of blocks, such as the hero, the figures, the research tiles, and the latest news.
+The top menu is defined in `config/_default/menus.yaml`, where lower `weight` values appear first.
+An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`, as News and Events do under **News & Events**.
+
+The full menu fits on one line from 1280px, and narrower screens use the collapsed menu.
+After adding a menu entry, check the menu at 1280px, and shorten a label or move it into a dropdown if the line wraps.
+
+Ask the maintainer to review changes to the homepage, the menu, or any file outside `content/`, because they affect the whole site.
+
+## Part 3. Publish your change
+
+### On the GitHub website
+
+1. Open <https://github.com/nlp-unibo/nlp-unibo.github.io>.
+2. To edit a page, open its `index.md` and select the pencil icon.
+   To create a page, select **Add file → Create new file** and type the full path, such as `content/news/acl-2026/index.md`.
+   To add images or PDFs, open the page folder and select **Add file → Upload files**.
+3. Select **Commit changes**, choose **Create a new branch for this commit and start a pull request**, and give the branch a short name such as `news/acl-2026`.
+4. On the next screen, select **Create pull request**.
+   Fill in the short template, and make sure the base branch is `hugoblox-template`.
+5. Wait for the **Validate content and build** check.
+   A green tick means the site builds.
+   A red cross means that the check found a problem, which [Part 4](#part-4-common-problems) helps to fix.
+6. To fix a problem, edit the file again in the same branch.
+   The check runs again automatically.
+7. When the check is green, merge the pull request, or ask the maintainer to merge it.
+
+The site updates a few minutes after the merge.
+Open the **Actions** tab to follow the **Deploy Hugo site to Pages** run, then check your page on <https://nlp.unibo.it/>.
+
+### Work on your computer
+
+The first setup installs everything the site needs into this folder, including the exact Hugo version used by GitHub.
+It requires [Git](https://git-scm.com/) and [uv](https://docs.astral.sh/uv/getting-started/installation/), and it runs on Linux and macOS.
+On Windows, use the [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install) and run every command inside it.
+
+```bash
+git clone https://github.com/nlp-unibo/nlp-unibo.github.io.git
+cd nlp-unibo.github.io
+uv sync
+uv run python scripts/site.py setup
+```
+
+For each change, start from the latest version and create a branch:
+
+```bash
+git switch hugoblox-template
+git pull --ff-only
+git switch -c news/acl-2026
+```
+
+Start the preview and open <http://localhost:1313/>.
+The preview updates while you edit, and it also shows drafts and pages with a future date.
+
+```bash
+uv run python scripts/site.py serve
+```
+
+Before publishing, run the same check as GitHub, then commit and push:
+
+```bash
+uv run python scripts/site.py check
+git add content/news/acl-2026
+git commit -m "Add ACL 2026 news"
+git push -u origin news/acl-2026
+```
+
+GitHub prints a link to open the pull request.
+Continue from step 4 of the website instructions above.
+
+### Before you merge
+
+- [ ] The title, names, dates, venue, DOI, and links are correct.
+- [ ] Every `TODO` text is gone, and `draft: true` is removed from pages meant to be public.
+- [ ] Every image or PDF is at most 5 MiB, and its file name has no spaces.
+- [ ] No private data, credentials, internal ratings, or copyrighted files were added.
+- [ ] The **Validate content and build** check is green.
+- [ ] After deployment, the page looks right on a computer and on a phone.
+
+## Part 4. Common problems
+
+The check prints one line per problem, starting with the file name.
+The table below explains the most frequent messages.
+
+| Message | Meaning and fix |
+| --- | --- |
+| `required field 'summary' is empty` | The named field is missing or empty. Add it to the front matter |
+| `categories must be exactly one of ...` | The `categories` value is missing, misspelled, or repeated. Copy one allowed value from the message |
+| `contains TODO marker` | A `TODO:` text from the template is still there. Replace it, or keep `draft: true` until the page is ready |
+| `email link '...' must start with mailto:` | Write email links as `[Name](mailto:name@unibo.it)` |
+| `local link '...' does not exist` | A link points to a missing file. Check the spelling and capitalization, and upload the file to the page folder |
+| `invalid slug` | The folder name contains capitals, spaces, or other characters. Use lowercase letters, numbers, and hyphens only |
+| `author slug must be '...'` | A member's folder name does not match their `title`. Rename the new folder as shown |
+| `author '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
+| `exceeds 5 MiB asset limit` | Compress the image or PDF, then upload it again |
+| `contains example domain` or `contains example email` | A template link or address such as `example.org` is still there. Replace it with the real one |
+| `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
+| `missing page index` | The folder has no `index.md` (or `_index.md` for a member or a proposal topic). Check the file name |
+| `pages must be folders with an index.md` | A page was saved as `name.md` directly in a section. Move it to `name/index.md` |
+| `repeated key ...` | The same field appears twice in the front matter. Keep one of them |
+| Warning `future publication date` | The page is valid but stays hidden until its date |
+| Warning `missing cite.bib` | The publication has no BibTeX file, so its Cite button is empty. Add `cite.bib` |
+| A YAML error with a line number | The front matter layout is broken. Check tabs, indentation, quotes, and both `---` lines near that line |
+
+The following problems produce no message.
+
+A page is missing from the site when it still has `draft: true`, when its `date` is in the future, or when it sits in the wrong folder.
+A publication is missing from its list when its `categories` value selects another list.
+An image is missing when the file name in the text differs from the uploaded file, including capitalization.
+A change is not visible when the deployment is still running; wait a few minutes and reload the page without the browser cache.
+
+## Part 5. Maintainer reference
+
+### Repository structure
+
+| Path | Purpose |
+| --- | --- |
+| `content/_index.md` | Homepage blocks |
+| `content/authors/` | Member profiles and avatars |
+| `content/publication/` | All publications; `categories` selects their list |
+| `content/news/`, `content/events/` | News items and events |
+| `content/projects/` | All projects; `categories` selects International or National |
+| `content/theses/` | Master's and bachelor's theses; `categories` selects the list |
+| `content/proposals/` | Research proposals, one folder per topic |
+| `content/opportunities/` | Challenges and academic workshops suggested to students |
+| `content/research/`, `content/tools/` | Research areas and tools |
+| `content/students/`, `content/people/`, `content/work-with-us/` | Landing pages |
+| `content/categories/_index.md` | Citation view for category pages |
+| `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
+| `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
+| `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
+| `assets/scss/template.scss` | Site-wide style rules layered over the theme |
+| `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
+| `assets/media/` | Shared images, including the homepage logo |
+| `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
+| `layouts/partials/views/citation.html` | Theme citation view plus category badges |
+| `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
+| `archetypes/` | Templates used by `site.py new` |
+| `scripts/site.py` | Setup, preview, validation, and build commands |
+| `scripts/test_site.py` | Self-checks for the validator, run by the pull-request workflow |
+| `content/mm-argfallacy/` | Redirect from a shared-task short link to its event page |
+| `.github/workflows/` | Pull-request validation (`validate.yml`) and deployment (`hugo.yml`) |
+| `.github/pull_request_template.md`, `.github/CODEOWNERS` | Pull-request checklist and code owners |
+
+### Categories
+
+Publications, projects, theses, and opportunities use one `categories` value to select the list they appear in.
+Validation rejects a missing or unknown value.
+The theme would print categories in the page metadata, so `template.scss` hides them.
+
+| Folder | Allowed `categories` values |
+| --- | --- |
+| `content/publication/` | `Highlight`, `Journal`, `Conference`, `Workshop`, `Preprint` |
+| `content/projects/` | `International project`, `National project` |
+| `content/theses/` | `Master thesis`, `Bachelor thesis` |
+| `content/opportunities/` | `Challenge`, `Academic workshop` |
+
+The allowed values live in `SECTION_CATEGORIES` in `scripts/site.py`.
+A new value also needs a list block on the matching landing page.
+
+When moving a published page, keep its old path under `aliases`, so that external links redirect to the new address.
+
+### Commands
+
+| Command | Effect |
+| --- | --- |
+| `uv run python scripts/site.py setup` | Download the pinned Hugo and Go versions into the ignored `.tools/` folder |
+| `uv run python scripts/site.py serve` | Start the local preview, including drafts and future pages |
+| `uv run python scripts/site.py new TYPE SLUG` | Create a draft page from a template |
+| `uv run python scripts/site.py content` | Validate front matter, slugs, required fields, categories, publication types, placeholders, local links, and asset sizes |
+| `uv run python scripts/site.py templates` | Verify that every template generates a valid draft |
+| `uv run python scripts/site.py build` | Build the production site under `.build/public` |
+| `uv run python scripts/site.py check` | Run every validation, then the production build |
+| `uv run python scripts/site.py clean` | Remove build output and caches, and keep the downloaded tools |
+| `uv run python scripts/test_site.py` | Run the self-checks of the validator's link parser and front-matter loader |
+
+The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, and `preprint`.
+Research proposals and opportunities have no template, so contributors copy an existing entry.
+
+The Hugo version comes from `.github/workflows/hugo.yml`, so local and GitHub builds always use the same version.
+The production build uses its own resource folder, so `check` can run while the preview is open.
+
+### Validation and deployment
+
+Every pull request to `hugoblox-template` runs **Validate website**, which executes `site.py check` with the locked Python environment.
+Merging into `hugoblox-template` runs **Deploy Hugo site to Pages**, which builds and publishes the site.
+The same workflow also runs every day at 04:00 UTC, so pages with a future date appear once that date arrives.
+If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `hugoblox-template`.
+Do not publish from the old `hugo` branch.
+Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
+
+### Review and emergency policy
 
 The repository currently has one active maintainer, so pull requests require zero approvals and the **Validate content and build** status check.
 Code owners are listed in `.github/CODEOWNERS`, but code-owner review is not required while maintenance remains a solo activity.
 When a second maintainer becomes active, increase the ruleset to one required code-owner approval and require another maintainer to review each change.
 Resolve review threads and push follow-up fixes before merging whenever a review takes place.
 
-Routine updates always follow the contribution workflow above.
+Routine updates always follow the workflow in Part 3.
 An emergency is limited to an active outage, security incident, privacy exposure, or similarly urgent risk to the live site.
 Emergency changes still use a focused pull request and the required validation check whenever GitHub is operational.
-If those controls prevent urgent risk mitigation, a repository administrator may temporarily amend the ruleset, record the reason and exact change in the pull request, restore the ruleset immediately afterward, and request retrospective review.
+If those controls prevent urgent risk mitigation, a repository administrator may temporarily amend the ruleset.
+The administrator records the reason and the exact change in the pull request, restores the ruleset immediately afterward, and requests a retrospective review.
 Deadlines and delayed content publication are not emergencies.
 
-## Repository structure
-
-| Path | Purpose |
-| --- | --- |
-| `content/` | All pages and displayed text |
-| `content/_index.md` | Homepage layout and homepage collections |
-| `content/authors/` | Team member profiles and avatars |
-| `content/news/` | News posts |
-| `content/events/` | Event pages |
-| `content/research/` | Research-area pages |
-| `content/projects/` | All projects; `categories` selects International or National |
-| `content/publication/` | All publications; `categories` selects their list |
-| `content/theses/` | Master's and bachelor's theses; `categories` selects the list |
-| `content/proposals/` | Research proposals, one folder per topic |
-| `content/opportunities/` | Challenges and academic workshops suggested to students |
-| `content/tools/` | Lab tools and software |
-| `config/_default/menus.yaml` | Top navigation menu |
-| `config/_default/hugo.yaml` | Site title, URL, and core Hugo settings |
-| `config/_default/params.yaml` | Theme and site-feature settings |
-| `assets/media/` | Shared images, including homepage assets |
-| `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
-| `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
-| `assets/scss/template.scss` | Site-wide style rules layered over the theme |
-| `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
-| `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (homepage research tiles), and `site-stats` (homepage figures) |
-| `layouts/partials/views/citation.html` | Theme citation view plus category badges; re-sync it when upgrading Hugo Blox |
-| `.github/workflows/hugo.yml` | GitHub Pages build and deployment workflow |
-
-Most content entries are **page bundles**: one directory containing an `index.md` file and any files used only by that page.
-
-```text
-content/news/example-news/
-├── index.md
-├── featured.jpg
-└── programme.pdf
-```
-
-Use lowercase directory and file names. Prefer short hyphen-separated slugs, for example `acl-2026`, and avoid spaces.
-
-## Page format
-
-Markdown pages normally contain:
-
-1. YAML front matter between two `---` lines.
-2. Page text written in Markdown.
-
-```markdown
----
-title: "Page title"
-date: 2026-05-20
-tags:
-  - natural language processing
-  - event
-summary: "Short text used in page lists and previews."
----
-
-Page body starts here.
-```
-
-Important rules:
-
-- Use spaces, not tabs, in YAML.
-- Use dates in `YYYY-MM-DD` format.
-- Quote values containing punctuation when unsure.
-- Keep indentation consistent.
-- Do not remove either `---` delimiter.
-- Use relative links for files in the same page directory: `[Programme](programme.pdf)`.
-- Use standard Markdown links for external pages: `[ACL](https://www.aclweb.org/)`.
-- Copy a nearby, working page of the same type before creating a page from scratch. Existing fields differ by content type.
-
-## Creating new content from templates
-
-Use repository archetypes instead of copying old entries. Generator creates page bundle in correct directory, fills title and date, and marks page `draft: true`:
-
-```bash
-uv run python scripts/site.py new TYPE slug
-```
-
-Available types:
-
-```text
-news                     event
-person                   research
-tool                     national-project
-international-project    bachelors-thesis
-masters-thesis           publication-highlight
-journal                  conference
-workshop                 preprint
-```
-
-Examples:
-
-```bash
-uv run python scripts/site.py new news acl-2026
-uv run python scripts/site.py new person maria-rossi
-uv run python scripts/site.py new international-project example-project
-uv run python scripts/site.py new conference rossi-etal-2026-example
-```
-
-Slugs must contain lowercase letters, numbers, and hyphens only. Replace every `TODO`, add page files such as avatars or PDFs, preview page, then remove `draft: true` when ready to publish. Publication templates also create `cite.bib`.
-
-## Updating existing content
-
-1. Find the relevant `index.md` under `content/`.
-2. Edit front matter for metadata shown in cards and lists.
-3. Edit Markdown below front matter for main page content.
-4. Place page-specific images, PDFs, or other downloads beside `index.md`.
-5. Preview and check every changed link.
-
-Do not rename a page directory without good reason: its name usually forms part of the public URL, so renaming it can break existing links.
-
-## Adding news or events
-
-Use `new news <slug>` or `new event <slug>`. This creates `content/news/<slug>/index.md` or `content/events/<slug>/index.md`.
-
-```markdown
----
-title: "Title of the news item"
-date: 2026-05-20
-tags:
-  - natural language processing
-  - workshop
-summary: "One-sentence summary shown in listing cards."
----
-
-Brief introduction.
-
-## Details
-
-Full text.
-
-## Useful links
-
-- [External page](https://example.org/)
-- [Programme](programme.pdf)
-```
-
-Place `programme.pdf` and other page-specific files in the same directory. A listing image can usually be supplied as `featured.jpg` or `featured.png`.
-
-## Adding or updating a team member
-
-Each profile lives at `content/authors/<firstname-lastname>/_index.md`. Avatar lives in same directory and must be named `avatar.jpg` or `avatar.png`.
-
-Run `new person <firstname-lastname>`, then update every personal field. Important fields include:
-
-- `title`, `first_name`, and `last_name`
-- `role`
-- `organizations`
-- `bio`
-- `interests`
-- `education`
-- `social`
-- `email`
-- `user_groups`
-
-`user_groups` controls where profile appears on People page. Current displayed groups are:
-
-- `Head`
-- `Academic Members`
-- `Research Fellows`
-- `PhD Students`
-
-Use group spelling and capitalization exactly as shown. Check email addresses and all profile links before merging.
-
-## Adding a project, research area, tool, or thesis
-
-Use matching `new` content type, then update generated entry:
-
-- National or international project: `content/projects/<slug>/index.md`
-- Research area: `content/research/<slug>/index.md`, with a Font Awesome 5 `icon` name for its homepage tile, such as `comments`
-- Tool: `content/tools/<slug>/index.md`
-- Bachelor's or master's thesis: `content/theses/<year-and-student>/index.md`
-
-Keep section `_index.md` files unchanged unless changing section title, layout, filters, or ordering.
-
-Projects, theses, and challenge or workshop entries use one `categories` value to select their list, like publications.
-The generator fills it for projects and theses.
-Allowed values are the following:
-
-| Folder | `categories` values |
-| --- | --- |
-| `content/projects/` | `International project`, `National project` |
-| `content/theses/` | `Master thesis`, `Bachelor thesis` |
-| `content/opportunities/` | `Challenge`, `Academic workshop` |
-
-Validation rejects a missing or unknown value.
-
-## Adding a research proposal
-
-Each research topic is a folder under `content/proposals/`.
-Its `_index.md` holds the topic title, the `summary` shown on the For Students page, and the topic description.
-Each proposal is a page bundle inside its topic folder:
-
-```text
-content/proposals/legal/
-├── _index.md
-├── am/index.md
-└── unfairclauses/index.md
-```
-
-To add a proposal, copy an existing proposal bundle in the same topic and edit it.
-Name the supervisors in its **Contact** line as `mailto:` links.
-To add a topic, create a new folder with an `_index.md`.
-The For Students page lists every topic folder automatically.
-
-## Adding a publication
-
-Every publication lives in `content/publication/`, one directory per publication:
-
-```text
-content/publication/paper-slug/
-├── index.md
-├── cite.bib
-└── featured.jpg        # optional
-```
-
-Use matching publication generator (`journal`, `conference`, `workshop`, `preprint`, or `publication-highlight`). Update at least:
-
-- `title`
-- `authors`
-- `date` and `publishDate`
-- `publication_types`
-- `publication`
-- `abstract`
-- `tags`
-- `categories`
-- `doi` and relevant `url_*` fields
-- `projects` or custom `links`, when applicable
-
-Add complete BibTeX record to `cite.bib`. Keep author names consistent across profile and publication files. Never copy stale DOI, URL, abstract, or publication venue from template entry.
-
-The `categories` field selects the list on the Publications page.
-It must contain exactly one of `Highlight`, `Journal`, `Conference`, `Workshop`, or `Preprint`.
-Validation rejects any other value.
-A `Highlight` publication appears only under Highlights, never in its venue list.
-When moving an existing publication, keep its old URL under `aliases` so that external links still work.
-
-## Editing homepage and navigation
-
-Homepage content and collections are defined in `content/_index.md`. Collection filters refer to content directories, so preserve directory names unless also updating filters.
-
-Top navigation lives in `config/_default/menus.yaml`. Lower `weight` values appear earlier. Test navigation changes locally before merging.
-
-An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`, as News and Events do under **News & Events**.
-The full menu fits in one line from 1280px.
-Narrower screens use the collapsed menu, which `assets/scss/template.scss` extends from the theme's 992px breakpoint.
-Check the menu at 1280px after adding an entry, and shorten a label or move it into a dropdown if the line wraps.
-
-Changes outside `content/` can affect whole site. Ask repository maintainer for review before changing `config/`, `layouts/`, `go.mod`, or GitHub Actions workflow.
-
-## Editing through GitHub website
-
-Useful for text-only changes and small additions:
-
-1. Open <https://github.com/nlp-unibo/nlp-unibo.github.io>.
-2. Confirm branch selector shows `hugoblox-template`.
-3. Create new branch from `hugoblox-template`.
-4. Navigate to file and select pencil icon to edit it.
-5. To create page, choose **Add file → Create new file** and enter full path, such as `content/news/acl-2026/index.md`.
-6. To add images or PDFs, open target directory and choose **Add file → Upload files**.
-7. Commit changes to your branch.
-8. Open pull request targeting `hugoblox-template`.
-
-Avoid editing binary files such as images and PDFs in text editor. Upload replacements instead.
-
-## Editing locally with uv
-
-Requirements:
-
-- Git
-- [uv](https://docs.astral.sh/uv/getting-started/installation/)
-- Current Node.js LTS and npm
-
-Repository tooling downloads pinned Hugo Extended and Go versions into ignored `.tools/` directory. Hugo version comes directly from `.github/workflows/hugo.yml`, keeping local and GitHub builds aligned. Python dependencies live in ignored `.venv/` environment managed by uv.
-
-Clone, initialize, and create work branch:
-
-```bash
-git clone https://github.com/nlp-unibo/nlp-unibo.github.io.git
-cd nlp-unibo.github.io
-git switch hugoblox-template
-git pull --ff-only
-uv sync
-uv run python scripts/site.py setup
-git switch -c news/acl-2026
-```
-
-Preview during editing:
-
-```bash
-uv run python scripts/site.py serve
-```
-
-Open <http://localhost:1313/>. Preview includes drafts and pages whose publication date is in future. Neither appears on the published site.
-
-Available commands:
-
-```bash
-# Validate content metadata, slugs, placeholders, local links, and asset sizes (fast)
-uv run python scripts/site.py content
-
-# Verify every content archetype generates a valid draft bundle
-uv run python scripts/site.py templates
-
-# Create production build and Pagefind index under .build/public
-uv run python scripts/site.py build
-
-# Validate front matter and configuration, build site, and generate search index
-uv run python scripts/site.py check
-
-# Remove generated build and caches; keep downloaded tools
-uv run python scripts/site.py clean
-```
-
-Run `check` before opening a pull request. Downloaded tools, virtual environment, build output, caches, and Hugo's machine-specific `assets/jsconfig.json` are excluded by `.gitignore`.
-
-Commit and push:
-
-```bash
-git status
-git diff
-git add content/path-you-changed
-git commit -m "Add ACL 2026 news"
-git push -u origin news/acl-2026
-```
-
-Then open pull request against `hugoblox-template`.
-
-## Pull-request validation
-
-Every pull request targeting `hugoblox-template` automatically runs **Validate website**. This read-only workflow:
-
-1. Creates locked uv environment.
-2. Validates YAML front matter and required fields under `content/`.
-3. Rejects invalid or duplicate slugs, inconsistent author names, visible placeholders, and broken local links.
-4. Rejects individual assets larger than 5 MiB and reports future publication dates.
-5. Checks Hugo version stays aligned across deployment configurations.
-6. Generates and validates every content archetype.
-7. Builds production site with pinned Hugo version used for deployment.
-8. Generates Pagefind search index.
-
-Do not merge while **Validate content and build** is failing. Open failed check, inspect first meaningful error, push fix to same branch, and wait for rerun.
-
-## Publishing
-
-Merging into `hugoblox-template` automatically starts the **Deploy Hugo site to Pages** workflow. Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
-
-After merging:
-
-1. Open repository's **Actions** tab.
-2. Select latest **Deploy Hugo site to Pages** run.
-3. Wait for build and deploy jobs to finish with green checks.
-4. Verify changed page at <https://nlp.unibo.it/>.
-5. Confirm <http://nlp.unibo.it/> redirects to HTTPS.
-
-If automatic run fails to start, open workflow and use **Run workflow** with `hugoblox-template`. Do not publish from old `hugo` branch.
-
-## Review checklist
-
-Before merging:
-
-- [ ] Change is on branch created from latest `hugoblox-template`.
-- [ ] Correct content directory used.
-- [ ] YAML front matter parses and indentation uses spaces.
-- [ ] Title, author names, dates, venue, DOI, and URLs are correct.
-- [ ] No private data, credentials, drafts, or copyrighted files were added accidentally.
-- [ ] Images have sensible dimensions; every image or PDF is at most 5 MiB.
-- [ ] Local `uv run python scripts/site.py check` succeeds.
-- [ ] GitHub **Validate content and build** check succeeds.
-- [ ] Changed page looks correct on desktop and mobile.
-- [ ] Links and downloads work.
-- [ ] Pull request targets `hugoblox-template`.
-- [ ] Deployment workflow succeeds after merge.
-
-## Common problems
-
-### Page is missing
-
-- Check page is under correct `content/` directory.
-- Check `date` or `publishDate`; future content stays hidden in normal production build.
-- Check front matter delimiters and YAML indentation.
-- Check section landing-page filters include content directory.
-
-### Image or PDF is missing
-
-- Check filename capitalization; paths are case-sensitive.
-- Keep page-specific file beside page's `index.md`.
-- Use relative path such as `paper.pdf`, not local computer path.
-- Avoid spaces in filenames.
-
-### Build fails
-
-Read first meaningful error in GitHub Actions log. It usually identifies file and line containing malformed YAML, invalid shortcode, missing dependency, or bad configuration. Fix on same branch and push again.
-
-### Site still shows old content
-
-Confirm deployment workflow completed successfully, then refresh page without browser cache. GitHub Pages may take a few minutes to update.
+### Theme customization and upgrades
+
+The site keeps the Hugo Blox theme unmodified and layers its changes on top.
+Colors live in `data/themes/ltlab.toml`, fonts in `data/fonts/ltlab.toml`, and style rules in `assets/scss/template.scss`.
+The collapsed menu between 992px and 1279px repeats the theme's mobile navbar rules from `components/_nav.scss`.
+
+Two files depend on theme internals and need attention when upgrading Hugo Blox.
+First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with category badges, so re-sync it with the new theme file.
+Second, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
