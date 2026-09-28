@@ -28,6 +28,8 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
+categories:
+  - Journal
 ---
 
 <!-- Add optional supplementary text here. -->

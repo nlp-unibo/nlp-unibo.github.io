@@ -2,6 +2,15 @@
 title: Publications
 type: landing
 
+# Every publication lives in content/publication/<slug>/.
+# Its `categories` value selects exactly one list below.
+aliases:
+  - /publication_highlights/
+  - /publication_journals/
+  - /publication_conferences/
+  - /publication_workshops/
+  - /publication_preprints/
+
 # Listing view
 view: citation
 
@@ -14,7 +23,8 @@ sections:
       text: ""
       filters:
         folders:
-          - publication_highlights
+          - publication
+        category: Highlight
     design:
       view: citation
       columns: '1'
@@ -24,7 +34,8 @@ sections:
       text: ""
       filters:
         folders:
-          - publication_journals
+          - publication
+        category: Journal
     design:
       view: citation
       columns: '1'
@@ -34,7 +45,8 @@ sections:
       text: ""
       filters:
         folders:
-          - publication_conferences
+          - publication
+        category: Conference
     design:
       view: citation
       columns: '1'
@@ -44,7 +56,8 @@ sections:
       text: ""
       filters:
         folders:
-          - publication_workshops
+          - publication
+        category: Workshop
     design:
       view: citation
       columns: '1'
@@ -54,7 +67,8 @@ sections:
       text: ""
       filters:
         folders:
-          - publication_preprints
+          - publication
+        category: Preprint
     design:
       view: citation
       columns: '1'

@@ -45,11 +45,11 @@ CONTENT_TYPES = {
     "tool": ("tools", "tool"),
     "bachelors-thesis": ("students_bscs", "bachelors-thesis"),
     "masters-thesis": ("students_mscs", "masters-thesis"),
-    "publication-highlight": ("publication_highlights", "publication-highlight"),
-    "journal": ("publication_journals", "publication-journal"),
-    "conference": ("publication_conferences", "publication-conference"),
-    "workshop": ("publication_workshops", "publication-workshop"),
-    "preprint": ("publication_preprints", "publication-preprint"),
+    "publication-highlight": ("publication", "publication-highlight"),
+    "journal": ("publication", "publication-journal"),
+    "conference": ("publication", "publication-conference"),
+    "workshop": ("publication", "publication-workshop"),
+    "preprint": ("publication", "publication-preprint"),
 }
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "role", "email", "user_groups"),
@@ -61,19 +61,11 @@ REQUIRED_FIELDS = {
     "tools": ("title", "date", "summary"),
     "students_bscs": ("title", "authors", "date", "publication_types"),
     "students_mscs": ("title", "authors", "date", "publication_types"),
-    "publication_highlights": ("title", "authors", "date", "publication_types"),
-    "publication_journals": ("title", "authors", "date", "publication_types"),
-    "publication_conferences": ("title", "authors", "date", "publication_types"),
-    "publication_workshops": ("title", "authors", "date", "publication_types"),
-    "publication_preprints": ("title", "authors", "date", "publication_types"),
+    "publication": ("title", "authors", "date", "publication_types", "categories"),
 }
-PUBLICATION_SECTIONS = {
-    "publication_highlights",
-    "publication_journals",
-    "publication_conferences",
-    "publication_workshops",
-    "publication_preprints",
-}
+PUBLICATION_SECTIONS = {"publication"}
+# Each value selects one list on the Publications page.
+PUBLICATION_CATEGORIES = {"Highlight", "Journal", "Conference", "Workshop", "Preprint"}
 PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),
     "example email": re.compile(r"\btest@example\.org\b", re.IGNORECASE),
@@ -423,6 +415,13 @@ def validate_content_quality() -> None:
 
             if section in PUBLICATION_SECTIONS and not (directory / "cite.bib").exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
+            if section in PUBLICATION_SECTIONS and not is_draft:
+                categories = metadata.get("categories") or []
+                if len(categories) != 1 or categories[0] not in PUBLICATION_CATEGORIES:
+                    allowed = ", ".join(sorted(PUBLICATION_CATEGORIES))
+                    failures.append(
+                        f"{page.relative_to(ROOT)}: categories must be exactly one of {allowed}"
+                    )
 
     checked_assets = 0
     for asset_root in (content_root, ROOT / "assets", ROOT / "static"):
@@ -474,7 +473,7 @@ def validate_archetypes() -> None:
     content_dir.mkdir(parents=True)
     try:
         for content_type, (section, kind) in CONTENT_TYPES.items():
-            relative_path = f"{section}/template-check"
+            relative_path = f"{section}/template-check-{content_type}"
             command = [
                 str(hugo),
                 "new",
