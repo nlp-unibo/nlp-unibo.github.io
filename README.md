@@ -41,11 +41,7 @@ Deadlines and delayed content publication are not emergencies.
 | `content/research/` | Research-area pages |
 | `content/projects_national/` | National projects |
 | `content/projects_international/` | International projects |
-| `content/publication_highlights/` | Highlighted publications |
-| `content/publication_journals/` | Journal articles |
-| `content/publication_conferences/` | Conference papers |
-| `content/publication_workshops/` | Workshop papers |
-| `content/publication_preprints/` | Preprints |
+| `content/publication/` | All publications; `categories` selects their list |
 | `content/students_bscs/` | Bachelor's theses |
 | `content/students_mscs/` | Master's theses |
 | `content/students_proposals/` | Thesis proposals grouped by topic |
@@ -208,10 +204,10 @@ Keep section `_index.md` files unchanged unless changing section title, layout, 
 
 ## Adding a publication
 
-Choose correct section and create one directory per publication:
+Every publication lives in `content/publication/`, one directory per publication:
 
 ```text
-content/publication_conferences/paper-slug/
+content/publication/paper-slug/
 ├── index.md
 ├── cite.bib
 └── featured.jpg        # optional
@@ -226,18 +222,17 @@ Use matching publication generator (`journal`, `conference`, `workshop`, `prepri
 - `publication`
 - `abstract`
 - `tags`
+- `categories`
 - `doi` and relevant `url_*` fields
 - `projects` or custom `links`, when applicable
 
 Add complete BibTeX record to `cite.bib`. Keep author names consistent across profile and publication files. Never copy stale DOI, URL, abstract, or publication venue from template entry.
 
-Publication locations:
-
-- Highlights: `content/publication_highlights/`
-- Journals: `content/publication_journals/`
-- Conferences: `content/publication_conferences/`
-- Workshops: `content/publication_workshops/`
-- Preprints: `content/publication_preprints/`
+The `categories` field selects the list on the Publications page.
+It must contain exactly one of `Highlight`, `Journal`, `Conference`, `Workshop`, or `Preprint`.
+Validation rejects any other value.
+A `Highlight` publication appears only under Highlights, never in its venue list.
+When moving an existing publication, keep its old URL under `aliases` so that external links still work.
 
 ## Editing homepage and navigation
 
