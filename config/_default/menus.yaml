@@ -36,6 +36,3 @@ main:
   # - name: Work with us
   #   url: work-with-us
   #   weight: 80
-  - name: Contact
-    url: contact
-    weight: 90
