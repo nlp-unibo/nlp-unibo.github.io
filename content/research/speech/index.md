@@ -6,7 +6,7 @@ tags:
   - speech
   - research
 
-summary: The development of automatic tools for handling and digesting speech data, often in conjuction with other modalities like text.
+summary: The development of automatic tools for handling and digesting speech data, often in conjunction with other modalities like text.
 
 # Font Awesome icon shown on the homepage research tile
 icon: microphone-alt
@@ -14,7 +14,7 @@ icon: microphone-alt
 
 ### Argumentation 
 
-We have investigated argumentation task using audio features.
+We have investigated argumentation tasks using audio features.
 We have also developed a toolkit to foster research on this topic. 
 
 ### Clinical domain 
@@ -24,10 +24,10 @@ We are currently evaluating interpretable speech techniques on clinical data (e.
 
 ### Interpretability 
 
-The development of interpretable audio features to address downstream task.
+The development of interpretable audio features to address downstream tasks.
 An example is audio tokens, a discretization process to better analyze audio inputs. 
 
 ### Multimodality 
 
 We have explored text and audio modalities to assess their overall and individual contribution.
-We have mainly target argumentation tasks for now.
+We have mainly targeted argumentation tasks for now.

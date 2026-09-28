@@ -1,5 +1,5 @@
 ---
-title: "Graph Neural Networks for Recommender Systems**"
+title: "Graph Neural Networks for Recommender Systems"
 authors:
   - Oleksandr Olmucci Poddubnyy
 

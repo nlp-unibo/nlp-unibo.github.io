@@ -10,14 +10,14 @@ summary: "EquAl: Equitable Algorithms, Promoting Fairness and Countering Algorit
 ## Project info
 
 The EquAl project addresses algorithmic evaluations, decisions, and predictions, to promote fairness and counter discrimination affecting individuals and groups.
-The research project fundedis  by the EU Commission under the NextGenerationEU program and the Italian Ministry of Education, University and Research. 
+The research project is funded by the EU Commission under the NextGenerationEU program and the Italian Ministry of Education, University and Research. 
 (PRIN 2022. Ref. prot. n.: 2022KFLF3E-001 - CUP J53D23005560001).
 
 ## Useful Links
 
 + [Project Page](https://site.unibo.it/equal/en/equal_project)
 + [Workshop Program](program.pdf)
-+ [Federico Ruggeri's Speech](reproducibility-crysis.pdf)
++ [Federico Ruggeri's Speech](reproducibility-crisis.pdf)
 
 
 

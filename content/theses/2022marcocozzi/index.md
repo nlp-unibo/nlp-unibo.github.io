@@ -1,5 +1,5 @@
 ---
-title: "Using semantic entities to improve the distillation of transformers**"
+title: "Using semantic entities to improve the distillation of transformers"
 authors:
   - Marco Cozzi
 

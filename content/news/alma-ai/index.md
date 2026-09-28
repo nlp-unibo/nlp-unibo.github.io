@@ -3,7 +3,7 @@ title: "ALMA-AI | Workshop LLM: a debate on technical experiences"
 date: 2025-11-20
 tags: ["natural language processing", "workshop", "alma-ai", "reasoning", "LLM", "event"]
 
-summary: "The workshop investigates LLMs applications in the legal domain, with a focus on performance, explainability and reasoning." 
+summary: "The workshop investigates LLM applications in the legal domain, with a focus on performance, explainability and reasoning." 
 
 
 ---
@@ -23,8 +23,8 @@ Il dibattito è utile a definire anche le aspettative future delle quali le isti
 
 The talk addresses three main aspects of LLMs and reasoning capabilities. 
 First, we discuss what kind of reasoning type LLMs are tested for. 
-The short answer is that in the majority of cases, it is unclear which reason type(s) is (are) considered. 
-Second, we discuss to what extent do LLMs perform reasoning. 
+The short answer is that in the majority of cases, it is unclear which reasoning type(s) is (are) considered. 
+Second, we discuss to what extent LLMs perform reasoning. 
 Some view LLMs as stochastic parrots, while others believe they acquire true reasoning capabilities. 
 Third, we show how reasoning and argumentation are tightly connected and discuss how argumentation is being progressively used as a way to assess reasoning capabilities in LLMs.
 

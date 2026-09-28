@@ -1,5 +1,5 @@
 ---
-title: "SynBA: A contextualized Synonim-Based adversarial Attack for text classification"
+title: "SynBA: A contextualized Synonym-Based adversarial Attack for text classification"
 authors:
   - Giuseppe Murro
 

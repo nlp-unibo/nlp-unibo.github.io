@@ -12,7 +12,7 @@ organizations:
   - name: University of Bologna
     url: 'https://www.unibo.it/sitoweb/e.mancini/en'
 
-bio: Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech Recognition.
+bio: Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech recognition.
 
 interests:
   - Artificial Intelligence
@@ -58,6 +58,6 @@ user_groups:
 ---
 
 Eleonora Mancini obtained her M.S. degree in Artificial Intelligence from University of Bologna in 2021, with a dissertation on disruptive situations detection on public transports through Speech Emotion Recognition. 
-Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech Recognition. 
+Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech recognition. 
 She is currently a PhD student of the Department of Computer Science and Engineering of University of Bologna (DISI) - Language Technologies Lab, working on multimodal argument mining, explainability in multimodal natural language processing and vague clauses detection in privacy policies. 
 In addition, she works as a teaching assistant at University of Bologna.

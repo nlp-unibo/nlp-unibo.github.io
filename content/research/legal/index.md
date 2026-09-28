@@ -15,7 +15,7 @@ icon: balance-scale
 
 ### Argumentation and Argument Schema 
 
-We have defined legal arguments and developed benchmarks for training machine learning in automatically identifying them.
+We have defined legal arguments and developed benchmarks for training machine learning models to automatically identify them.
 Legal arguments are relevant to several legal tasks (e.g., judgement prediction) as they encode important decisions and opinions that are tailored to a given problem.
 Moreover, legal experts are interested in assessing if there are some recurring patterns concerning legal arguments.
 For instance, do similar documents convey similar legal arguments?
@@ -32,7 +32,7 @@ We have explored memory-augmented neural networks and decision trees to define m
 
 ### Unfair Clause Detection 
 
-The automatic  identification and classification of unfair clauses.
+The automatic identification and classification of unfair clauses.
 We have developed benchmarks on this topic. 
 
 ### Summarization 
@@ -47,4 +47,4 @@ We have developed some methods to project labels from similar documents written 
 ### Information Retrieval 
 
 The automatic retrieval of legal documents and knowledge based on a similarity metric.
-This also link to the argumentation topic if we use arguments (either quantitatively or qualitatively) to compare and rank retrieved documents. 
+This also links to the argumentation topic if we use arguments (either quantitatively or qualitatively) to compare and rank retrieved documents. 

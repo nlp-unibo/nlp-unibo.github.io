@@ -16,4 +16,4 @@ aliases:
   - /projects_national/gemeb/
 ---
 
-The project developing ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy.
+The project develops ad-hoc LLM-based solutions to speed up existing user assistance systems while guaranteeing privacy.
