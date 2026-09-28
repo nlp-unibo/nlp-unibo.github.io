@@ -25,7 +25,7 @@ social:
     link: "mailto:TODO@example.org"
 
 email: "TODO@example.org"
-highlight_name: false
+highlight_name: true
 
 # Allowed groups: Head, Academic Members, Research Fellows, PhD Students
 user_groups:
