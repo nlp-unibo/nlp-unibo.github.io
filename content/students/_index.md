@@ -13,6 +13,7 @@ banner:
 # Page sections
 sections:
   - block: collection
+    id: proposals
     content:
       title: Research Proposals
       text: ""
@@ -53,6 +54,7 @@ sections:
       view: citation
       columns: '1'
   - block: collection
+    id: challenges
     content:
       title: International contests, benchmarks, and challenges
       text: "There are many other international challenges held every year. Developing models and techniques to tackle past or ongoing challenges may be good proposals for project works. <br/><br/>"
@@ -63,6 +65,7 @@ sections:
       view: masonry
       columns: '1'
   - block: collection
+    id: workshops
     content:
       title: Workshops
       text: "Academic workshops discussing topics and proposing shared tasks of our interest. <br/><br/>"
