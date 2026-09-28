@@ -13,3 +13,77 @@
 .article-categories {
   display: none;
 }
+
+// Keep every menu label on one line
+.navbar-nav .nav-link {
+  white-space: nowrap;
+}
+
+// The full menu needs about 1280px, so narrower screens use the collapsed mobile menu.
+// These rules repeat the theme's below-992px navbar rules (components/_nav.scss) up to 1279px.
+@media (min-width: 992px) and (max-width: 1279.98px) {
+  .navbar {
+    height: 50px;
+  }
+
+  #navbar-main > .container-xl > .d-lg-inline-flex {
+    display: none !important;
+  }
+
+  #navbar-main .navbar-brand-mobile-wrapper {
+    display: inline-flex !important;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  #navbar-main .navbar-brand {
+    margin: 0 auto;
+  }
+
+  #navbar-main .navbar-toggler {
+    display: block;
+  }
+
+  #navbar-main .navbar-collapse:not(.show) {
+    display: none !important;
+  }
+
+  #navbar-main .navbar-collapse.show {
+    display: block !important;
+  }
+
+  #navbar-main .navbar-collapse {
+    z-index: 1031 !important;
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: 100%;
+    background-color: $sta-menu-primary;
+  }
+
+  .dark #navbar-main .navbar-collapse {
+    background-color: $sta-dark-menu-primary;
+  }
+
+  #navbar-main .main-menu-item {
+    text-align: left !important;
+    padding-left: 0;
+  }
+
+  #navbar-main .navbar-nav {
+    flex-direction: column;
+  }
+
+  #navbar-main .navbar-nav .dropdown-menu {
+    position: static;
+  }
+
+  #navbar-main .main-menu-item .nav-item {
+    padding: 10px 15px !important;
+  }
+
+  #navbar-main .main-menu-item .nav-item .nav-link {
+    padding: 5px 15px !important;
+  }
+}
