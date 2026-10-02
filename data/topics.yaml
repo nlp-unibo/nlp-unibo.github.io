@@ -1,5 +1,5 @@
-# Topics shown as colored tags under each project card.
-# A project lists keys from this file in its `topics` front matter field.
+# Topics shown as colored tags under each project and tool card.
+# A project or tool lists keys from this file in its `topics` front matter field.
 # Change a label or a color here to update every card that uses it.
 legal:
   label: Legal
@@ -37,3 +37,23 @@ sustainability:
   label: Sustainability
   background: '#9bc53d'
   text: '#1f3a10'
+prototype:
+  label: Prototype
+  background: '#2b2f36'
+  text: '#ffffff'
+toolkit:
+  label: Toolkit
+  background: '#9a5518'
+  text: '#ffffff'
+multimodal:
+  label: Multimodal
+  background: '#d6336c'
+  text: '#ffffff'
+reproducibility:
+  label: Reproducibility
+  background: '#e6ebf1'
+  text: '#33475b'
+benchmark:
+  label: Benchmark
+  background: '#3f51b5'
+  text: '#ffffff'

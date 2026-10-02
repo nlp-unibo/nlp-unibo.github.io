@@ -67,16 +67,17 @@ h1, h2, h3, h4, h5, h6,
     font-size: 1.9rem;
     margin-bottom: 0.4rem;
   }
+}
 
-  h1::after {
-    content: "";
-    display: block;
-    width: 2.5rem;
-    height: 3px;
-    margin-top: 0.6rem;
-    border-radius: 2px;
-    background: $lt-orange;
-  }
+.universal-wrapper > h1::after,
+.section-heading h1::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 3px;
+  margin-top: 0.6rem;
+  border-radius: 2px;
+  background: $lt-orange;
 }
 
 .home-section {
@@ -341,7 +342,7 @@ h1, h2, h3, h4, h5, h6,
   color: #f5c46b;
 }
 
-// Project topic tags; labels and colors live in data/topics.yaml
+// Topic tags on project and tool cards; labels and colors live in data/topics.yaml
 .lt-topics {
   display: flex;
   flex-wrap: wrap;
