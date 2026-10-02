@@ -62,7 +62,7 @@ REQUIRED_FIELDS = {
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
     "opportunities": ("title", "categories"),
-    "tools": ("title", "date", "summary", "target"),
+    "tools": ("title", "date", "summary", "external_link", "topics"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
     "proposals": ("title", "date", "summary"),
@@ -463,7 +463,7 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            if section == "projects":
+            if section in {"projects", "tools"}:
                 for topic in metadata.get("topics") or []:
                     if topic not in project_topics:
                         failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
