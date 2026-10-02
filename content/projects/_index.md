@@ -9,6 +9,17 @@ aliases:
   - /projects_international/
   - /projects_national/
 
+# Project cards show no date and link straight to the project website in `external_link`,
+# so each project page only redirects to that website.
+cascade:
+  - params:
+      show_date: false
+  - type: redirect
+    sitemap:
+      disable: true
+    target:
+      kind: page
+
 sections:
   - block: collection
     content:

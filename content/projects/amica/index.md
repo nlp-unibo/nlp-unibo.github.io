@@ -3,23 +3,15 @@ title: 'Argument Mining In Covid-19 Articles (AMICA)'
 
 date: '2021-01-01'
 
-tags:
-  - project
-  - COVID-19
-  - argument mining
-  - argument search
+topics:
+  - argument-mining
+  - information-retrieval
 
 summary: "The AMICA project exploited the argumentative content of the scientific literature on Covid-19 to improve the retrieval of relevant and reliable articles."
 
-url_project: 'http://amica.unimore.it/'
+external_link: 'http://amica.unimore.it/'
 categories:
   - National project
 aliases:
   - /projects_national/amica/
 ---
-
-The objective of the AMICA project was to exploit the argumentative content present
-in the scientific literature regarding Covid-19 to improve the retrieval of relevant and
-reliable articles. The project involved both medical and artificial intelligence experts and
-aimed to develop an argument mining-based search engine, specifically designed for the
-analysis of scientific literature related to Covid-19.

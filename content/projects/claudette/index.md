@@ -3,23 +3,15 @@ title: 'automated CLAUse DETectEr (CLAUDETTE)'
 
 date: '2017-01-01'
 
-tags:
-  - project
+topics:
   - legal
-  - legal analytics
+  - argument-mining
 
 summary: CLAUDETTE is an interdisciplinary research project hosted at the Law Department of the European University Institute.
 
-url_project: 'http://claudette.eui.eu/'
+external_link: 'http://claudette.eui.eu/'
 categories:
   - International project
 aliases:
   - /projects_international/claudette/
 ---
-
-CLAUDETTE is an interdisciplinary research project hosted at the Law Department of
-the European University Institute. The research objective is to test to what extent it
-is possible to automate reading and legal assessment of online consumer contracts and
-privacy policies, to evaluate their compliance with EU’s unfair contractual terms law
-and personal data protection law (GDPR), using machine learning and grammar-based
-approaches.

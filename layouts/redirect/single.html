@@ -1,5 +1,5 @@
-{{- with .Params.target -}}
+{{- with .Params.target | default .Params.external_link -}}
   {{- template "alias.html" (dict "Permalink" .) -}}
 {{- else -}}
-  {{- errorf "redirect: %s has no target" .File.Path -}}
+  {{- errorf "redirect: %s has no target or external_link" .File.Path -}}
 {{- end -}}

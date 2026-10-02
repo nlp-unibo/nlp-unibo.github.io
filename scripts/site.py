@@ -60,7 +60,7 @@ REQUIRED_FIELDS = {
     "news": ("title", "date", "summary"),
     "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
-    "projects": ("title", "date", "summary", "categories"),
+    "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
     "opportunities": ("title", "categories"),
     "tools": ("title", "date", "summary", "target"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
@@ -386,6 +386,10 @@ def validate_content_quality() -> None:
     checked_links = 0
     content_root = ROOT / "content"
     author_names: dict[str, tuple[str, Path]] = {}
+    project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
+    for key, topic in project_topics.items():
+        if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
+            failures.append(f"data/topics.yaml: topic {key!r} needs label, background, and text")
 
     for section in REQUIRED_FIELDS:
         for stray in sorted((content_root / section).glob("*.md")):
@@ -459,6 +463,10 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
+            if section == "projects":
+                for topic in metadata.get("topics") or []:
+                    if topic not in project_topics:
+                        failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
             if section in SECTION_CATEGORIES and not is_draft:
                 error = category_error(section, metadata.get("categories") or [])
                 if error:

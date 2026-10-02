@@ -220,10 +220,16 @@ Copy the `_index.md` of an existing topic and replace its title, summary, and de
 1. Create `content/projects/<slug>/index.md`, for example `content/projects/amica/index.md`.
    Copy an existing project, or run `uv run python scripts/site.py new national-project amica`.
    Use `international-project` for an international project.
-2. Set `title`, `date` as the project start, `summary`, and `url_project` as the project website.
-3. Keep `categories` as `International project` or `National project`.
+2. Set `title`, `date` as the project start, `summary`, and `external_link` as the project website.
+   The Projects page shows only the summary, and the card opens `external_link` directly.
+   The date orders the list and is not displayed.
+3. List one or more `topics`, using the keys defined in `data/topics.yaml`.
+   Each topic appears as a colored tag on the card.
+   To add a topic or change its label or color, edit `data/topics.yaml`.
+4. Keep `categories` as `International project` or `National project`.
    It selects the list on the Projects page.
-4. Describe the goals, the partners, and the lab's role in the body.
+
+Projects have no page of their own, so the file needs no body text.
 
 ### Add a challenge or workshop suggestion
 
@@ -393,12 +399,14 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/students/`, `content/people/`, `content/work-with-us/` | Landing pages |
 | `content/categories/_index.md` | Citation view for category pages |
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
+| `data/topics.yaml` | Project topic labels and tag colors |
 | `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
+| `layouts/partials/views/card.html` | Theme card view plus project topic tags |
 | `layouts/partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
 | `archetypes/` | Templates used by `site.py new` |
@@ -476,9 +484,10 @@ The site keeps the Hugo Blox theme unmodified and layers its changes on top.
 Colors live in `data/themes/ltlab.toml`, fonts in `data/fonts/ltlab.toml`, and style rules in `assets/scss/template.scss`.
 The collapsed menu between 992px and 1279px repeats the theme's mobile navbar rules from `components/_nav.scss`.
 
-Two files depend on theme internals and need attention when upgrading Hugo Blox.
+Three files depend on theme internals and need attention when upgrading Hugo Blox.
 First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with the award line and year data, so re-sync it with the new theme file.
-Second, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
+Second, `layouts/partials/views/card.html` is a copy of the theme's card view with project topic tags, so re-sync it as well.
+Third, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
 
 ### License
 
