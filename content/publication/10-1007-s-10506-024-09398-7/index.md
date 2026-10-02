@@ -93,6 +93,7 @@ links:
   url: https://doi.org/10.1007/s10506-024-09398-7
 categories:
   - Highlight
+  - Journal
 aliases:
   - /publication_highlights/10-1007-s-10506-024-09398-7/
 ---

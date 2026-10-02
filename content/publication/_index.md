@@ -27,6 +27,7 @@ sections:
         category: Highlight
     design:
       view: citation
+      css_class: lt-no-years
       columns: '1'
   - block: collection
     content:

@@ -81,6 +81,7 @@ links:
   url: https://aclanthology.org/2024.eacl-short.16
 categories:
   - Highlight
+  - Conference
 aliases:
   - /publication_highlights/mancini-etal-2024-multimodal/
 ---

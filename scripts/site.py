@@ -72,8 +72,9 @@ TOPIC_FIELDS = ("title", "summary")
 # publication_types values that the theme can label.
 PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter", "thesis", "report", "book"}
 # Each `categories` value selects one list on the section's landing page.
+# A publication may add `Highlight`, which also lists it under Highlights.
 SECTION_CATEGORIES = {
-    "publication": {"Highlight", "Journal", "Conference", "Workshop", "Preprint"},
+    "publication": {"Journal", "Conference", "Workshop", "Preprint"},
     "projects": {"International project", "National project"},
     "theses": {"Master thesis", "Bachelor thesis"},
     "opportunities": {"Challenge", "Academic workshop"},
@@ -86,6 +87,19 @@ PLACEHOLDER_PATTERNS = {
     "publication boilerplate": re.compile(r"Add the \*\*full text\*\*", re.IGNORECASE),
 }
 MAX_ASSET_BYTES = 5 * 1024 * 1024
+
+
+def category_error(section: str, categories: list) -> str | None:
+    allowed = SECTION_CATEGORIES[section]
+    if section == "publication":
+        highlights = categories.count("Highlight")
+        categories = [category for category in categories if category != "Highlight"]
+        if highlights > 1:
+            return "categories must list Highlight at most once"
+    if len(categories) != 1 or categories[0] not in allowed:
+        suffix = ", optionally with Highlight" if section == "publication" else ""
+        return f"categories must be exactly one of {', '.join(sorted(allowed))}{suffix}"
+    return None
 
 
 def run(command: list[str], *, env: dict[str, str] | None = None) -> None:
@@ -446,12 +460,9 @@ def validate_content_quality() -> None:
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
             if section in SECTION_CATEGORIES and not is_draft:
-                categories = metadata.get("categories") or []
-                if len(categories) != 1 or categories[0] not in SECTION_CATEGORIES[section]:
-                    allowed = ", ".join(sorted(SECTION_CATEGORIES[section]))
-                    failures.append(
-                        f"{page.relative_to(ROOT)}: categories must be exactly one of {allowed}"
-                    )
+                error = category_error(section, metadata.get("categories") or [])
+                if error:
+                    failures.append(f"{page.relative_to(ROOT)}: {error}")
 
     checked_assets = 0
     for asset_root in (content_root, ROOT / "assets", ROOT / "static"):
@@ -520,11 +531,8 @@ def validate_archetypes() -> None:
                 raise RuntimeError(f"Archetype {kind!r} must create draft content")
             if section == "publication" and not page.with_name("cite.bib").exists():
                 raise RuntimeError(f"Archetype {kind!r} did not create cite.bib")
-            categories = metadata.get("categories") or []
-            if section in SECTION_CATEGORIES and (
-                len(categories) != 1 or categories[0] not in SECTION_CATEGORIES[section]
-            ):
-                raise RuntimeError(f"Archetype {kind!r} has an invalid categories value {categories!r}")
+            if section in SECTION_CATEGORIES and category_error(section, metadata.get("categories") or []):
+                raise RuntimeError(f"Archetype {kind!r} has an invalid categories value {metadata.get('categories')!r}")
             types = metadata.get("publication_types") or []
             if section in {"publication", "theses"} and (len(types) != 1 or types[0] not in PUBLICATION_TYPES):
                 raise RuntimeError(f"Archetype {kind!r} has an invalid publication_types value {types!r}")

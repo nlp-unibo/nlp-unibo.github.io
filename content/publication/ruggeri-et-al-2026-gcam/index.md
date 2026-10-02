@@ -76,6 +76,7 @@ links:
   url: https://arxiv.org/pdf/2406.14099v2
 categories:
   - Highlight
+  - Journal
 aliases:
   - /publication_highlights/ruggeri-et-al-2026-gcam/
 ---

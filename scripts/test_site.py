@@ -1,4 +1,4 @@
-"""Self-checks for the link parser and front-matter loader in site.py: uv run python scripts/test_site.py"""
+"""Self-checks for the link parser, front-matter loader, and category rule in site.py: uv run python scripts/test_site.py"""
 
 import importlib.util
 from pathlib import Path
@@ -10,6 +10,7 @@ spec = importlib.util.spec_from_file_location("site_tools", Path(__file__).with_
 site_tools = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(site_tools)
 EMAIL, UniqueKeyLoader, local_link_targets = site_tools.EMAIL, site_tools.UniqueKeyLoader, site_tools.local_link_targets
+category_error = site_tools.category_error
 
 page = Path("content/news/example/index.md")
 body = """
@@ -31,5 +32,12 @@ except yaml.YAMLError:
     pass
 else:
     raise AssertionError("repeated keys must be rejected")
+
+assert category_error("publication", ["Journal"]) is None
+assert category_error("publication", ["Highlight", "Journal"]) is None
+assert category_error("publication", ["Highlight"])
+assert category_error("publication", ["Journal", "Conference"])
+assert category_error("publication", ["Highlight", "Highlight", "Journal"])
+assert category_error("theses", ["Highlight", "Master thesis"])
 
 print("site.py self-checks passed.")

@@ -81,6 +81,7 @@ image:
 projects: []
 categories:
   - Highlight
+  - Journal
 aliases:
   - /publication_highlights/9194070/
 ---

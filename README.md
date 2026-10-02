@@ -116,13 +116,14 @@ content/publication/rossi-etal-2026-example/
 | `date` and `publishDate` | The publication date as `YYYY-MM-DD` |
 | `publication_types` | `article-journal` for a journal paper, `paper-conference` for a conference or workshop paper, `article` for a preprint, or `chapter` for a book chapter |
 | `publication` | The full venue name, for example `Proceedings of ACL 2026` |
-| `categories` | Exactly one of `Highlight`, `Journal`, `Conference`, `Workshop`, or `Preprint`. It selects the list on the Publications page |
+| `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which selects the list on the Publications page. Add `Highlight` as a second value to also list the paper under Highlights |
 | `abstract` | The abstract |
 | `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
 | `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
+| `award` | Optional award name, for example `Best Paper Award`. It appears with a trophy under the title in every publication list |
 | `tags` | Topic keywords. Add `student publication` to show the paper on the For Students page |
 
-A `Highlight` publication appears only under Highlights, never in its venue list.
+A `Highlight` publication appears both under Highlights and in its venue list.
 Leave `featured: false` unchanged, because the Highlight category replaces it.
 
 ### Add a news item
@@ -398,7 +399,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
-| `layouts/partials/views/citation.html` | Theme citation view plus category badges |
+| `layouts/partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
 | `archetypes/` | Templates used by `site.py new` |
 | `scripts/site.py` | Setup, preview, validation, and build commands |
@@ -410,12 +411,13 @@ A change is not visible when the deployment is still running; wait a few minutes
 ### Categories
 
 Publications, projects, theses, and opportunities use one `categories` value to select the list they appear in.
+A publication may also add `Highlight`, which lists it under Highlights as well.
 Validation rejects a missing or unknown value.
 The theme would print categories in the page metadata, so `template.scss` hides them.
 
 | Folder | Allowed `categories` values |
 | --- | --- |
-| `content/publication/` | `Highlight`, `Journal`, `Conference`, `Workshop`, `Preprint` |
+| `content/publication/` | `Journal`, `Conference`, `Workshop`, `Preprint`, plus an optional `Highlight` |
 | `content/projects/` | `International project`, `National project` |
 | `content/theses/` | `Master thesis`, `Bachelor thesis` |
 | `content/opportunities/` | `Challenge`, `Academic workshop` |
@@ -475,7 +477,7 @@ Colors live in `data/themes/ltlab.toml`, fonts in `data/fonts/ltlab.toml`, and s
 The collapsed menu between 992px and 1279px repeats the theme's mobile navbar rules from `components/_nav.scss`.
 
 Two files depend on theme internals and need attention when upgrading Hugo Blox.
-First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with category badges, so re-sync it with the new theme file.
+First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with the award line and year data, so re-sync it with the new theme file.
 Second, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
 
 ### License
