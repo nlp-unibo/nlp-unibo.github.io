@@ -405,7 +405,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `scripts/test_site.py` | Self-checks for the validator, run by the pull-request workflow |
 | `content/mm-argfallacy/` | Redirect from a shared-task short link to its event page |
 | `.github/workflows/` | Pull-request validation (`validate.yml`) and deployment (`hugo.yml`) |
-| `.github/pull_request_template.md`, `.github/CODEOWNERS` | Pull-request checklist and code owners |
+| `.github/pull_request_template.md` | Pull-request checklist |
 
 ### Categories
 
@@ -456,8 +456,9 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 ### Review and emergency policy
 
 The repository currently has one active maintainer, so pull requests require zero approvals and the **Validate content and build** status check.
-Code owners are listed in `.github/CODEOWNERS`, but code-owner review is not required while maintenance remains a solo activity.
-When a second maintainer becomes active, increase the ruleset to one required code-owner approval and require another maintainer to review each change.
+The repository has no `CODEOWNERS` file, so new pull requests request no reviewers by default.
+Request a reviewer explicitly when a change needs a second opinion.
+When a second maintainer becomes active, increase the ruleset to one required approval and require another maintainer to review each change.
 Resolve review threads and push follow-up fixes before merging whenever a review takes place.
 
 Routine updates always follow the workflow in Part 3.
