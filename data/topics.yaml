@@ -1,0 +1,39 @@
+# Topics shown as colored tags under each project card.
+# A project lists keys from this file in its `topics` front matter field.
+# Change a label or a color here to update every card that uses it.
+legal:
+  label: Legal
+  background: '#105080'
+  text: '#ffffff'
+argument-mining:
+  label: Argument mining
+  background: '#f09010'
+  text: '#003060'
+fairness:
+  label: Fairness
+  background: '#25734a'
+  text: '#ffffff'
+ethics:
+  label: Ethics
+  background: '#7b4fa0'
+  text: '#ffffff'
+llms:
+  label: LLMs
+  background: '#60c0e0'
+  text: '#003060'
+industry:
+  label: Industry
+  background: '#5b6b7d'
+  text: '#ffffff'
+privacy:
+  label: Privacy
+  background: '#c0392b'
+  text: '#ffffff'
+information-retrieval:
+  label: Information retrieval
+  background: '#0b6e70'
+  text: '#ffffff'
+sustainability:
+  label: Sustainability
+  background: '#9bc53d'
+  text: '#1f3a10'

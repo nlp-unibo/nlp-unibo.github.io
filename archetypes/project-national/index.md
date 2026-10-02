@@ -2,12 +2,11 @@
 title: '{{ replace .Name "-" " " | title }}'
 date: '{{ now.Format "2006-01-02" }}'
 draft: true
-tags:
-  - project
+# Keys from data/topics.yaml, shown as colored tags on the project card.
+topics:
+  - legal
 summary: "TODO: Add a one-sentence project summary."
-url_project: "https://example.org/"
+external_link: "https://example.org/"
 categories:
   - National project
 ---
-
-TODO: Describe project goals, partners, funding, and lab contribution.
