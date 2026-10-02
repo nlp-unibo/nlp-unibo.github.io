@@ -7,8 +7,8 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
-  // Long citation lists get a heading before the first entry of each year.
-  document.querySelectorAll(".wg-collection, .universal-wrapper").forEach((list) => {
+  // Long citation lists get a heading before the first entry of each year, unless their block sets `lt-no-years`.
+  document.querySelectorAll(".wg-collection:not(.lt-no-years), .universal-wrapper").forEach((list) => {
     const items = list.querySelectorAll(".pub-list-item[data-year]");
     if (items.length < 6) return;
     let year = null;

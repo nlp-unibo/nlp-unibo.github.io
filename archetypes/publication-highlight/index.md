@@ -30,8 +30,10 @@ image:
   focal_point: ""
   preview_only: false
 projects: []
+# Keep Highlight and set the venue list: Journal, Conference, Workshop, or Preprint.
 categories:
   - Highlight
+  - Journal
 ---
 
 <!-- Add optional supplementary text here. -->

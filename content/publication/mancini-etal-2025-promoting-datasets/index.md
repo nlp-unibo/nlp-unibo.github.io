@@ -78,6 +78,7 @@ links:
 
 categories:
   - Highlight
+  - Journal
 aliases:
   - /publication_highlights/mancini-etal-2025-promoting-datasets/
 ---

@@ -39,8 +39,11 @@ tags:
 
 featured: false
 
+award: '"Peter Jackson" Award for Best Innovative Application Paper'
+
 categories:
   - Highlight
+  - Conference
 aliases:
   - /publication_highlights/2025worth/
 ---

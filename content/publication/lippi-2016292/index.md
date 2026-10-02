@@ -82,6 +82,7 @@ links:
   url: https://www.sciencedirect.com/science/article/pii/S0957417416304493
 categories:
   - Highlight
+  - Journal
 aliases:
   - /publication_highlights/lippi-2016292/
 ---

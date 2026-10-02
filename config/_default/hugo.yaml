@@ -33,6 +33,10 @@ permalinks:
   categories: '/category/:slug/'
   publication_types: '/publication-type/:slug/'
 disableAliases: false
+# Hide the theme's social media share buttons on every page.
+cascade:
+  - params:
+      share: false
 outputs:
   home: [HTML, RSS, WebAppManifest]
   section: [HTML, RSS]

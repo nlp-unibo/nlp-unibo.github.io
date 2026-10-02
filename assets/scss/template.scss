@@ -325,39 +325,20 @@ h1, h2, h3, h4, h5, h6,
   }
 }
 
-// Category badges in citation lists
-.lt-badge {
-  display: inline-block;
-  margin-right: 0.45rem;
-  padding: 0.12rem 0.5rem;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  line-height: 1.5;
-  text-transform: uppercase;
-  vertical-align: 0.12em;
-  color: #fff;
-  background: $lt-blue;
+// Award line under a citation, set through the `award` front matter field
+.lt-award {
+  margin-top: 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $lt-navy;
+
+  .fa-trophy {
+    color: $lt-orange;
+  }
 }
 
-.lt-badge-highlight { background: $lt-orange; color: $lt-navy; }
-.lt-badge-journal { background: $lt-navy; }
-.lt-badge-conference { background: $lt-blue; }
-.lt-badge-workshop { background: $lt-sky; color: $lt-navy; }
-.lt-badge-preprint,
-.lt-badge-bachelor-thesis,
-.lt-badge-master-thesis { background: #e6ebf1; color: #33475b; }
-.lt-badge-international-project,
-.lt-badge-academic-workshop { background: $lt-sky; color: $lt-navy; }
-.lt-badge-national-project,
-.lt-badge-challenge { background: $lt-navy; }
-
-.dark {
-  .lt-badge-journal { background: #2a5a8a; }
-  .lt-badge-preprint,
-  .lt-badge-bachelor-thesis,
-  .lt-badge-master-thesis { background: #243447; color: #c9d6e3; }
+.dark .lt-award {
+  color: #f5c46b;
 }
 
 // Year headings inserted by assets/js/ltlab.js in long citation lists
