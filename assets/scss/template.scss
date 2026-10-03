@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .universal-wrapper > h1::after,
+.lt-latest > h3::after,
 .section-heading h1::after {
   content: "";
   display: block;
@@ -358,6 +359,46 @@ h1, h2, h3, h4, h5, h6,
   letter-spacing: 0.04em;
   line-height: 1.5;
   text-transform: uppercase;
+}
+
+// Kind badges in the Latest list of profile pages, set by layouts/authors/list.html
+.lt-kind {
+  display: inline-block;
+  min-width: 6.2rem;
+  margin-right: 0.5rem;
+  padding: 0.08rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: 0.12em;
+  color: #fff;
+  background: $lt-muted;
+}
+
+.lt-kind-journal { background: $lt-navy; }
+.lt-kind-conference { background: $lt-blue; }
+.lt-kind-workshop { background: #0b6e70; }
+.lt-kind-preprint { background: #e6ebf1; color: #33475b; }
+.lt-kind-event { background: $lt-orange; color: $lt-navy; }
+.lt-kind-master-thesis,
+.lt-kind-bachelor-thesis { background: #7b4fa0; }
+
+.dark .lt-kind-journal { background: #2a5a8a; }
+
+// Unibo seal for links to a member's University of Bologna page (`icon_pack: custom`, `icon: unibo`)
+.network-icon .custom-unibo {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  vertical-align: -0.2em;
+  // The seal is a mask, so it takes the text color of the other social icons.
+  background-color: currentColor;
+  -webkit-mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
+  mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
 }
 
 // Year headings inserted by assets/js/ltlab.js in long citation lists

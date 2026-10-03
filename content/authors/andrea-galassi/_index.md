@@ -6,7 +6,7 @@ last_name: Galassi
 
 superuser: false
 
-role: Junior Assistant Professor
+role: Deputy
 
 organizations:
   - name: University of Bologna
@@ -22,16 +22,10 @@ interests:
   - Argument Mining
   - Transfer Learning
 
-education:
-  courses:
-    - course: PhD in Computer Science and Engineering
-      institution: University of Bologna
-      year: 2021
-    - course: Junior Assistant Professor
-      institution: University of Bologna
-      year: 2023
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/a.galassi/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:a.galassi@unibo.it'
@@ -50,7 +44,8 @@ email: 'a.galassi@unibo.it'
 highlight_name: true
 
 user_groups:
-  - Academic Members
+  - Members
+weight: 2
 ---
 
 Andrea is a Junior assistant professor (RTD-A) at the University of Bologna. He is involved in the Italian FAIR (Future Artificial Intelligence Research) project, regarding the development of scalable, transferable, neuro-symbolic machine learning techniques.

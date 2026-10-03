@@ -6,11 +6,9 @@ last_name: Ruggeri
 
 superuser: false
 
-role: Postdoctoral Research Fellow
-
 organizations:
   - name: University of Bologna
-    url: 'https://federicoruggeri.github.io/'
+    url: 'https://www.unibo.it/sitoweb/federico.ruggeri6/en'
 
 bio: His research aims to devise Natural Language Processing (NLP) systems that learn to generate, distill, and use knowledge from unstructured text.
 
@@ -23,16 +21,10 @@ interests:
   - Argument Mining
   - Interpretability
 
-education:
-  courses:
-    - course: PhD in Computer Science and Engineering
-      institution: University of Bologna
-      year: 2022
-    - course: Postdoctoral Research Fellow
-      institution: University of Bologna
-      year: 2022
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/federico.ruggeri6/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:federico.ruggeri6@unibo.it'
@@ -45,8 +37,8 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/federico-ruggeri-a87647145/
-  - icon: user
-    icon_pack: far
+  - icon: globe
+    icon_pack: fas
     link: https://federicoruggeri.github.io/
 
 email: 'federico.ruggeri6@unibo.it'
@@ -54,7 +46,8 @@ email: 'federico.ruggeri6@unibo.it'
 highlight_name: true
 
 user_groups:
-  - Research Fellows
+  - Members
+weight: 3
 ---
 
 Federico obtained his PhD from the University of Bologna in 2022 with the thesis *"Towards Integrating Unstructured Knowledge in Natural Language Processing"*.

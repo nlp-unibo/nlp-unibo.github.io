@@ -11,11 +11,11 @@ sections:
       # Choose which groups/teams of users to display.
       #   Edit `user_groups` in each user's profile to add them to one or more of these groups.
       user_groups:
-          - Head
-          - Academic Members
-          - Research Fellows
-          - PhD Students
-      sort_by: Params.last_name
+          - Members
+          - Associate Fellows
+          - Former Members
+      # Each profile sets `weight`; lower values appear first within a group.
+      sort_by: Weight
       sort_ascending: true
     design:
       show_interests: false
