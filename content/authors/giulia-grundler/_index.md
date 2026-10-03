@@ -6,8 +6,6 @@ last_name: Grundler
 
 superuser: false
 
-role: PhD Student
-
 organizations:
   - name: University of Bologna
     url: 'https://www.unibo.it/sitoweb/giulia.grundler2/en'
@@ -21,13 +19,10 @@ interests:
   - Legal Analytics
   - Argument Mining
 
-education:
-  courses:
-    - course: Msc in Computer Engineering
-      institution: University of Bologna
-      year: 2021
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/giulia.grundler2/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:giulia.grundler2@unibo.it'
@@ -40,7 +35,8 @@ email: 'giulia.grundler2@unibo.it'
 highlight_name: true
 
 user_groups:
-  - PhD Students
+  - Members
+weight: 5
 ---
 
 Giulia graduated cum laude in Computer Engineering in 2021 and joined the lab as a Research Fellow on the ADELE project, a European DG JUSTICE project that develops machine learning and natural language processing methods for multilingual legal analytics.

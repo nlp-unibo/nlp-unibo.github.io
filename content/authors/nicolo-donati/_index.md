@@ -6,8 +6,6 @@ last_name: Donati
 
 superuser: false
 
-role: PhD Student
-
 organizations:
   - name: University of Bologna
     url: 'https://www.unibo.it/sitoweb/n.donati/en'
@@ -22,16 +20,10 @@ interests:
   - RAG
   - Text Generation
 
-education:
-  courses:
-    - course: Msc in Artificial Intelligence
-      institution: University of Bologna
-      year: 2023
-    - course: PhD Student
-      institution: University of Bologna
-      year: 2023
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/n.donati/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:n.donati@unibo.it'
@@ -41,7 +33,8 @@ email: 'n.donati@unibo.it'
 highlight_name: true
 
 user_groups:
-  - PhD Students
+  - Members
+weight: 4
 ---
 
 Nicolò Donati is a PhD student who joined the lab in 2023.

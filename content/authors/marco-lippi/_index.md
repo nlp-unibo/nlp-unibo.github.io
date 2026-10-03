@@ -6,8 +6,6 @@ last_name: Lippi
 
 superuser: false
 
-role: Associate Professor
-
 organizations:
   - name: University of Florence
     url: 'https://cercachi.unifi.it/p-doc2-0-0-A-3f2b3a31392e2a-0.html'
@@ -20,12 +18,6 @@ interests:
   - Natural Language Processing
   - Neuro-symbolic AI
   - Argument Mining
-
-education:
-  courses:
-    - course: PhD in Computer Science and Engineering
-      institution: University of Florence
-      year: 2010
 
 social:
   - icon: envelope
@@ -40,7 +32,8 @@ email: 'marco.lippi@unifi.it'
 highlight_name: true
 
 user_groups:
-  - Academic Members
+  - Associate Fellows
+weight: 7
 ---
 
 Marco obtained his PhD in 2010 with a thesis on statistical learning for relational and structured data which received a best PhD dissertation award. 

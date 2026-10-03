@@ -172,14 +172,21 @@ The folder contains `_index.md`, with an underscore, and a photo named `avatar.j
 1. Copy the folder of an existing member, or run `uv run python scripts/site.py new person maria-rossi`.
 2. Set `title` to the full name exactly as it appears in publications, for example `Maria Rossi`.
    The folder name must match it: validation rejects `maria-rossi` for a profile titled `Mario Rossi`.
-3. Set `first_name`, `last_name`, `role`, `bio`, `interests`, `email`, and the `social` links.
-4. Set `user_groups` to one of `Head`, `Academic Members`, `Research Fellows`, or `PhD Students`, with this exact spelling.
+3. Set `first_name`, `last_name`, `bio`, `interests`, `email`, and the `social` links.
+   Leave out `role`, which only the head and the deputy of the lab set.
+   For a member with a University of Bologna page, add a first social link with `icon: unibo` and `icon_pack: custom`, which shows the university seal.
+   For a personal website, use `icon: globe` and `icon_pack: fas`.
+4. Set `user_groups` to one of `Members`, `Associate Fellows`, or `Former Members`, with this exact spelling.
    The group selects the section of the People page.
+   Set `weight` to order the people within a group, where lower values appear first.
 5. Keep `highlight_name: true`, which shows the member in bold in author lists.
-6. Upload a square photo as `avatar.jpg` or `avatar.png`, at most 5 MiB.
+6. Replace the default `avatar.png` with a square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
+   Delete the default file when the photo is a JPEG, because the page shows only one avatar.
 
-To remove a former member from the People page, set their `user_groups` to `Alumni`.
-The People page shows only the four groups above, and validation requires a group.
+When a member leaves the lab, set their `user_groups` to `Former Members`.
+Former members may omit `email`.
+Without a photo, keep the default person avatar from `archetypes/person/avatar.png`.
+Validation requires exactly one of the three groups.
 Keep the folder, because their publications still link to it.
 
 ### Add a thesis
@@ -409,8 +416,10 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
+| `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
 | `layouts/partials/views/card.html` | Theme card view plus topic tags |
 | `layouts/partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
+| `static/media/icons/unibo-seal.svg` | University of Bologna seal for the `unibo` social icon |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
 | `archetypes/` | Templates used by `site.py new` |
 | `scripts/site.py` | Setup, preview, validation, and build commands |
@@ -487,13 +496,16 @@ The site keeps the Hugo Blox theme unmodified and layers its changes on top.
 Colors live in `data/themes/ltlab.toml`, fonts in `data/fonts/ltlab.toml`, and style rules in `assets/scss/template.scss`.
 The collapsed menu between 992px and 1279px repeats the theme's mobile navbar rules from `components/_nav.scss`.
 
-Three files depend on theme internals and need attention when upgrading Hugo Blox.
+Four files depend on theme internals and need attention when upgrading Hugo Blox.
 First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with the award line and year data, so re-sync it with the new theme file.
 Second, `layouts/partials/views/card.html` is a copy of the theme's card view with topic tags, so re-sync it as well.
-Third, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
+Third, `layouts/authors/list.html` is a copy of the theme's profile page with Latest badges, so re-sync it as well.
+Fourth, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
 
 ### License
 
 The repository and the website are licensed under CC BY-NC-ND 4.0, as stated in the site footer and in `LICENSE`.
 Code derived from the Hugo Blox template keeps its MIT License, and the Inter font keeps the SIL Open Font License.
+The University of Bologna seal in `static/media/icons/unibo-seal.svg` is derived from the public-domain seal on Wikimedia Commons, cut out of a solid disc so that it matches the weight of the other icons.
+The seal remains a university insignia, so the site uses it only to link to university pages.
 The footer license is configured under `footer.copyright.license` in `config/_default/params.yaml`, so change both places together.

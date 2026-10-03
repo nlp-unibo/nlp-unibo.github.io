@@ -6,7 +6,7 @@ last_name: Torroni
 
 superuser: false
 
-role: Associate Professor
+role: Head
 
 organizations:
   - name: University of Bologna
@@ -22,16 +22,10 @@ interests:
   - Argument Mining
   - Computational Logics
 
-education:
-  courses:
-    - course: PhD in Computer Science and Engineering
-      institution: University of Bologna
-      year: 2002
-    - course: Associate Professor
-      institution: University of Bologna
-      year: 2015
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/p.torroni/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:p.torroni@unibo.it'
@@ -44,7 +38,8 @@ email: 'p.torroni@unibo.it'
 highlight_name: true
 
 user_groups:
-  - Head
+  - Members
+weight: 1
 ---
 
 Paolo obtained his PhD from the University of Bologna in 2002 and has been an associate professor at the [Department of Computer Science and Engineering](https://disi.unibo.it/it) since 2015.

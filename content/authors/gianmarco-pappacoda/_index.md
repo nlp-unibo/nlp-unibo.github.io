@@ -6,8 +6,6 @@ last_name: Pappacoda
 
 superuser: false
 
-role: PhD Student
-
 organizations:
   - name: University of Bologna
     url: 'https://www.unibo.it/sitoweb/gianmarco.pappacoda/en'
@@ -22,16 +20,10 @@ interests:
   - Knowledge Graphs
   - Knowledge Integration
 
-education:
-  courses:
-    - course: Msc in Artificial Intelligence
-      institution: University of Bologna
-      year: 2023
-    - course: PhD Student
-      institution: University of Bologna
-      year: 2023
-
 social:
+  - icon: unibo
+    icon_pack: custom
+    link: 'https://www.unibo.it/sitoweb/gianmarco.pappacoda/en'
   - icon: envelope
     icon_pack: fas
     link: 'mailto:gianmarco.pappacoda@unibo.it'
@@ -41,7 +33,8 @@ email: 'gianmarco.pappacoda@unibo.it'
 highlight_name: true
 
 user_groups:
-  - PhD Students
+  - Members
+weight: 6
 ---
 
 Gianmarco graduated cum laude in Artificial Intelligence in 2023 with a thesis on the integration of knowledge graphs in LLMs. 

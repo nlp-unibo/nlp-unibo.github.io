@@ -1,6 +1,6 @@
 {{/* Counts computed at build time from content, so the homepage figures never need manual updates. */}}
-{{/* Keep these groups in sync with the people block in content/people/index.md. */}}
-{{- $groups := slice "Head" "Academic Members" "Research Fellows" "PhD Students" -}}
+{{/* Current members only: keep these groups in sync with the people block in content/people/index.md. */}}
+{{- $groups := slice "Members" "Associate Fellows" -}}
 {{- $stats := slice
   (dict "value" (len (where site.RegularPages "Section" "publication")) "label" "Publications" "url" "/publication/")
   (dict "value" (len (where site.RegularPages "Section" "projects")) "label" "Projects" "url" "/projects/")

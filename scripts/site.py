@@ -56,7 +56,7 @@ CONTENT_TYPES = {
     "preprint": ("publication", "publication-preprint"),
 }
 REQUIRED_FIELDS = {
-    "authors": ("title", "first_name", "last_name", "role", "email", "user_groups"),
+    "authors": ("title", "first_name", "last_name", "user_groups"),
     "news": ("title", "date", "summary"),
     "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
@@ -71,6 +71,8 @@ REQUIRED_FIELDS = {
 TOPIC_FIELDS = ("title", "summary")
 # publication_types values that the theme can label.
 PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter", "thesis", "report", "book"}
+# Each `user_groups` value selects one group on the People page.
+AUTHOR_GROUPS = {"Members", "Associate Fellows", "Former Members"}
 # Each `categories` value selects one list on the section's landing page.
 # A publication may add `Highlight`, which also lists it under Highlights.
 SECTION_CATEGORIES = {
@@ -408,6 +410,13 @@ def validate_content_quality() -> None:
             for field in required_fields:
                 if metadata.get(field) in (None, "", []):
                     failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
+            if section == "authors":
+                groups = metadata.get("user_groups") or []
+                if len(groups) != 1 or groups[0] not in AUTHOR_GROUPS:
+                    allowed = ", ".join(sorted(AUTHOR_GROUPS))
+                    failures.append(f"{page.relative_to(ROOT)}: user_groups must be exactly one of {allowed}")
+                if groups != ["Former Members"] and not metadata.get("email"):
+                    failures.append(f"{page.relative_to(ROOT)}: required field 'email' is empty")
             if section == "authors" and not is_draft and isinstance(metadata.get("title"), str):
                 expected_slug = content_slug(metadata["title"])
                 if slug != expected_slug:
