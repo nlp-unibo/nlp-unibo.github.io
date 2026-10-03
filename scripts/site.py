@@ -38,7 +38,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 TOOLS = ROOT / ".tools"
 BUILD = ROOT / ".build"
-GO_VERSION = "1.24.3"
+GO_VERSION = "1.27.1"
 CONTENT_TYPES = {
     "news": ("news", "news"),
     "event": ("events", "event"),
@@ -387,7 +387,8 @@ def validate_content_quality() -> None:
     checked_pages = 0
     checked_links = 0
     content_root = ROOT / "content"
-    author_names: dict[str, tuple[str, Path]] = {}
+    # Hugo merges terms that share a URL, and then shows whichever spelling it reads first.
+    term_names: dict[str, dict[str, tuple[str, Path]]] = {"authors": {}, "tags": {}, "categories": {}}
     project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
     for key, topic in project_topics.items():
         if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
@@ -424,18 +425,19 @@ def validate_content_quality() -> None:
                         f"{directory.relative_to(ROOT)}: author slug must be {expected_slug!r}"
                     )
 
-            for author in metadata.get("authors") or []:
-                if not isinstance(author, str):
-                    continue
-                author_slug = content_slug(author)
-                if author_slug in author_names and author_names[author_slug][0] != author:
-                    first_name, first_page = author_names[author_slug]
-                    failures.append(
-                        f"{page.relative_to(ROOT)}: author {author!r} conflicts with "
-                        f"{first_name!r} in {first_page.relative_to(ROOT)}"
-                    )
-                else:
-                    author_names[author_slug] = (author, page)
+            for taxonomy, names in term_names.items():
+                for term in metadata.get(taxonomy) or []:
+                    if not isinstance(term, str):
+                        continue
+                    term_slug = content_slug(term)
+                    if term_slug in names and names[term_slug][0] != term:
+                        first_name, first_page = names[term_slug]
+                        failures.append(
+                            f"{page.relative_to(ROOT)}: {taxonomy} term {term!r} conflicts with "
+                            f"{first_name!r} in {first_page.relative_to(ROOT)}"
+                        )
+                    else:
+                        names[term_slug] = (term, page)
 
             bib = directory / "cite.bib"
             if not is_draft:

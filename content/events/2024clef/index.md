@@ -1,7 +1,7 @@
 ---
 title: "Overview of the CLEF-2024 CheckThat! Lab: Check-Worthiness, Subjectivity, Persuasion, Roles, Authorities, and Adversarial Robustness" 
 date: 2024-09-01
-tags: ["natural language processing", "shared task", "clef", "subjectivity detection"]
+tags: ["natural language processing", "shared task", "CLEF", "subjectivity detection"]
 authors:
   - "Alberto Barrón-Cedeño"
   - "Firoj Alam"

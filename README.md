@@ -373,7 +373,8 @@ The table below explains the most frequent messages.
 | `local link '...' does not exist` | A link points to a missing file. Check the spelling and capitalization, and upload the file to the page folder |
 | `invalid slug` | The folder name contains capitals, spaces, or other characters. Use lowercase letters, numbers, and hyphens only |
 | `author slug must be '...'` | A member's folder name does not match their `title`. Rename the new folder as shown |
-| `author '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
+| `authors term '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
+| `tags term '...' conflicts with '...'` | The same tag is written in two ways, for example `semeval` and `SemEval`. Use the spelling of the existing tag |
 | `exceeds 5 MiB asset limit` | Compress the image or PDF, then upload it again |
 | `contains example domain` or `contains example email` | A template link or address such as `example.org` is still there. Replace it with the real one |
 | `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
@@ -409,18 +410,20 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/students/`, `content/people/`, `content/work-with-us/` | Landing pages |
 | `content/categories/_index.md` | Citation view for category pages |
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
+| `config/_default/module.yaml` | Theme modules, with one blox-seo file excluded |
 | `data/topics.yaml` | Topic labels and tag colors for projects and tools |
 | `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
-| `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/partials/hooks/body-end/ltlab.html` |
+| `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
-| `layouts/shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
+| `layouts/_shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
 | `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
-| `layouts/partials/views/card.html` | Theme card view plus topic tags |
-| `layouts/partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
+| `layouts/_partials/views/card.html` | Theme card view plus topic tags |
+| `layouts/_partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
 | `static/media/icons/unibo-seal.svg` | University of Bologna seal for the `unibo` social icon |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
+| `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest`, other `layouts/_partials/` files | Theme templates with current Hugo calls in place of deprecated ones |
 | `archetypes/` | Templates used by `site.py new` |
 | `scripts/site.py` | Setup, preview, validation, and build commands |
 | `scripts/test_site.py` | Self-checks for the validator, run by the pull-request workflow |
@@ -496,11 +499,25 @@ The site keeps the Hugo Blox theme unmodified and layers its changes on top.
 Colors live in `data/themes/ltlab.toml`, fonts in `data/fonts/ltlab.toml`, and style rules in `assets/scss/template.scss`.
 The collapsed menu between 992px and 1279px repeats the theme's mobile navbar rules from `components/_nav.scss`.
 
+The theme is the Bootstrap edition of Hugo Blox at its last upstream commit, `62f5b139d3c5`, pinned in `go.mod`.
+That edition is archived upstream, so no newer version exists.
+The `layouts/` folder follows the template structure of Hugo 0.146 and later, with `_partials/`, `_shortcodes/`, and `_markup/` folders.
+Hooks must stay in `layouts/_partials/hooks/`, because the theme reads hooks only from that folder.
+
 Four files depend on theme internals and need attention when upgrading Hugo Blox.
-First, `layouts/partials/views/citation.html` is a copy of the theme's citation view with the award line and year data, so re-sync it with the new theme file.
-Second, `layouts/partials/views/card.html` is a copy of the theme's card view with topic tags, so re-sync it as well.
+First, `layouts/_partials/views/citation.html` is a copy of the theme's citation view with the award line and year data, so re-sync it with the new theme file.
+Second, `layouts/_partials/views/card.html` is a copy of the theme's card view with topic tags, so re-sync it as well.
 Third, `layouts/authors/list.html` is a copy of the theme's profile page with Latest badges, so re-sync it as well.
 Fourth, the navbar rules in `template.scss` rely on the theme's navbar markup, so recheck the menu between 992px and 1279px.
+
+Fifteen further templates are copies of theme files that differ only in their Hugo calls.
+They use `hugo.Data` instead of `site.Data`, `site.Language.Locale` instead of `site.LanguageCode`, and `.IsBranch` instead of `.IsNode`.
+Two of them come from the blox-seo module: `layouts/index.webmanifest` and `layouts/_partials/seo_tags.html`.
+The other thirteen come from blox-bootstrap: `layouts/baseof.html`, `layouts/rss.xml`, and eleven files under `layouts/_partials/`.
+When a Hugo release deprecates another call, search the theme modules for it and copy each affected file the same way.
+
+`config/_default/module.yaml` imports blox-core and blox-seo directly, in the order the theme uses.
+The direct import lets the site exclude `layouts/_markup/sitemap.xml` from blox-seo, which Hugo skips with a warning.
 
 ### License
 
