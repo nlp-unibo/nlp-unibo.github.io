@@ -30,7 +30,7 @@ summary: ''
 
 tags:
 - challenge
-- semeval
+- SemEval
 - NER
 - legal
 - rhetorical roles

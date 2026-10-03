@@ -1,7 +1,7 @@
 ---
 title: "Overview of the CLEF–2023 CheckThat! Lab on Checkworthiness, Subjectivity, Political Bias, Factuality, and Authority of News Articles and Their Source" 
 date: 2023-09-01
-tags: ["natural language processing", "shared task", "clef", "subjectivity detection"]
+tags: ["natural language processing", "shared task", "CLEF", "subjectivity detection"]
 authors:
   - "Alberto Barrón-Cedeño"
   - "Firoj Alam"

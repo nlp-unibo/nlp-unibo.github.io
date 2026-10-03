@@ -1,4 +1,8 @@
-github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5 v5.9.8-0.20241012174104-661cadc17327 h1:aKhll1k3EctTWSvLZYrkhz4ehSqo1+OX5Ho7LvfZR/0=
-github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5 v5.9.8-0.20241012174104-661cadc17327/go.mod h1:+Itucnia7M8NWxaEys257x/34K4+POiBlR1yYCTrzBM=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5 v5.9.8-0.20250819232439-62f5b139d3c5 h1:VdBo8Rjnp3taCPZ7yZS9M1AR6ETj8BC7EJvSdQMnt5I=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5 v5.9.8-0.20250819232439-62f5b139d3c5/go.mod h1:+Itucnia7M8NWxaEys257x/34K4+POiBlR1yYCTrzBM=
 github.com/HugoBlox/hugo-blox-builder/modules/blox-core v0.3.1/go.mod h1:So8+V2U+TNxlXmcpZfdDX0muLh3PdJ7z92h30sv3bZg=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-core v0.4.1 h1:LAIEtt5FVZVJoKVmZ+rB/M5exoek52ksCEK12HWssIo=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-core v0.4.1/go.mod h1:So8+V2U+TNxlXmcpZfdDX0muLh3PdJ7z92h30sv3bZg=
 github.com/HugoBlox/hugo-blox-builder/modules/blox-seo v0.2.3/go.mod h1:NsESu6cEms1DgH84icCyylElg2Zu8A0f7Fma5JR0LZE=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-seo v0.3.1 h1:sjJqjf5RAGdNsg5iGf7RJvlvLS8dZkcSDRQ+YMML2Bc=
+github.com/HugoBlox/hugo-blox-builder/modules/blox-seo v0.3.1/go.mod h1:NsESu6cEms1DgH84icCyylElg2Zu8A0f7Fma5JR0LZE=

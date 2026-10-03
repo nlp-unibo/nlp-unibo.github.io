@@ -6,3 +6,15 @@
 
 imports:
   - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-bootstrap/v5
+    ignoreImports: true
+  # The theme imports below follow the theme's own order, so precedence stays the same.
+  # blox-seo is listed here to exclude layouts/_markup/sitemap.xml,
+  # which Hugo skips as an unrecognized render hook template.
+  - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-core
+  - path: github.com/HugoBlox/hugo-blox-builder/modules/blox-seo
+    mounts:
+      - source: assets
+        target: assets
+      - source: layouts
+        target: layouts
+        files: ['! _markup/sitemap.xml']

@@ -1,7 +1,7 @@
 ---
 title: "Overview of the CLEF-2025 CheckThat! Lab: Subjectivity, fact-checking, claim normalization, and retrieval" 
 date: 2025-09-01
-tags: ["natural language processing", "shared task", "clef", "subjectivity detection"]
+tags: ["natural language processing", "shared task", "CLEF", "subjectivity detection"]
 authors:
   - "Firoj Alam"
   - "Julia Maria Struß"
