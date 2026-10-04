@@ -1,5 +1,5 @@
-# Topics shown as colored tags under each project and tool card.
-# A project or tool lists keys from this file in its `topics` front matter field.
+# Topics shown as colored tags on project, tool, and news cards, and in the homepage research map.
+# A page lists keys from this file in its `topics` field. Research areas also use them in `topic` and `threads`.
 # Change a label or a color here to update every card that uses it.
 legal:
   label: Legal
@@ -56,4 +56,16 @@ reproducibility:
 benchmark:
   label: Benchmark
   background: '#3f51b5'
+  text: '#ffffff'
+speech:
+  label: Speech
+  background: '#0f766e'
+  text: '#ffffff'
+interpretability:
+  label: Interpretability
+  background: '#003060'
+  text: '#ffffff'
+llm-reasoning:
+  label: LLM reasoning
+  background: '#9d174d'
   text: '#ffffff'

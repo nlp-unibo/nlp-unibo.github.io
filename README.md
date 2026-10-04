@@ -117,11 +117,54 @@ content/publication/rossi-etal-2026-example/
 | `publication_types` | `article-journal` for a journal paper, `paper-conference` for a conference or workshop paper, `article` for a preprint, or `chapter` for a book chapter |
 | `publication` | The full venue name, for example `Proceedings of ACL 2026` |
 | `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which selects the list on the Publications page. Add `Highlight` as a second value to also list the paper under Highlights |
-| `abstract` | The abstract |
+| `abstract` | The abstract, shown in full on the publication page |
+| `summary` | One sentence shown under the title of the publication page and on publication cards |
 | `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
 | `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
 | `award` | Optional award name, for example `Best Paper Award`. It appears with a trophy under the title in every publication list |
 | `tags` | Topic keywords. Add `student publication` to show the paper on the For Students page |
+
+Each publication page is a project page, like the pages that research groups publish for their papers.
+It shows the title, the authors, the research topics, link buttons, a teaser, the body sections, and the citation.
+The page is self-contained, so its text cites no other publication; its tags link to the tag pages.
+The page answers four questions for a reader outside the field:
+
+1. What is the paper about?
+2. Which research topics does it cover?
+3. Why was the work needed, and what did it aim for?
+4. What did it find, and what should a reader take away?
+
+Base every statement on the paper, and leave the details to the paper itself.
+
+The template provides five body sections: **Research setting**, **Motivation**, **Approach**, **Results**, and **Takeaways**.
+They guide the reader from the task, to the gap in related work, to the method, to the findings.
+Never show a number or a term before the text has given its context.
+Keep the five sections in every page, so that all pages share one structure.
+Each `##` heading also appears in the section menu below the teaser.
+
+| Extra | How to add it |
+| --- | --- |
+| Teaser and preview | The most representative figure of the paper, saved as `featured.png`. It appears as the teaser and on every publication card. A video named `teaser.mp4` replaces the teaser image on the page |
+| Topics | `topics`, a list of keys from `data/topics.yaml`, shown as colored tags |
+| Affiliations | `affiliations`, a list of institution names shown under the authors |
+| Buttons | `url_pdf`, `url_code`, `url_dataset`, `url_project` (demo), `url_video`, `url_slides`, `url_poster`, `doi`, and `links` |
+
+The body can use nine visual components.
+Each component except `figure` and `svg` takes YAML between its opening and closing tags, and the publication templates show an example of each one.
+
+| Component | Shows |
+| --- | --- |
+| `figure` | A figure from the paper, saved in the page folder. Reuse a figure only when its source is openly licensed, such as arXiv, the ACL Anthology, or CEUR-WS |
+| `svg` | A schema drawn for the page as an SVG file, which follows light and dark mode |
+| `gap` | A table that compares the paper with related work, with one row marked `ours: true` |
+| `pipeline` | A method diagram with three to five steps, with optional parallel branches inside a step |
+| `stages` | An interactive diagram with one tab per stage, which shows whether each component is optimized, trained, or frozen |
+| `numbers` | Two to four headline numbers, placed in **Results** after the text that explains them |
+| `bars` | An interactive bar chart of one metric, with optional standard deviations and a table view |
+| `annotate` | An annotated text example with up to four labels, which readers can filter |
+| `takeaways` | Three numbered takeaway cards |
+
+A page without body sections shows only its abstract, so a new entry can be published before its page is complete.
 
 A `Highlight` publication appears both under Highlights and in its venue list.
 Leave `featured: false` unchanged, because the Highlight category replaces it.
@@ -153,7 +196,19 @@ Our paper has been accepted at ACL 2026.
 - [Programme](programme.pdf)
 ```
 
-The homepage shows the five most recent news items automatically.
+The homepage shows the six most recent news items automatically.
+The three newest appear as cards with generated cover art, and the others appear as rows.
+A preview does not link to the news page.
+The title, the summary, and the links must therefore be enough on their own.
+
+Every link in the text appears as a button on the preview, so a reader can open a program or a paper directly.
+For a paper, use the paper title as the news title and write the venue in the summary.
+List `topics` from `data/topics.yaml` to show colored tags, preferably the topics of the research areas.
+
+The tags set the label on the preview.
+The tag `paper` gives **Paper**, `special issue` gives **Call for papers**, `workshop` gives **Workshop**, and `event` gives **Event**.
+Any other news item gets the label **News**.
+
 A news item with a future date stays hidden until that date.
 The site rebuilds every day at 04:00 UTC, so the item appears on the morning of its date.
 
@@ -251,12 +306,22 @@ The For Students page suggests international challenges and academic workshops a
 
 1. Create `content/research/<slug>/index.md`.
    Copy an existing area, or run `uv run python scripts/site.py new research <slug>`.
-2. Set `title` and `summary`.
-   The summary appears on the homepage tile.
+2. Set `title`, `summary`, and a `tagline` of at most 12 words.
+   The tagline appears on the homepage card.
 3. Set `icon` to a [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name, such as `comments` or `balance-scale`.
-4. Describe the topics in the body.
+4. Set `weight` to order the cards, and `cover_pattern` to `dots`, `graph`, `tokens`, or `wave`.
+5. Set `topic` to the key of the area in `data/topics.yaml`, and list in `threads` the topic keys that the area shares with other areas, such as `interpretability`.
+   The homepage matrix shows one row per thread, with the label and color from `data/topics.yaml`.
+6. Write a short introduction in the body that defines the area in plain words.
+7. Describe the area in a `map`: columns of blocks, one block per subarea.
+   The page draws each block as a node of an overview graph, joined to the blocks named in its `links`.
+   Hovering a node shows its `summary`, and selecting it opens a panel with its items marked `done`, `now`, or `next`.
+   An item cites publications in `cite` by folder name, and each citation appears as a link such as "Mancini et al., 2024".
+   A block lists `topics` from `data/topics.yaml`, shown as colored tags, and its `title` appears as a topic chip on the homepage card.
+   Copy the map of `content/research/am/index.md` as a starting point.
+   The check fails on a repeated block key, a link to a missing block, an unknown status, or a citation of a missing publication.
 
-The homepage shows one tile per research area automatically.
+The homepage shows one card per research area and a matrix of shared threads automatically.
 
 ### Add a tool
 
@@ -278,9 +343,14 @@ It lives in `content/work-with-us/index.md` and appears in the local preview at 
 1. Delete the `draft: true` line and its comment in `content/work-with-us/index.md`.
 2. In `config/_default/menus.yaml`, remove the `#` at the start of the three `Work with us` lines, and delete the comment above them.
 
+The **Work with us** button in the homepage hero appears by itself once the page is published.
+
 ### Edit the homepage or the menu
 
-The homepage is defined in `content/_index.md` as a list of blocks, such as the hero, the figures, the research tiles, and the latest news.
+The homepage is defined in `content/_index.md` as a list of blocks: the hero, the research map, the latest news, and the latest preprints.
+The texts of the hero and the section headings are front matter values in that file.
+The blocks named `lt-*` are templates in `layouts/_partials/blocks/`.
+A hero button that points to an unpublished page, such as a draft, is hidden.
 The top menu is defined in `config/_default/menus.yaml`, where lower `weight` values appear first.
 An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`, as News and Events do under **News & Events**.
 
@@ -411,13 +481,17 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/categories/_index.md` | Citation view for category pages |
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
 | `config/_default/module.yaml` | Theme modules, with one blox-seo file excluded |
-| `data/topics.yaml` | Topic labels and tag colors for projects and tools |
+| `data/topics.yaml` | Topic labels and tag colors for projects, tools, news, and research areas |
 | `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
-| `layouts/_shortcodes/` | `section-cards` (proposal topics), `section-tiles` (research tiles), and `site-stats` (homepage figures) |
+| `layouts/_shortcodes/` | `section-cards` (proposal topics) |
+| `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero, research map, news, and preprints |
+| `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, and publication cards |
+| `layouts/publication/single.html` | Publication page in the style of a research project page |
+| `assets/media/logo.svg`, `assets/media/icon.png` | Navbar logo and the favicon generated from it |
 | `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
 | `layouts/_partials/views/card.html` | Theme card view plus topic tags |
 | `layouts/_partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
@@ -515,6 +589,7 @@ They use `hugo.Data` instead of `site.Data`, `site.Language.Locale` instead of `
 Two of them come from the blox-seo module: `layouts/index.webmanifest` and `layouts/_partials/seo_tags.html`.
 The other thirteen come from blox-bootstrap: `layouts/baseof.html`, `layouts/rss.xml`, and eleven files under `layouts/_partials/`.
 When a Hugo release deprecates another call, search the theme modules for it and copy each affected file the same way.
+One copy has a second change: `layouts/_partials/components/headers/navbar.html` shows the site title next to the logo.
 
 `config/_default/module.yaml` imports blox-core and blox-seo directly, in the order the theme uses.
 The direct import lets the site exclude `layouts/_markup/sitemap.xml` from blox-seo, which Hugo skips with a warning.

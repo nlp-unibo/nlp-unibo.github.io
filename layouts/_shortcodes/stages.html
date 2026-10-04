@@ -1,0 +1,37 @@
+{{/* Interactive stage diagram: a flow of components and, for each stage, the state of every component. */}}
+{{/* Inner YAML: `flow` (component names, left to right), and `stages` with `title`, `text`, and `states` mapping a component to */}}
+{{/* evolved, trained, frozen, or data. A component missing from `states` stays neutral. Optional `labels` (one or two words, shown in the boxes), `legend` (a short phrase), and `icons` (Font Awesome names) rename a state. Readers switch stages with the tabs. */}}
+{{- $d := transform.Unmarshal .Inner -}}
+{{- $icons := merge (dict "evolved" "dna" "trained" "fire" "frozen" "snowflake" "data" "file-alt") ($d.icons | default dict) -}}
+{{- $id := printf "lt-stages-%d" (hash.FNV32a .Inner) -}}
+  {{- $used := slice }}{{ range $d.stages }}{{ range $k, $v := .states }}{{ if not (in $used $v) }}{{ $used = $used | append $v }}{{ end }}{{ end }}{{ end }}
+  {{- $short := merge (dict "evolved" "Optimized" "trained" "Trained" "frozen" "Frozen" "data" "Data") ($d.labels | default dict) }}
+  {{- $legend := merge (dict "evolved" "Optimized" "trained" "Trained" "frozen" "Frozen" "data" "Data") ($d.legend | default dict) }}
+<figure class="lt-viz lt-stages" id="{{ $id }}">
+  <div class="lt-stages-tabs" role="tablist">
+    {{- range $i, $s := $d.stages }}
+    <button type="button" role="tab" id="{{ $id }}-tab-{{ $i }}" aria-controls="{{ $id }}-panel-{{ $i }}" aria-selected="{{ eq $i 0 }}" tabindex="{{ cond (eq $i 0) 0 -1 }}">{{ $s.title }}</button>
+    {{- end }}
+  </div>
+  {{- range $i, $s := $d.stages }}
+  <div class="lt-stages-panel" role="tabpanel" id="{{ $id }}-panel-{{ $i }}" aria-labelledby="{{ $id }}-tab-{{ $i }}"{{ if gt $i 0 }} hidden{{ end }}>
+    <ol class="lt-stages-flow">
+      {{- range $c := $d.flow }}
+      {{- $state := index ($s.states | default dict) $c | default "idle" }}
+      <li class="is-{{ $state }}">
+        {{ with index $icons $state }}<i class="fas fa-{{ . }}" aria-hidden="true"></i>{{ end }}
+        <strong>{{ $c }}</strong>
+        {{ if ne $state "idle" }}<span>{{ index $short $state }}</span>{{ end }}
+      </li>
+      {{- end }}
+    </ol>
+    {{ with $s.text }}<p class="lt-stages-text">{{ . | markdownify }}</p>{{ end }}
+  </div>
+  {{- end }}
+  <p class="lt-stages-legend">
+    {{- range slice "evolved" "trained" "frozen" "data" }}{{ if in $used . }}
+    <span class="is-{{ . }}"><i class="fas fa-{{ index $icons . }}" aria-hidden="true"></i> {{ index $legend . }}</span>
+    {{- end }}{{ end }}
+  </p>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

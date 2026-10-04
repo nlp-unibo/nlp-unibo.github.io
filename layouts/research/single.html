@@ -1,0 +1,122 @@
+{{/* Research area page: header, short introduction, and the research map. */}}
+{{/* The map comes from the `map` front matter: columns of blocks. The overview draws each block as a node, joined by its `links`. */}}
+{{/* Below the overview, each block has a detail panel with its items in Done, Now, and Next lanes. assets/js/ltlab.js shows one panel at a time; without JavaScript every panel is visible and the nodes are anchor links. */}}
+{{/* An item cites publications by folder name; each citation renders as "Surname et al., Year" and links to the publication page. */}}
+{{- define "main" -}}
+{{ $status := dict "done" (dict "label" "Done" "icon" "fas fa-check") "now" (dict "label" "Now" "icon" "fas fa-circle") "next" (dict "label" "Next" "icon" "fas fa-arrow-right") }}
+<article class="lt-proj">
+  <header class="lt-proj-header">
+    <p class="lt-proj-venue"><span class="lt-pill">Research area</span></p>
+    <h1 class="lt-proj-title">{{ .Title }}</h1>
+    {{ with .Params.tagline }}<p class="lt-proj-tagline">{{ . }}</p>{{ end }}
+  </header>
+
+  <div class="lt-proj-body article-style">
+    {{ .Content }}
+  </div>
+
+  {{ with .Params.map }}
+  {{/* Node positions in percent of the overview canvas: one column per map column, blocks centered vertically in their column. */}}
+  {{ $cols := len . }}
+  {{ $rows := 0 }}{{ range . }}{{ $rows = math.Max $rows (len .blocks) }}{{ end }}
+  {{ $nodes := dict }}
+  {{ $blocks := slice }}
+  {{ range $c, $column := . }}
+    {{ $n := len $column.blocks }}
+    {{ range $r, $b := $column.blocks }}
+      {{ $x := div (mul 100.0 (add $c 0.5)) $cols }}
+      {{ $y := div (mul 100.0 (add $r 0.5 (div (sub $rows $n) 2.0))) $rows }}
+      {{ $nodes = merge $nodes (dict $b.key (dict "x" $x "y" $y "c" $c "title" $b.title)) }}
+      {{ $blocks = $blocks | append $b }}
+    {{ end }}
+  {{ end }}
+  {{/* Links are declared once, so each block's neighbours are its own links plus the blocks that link to it. */}}
+  {{ $neighbours := dict }}
+  {{ range $blocks }}{{ $from := .key }}{{ range .links }}
+    {{ $neighbours = merge $neighbours (dict $from ((index $neighbours $from | default slice) | append .)) }}
+    {{ $neighbours = merge $neighbours (dict . ((index $neighbours . | default slice) | append $from)) }}
+  {{ end }}{{ end }}
+
+  <section class="lt-rmap" aria-labelledby="research-map">
+    <div class="lt-rmap-head">
+      <h2 id="research-map">Research map</h2>
+      <div class="lt-rmap-legend" role="group" aria-label="Highlight items">
+        {{ range slice "done" "now" "next" }}{{ $s := index $status . }}
+        <button type="button" class="lt-rmap-key is-{{ . }}" data-lt-status="{{ . }}" aria-pressed="false"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</button>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="lt-rmap-overview">
+      <div class="lt-rmap-colheads" style="--lt-cols: {{ $cols }}">
+        {{ range . }}<span>{{ .column }}</span>{{ end }}
+      </div>
+      <div class="lt-rmap-canvas" style="--lt-rows: {{ $rows }}">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          {{ range $blocks }}{{ $from := .key }}{{ $a := index $nodes $from }}{{ range .links }}{{ $b := index $nodes . }}
+          {{ $mx := div (add $a.x $b.x) 2 }}
+          <path class="lt-rmap-edge" data-lt-a="{{ $from }}" data-lt-b="{{ . }}" d="M{{ $a.x }} {{ $a.y }} C{{ $mx }} {{ $a.y }} {{ $mx }} {{ $b.y }} {{ $b.x }} {{ $b.y }}"/>
+          {{ end }}{{ end }}
+        </svg>
+        {{ range $blocks }}{{ $p := index $nodes .key }}
+        <a class="lt-rmap-node lt-rmap-c{{ $p.c }}{{ range (uniq (apply .items "index" "." "status")) }} has-{{ . }}{{ end }}" href="#area-{{ .key }}" data-lt-area="{{ .key }}" aria-describedby="tip-{{ .key }}" style="left: {{ $p.x }}%; top: {{ $p.y }}%; --lt-c: {{ $p.c }}">
+          <span class="lt-rmap-node-title">{{ .title }}</span>
+          <span class="lt-rmap-counts">
+            {{- $item_status := slice }}{{ range .items }}{{ $item_status = $item_status | append .status }}{{ end }}
+            {{- range slice "done" "now" "next" }}{{ $k := . }}{{ $count := 0 }}{{ range $item_status }}{{ if eq . $k }}{{ $count = add $count 1 }}{{ end }}{{ end }}{{ if $count }}<span class="is-{{ $k }}"><i class="{{ (index $status $k).icon }}" aria-hidden="true"></i> {{ $count }}<span class="sr-only"> {{ (index $status $k).label }}</span></span>{{ end }}{{ end -}}
+          </span>
+          <span class="lt-rmap-tip" role="tooltip" id="tip-{{ .key }}">{{ .summary }}</span>
+        </a>
+        {{ end }}
+      </div>
+    </div>
+
+    <div class="lt-rmap-details">
+      {{ range $blocks }}{{ $key := .key }}
+      <section class="lt-rmap-detail" id="area-{{ $key }}" data-lt-area="{{ $key }}" aria-labelledby="area-{{ $key }}-title" tabindex="-1">
+        <div class="lt-rmap-detail-head">
+          <h3 id="area-{{ $key }}-title">{{ .title }}</h3>
+          {{ partial "lt/topic-tags.html" .topics }}
+        </div>
+        <p class="lt-rmap-summary">{{ .summary }}</p>
+        <div class="lt-rmap-flow">
+          {{ $items := .items }}
+          {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
+          {{ $lane := where $items "status" $k }}
+          {{ with $lane }}
+          <div class="lt-rmap-lane is-{{ $k }}">
+            <h4 class="lt-rmap-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+            <ul class="lt-rmap-items">
+              {{ range . }}
+              <li class="lt-rmap-item is-{{ $k }}">
+                <span class="lt-rmap-text">{{ .text }}</span>
+                {{ with .cite }}
+                <span class="lt-rmap-cite">
+                  {{- range $i, $slug := . }}{{ with site.GetPage (printf "/publication/%v" $slug) }}
+                    {{- $names := apply (.Params.authors | default slice) "split" "." " " }}
+                    {{- $surnames := slice }}{{ range $names }}{{ $surnames = $surnames | append (index . (sub (len .) 1)) }}{{ end }}
+                    {{- $who := index $surnames 0 }}
+                    {{- if eq (len $surnames) 2 }}{{ $who = printf "%s and %s" $who (index $surnames 1) }}{{ else if gt (len $surnames) 2 }}{{ $who = printf "%s et al." $who }}{{ end }}
+                    {{- if $i }}; {{ end }}<a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ $who }}, {{ .Date.Year }}</a>
+                  {{- end }}{{ end -}}
+                </span>
+                {{ end }}
+              </li>
+              {{ end }}
+            </ul>
+          </div>
+          {{ end }}
+          {{ end }}
+        </div>
+        {{ with index $neighbours $key }}
+        <p class="lt-rmap-related"><span>Connected to</span>
+          {{ range . }}<a href="#area-{{ . }}" data-lt-area="{{ . }}">{{ (index $nodes .).title }}</a>{{ end }}
+        </p>
+        {{ end }}
+      </section>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+</article>
+{{- end -}}

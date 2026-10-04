@@ -1,0 +1,62 @@
+{{/* Generated cover art for cards. The `seed` string fixes the palette and the pattern, so a page always gets the same image. */}}
+{{/* Patterns: tokens (text lines), graph (argument nodes), wave (speech bars), and dots. Each shape hashes the seed with its own index. */}}
+{{- $h := hash.FNV32a .seed -}}
+{{- $palettes := slice
+  (slice "#003060" "#105080" "#f09010")
+  (slice "#105080" "#3a9cc4" "#003060")
+  (slice "#003060" "#0b6e70" "#60c0e0")
+  (slice "#0d2440" "#2a5a8a" "#f09010")
+-}}
+{{- $p := index $palettes (mod $h (len $palettes)) -}}
+{{- $pattern := .pattern | default (index (slice "tokens" "graph" "wave" "dots") (mod (div $h 7) 4)) -}}
+{{- $id := printf "lt-cover-%d" $h -}}
+<svg class="lt-cover lt-cover-{{ $pattern }}" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="{{ $id }}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="{{ index $p 0 }}"/>
+      <stop offset="1" stop-color="{{ index $p 1 }}"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="200" fill="url(#{{ $id }})"/>
+  <g class="lt-cover-art">
+  {{- if eq $pattern "tokens" }}
+    {{- range $row := seq 0 6 }}
+      {{- $x := 24 -}}
+      {{- range $col := seq 0 5 }}
+        {{- $r := mod (hash.FNV32a (printf "%s|t%d|%d" $.seed $row $col)) 101 -}}
+        {{- $w := add 18 (mod $r 52) -}}
+        {{- if lt $x 380 }}
+        <rect x="{{ $x }}" y="{{ add 22 (mul $row 24) }}" width="{{ $w }}" height="10" rx="5" fill="{{ cond (lt $r 14) (index $p 2) "#ffffff" }}" opacity="{{ cond (lt $r 14) "0.95" "0.18" }}"/>
+        {{- end }}
+        {{- $x = add $x (add $w 10) -}}
+      {{- end }}
+    {{- end }}
+  {{- else if eq $pattern "graph" }}
+    {{- $nodes := slice -}}
+    {{- range $i := seq 0 7 }}
+      {{- $nodes = $nodes | append (dict "x" (add 28 (mul $i 46) (mod (hash.FNV32a (printf "%s|x%d" $.seed $i)) 22)) "y" (add 28 (mod (hash.FNV32a (printf "%s|y%d" $.seed $i)) 144))) -}}
+    {{- end }}
+    {{- range $i, $n := $nodes }}
+      {{- if gt $i 0 }}{{ $m := index $nodes (div $i 2) }}
+      <line x1="{{ $m.x }}" y1="{{ $m.y }}" x2="{{ $n.x }}" y2="{{ $n.y }}" stroke="#ffffff" stroke-opacity="0.35" stroke-width="2"/>
+      {{- end }}
+    {{- end }}
+    {{- range $i, $n := $nodes }}
+      <circle cx="{{ $n.x }}" cy="{{ $n.y }}" r="{{ cond (eq $i 0) 11 6 }}" fill="{{ cond (eq $i 0) (index $p 2) "#ffffff" }}" opacity="{{ cond (eq $i 0) "1" "0.8" }}"/>
+    {{- end }}
+  {{- else if eq $pattern "wave" }}
+    {{- range $i := seq 0 37 }}
+      {{- $r := mod (hash.FNV32a (printf "%s|w%d" $.seed $i)) 97 -}}
+      {{- $bar := add 10 (div (mul $r (sub 20 (math.Abs (sub (mod $i 20) 10)))) 9) -}}
+      <rect x="{{ add 14 (mul $i 10) }}" y="{{ sub 100 (div $bar 2) }}" width="5" height="{{ $bar }}" rx="2.5" fill="{{ cond (lt $r 12) (index $p 2) "#ffffff" }}" opacity="{{ cond (lt $r 12) "0.95" "0.35" }}"/>
+    {{- end }}
+  {{- else }}
+    {{- range $row := seq 0 7 }}
+      {{- range $col := seq 0 17 }}
+        {{- $r := mod (hash.FNV32a (printf "%s|d%d|%d" $.seed $row $col)) 89 -}}
+        <circle cx="{{ add 18 (mul $col 22) }}" cy="{{ add 22 (mul $row 22) }}" r="{{ cond (lt $r 9) 5 2 }}" fill="{{ cond (lt $r 9) (index $p 2) "#ffffff" }}" opacity="{{ cond (lt $r 9) "0.95" "0.3" }}"/>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+  </g>
+</svg>

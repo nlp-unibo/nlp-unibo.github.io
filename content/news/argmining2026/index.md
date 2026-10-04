@@ -4,6 +4,8 @@ date: 2025-10-01
 tags: ["natural language processing", "workshop", "argument mining", "reasoning"]
 summary: "The 2026 edition of the ArgMining workshop places a special focus on understanding and evaluating arguments in both human and machine reasoning." 
 
+# Colored tags on the homepage card, from data/topics.yaml
+topics: [argument-mining, llm-reasoning]
 ---
 
 ## Introduction

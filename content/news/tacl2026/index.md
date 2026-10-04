@@ -1,9 +1,11 @@
 ---
-title: "Paper accepted at TACL!" 
+title: "Let Guidelines Guide You: A Prescriptive Guideline-Centered Data Annotation Methodology"
 date: 2026-03-02
 tags: ["news", "TACL", "paper", "accepted"]
-summary: "Our paper 'Let Guidelines Guide You: A Prescriptive Guideline-Centered Data Annotation Methodology' has been accepted at Transactions of the Association for Computational Linguistics (TACL)!" 
+summary: "Accepted at Transactions of the Association for Computational Linguistics (TACL)."
 
+# Colored tags on the homepage card, from data/topics.yaml
+topics: [benchmark]
 ---
 
 ## Description

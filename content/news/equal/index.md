@@ -5,6 +5,8 @@ tags: ["natural language processing", "workshop", "EquAl", "project", "legal", "
 
 summary: "The EquAl final conference discussed how norms and technologies can promote fairness and counter algorithmic discrimination."
 
+# Colored tags on the homepage card, from data/topics.yaml
+topics: [legal, fairness]
 ---
 
 ## Project info

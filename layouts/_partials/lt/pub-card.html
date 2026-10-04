@@ -1,0 +1,28 @@
+{{/* Model card for one publication. Input: the publication page. */}}
+{{ $meta := partial "lt/pub-meta.html" . }}
+<article class="lt-card lt-model-card">
+  <div class="lt-model-head">
+    {{ with (.Resources.ByType "image").GetMatch "*featured*" }}
+      {{ $img := .Fill "800x400 webp Center" }}
+      <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
+    {{ else }}
+      {{ partial "lt/cover.html" (dict "seed" .Title) }}
+    {{ end }}
+    <div class="lt-model-badges">
+      <span class="lt-badge">{{ $meta.kind }}</span>
+      {{ with $meta.arxiv }}<span class="lt-badge lt-badge-mono">arXiv:{{ . }}</span>{{ end }}
+    </div>
+  </div>
+  <div class="lt-card-body">
+    <dl class="lt-model-specs">
+      <div><dt>Year</dt><dd>{{ .Date.Format "2006" }}</dd></div>
+      <div><dt>Venue</dt><dd>{{ $meta.venue | default (cond (ne $meta.arxiv "") "arXiv" "Unpublished") }}</dd></div>
+      <div><dt>Authors</dt><dd>{{ len $meta.authors }}</dd></div>
+    </dl>
+    <h3 class="lt-card-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p class="lt-model-authors">{{ $meta.authors_short }}</p>
+    {{ with $meta.tldr }}<p class="lt-card-text">{{ . }}</p>{{ end }}
+    {{ with .Params.topics }}{{ partial "lt/topic-tags.html" . }}{{ else }}{{ with .Params.tags }}<ul class="lt-tags">{{ range first 3 . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}{{ end }}
+    {{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 2) }}
+  </div>
+</article>

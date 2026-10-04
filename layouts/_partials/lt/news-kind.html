@@ -1,0 +1,9 @@
+{{/* Kind label and icon of a news item, derived from its tags. The first matching rule wins. */}}
+{{- $tags := apply (.Params.tags | default slice) "lower" "." -}}
+{{- $kind := dict "label" "News" "icon" "fas fa-bullhorn" "slug" "news" -}}
+{{- if in $tags "paper" }}{{ $kind = dict "label" "Paper" "icon" "fas fa-file-alt" "slug" "paper" }}
+{{- else if in $tags "special issue" }}{{ $kind = dict "label" "Call for papers" "icon" "fas fa-book-open" "slug" "call" }}
+{{- else if in $tags "workshop" }}{{ $kind = dict "label" "Workshop" "icon" "fas fa-users" "slug" "event" }}
+{{- else if in $tags "event" }}{{ $kind = dict "label" "Event" "icon" "fas fa-calendar-alt" "slug" "event" }}
+{{- end -}}
+{{- return $kind -}}

@@ -1,0 +1,79 @@
+{{/* Publication page in the style of a research project page. */}}
+{{/* Order: venue, title, authors, topics, link buttons, teaser, section menu, body, citation. A page without a body shows its abstract instead. */}}
+{{/* The body tells the story of the paper in the sections that the publication archetypes provide; each `##` heading also appears in the section menu. */}}
+{{/* The page is self-contained: its text cites no other publication. Tags link to the tag pages. */}}
+{{- define "main" -}}
+{{ $meta := partial "lt/pub-meta.html" . }}
+{{ $bib := .Resources.Get "cite.bib" }}
+{{ $teaser_video := .Resources.GetMatch "teaser.mp4" }}
+{{ $featured := (.Resources.ByType "image").GetMatch "*featured*" }}
+{{ $body := .Content | replaceRE `<!--[\s\S]*?-->` "" | strings.TrimSpace }}
+{{ $sections := findRESubmatch `<h2 id="([^"]+)"[^>]*>(.*?)</h2>` $body }}
+<article class="lt-proj">
+  <header class="lt-proj-header">
+    <p class="lt-proj-venue">
+      <span class="lt-pill">{{ $meta.kind }}</span>
+      <span>{{ with $meta.venue }}{{ . }} · {{ end }}{{ .Date.Format "2006" }}</span>
+    </p>
+    <h1 class="lt-proj-title">{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
+    <p class="lt-proj-authors">{{ partial "page_metadata_authors" . }}</p>
+    {{ with .Params.topics }}<div class="lt-proj-topics">{{ partial "lt/topic-tags.html" . }}</div>{{ end }}
+    {{ with .Params.affiliations }}<p class="lt-proj-affiliations">{{ delimit . " · " }}</p>{{ end }}
+    {{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
+    <div class="lt-proj-buttons">
+      {{ range $meta.links }}
+      <a class="lt-proj-button" href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}><i class="{{ .icon }}" aria-hidden="true"></i> {{ .name }}</a>
+      {{ end }}
+      {{ with $bib }}<a class="lt-proj-button lt-proj-button-light" href="#cite"><i class="fas fa-quote-right" aria-hidden="true"></i> Cite</a>{{ end }}
+    </div>
+  </header>
+
+  <figure class="lt-proj-teaser">
+    {{ if $teaser_video }}
+      <video src="{{ $teaser_video.RelPermalink }}" autoplay muted loop playsinline{{ with $featured }} poster="{{ (.Fit "1600x900 webp").RelPermalink }}"{{ end }}></video>
+    {{ else if $featured }}
+      {{ $img := $featured.Resize "1600x webp" }}
+      <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ .Params.image.caption | default .Title }}">
+    {{ else }}
+      {{ partial "lt/cover.html" (dict "seed" .Title) }}
+    {{ end }}
+    {{ with .Params.image.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+  </figure>
+
+  <nav class="lt-proj-nav" aria-label="Sections">
+    {{ if not $body }}{{ with .Params.abstract }}<a href="#abstract">Abstract</a>{{ end }}{{ end }}
+    {{ range $sections }}<a href="#{{ index . 1 }}">{{ index . 2 | plainify | htmlUnescape }}</a>{{ end }}
+    {{ with $bib }}<a href="#cite">Cite</a>{{ end }}
+  </nav>
+
+  <div class="lt-proj-body article-style">
+    {{ if $body }}
+      {{ $body | safeHTML }}
+    {{ else if .Params.abstract }}
+      <section id="abstract" class="lt-proj-abstract-only">
+        <h2>Abstract</h2>
+        {{ .Params.abstract | markdownify }}
+      </section>
+    {{ else }}
+      <p class="lt-pub-empty">The abstract is not available yet. Follow the links above to read the paper.</p>
+    {{ end }}
+
+    {{ with $bib }}
+    <section id="cite" class="lt-proj-cite">
+      <h2>Citation</h2>
+      <div class="lt-bib">
+        <button type="button" class="lt-bib-copy" data-lt-copy="#lt-bib-text"><i class="far fa-copy" aria-hidden="true"></i> <span>Copy</span></button>
+        {{/* The abstract is shown above, so the displayed record leaves it out. */}}
+        <pre id="lt-bib-text"><code>{{ .Content | replaceRE `(?s)\n\s*abstract\s*=\s*\{[^{}]*\},?` "" | strings.TrimSpace }}</code></pre>
+      </div>
+    </section>
+    {{ end }}
+
+    {{ with .GetTerms "tags" }}
+    <ul class="lt-tags lt-proj-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
+    {{ end }}
+  </div>
+
+</article>
+{{- end -}}

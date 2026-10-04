@@ -1,0 +1,11 @@
+{{/* Inline SVG figure from the page folder, so that its classes follow the light and dark themes (template.scss, `.lt-svg`). */}}
+{{/* Usage: {{< svg src="schema.svg" caption="..." >}}. Draw with the classes lt-s-box, lt-s-sel, lt-s-pred, lt-s-tok, lt-s-on, lt-s-off, lt-s-txt, lt-s-sub, lt-s-arrow. */}}
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src -}}
+<figure class="lt-viz lt-svg">
+  {{ .Content | safeHTML }}
+  {{ with $.Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
+{{- else -}}
+  {{- errorf "svg shortcode: %q not found in %s" $src .Page.File.Path -}}
+{{- end -}}

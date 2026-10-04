@@ -474,10 +474,33 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            if section in {"projects", "tools"}:
-                for topic in metadata.get("topics") or []:
-                    if topic not in project_topics:
-                        failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
+            # Research map blocks need unique keys and links to existing keys; items need a known status,
+            # and their citations must name existing publications.
+            map_blocks = [block for column in metadata.get("map") or [] for block in column.get("blocks") or []]
+            map_keys = [block.get("key") for block in map_blocks]
+            for key in {key for key in map_keys if map_keys.count(key) > 1 or not key}:
+                failures.append(f"{page.relative_to(ROOT)}: map block key {key!r} is missing or repeated")
+            for block in map_blocks:
+                for link in block.get("links") or []:
+                    if link not in map_keys:
+                        failures.append(f"{page.relative_to(ROOT)}: map link {link!r} names no block")
+            for column in metadata.get("map") or []:
+                for block in column.get("blocks") or []:
+                    for topic in block.get("topics") or []:
+                        if topic not in project_topics:
+                            failures.append(f"{page.relative_to(ROOT)}: map topic {topic!r} is not defined in data/topics.yaml")
+                    for item in block.get("items") or []:
+                        if item.get("status") not in {"done", "now", "next"}:
+                            failures.append(f"{page.relative_to(ROOT)}: map item status must be done, now, or next")
+                        for slug in item.get("cite") or []:
+                            if not (content_root / "publication" / str(slug) / "index.md").exists():
+                                failures.append(f"{page.relative_to(ROOT)}: map cites unknown publication {slug!r}")
+            topic_keys = [*(metadata.get("topics") or []), *(metadata.get("threads") or [])]
+            if metadata.get("topic"):
+                topic_keys.append(metadata["topic"])
+            for topic in topic_keys:
+                if topic not in project_topics:
+                    failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
             if section in SECTION_CATEGORIES and not is_draft:
                 error = category_error(section, metadata.get("categories") or [])
                 if error:

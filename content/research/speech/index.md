@@ -8,8 +8,20 @@ tags:
 
 summary: The development of automatic tools for handling and digesting speech data, often in conjunction with other modalities like text.
 
-# Font Awesome icon shown on the homepage research tile
+# Font Awesome icon shown on the homepage research card
 icon: microphone-alt
+weight: 3
+
+# Homepage research map: tagline, cover pattern (dots, graph, tokens, or wave), own topic, and shared threads.
+# Topic and thread keys come from data/topics.yaml.
+tagline: Models that listen, from spoken arguments to clinical speech.
+cover_pattern: wave
+topic: speech
+threads:
+  - argument-mining
+  - interpretability
+  - multimodal
+  - benchmark
 ---
 
 ### Argumentation 

@@ -68,11 +68,7 @@
   </a>
   {{ end }}
 
-  {{ with $item.Params.topics }}
-  <div class="lt-topics">
-    {{ range . }}{{ with index hugo.Data.topics . }}<span class="lt-topic" style="{{ printf "background:%s;color:%s" .background .text | safeCSS }}">{{ .label }}</span>{{ end }}{{ end }}
-  </div>
-  {{ end }}
+  {{ partial "lt/topic-tags.html" $item.Params.topics }}
 
   {{ if $has_attachments }}
   <div class="btn-links">

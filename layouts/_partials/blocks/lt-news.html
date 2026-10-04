@@ -1,0 +1,41 @@
+{{/* Latest news: the newest items as cards with cover art, the next ones as compact rows. */}}
+{{/* Previews are self-contained and do not link to the news page: they show the topics and the links of the page. */}}
+{{ $block := .wcBlock }}
+{{ $items := first ($block.content.count | default 6) (where site.RegularPages "Section" "news").ByDate.Reverse }}
+{{ $featured := $block.content.featured | default 3 }}
+{{ $patterns := dict "paper" "tokens" "call" "graph" "event" "dots" "news" "wave" }}
+{{ partial "lt/section-head.html" $block }}
+<div class="lt-news-grid">
+  {{ range first $featured $items }}
+  {{ $kind := partial "lt/news-kind.html" . }}
+  <article class="lt-card lt-news-card">
+    <div class="lt-card-cover">
+      {{ partial "lt/cover.html" (dict "seed" .Title "pattern" (index $patterns $kind.slug)) }}
+      <span class="lt-cover-icon"><i class="{{ $kind.icon }}" aria-hidden="true"></i></span>
+    </div>
+    <div class="lt-card-body">
+      <div class="lt-meta"><span class="lt-pill lt-pill-{{ $kind.slug }}">{{ $kind.label }}</span><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time></div>
+      <h3 class="lt-card-title">{{ .Title }}</h3>
+      {{ with .Params.summary }}<p class="lt-card-text">{{ . | plainify }}</p>{{ end }}
+      {{ partial "lt/topic-tags.html" .Params.topics }}
+      {{ partial "lt/link-chips.html" (dict "links" (partial "lt/links.html" .) "max" 3) }}
+    </div>
+  </article>
+  {{ end }}
+</div>
+{{ with after $featured $items }}
+<ul class="lt-news-list">
+  {{ range . }}
+  {{ $kind := partial "lt/news-kind.html" . }}
+  <li class="lt-news-row">
+    <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+    <span class="lt-pill lt-pill-{{ $kind.slug }}">{{ $kind.label }}</span>
+    <div class="lt-news-row-main">
+      <span class="lt-news-row-title">{{ .Title }}</span>
+      {{ partial "lt/topic-tags.html" .Params.topics }}
+      {{ partial "lt/link-chips.html" (dict "links" (partial "lt/links.html" .) "max" 3) }}
+    </div>
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

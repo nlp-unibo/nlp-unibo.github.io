@@ -9,8 +9,20 @@ tags:
 
 summary: The process of automatically understanding and extracting legal knowledge from legal documents.
 
-# Font Awesome icon shown on the homepage research tile
+# Font Awesome icon shown on the homepage research card
 icon: balance-scale
+weight: 2
+
+# Homepage research map: tagline, cover pattern (dots, graph, tokens, or wave), own topic, and shared threads.
+# Topic and thread keys come from data/topics.yaml.
+tagline: Turning court decisions and contracts into structured legal knowledge.
+cover_pattern: tokens
+topic: legal
+threads:
+  - argument-mining
+  - interpretability
+  - benchmark
+  - llm-reasoning
 ---
 
 ### Argumentation and Argument Schema 

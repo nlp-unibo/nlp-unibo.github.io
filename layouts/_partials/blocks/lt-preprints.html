@@ -1,0 +1,9 @@
+{{/* Latest preprints as model cards: identifier, title, authors, a one-sentence summary, topics, and links. */}}
+{{ $block := .wcBlock }}
+{{ $pubs := where (where site.RegularPages "Section" "publication") ".Params.categories" "intersect" (slice ($block.content.category | default "Preprint")) }}
+{{ partial "lt/section-head.html" $block }}
+<div class="lt-model-grid">
+  {{ range first ($block.content.count | default 3) $pubs.ByDate.Reverse }}
+  {{ partial "lt/pub-card.html" . }}
+  {{ end }}
+</div>
