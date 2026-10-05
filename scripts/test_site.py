@@ -49,4 +49,17 @@ assert view_errors({**view, "roles": []}) == ["component 'a' has an unknown role
 assert view_errors({**view, "implicit": [{"id": "a", "role": "clause"}, {"id": "b", "role": "clause"}]}) == ["component 'a' is repeated"]
 assert view_errors({**view, "edges": [{"from": "a", "to": "b", "relation": "rebut"}]}) == ["edge relation 'rebut' is not support, attack, or link"]
 
+detect = {"type": "detect", "sections": [{"sentences": [{"text": "x"}, {"text": "y", "category": "Arbitration", "level": 2}]}]}
+assert view_errors(detect) == [], view_errors(detect)
+assert view_errors({**detect, "sections": []}) == ["detect view has no sentences"]
+assert view_errors({"type": "detect", "sections": [{"sentences": [{"text": "y", "level": 4}]}]}) == ["sentence 1 needs a category and a level of 1, 2, or 3"]
+
+rules = {"type": "rules", "rules": [{"level": 2, "n": 2, "category": "open", "specification": "open", "subcategory": "any"}],
+         "sections": [{"sentences": [{"level": 2, "rule": 2, "parts": [
+             {"role": "category", "type": "open", "text": "information"},
+             {"role": "specification", "type": "open", "parts": [{"text": "such as"}, {"role": "subcategory", "type": "closed", "text": "name"}]}]}]}]}
+assert view_errors(rules) == [], view_errors(rules)
+assert view_errors({**rules, "rules": [{**rules["rules"][0], "category": "closed"}]}) == ["sentence 1: category is open, but level 2 rule 2 needs closed"]
+assert view_errors({**rules, "rules": [{**rules["rules"][0], "n": 3}]}) == ["sentence 1: level 2 rule 2 is not listed"]
+
 print("site.py self-checks passed.")

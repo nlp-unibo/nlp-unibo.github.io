@@ -91,9 +91,61 @@ PLACEHOLDER_PATTERNS = {
 MAX_ASSET_BYTES = 5 * 1024 * 1024
 
 
+def rules_view_errors(view: dict) -> list[str]:
+    """Return the problems of one rules view: marks with an unknown role or type, and clauses whose level and rule
+    name no listed rule, or whose marks do not match the rule they name."""
+    types = {"open", "closed"}
+    rules = {(rule.get("level"), rule.get("n")): rule for rule in view.get("rules") or []}
+    errors = [] if rules else ["rules view has no rules"]
+    errors += [f"rule {key} has a type outside open, closed, any, or none" for key, rule in rules.items()
+               if any(rule.get(name) not in types | {"any", "none"} for name in ("category", "specification", "subcategory"))]
+
+    def marks(parts: list) -> list[dict]:
+        found = []
+        for part in parts or []:
+            if part.get("role"):
+                found.append(part)
+            found += marks(part.get("parts"))
+        return found
+
+    sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+    for n, sentence in enumerate(sentences, 1):
+        found = marks(sentence.get("parts"))
+        errors += [f"sentence {n}: mark {mark.get('text')!r} needs a role of category, specification, or subcategory and a type of open or closed"
+                   for mark in found if mark.get("role") not in {"category", "specification", "subcategory"} or mark.get("type") not in types]
+        if "level" not in sentence and "rule" not in sentence:
+            continue
+        rule = rules.get((sentence.get("level"), sentence.get("rule")))
+        if not rule:
+            errors.append(f"sentence {n}: level {sentence.get('level')} rule {sentence.get('rule')} is not listed")
+            continue
+        # A rule holds when each element is absent for `none`, present for `any`, and of the stated type otherwise;
+        # subcategories are open when any of them is open.
+        def kind(role: str) -> str:
+            values = {mark.get("type") for mark in found if mark.get("role") == role}
+            return "none" if not values else "open" if "open" in values else "closed"
+        for name in ("category", "specification", "subcategory"):
+            want, have = rule.get(name), kind(name)
+            if not (want == have or (want == "any" and have != "none")):
+                errors.append(f"sentence {n}: {name} is {have}, but level {rule.get('level')} rule {rule.get('n')} needs {want}")
+    return errors
+
+
 def view_errors(view: dict) -> list[str]:
     """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
-    undefined components, or unknown relations."""
+    undefined components, or unknown relations. A detect view needs sentences with text, and each annotated
+    clause needs a category and a level of 1, 2, or 3."""
+    if view.get("type") == "rules":
+        return rules_view_errors(view)
+    if view.get("type") == "detect":
+        sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+        errors = [] if sentences else ["detect view has no sentences"]
+        for n, sentence in enumerate(sentences, 1):
+            if not sentence.get("text"):
+                errors.append(f"sentence {n} has no text")
+            if ("level" in sentence or "category" in sentence) and (sentence.get("level") not in {1, 2, 3} or not sentence.get("category")):
+                errors.append(f"sentence {n} needs a category and a level of 1, 2, or 3")
+        return errors
     roles = {role.get("key") for role in view.get("roles") or []}
     texts = view.get("texts") or [{"segments": view.get("segments") or []}]
     parts = [segment for text in texts for segment in text.get("segments") or [] if segment.get("id")]

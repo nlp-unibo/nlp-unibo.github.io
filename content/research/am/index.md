@@ -6,17 +6,65 @@ tags:
   - argument mining
   - research
   
-summary: The automatic extraction and identification of argumentative structures from text. Such structures include premises, claims or conclusions, argumentation schemes, and the relations between arguments.
+summary: The automatic identification and extraction of arguments from text and speech. Arguments include claims, premises, argumentation schemes, and the relations between them.
 
 # Font Awesome icon shown on the homepage research card
 icon: network-wired
 weight: 1
 
 # Homepage research card: tagline and cover pattern (dots, graph, tokens, or wave).
-tagline: Finding claims, premises, and fallacies in text, dialogue, and speech.
+tagline: Extracting, linking, evaluating, and reasoning about arguments in text and speech.
 cover_pattern: graph
 
-# Overview figure: interactive views of one argument each, grouped by argument model and by domain.
+# Definition: a short answer to "What is argument mining?" under the title. Markdown, one idea per sentence.
+definition: |
+  Argument mining is the automatic identification and extraction of arguments from natural language, in text and in speech.
+  It finds the claims people make, the premises they offer as reasons, and the relations between them.
+  Opinion mining tells what people think about a topic, while argument mining asks why they think it ([Lawrence and Reed, 2019](https://doi.org/10.1162/COLI_a_00364)).
+
+# Core concepts: one block per concept, with a short text and a small schema (an SVG file in this folder, drawn with the `lt-s-*` classes).
+overview:
+  - icon: quote-right
+    title: Arguments
+    text: "Argument mining first separates argumentative text from the rest of a document. It then marks each argument component with its boundaries and its type. The two most common types are claims, the statements under discussion, and premises, the reasons given for or against them."
+    schema: schema-arguments.svg
+  - icon: project-diagram
+    title: Relations
+    text: "Components and arguments support or attack each other. Linking them across a document gives an argument graph, whose nodes are components and whose edges are relations."
+    schema: schema-relations.svg
+  - icon: balance-scale
+    title: Evaluation
+    text: "An argument takes a stance on a topic, for or against it. Its quality is scored along dimensions such as clarity, relevance, and persuasiveness. Both properties are subjective, so annotators often disagree."
+    schema: schema-evaluation.svg
+  - icon: lightbulb
+    title: Reasoning
+    text: "Arguments typically leave steps unstated, such as the warrant that links premises to a claim. Reasoning tasks recover these steps, name the pattern an argument follows, and recognize fallacies."
+    schema: schema-reasoning.svg
+
+# What is an argument?: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
+views_title: What is an argument?
+concepts: |
+  The literature offers several definitions of an argument.
+  A common one comes from Walton, as reported by [Lippi and Torroni (2016)](/publication/10-1145-2850417/).
+  In it, an argument is a set of premises, a conclusion, and an inference from the premises to the conclusion.
+  Argument mining typically calls the conclusion a claim.
+  A premise can support a claim or attack it, and claims on opposite sides can attack each other.
+
+  An argument model defines the components of an argument, such as the claim and the premise, and the relations between them.
+  The claim and premise model marks only these two components.
+  The Toulmin model calls premises grounds and adds two more components.
+  The warrant is the general rule that links the grounds to the claim, and the text can leave it unstated.
+  The rebuttal states when the claim does not hold.
+  The original model of [Toulmin (1958)](https://doi.org/10.1017/CBO9780511840005) has two more components.
+  The backing supports the warrant, and the qualifier states how strongly the claim holds.
+
+  Each domain also names these components in its own way.
+  In debates, evidence takes the place of premises and supports a claim on a given topic.
+  In clinical trial abstracts, evidence is an observed outcome of a study, and a claim is what the authors infer from it.
+  In court decisions, the claim is called the conclusion, and premises are either factual or legal.
+  The examples below show one argument for each model and each domain.
+
+# Views: interactive examples of one argument each, grouped by argument model and by domain.
 # `roles` fixes the role labels and their color order; a segment with `id` is a marked component, one without is plain text.
 # Graph nodes repeat the marked text; keep examples short. `implicit` adds components that the text leaves unstated, with a `node` text.
 # `tag` adds a type label to a component; `rows` places nodes in the graph from top to bottom.
@@ -26,7 +74,7 @@ views:
   - key: claim-premise
     group: Argument models
     label: Claim and premise
-    description: The most common model. A claim is the conclusion being argued, and premises are the reasons offered for it; some annotations also mark premises that attack a claim.
+    description: The most common model. A claim is the statement being argued for, and premises are offered as reasons for it. Some annotations also mark premises that attack a claim.
     caption: "Example reported by [Sun et al. (2024)](https://aclanthology.org/2024.findings-acl.689/). Original wording preserved."
     roles:
       - {key: claim, label: Claim}
@@ -127,8 +175,8 @@ views:
 # Research areas: one block per macro topic. Selecting a block enlarges it and opens its tasks beside it.
 # Each task states its input and the expected output.
 fields:
-  - key: finding
-    title: Finding arguments
+  - key: extraction
+    title: Argument extraction
     icon: search
     question: Where are the arguments in a text, and what are their parts?
     summary: The first step separates argumentative text from the rest, cuts each argument into its components, and groups arguments by the aspects they address.
@@ -141,8 +189,8 @@ fields:
         text: Given a topic and a set of documents, the task is to retrieve the claims on the topic and the evidence for each claim.
       - name: Aspect mining
         text: Given an argument, the task is to identify the aspects it addresses, so that arguments on the same aspect can be grouped.
-  - key: linking
-    title: Linking arguments
+  - key: relations
+    title: Argument relations
     icon: project-diagram
     question: How do claims and premises relate to each other?
     summary: Components form an argument only when they are linked. These links define a graph over the whole discussion.
@@ -151,18 +199,18 @@ fields:
         text: Given two components or two arguments, the task is to decide whether one supports or attacks the other.
       - name: Argument structure prediction
         text: Given a document, the task is to predict its argument graph, where components are nodes and relations are edges.
-  - key: judging
-    title: Judging arguments
+  - key: evaluation
+    title: Argument evaluation
     icon: balance-scale
     question: Which side does an argument take, and how good is it?
-    summary: Assessment tasks assign properties to arguments, such as their position on a topic or their quality.
+    summary: Evaluation tasks assign properties to arguments, such as their position on a topic or their quality.
     tasks:
       - name: Stance classification
         text: Given a topic and an argument, the task is to decide whether the argument is for or against the topic.
       - name: Argument quality assessment
         text: Given an argument, the task is to score its quality along dimensions such as clarity, relevance, and persuasiveness. A pairwise variant selects the more convincing of two arguments.
   - key: reasoning
-    title: Understanding the reasoning
+    title: Argument reasoning
     icon: lightbulb
     question: What does an argument leave unsaid, and does its reasoning hold?
     summary: Arguments typically leave some steps unstated. These tasks recover the missing steps and assess the inference.
@@ -173,8 +221,8 @@ fields:
         text: Given an argument, the task is to identify its argumentation scheme, the reasoning pattern it follows, such as an argument from consequences.
       - name: Fallacy recognition
         text: Given an argument, the task is to decide whether its reasoning is flawed and, if so, which fallacy it commits.
-  - key: producing
-    title: Generating and retrieving arguments
+  - key: generation
+    title: Argument generation and retrieval
     icon: pen-fancy
     question: Can a system write, condense, or retrieve arguments?
     summary: Generation tasks produce new text from arguments, while retrieval tasks find arguments in large collections.
@@ -276,7 +324,7 @@ focus:
         cite: [ruggeri-signorelli-2025-interlocking]
       - status: now
         text: "Finding the textual patterns behind each argument component."
-        detail: "Argument components are the parts of an argument, such as a claim or the evidence that supports it. We use local explanations, which justify one prediction at a time, to find which words and patterns typically mark each component."
+        detail: "Argument components are the parts of an argument, such as a claim or a premise that supports it. We use local explanations, which justify one prediction at a time, to find which words and patterns typically mark each component."
   - key: reasoning
     title: Reasoning in LLMs
     icon: brain
@@ -293,19 +341,8 @@ focus:
         cite: [dougrez-lewis-etal-2025-assessing]
       - status: now
         text: Using argument mining tasks to probe how LLMs reason.
-        detail: "Argument mining is the automatic detection of arguments and their parts in text. We use its tasks as tests that show where LLM reasoning holds and where it breaks."
+        detail: "Argument mining is the automatic identification of arguments and their components in text and speech. We use its tasks as tests that show where LLM reasoning holds and where it breaks."
       - status: next
         text: Benchmarks centered on argumentation to evaluate LLM reasoning.
         detail: "We plan to build evaluation benchmarks in which each test item is an argumentative problem. This would let us measure reasoning skills directly instead of only final answers."
 ---
-
-## What is argument mining?
-
-Argument mining teaches computers to find arguments in text and speech.
-An argument presents a claim or conclusion together with one or more premises offered as reasons for it.
-Argument mining also identifies counterarguments and the support or attack relations among components.
-Opinion mining tells us what people think; argument mining asks why they think it.
-The field covers five families of tasks: finding arguments, linking them, judging them, understanding the reasoning behind them, and generating or retrieving them.
-Large language models (LLMs) now cut across all five families.
-This page uses the term broadly, so it also covers computational argumentation, such as dialogue systems and argumentation as a way to evaluate LLMs.
-Argument models and domains use different labels for related roles, including premises, grounds, evidence, claims, and conclusions.

@@ -1,5 +1,6 @@
 {{/* Research area page. It adds detail from top to bottom, so each reader can stop at the depth they need. */}}
-{{/* 1. The body: a short overview, followed by `views` of one argument under different argument models and domains, with the text and its source caption above the argument graph. */}}
+{{/* 1. The introduction, in one band: the body, a `definition`, the `overview` blocks under "Core concepts", and `views` of one argument */}}
+{{/*    under different argument models and domains, with the text and its source caption above the argument graph. */}}
 {{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
 {{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
 {{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
@@ -8,27 +9,52 @@
 {{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
 <article class="lt-proj">
   {{/* Each section sits in a full-width band; bands alternate their background, as on the homepage. */}}
+  {{/* The header shows the title only: the `tagline` is for the homepage research card. */}}
   <div class="lt-band">
   <header class="lt-proj-header">
-    <p class="lt-proj-venue"><span class="lt-pill">Research area</span></p>
     <h1 class="lt-proj-title">{{ .Title }}</h1>
-    {{ with .Params.tagline }}<p class="lt-proj-tagline">{{ . }}</p>{{ end }}
   </header>
 
-  <div class="lt-proj-body article-style">
-    {{ .Content }}
-  </div>
-  </div>
+  {{ with .Content }}<div class="lt-proj-body article-style">{{ . }}</div>{{ end }}
+  {{/* `definition`: a short answer to "What is ...?", in Markdown, right under the title. */}}
+  {{ with .Params.definition }}
+  <section class="lt-definition" aria-label="Definition">
+    <p class="lt-definition-label"><i class="fas fa-book-open" aria-hidden="true"></i> Definition</p>
+    {{ . | markdownify }}
+  </section>
+  {{ end }}
+  {{/* `overview`: concept blocks under "Core concepts", each with a short text and a small schema below it. */}}
+  {{/* `schema` names an SVG file in the page folder, drawn with the `lt-s-*` classes so that it follows the theme. */}}
+  {{ with .Params.overview }}
+  <section class="lt-overview-section" aria-labelledby="overview-title">
+    <h2 id="overview-title">Core concepts</h2>
+    <div class="lt-overview">
+      {{ range . }}
+      <section class="lt-overview-block">
+        <h3>{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }} {{ .title }}</h3>
+        <p>{{ .text }}</p>
+        {{ with .schema }}{{ with $.Resources.Get . }}<div class="lt-svg lt-overview-schema">{{ .Content | safeHTML }}</div>{{ else }}{{ errorf "overview schema %q not found in %s" . $.File.Path }}{{ end }}{{ end }}
+      </section>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
 
   {{ with .Params.views }}
   {{/* Argument views: one tab per argument model or domain, each with the marked text and the argument graph. */}}
   {{/* assets/js/ltlab.js switches tabs and draws the graph edges; without it every view is visible and edges are listed as text. */}}
   {{ $relations := dict "support" "supports" "attack" "attacks" "link" "links" }}
   {{ $groups := slice }}{{ range . }}{{ if not (in $groups .group) }}{{ $groups = $groups | append .group }}{{ end }}{{ end }}
-  <div class="lt-band">
-  <section class="lt-arg-views" aria-label="Argument models and domains">
+  {{ $title := $.Params.views_title | default "Core concepts" }}
+  <section class="lt-arg-views" aria-label="{{ if $.Params.concepts }}{{ $title }}{{ else }}Examples{{ end }}">
+    {{/* `concepts` gives the background of the examples below: the notions they rely on, in a few sentences. */}}
+    {{/* `views_title` names the section, "Core concepts" by default. */}}
+    {{ with $.Params.concepts }}
+    <h2>{{ $title }}</h2>
+    <div class="lt-concepts">{{ . | markdownify }}</div>
+    {{ end }}
     {{/* One tablist for all views; the group names are visual labels that each tab also carries as its description. */}}
-    <div class="lt-arg-tabgroups" role="tablist" aria-label="Argument models and domains">
+    <div class="lt-arg-tabgroups" role="tablist" aria-label="Examples">
       {{ range $groups }}{{ $group := . }}
       <div class="lt-arg-tabgroup" role="presentation">
         <span class="lt-arg-tabgroup-label" id="views-{{ urlize $group }}" aria-hidden="true">{{ $group }}</span>
@@ -41,6 +67,142 @@
       {{ end }}
     </div>
     {{ range $i, $v := . }}
+    {{ if eq $v.type "detect" }}
+    {{/* A detect view: a document whose sentences the Detect button scans; annotated clauses show their category and level. */}}
+    {{ $levels := dict "1" "Clearly fair" "2" "Potentially unfair" "3" "Clearly unfair" }}
+    {{ $count := dict }}{{ $total := 0 }}
+    {{ range $v.sections }}{{ range .sentences }}{{ $total = add $total 1 }}{{ with .level }}{{ $k := string . }}{{ $count = merge $count (dict $k (add (index $count $k | default 0) 1)) }}{{ end }}{{ end }}{{ end }}
+    <div class="lt-arg-view lt-detect" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panel">
+          <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
+          <div class="lt-detect-doc">
+            {{ range $v.sections }}
+            <h4>{{ .title }}</h4>
+            <p>
+              {{- range $s, $c := .sentences }}{{ if $s }} {{ end }}<span class="lt-detect-s{{ with $c.level }} lt-detect-clause is-level-{{ . }}{{ end }}" data-lt-sentence>{{ with $c.level }}<span class="lt-detect-tag">{{ $c.category }} · {{ index $levels (string .) }}</span><span class="lt-detect-mark">{{ $c.text }}</span>{{ else }}{{ $c.text }}{{ end }}</span>{{ end -}}
+            </p>
+            {{ end }}
+          </div>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+      {{/* The summary counts the annotated clauses by level, in the same marks as the text; the buttons sit beside it. */}}
+      <div class="lt-detect-foot">
+        {{ $flagged := add (index $count "2" | default 0) (index $count "3" | default 0) }}
+        <p class="lt-detect-summary" aria-live="polite">
+          <span>{{ $flagged }} of {{ $total }} sentences flagged as unfair:</span>
+          {{ range $lv := slice "3" "2" }}{{ with index $count $lv }}<span class="lt-detect-count is-level-{{ $lv }}">{{ . }} {{ lower (index $levels $lv) }}</span>{{ end }}{{ end }}
+        </p>
+        <div class="lt-arg-controls lt-detect-controls" hidden>
+          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+          <button type="button" data-lt-action="detect"><i class="fas fa-search" aria-hidden="true"></i> Detect</button>
+          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+        </div>
+      </div>
+    </div>
+    {{ else if eq $v.type "rules" }}
+    {{/* A rules view: the text, then the annotation hierarchy of each clause about personal data, then the rules. */}}
+    {{/* Detect marks the clauses in the text and builds their hierarchy; Classify labels each clause with the rule its hierarchy matches. */}}
+    {{ $values := dict "open" "Open" "closed" "Closed" "any" "Any" }}
+    {{ $roles := dict "category" (dict "n" 1 "label" "Category") "specification" (dict "n" 4 "label" "Specification") "subcategory" (dict "n" 3 "label" "Subcategory") }}
+    {{ $k := 0 }}{{ $ns := dict }}{{ $count := dict }}{{ $clauses := slice }}
+    {{ range $si, $sec := $v.sections }}{{ range $ci, $c := .sentences }}{{ with $c.level }}{{ $k = add $k 1 }}{{ $ns = merge $ns (dict (printf "%d-%d" $si $ci) $k) }}{{ $clauses = $clauses | append (merge $c (dict "n" $k)) }}{{ $l := string . }}{{ $count = merge $count (dict $l (add (index $count $l | default 0) 1)) }}{{ end }}{{ end }}{{ end }}
+    <div class="lt-arg-view lt-rules" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panel">
+          <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
+          <div class="lt-detect-doc">
+            {{ range $si, $sec := $v.sections }}
+            {{ with .title }}<h4>{{ . }}</h4>{{ end }}
+            <p>
+              {{- range $ci, $c := .sentences }}{{ if $ci }} {{ end }}{{ $n := index $ns (printf "%d-%d" $si $ci) }}
+              {{- if $c.level }}<span class="lt-rule-clause is-level-{{ $c.level }}" data-lt-clause="{{ $n }}" data-lt-rule="{{ $c.level }}-{{ $c.rule }}"><span class="lt-rule-num" aria-label="Clause {{ $n }}">{{ $n }}</span>{{ partial "lt/rule-parts.html" $c.parts }}</span>
+              {{- else }}{{ partial "lt/rule-parts.html" $c.parts }}{{ end }}{{ end -}}
+            </p>
+            {{ end }}
+          </div>
+          {{/* The marks in the text carry no tag; the legend names their colors and lines, and the hierarchy names each mark. */}}
+          <p class="lt-rules-legend">
+            {{ range slice "category" "specification" "subcategory" }}{{ $r := index $roles . }}<span class="lt-role-{{ $r.n }}">{{ $r.label }}</span>{{ end }}
+            <span class="is-line is-open">Open</span><span class="is-line">Closed</span>
+          </p>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+      <div class="lt-detect-foot">
+        <p class="lt-detect-summary" aria-live="polite">
+          <span>{{ $k }} clauses about personal data:</span>
+          {{ range $lv := slice "1" "2" }}{{ with index $count $lv }}<span class="lt-detect-count lt-rule-count is-level-{{ $lv }}">{{ . }} {{ lower (index $v.levels $lv) }}</span>{{ end }}{{ end }}
+        </p>
+        <div class="lt-arg-controls lt-detect-controls" hidden>
+          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+          <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Detect</button>
+          <span class="lt-arg-link" aria-hidden="true"></span>
+          <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
+          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+        </div>
+      </div>
+      {{/* The hierarchy of each clause: its category, the specification that introduces a list (shown by its opening words), */}}
+      {{/* and the subcategories in that list. A specification hangs under the category of its clause. */}}
+      <div class="lt-arg-panel lt-tree-panel">
+        <h3 class="lt-arg-step"><span><i class="fas fa-sitemap" aria-hidden="true"></i></span> Annotation hierarchy</h3>
+        <div class="lt-tree-grid">
+          {{ range $clauses }}{{ $c := . }}
+          <div class="lt-tree-card is-level-{{ .level }}" data-lt-card="{{ .n }}">
+            <p class="lt-tree-head"><span class="lt-rule-num">{{ .n }}</span> Clause {{ .n }}</p>
+            <ul class="lt-tree">
+              {{ range where .parts "role" "category" }}
+              <li><span class="lt-tree-node lt-role-1 is-{{ .type }}"><span class="lt-rule-tag">Category · {{ .type }}</span> {{ .text }}</span>
+                {{ with where $c.parts "role" "specification" }}
+                <ul>
+                  {{ range . }}{{ $opening := index (where .parts "role" "eq" nil) 0 }}
+                  <li><span class="lt-tree-node lt-role-4 is-{{ .type }}"><span class="lt-rule-tag">Specification · {{ .type }}</span> {{ with $opening }}{{ .text }}{{ end }}</span>
+                    <ul>
+                      {{ range where .parts "role" "subcategory" }}
+                      <li><span class="lt-tree-node lt-role-3 is-{{ .type }}"><span class="lt-rule-tag">Subcategory · {{ .type }}</span> {{ .text }}</span></li>
+                      {{ end }}
+                    </ul>
+                  </li>
+                  {{ end }}
+                </ul>
+                {{ end }}
+              </li>
+              {{ end }}
+            </ul>
+            <p class="lt-tree-label"><span class="lt-rule-label">{{ index $v.levels (string .level) }} · level {{ .level }}, rule {{ .rule }}</span></p>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+      {{/* The rules, one column per level; each rule lists the clauses that match it. */}}
+      <div class="lt-arg-panel lt-rules-panel">
+        <h3 class="lt-arg-step"><span><i class="fas fa-balance-scale" aria-hidden="true"></i></span> Annotation rules</h3>
+        <div class="lt-rules-grid">
+          {{ range $lv := slice 1 2 }}
+          <div class="lt-rules-col is-level-{{ $lv }}">
+            <p class="lt-rules-level">{{ index $v.levels (string $lv) }} <span>level {{ $lv }}</span></p>
+            {{ range $v.rules }}{{ if eq .level $lv }}{{ $rule := . }}
+            <div class="lt-rule" data-lt-rulecard="{{ .level }}-{{ .n }}">
+              <p class="lt-rule-name">Rule {{ .n }}</p>
+              <ul>
+                <li class="lt-role-1">Category {{ index $values .category }}</li>
+                <li class="lt-role-4">{{ if eq .specification "none" }}No specification{{ else }}Specification {{ index $values .specification }}{{ end }}</li>
+                <li class="lt-role-3">{{ if eq .subcategory "none" }}No subcategories{{ else }}Subcategories {{ index $values .subcategory }}{{ end }}</li>
+              </ul>
+              <p class="lt-rule-matches">
+                {{- range $clauses }}{{ if and (eq .level $rule.level) (eq .rule $rule.n) }}<span class="lt-rule-num" data-lt-match="{{ .n }}">{{ .n }}</span>{{ end }}{{ end -}}
+              </p>
+            </div>
+            {{ end }}{{ end }}
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+    {{ else }}
     {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label)) }}{{ end }}
     {{/* A view has one text in `segments`, or several side by side in `texts` (each with a `label`, a `lang`, and `segments`). */}}
     {{ $texts := $v.texts | default (slice (dict "segments" $v.segments)) }}
@@ -104,9 +266,10 @@
       </div>
     </div>
     {{ end }}
+    {{ end }}
   </section>
-  </div>
   {{ end }}
+  </div>
 
   {{ with .Params.fields }}
   <div class="lt-band">

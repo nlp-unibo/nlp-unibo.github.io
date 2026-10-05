@@ -79,11 +79,31 @@
     select(tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0]);
   });
 
+  // A view starts once it comes into sight, above the bottom quarter of the window, so its writing is seen from
+  // the start. Without IntersectionObserver it starts at once.
+  const onSight = (element, start) => {
+    if (!("IntersectionObserver" in window)) { start(); return; }
+    const sight = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      sight.disconnect();
+      start();
+    }, { rootMargin: "0px 0px -25% 0px" });
+    sight.observe(element);
+  };
+
   // Argument graphs: nodes sit in aligned columns, and each edge is an SVG path from its source node to its
   // target node, ending in an arrowhead at the target, with its relation written on it. Edges within a row
   // run straight across; edges between rows run straight down when the nodes are aligned, and otherwise
   // bend at right angles halfway between the rows. A graph redraws whenever its size changes,
   // which also covers a tab that becomes visible.
+  // A view returns to its blank state at once: transitions and animations stay off while its classes change,
+  // so marks, tags, and highlights vanish instead of fading out while the text is written again.
+  const instantly = (view, change) => {
+    view.classList.add("lt-instant");
+    change();
+    void view.offsetWidth;
+    view.classList.remove("lt-instant");
+  };
   const svgNS = "http://www.w3.org/2000/svg";
   const svgElement = (name, attributes) => {
     const element = document.createElementNS(svgNS, name);
@@ -209,7 +229,7 @@
       requestAnimationFrame(frame);
     });
     document.querySelectorAll(".lt-arg-views").forEach((views) => {
-      const panels = [...views.querySelectorAll(".lt-arg-view")];
+      const panels = [...views.querySelectorAll(".lt-arg-view:not(.lt-detect, .lt-rules)")];
       const controls = (view) => {
         const bar = view.querySelector(".lt-arg-controls");
         return {
@@ -232,8 +252,10 @@
           span.style.transitionDelay = "";
           span.classList.remove("is-sending");
         });
-        view.querySelectorAll(".is-shown").forEach((node) => node.classList.remove("is-shown"));
-        view.classList.remove("is-animating", "is-marked", "is-graph");
+        instantly(view, () => {
+          view.querySelectorAll(".is-shown").forEach((node) => node.classList.remove("is-shown"));
+          view.classList.remove("is-animating", "is-marked", "is-graph");
+        });
         run.graph.ltShow(null);
         const { bar, skip, annotate, graph, link, replay: again } = controls(view);
         skip.hidden = true;
@@ -258,7 +280,7 @@
         });
         run.parts.forEach(([node]) => { node.textContent = ""; });
         view.ltRun = run;
-        view.classList.add("is-animating");
+        instantly(view, () => view.classList.add("is-animating"));
         run.graph.ltShow(run.ids);
         const { bar, skip, annotate, graph, link, replay } = controls(view);
         skip.hidden = false;
@@ -426,14 +448,207 @@
         });
         bar.hidden = true;
       });
-      // The first view is written once its section takes the focus (see the section focus below).
+      // The first view is written once it comes into sight.
       const first = panels.find((view) => !view.hidden);
-      const band = views.closest(".lt-band");
-      if (!first || !band) return;
+      if (!first) return;
       prepare(first);
-      band.addEventListener("lt-focus", () => {
+      onSight(first, () => {
         if (first.ltRun && !first.ltRun.started) write(first);
-      }, { once: true });
+      });
+    });
+  }
+
+  // Document views (detect and rules): picking a tab, or the first view coming into sight, writes the
+  // document at about 55 characters per second, between 1.5 and 6 seconds in total; Skip writes the rest at once.
+  // Detect then plays the first step. In a detect view it scans the document one sentence at a time and highlights
+  // each annotated clause with its category and level. In a rules view it marks each clause and builds its card in the
+  // annotation hierarchy, and Classify then shows the rules and, clause by clause, lights the rule that the hierarchy
+  // matches and labels the clause. The page follows the step unless the reader scrolls. Replay writes the document
+  // again. Under reduced motion, or without the script, every view shows its final state and the buttons stay hidden.
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const pause = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
+    const docs = [...document.querySelectorAll(".lt-detect, .lt-rules")];
+    docs.forEach((view) => {
+      const rules = view.classList.contains("lt-rules");
+      const bar = view.querySelector(".lt-detect-controls");
+      const button = (action) => bar.querySelector(`[data-lt-action="${action}"]`);
+      const [skip, detect, classify, replay] = ["skip", "detect", "classify", "replay"].map(button);
+      const link = bar.querySelector(".lt-arg-link");
+      const steps = [detect, classify, link].filter(Boolean);
+      const doc = view.querySelector(".lt-detect-doc");
+      const units = [...view.querySelectorAll(rules ? "[data-lt-clause]" : "[data-lt-sentence]")];
+      // The written text: every text node of the document except tags and clause numbers.
+      const parts = [];
+      const walker = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, {
+        acceptNode: (node) => (node.parentElement.closest(".lt-detect-tag, .lt-rule-tag, .lt-rule-num") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+      });
+      while (walker.nextNode()) parts.push([walker.currentNode, walker.currentNode.textContent]);
+      const total = parts.reduce((sum, [, text]) => sum + text.length, 0);
+      let run = 0;
+      let manual = false;
+      let skipping = false;
+      const follow = (element) => { if (!manual) element.scrollIntoView({ block: "nearest", behavior: "smooth" }); };
+      const watch = () => {
+        manual = false;
+        ["wheel", "touchmove", "keydown"].forEach((type) => addEventListener(type, () => { manual = true; }, { once: true, passive: true }));
+      };
+      // The marks and labels of the steps go back to their blank state; the text stays as it is.
+      const clear = () => {
+        run += 1;
+        instantly(view, () => {
+          view.classList.add("is-ready");
+          view.classList.remove("is-detected", "is-marked", "is-detecting", "is-classifying", "is-classified");
+          bar.classList.remove("is-annotated");
+          view.querySelectorAll(".is-current, .is-hit, .is-shown, .is-labelled, .is-match").forEach((node) => node.classList.remove("is-current", "is-hit", "is-shown", "is-labelled", "is-match"));
+          view.querySelectorAll("[style*=delay]").forEach((node) => { node.style.transitionDelay = ""; node.style.animationDelay = ""; });
+        });
+        steps.forEach((node) => { node.hidden = false; node.classList.remove("is-done"); });
+        detect.disabled = true;
+        if (classify) classify.disabled = true;
+        replay.hidden = true;
+        bar.hidden = false;
+      };
+      // The blank state keeps the final height of the document, so the page does not jump while it is written.
+      const blank = () => {
+        clear();
+        if (!doc.style.minHeight) doc.style.minHeight = `${doc.offsetHeight}px`;
+        parts.forEach(([node]) => { node.textContent = ""; });
+      };
+      const write = async () => {
+        blank();
+        const id = run;
+        skipping = false;
+        skip.hidden = false;
+        const duration = Math.min(6000, Math.max(1500, total * 18));
+        const start = performance.now();
+        await new Promise((resolve) => {
+          const frame = (now) => {
+            if (run !== id) return resolve();
+            let left = skipping ? total : Math.round(Math.min(1, (now - start) / duration) * total);
+            const done = left >= total;
+            parts.forEach(([node, text]) => {
+              node.textContent = text.slice(0, Math.max(0, Math.min(text.length, left)));
+              left -= text.length;
+            });
+            if (done) resolve();
+            else requestAnimationFrame(frame);
+          };
+          requestAnimationFrame(frame);
+        });
+        doc.style.minHeight = "";
+        if (run !== id) return;
+        skip.hidden = true;
+        detect.disabled = false;
+      };
+      const finish = () => {
+        steps.forEach((node) => { node.hidden = true; });
+        replay.hidden = false;
+      };
+      const scan = async () => {
+        const id = run;
+        detect.disabled = true;
+        detect.classList.add("is-done");
+        watch();
+        for (const sentence of units) {
+          const clause = sentence.classList.contains("lt-detect-clause");
+          sentence.classList.add("is-current");
+          follow(sentence);
+          await pause(clause ? 700 : 350);
+          if (run !== id) return;
+          sentence.classList.remove("is-current");
+          if (clause) {
+            sentence.classList.add("is-hit");
+            await pause(400);
+            if (run !== id) return;
+          }
+        }
+        view.classList.add("is-detected");
+        finish();
+      };
+      const mark = async () => {
+        const id = run;
+        detect.disabled = true;
+        detect.classList.add("is-done");
+        view.classList.add("is-detecting");
+        watch();
+        for (const clause of units) {
+          const card = view.querySelector(`[data-lt-card="${clause.dataset.ltClause}"]`);
+          const spans = [...clause.querySelectorAll(".lt-rule-span")];
+          spans.forEach((span, i) => { span.style.transitionDelay = `${i * 200}ms`; });
+          card.querySelectorAll("li").forEach((li, i) => { li.style.animationDelay = `${300 + i * 200}ms`; });
+          clause.classList.add("is-current", "is-hit");
+          follow(clause);
+          await pause(spans.length * 200 + 500);
+          if (run !== id) return;
+          card.classList.add("is-shown", "is-current");
+          follow(card);
+          await pause(card.querySelectorAll("li").length * 200 + 900);
+          if (run !== id) return;
+          clause.classList.remove("is-current");
+          card.classList.remove("is-current");
+        }
+        view.classList.add("is-marked");
+        bar.classList.add("is-annotated");
+        await pause(600);
+        if (run === id) classify.disabled = false;
+      };
+      const label = async () => {
+        const id = run;
+        classify.disabled = true;
+        classify.classList.add("is-done");
+        view.classList.add("is-classifying");
+        const panel = view.querySelector(".lt-rules-panel");
+        panel.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 600, easing: "ease-out" });
+        watch();
+        await pause(800);
+        for (const clause of units) {
+          if (run !== id) return;
+          const n = clause.dataset.ltClause;
+          const card = view.querySelector(`[data-lt-card="${n}"]`);
+          const rule = view.querySelector(`[data-lt-rulecard="${clause.dataset.ltRule}"]`);
+          card.classList.add("is-current");
+          follow(card);
+          await pause(700);
+          if (run !== id) return;
+          rule.classList.add("is-match");
+          follow(rule);
+          await pause(900);
+          if (run !== id) return;
+          rule.querySelector(`[data-lt-match="${n}"]`).classList.add("is-shown");
+          card.classList.add("is-labelled");
+          clause.classList.add("is-labelled");
+          follow(card);
+          await pause(900);
+          if (run !== id) return;
+          rule.classList.remove("is-match");
+          card.classList.remove("is-current");
+        }
+        view.classList.add("is-classified");
+        finish();
+      };
+      skip.addEventListener("click", () => { skipping = true; });
+      detect.addEventListener("click", rules ? mark : scan);
+      if (classify) classify.addEventListener("click", label);
+      replay.addEventListener("click", () => {
+        write();
+        const top = view.getBoundingClientRect().top + scrollY - 90;
+        requestAnimationFrame(() => scrollTo({ top, behavior: "smooth" }));
+      });
+      view.addEventListener("lt-show", write);
+      view.ltWrite = write;
+      view.ltBlank = blank;
+    });
+    // The first visible document view is written once it comes into sight; until then it stays blank.
+    document.querySelectorAll(".lt-arg-views").forEach((views) => {
+      const first = docs.find((view) => views.contains(view) && !view.hidden);
+      if (!first) return;
+      let started = false;
+      onSight(first, () => {
+        if (!started) first.ltWrite();
+        started = true;
+      });
+      first.addEventListener("lt-show", () => { started = true; }, { once: true });
+      first.ltBlank();
     });
   }
 
@@ -711,27 +926,30 @@
     update();
   });
 
-  // Section focus: on the homepage and on research area pages, the section that crosses a line at 40% of the
-  // window height is in focus; the others fade and shrink slightly, so the reader's focus follows the scroll.
-  // The last section takes the focus at the bottom of the page. A section that takes the focus receives an
-  // `lt-focus` event. Without the script, or under reduced motion, every section stays fully visible.
+  // Section focus: on the homepage and on research area pages, each section gets a focus value from 0 to 1 as
+  // `--lt-f`, from its distance to a focus line, so it grows and takes its color while it nears the line and
+  // shrinks and turns grey while it leaves it. The line starts at the top of the window, so the first section is in
+  // focus at the top of the page; it reaches 40% of the window height after scrolling that far, and moves to the
+  // bottom of the window over the last 40% of the page, so the last section takes the focus at the bottom.
+  // Without the script, or under reduced motion, every section stays fully visible.
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   const sections = [...document.querySelectorAll(".home-section, .lt-band")];
   if (sections.length > 1) {
     document.body.classList.add("lt-section-focus");
-    let focused = null;
     let queued = false;
     const refocus = () => {
       queued = false;
-      const line = innerHeight * 0.4;
-      const bottom = scrollY + innerHeight >= document.documentElement.scrollHeight - 4;
-      const next = bottom ? sections[sections.length - 1]
-        : sections.find((section) => section.getBoundingClientRect().bottom > line) || sections[sections.length - 1];
-      if (next === focused) return;
-      if (focused) focused.classList.remove("is-focus");
-      next.classList.add("is-focus");
-      focused = next;
-      next.dispatchEvent(new CustomEvent("lt-focus"));
+      const h = innerHeight;
+      const left = document.documentElement.scrollHeight - h - scrollY;
+      // The line never sits above the first section, which may start below the navigation bar.
+      const line = Math.max(sections[0].getBoundingClientRect().top, Math.min(scrollY, h * 0.4) + Math.max(0, h * 0.4 - left) * 1.5);
+      const fade = h * 0.35;
+      sections.forEach((section) => {
+        // Only the content of a section is scaled, so the section box, and its focus value, stay put.
+        const { top, bottom } = section.getBoundingClientRect();
+        const d = line < top ? top - line : line > bottom ? line - bottom : 0;
+        section.style.setProperty("--lt-f", Math.max(0, 1 - d / fade).toFixed(3));
+      });
     };
     const queue = () => {
       if (!queued) requestAnimationFrame(refocus);

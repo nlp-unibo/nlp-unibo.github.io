@@ -1,0 +1,9 @@
+{{/* Marked parts of a sentence in a rules view. Input: a slice of parts, each plain `text`, or a `role` (category, specification, or subcategory) with a `type` (open or closed) and either `text` or nested `parts`. Parts are joined by spaces, except before punctuation. */}}
+{{- $roles := dict "category" (dict "n" 1 "label" "Category") "specification" (dict "n" 4 "label" "Specification") "subcategory" (dict "n" 3 "label" "Subcategory") -}}
+{{- range $i, $p := . -}}
+{{- $text := $p.text | default "" -}}
+{{- if and $i (not (findRE `^[,.;:]` $text)) }} {{ end -}}
+{{- with $p.role -}}{{- $r := index $roles . -}}
+<span class="lt-rule-span lt-role-{{ $r.n }} is-{{ $p.type }}" data-lt-mark><span class="lt-rule-tag">{{ $r.label }} · {{ $p.type }}</span>{{ with $p.parts }}{{ partial "lt/rule-parts.html" . }}{{ else }}{{ $text }}{{ end }}</span>
+{{- else -}}{{ $text }}{{- end -}}
+{{- end -}}

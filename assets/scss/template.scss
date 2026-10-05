@@ -264,24 +264,18 @@ h1, h2, h3, h4, h5, h6,
   translate: none;
 }
 
-// Section focus, added by assets/js/ltlab.js only when motion is allowed: the section in focus is at full
-// size and color, and the others shrink slightly and lose their color. Opacity stays at 0.94 or more, the
-// lowest value that keeps the muted text at a 4.5:1 contrast, so every section stays readable.
+// Section focus, added by assets/js/ltlab.js only when motion is allowed: `--lt-f` runs from 0 to 1 as a section
+// nears the focus line. In focus, a section is at full size and color; away from it, it shrinks to 96% and turns grey.
+// Opacity stays at 0.94 or more, the lowest value that keeps the muted text at a 4.5:1 contrast, so every section
+// stays readable. A short transition smooths the steps between scroll events.
 .lt-section-focus {
   .home-section > .container,
   .lt-band > * {
-    opacity: 0.94;
-    scale: 0.96;
-    filter: grayscale(1);
+    opacity: calc(0.94 + 0.06 * var(--lt-f, 1));
+    scale: calc(0.96 + 0.04 * var(--lt-f, 1));
+    filter: unquote("grayscale(calc(1 - var(--lt-f, 1)))");
     transform-origin: 50% 0;
-    transition: opacity 0.7s ease, scale 0.7s ease, filter 0.7s ease;
-  }
-
-  .home-section.is-focus > .container,
-  .lt-band.is-focus > * {
-    opacity: 1;
-    scale: none;
-    filter: none;
+    transition: opacity 0.3s ease, scale 0.3s ease, filter 0.3s ease;
   }
 }
 
@@ -2178,6 +2172,13 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-s-labeltxt { fill: #fff; }
   .lt-s-arrow { fill: none; stroke: $lt-muted; stroke-width: 1.8; }
   .lt-s-head { fill: $lt-muted; }
+  // Role boxes and relation edges take the colors of the argument views; their text stays neutral for contrast.
+  .lt-s-node { fill: color-mix(in srgb, var(--lt-role) 12%, transparent); stroke: var(--lt-role); stroke-width: 1.5; }
+  .lt-s-implicit { stroke-dasharray: 4 3; }
+  .lt-s-arrow.lt-s-support { stroke: var(--lt-support); }
+  .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
+  .lt-s-head.lt-s-support { fill: var(--lt-support); }
+  .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
 }
 
 .dark .lt-svg {
@@ -2213,6 +2214,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 // Research area pages (layouts/research/single.html)
 // Sections share the reading width of the page body; status is carried by a text label and an icon, never by color alone.
+.lt-overview-section,
 .lt-arg-views,
 .lt-fields,
 .lt-focus {
@@ -2226,17 +2228,110 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   }
 }
 
+// Definition: the short answer to "What is ...?" under the title, at the reading width of the page body.
+.lt-definition {
+  width: calc(100% - 32px);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.1rem 1.4rem;
+  border-left: 4px solid $lt-blue;
+  border-radius: 0 14px 14px 0;
+  background: rgba($lt-blue, 0.05);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: $lt-ink;
+
+  p { margin: 0 0 0.6rem; }
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-definition-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
+
+  i { margin-right: 0.3rem; color: $lt-blue; }
+}
+
+// Core concepts: two columns of blocks, one on phones; each block ends with a small schema.
+.lt-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.lt-overview-block {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+  background: #fff;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.6rem;
+    font-size: 1.1rem;
+    color: $lt-navy;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.65;
+    color: $lt-ink;
+
+    @media (min-width: 992px) { font-size: 0.95rem; line-height: 1.6; }
+  }
+}
+
+.lt-overview-schema {
+  width: 100%;
+  max-width: 280px;
+  margin: auto auto 0;
+  padding-top: 1rem;
+}
+
+.dark {
+  .lt-definition { border-color: $lt-sky; background: rgba($lt-sky, 0.06); color: #c9d6e3; }
+  .lt-definition-label { color: $lt-dark-muted; }
+  .lt-definition-label i { color: $lt-sky; }
+  .lt-overview-block { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-overview-block h3 { color: #f1f5fa; }
+  .lt-overview-block p { color: #c9d6e3; }
+}
+
+// Core concepts: the short background text above the views, at the reading width of the page body.
+.lt-concepts {
+  max-width: 48rem;
+  margin-bottom: 1.6rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: $lt-ink;
+
+  p { margin: 0 0 0.8rem; }
+}
+
+.dark .lt-concepts { color: #c9d6e3; }
+
 // Argument views: tabs by argument model and domain, then the marked text and the argument graph.
 // Roles take categorical colors in fixed order (validated for color vision deficiency in both modes),
 // and every colored mark also carries its role as text.
-.lt-arg-views {
+.lt-arg-views,
+.lt-overview {
   --lt-role-1: #1f6fb2;
   --lt-role-2: #c26a00;
   --lt-role-3: #0f8a7a;
   --lt-role-4: #9a4fb5;
 }
 
-.dark .lt-arg-views {
+.dark .lt-arg-views,
+.dark .lt-overview {
   --lt-role-1: #3f8fd6;
   --lt-role-2: #c97a14;
   --lt-role-3: #13917d;
@@ -2478,12 +2573,14 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red; the pair
 // passes the color vision deficiency check in light mode and stays in the 6 to 8 floor band in dark mode,
 // which is legal only because every edge also has a text label.
-.lt-arg-views {
+.lt-arg-views,
+.lt-overview {
   --lt-support: #17663a;
   --lt-attack: #e8584e;
 }
 
-.dark .lt-arg-views {
+.dark .lt-arg-views,
+.dark .lt-overview {
   --lt-support: #45ad64;
   --lt-attack: #d8443a;
 }
@@ -2555,6 +2652,448 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-arg-edge.is-link { stroke: #c9d6e3; }
   .lt-arg-edge-head.is-link { fill: #c9d6e3; }
   .lt-arg-edge-label { fill: #c9d6e3; stroke: #15243a; }
+}
+
+// Detect views: a document whose annotated clauses are highlighted in the color of their fairness level.
+// Potentially unfair clauses take a dashed orange underline and clearly unfair ones a solid red one, and every
+// clause also names its category and level as text. Clearly fair clauses take the teal role color.
+.lt-detect {
+  --lt-level-1: var(--lt-role-3);
+  --lt-level-2: var(--lt-role-2);
+  --lt-level-3: var(--lt-attack);
+}
+
+.lt-detect .is-level-1 { --lt-level: var(--lt-level-1); --lt-line: solid; }
+.lt-detect .is-level-2 { --lt-level: var(--lt-level-2); --lt-line: dashed; }
+.lt-detect .is-level-3 { --lt-level: var(--lt-level-3); --lt-line: solid; }
+
+.lt-detect-doc {
+  max-width: 50rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 10px;
+  background: #fff;
+  color: $lt-ink;
+  line-height: 1.85;
+
+  h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $lt-navy;
+  }
+
+  p { margin: 0; }
+
+  p + h4, p + p { margin-top: 1rem; }
+}
+
+.lt-detect-s {
+  scroll-margin: 6rem 0 2rem;
+  transition: background-color 0.4s ease;
+}
+
+// Only the clause text is highlighted, so a tag that wraps on a narrow screen carries no background.
+.lt-detect-mark {
+  padding: 0.1em 0;
+  border-radius: 3px;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  border-bottom: 2px var(--lt-line) var(--lt-level);
+  color: $lt-navy;
+  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+// The category and level of a clause, before its text; the tag wraps on narrow screens.
+.lt-detect-tag,
+.lt-detect-count {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-ink;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-level);
+  }
+}
+
+.lt-detect-tag {
+  display: inline-block;
+  max-width: 100%;
+  margin-right: 0.35rem;
+  line-height: 1.4;
+  vertical-align: 0.1em;
+}
+
+// The summary and the buttons share one row below the caption, and stack on narrow screens.
+.lt-detect-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1rem;
+  margin-top: 1rem;
+}
+
+.lt-detect-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: $lt-ink;
+}
+
+.lt-detect-count {
+  padding: 0.2rem 0.6rem;
+  border: 1px var(--lt-line) var(--lt-level);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
+}
+
+// While the script plays a view, the clauses stay plain until the scan reaches them, and the summary appears at the end.
+.lt-detect.is-ready {
+  .lt-detect-clause:not(.is-hit) .lt-detect-mark {
+    border-bottom-color: transparent;
+    color: inherit;
+    background: transparent;
+  }
+
+  .lt-detect-clause:not(.is-hit) .lt-detect-tag { display: none; }
+
+  .lt-detect-s.is-current { background: rgba($lt-sky, 0.3); }
+
+  .lt-detect-clause.is-hit .lt-detect-tag { animation: lt-detect-in 0.5s ease; }
+
+  &:not(.is-detected) .lt-detect-summary { visibility: hidden; }
+}
+
+@keyframes lt-detect-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+.dark {
+  .lt-detect-doc { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
+  .lt-detect-doc h4, .lt-detect-mark { color: #f1f5fa; }
+  .lt-detect-tag, .lt-detect-count, .lt-detect-summary { color: #c9d6e3; }
+  .lt-detect-mark, .lt-detect-count { background: color-mix(in srgb, var(--lt-level) 22%, transparent); }
+}
+
+// Rules views: the marks of a clause take the role colors (category blue, specification purple, subcategory teal),
+// with a dashed line when the mark is open and a solid one when it is closed; every mark also names its role and type.
+// Levels take the validated support and attack pair: green for sufficiently and red for insufficiently informative.
+.lt-rules .is-level-1 { --lt-level: var(--lt-support); --lt-line: solid; }
+.lt-rules .is-level-2 { --lt-level: var(--lt-attack); --lt-line: solid; }
+
+.lt-rule-span {
+  text-decoration: underline 2px var(--lt-role);
+  text-underline-offset: 0.3em;
+  color: $lt-navy;
+  transition: text-decoration-color 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+
+  &.is-open { text-decoration-style: dashed; }
+}
+
+// A specification holds subcategories, so it takes a tinted box with a bottom border instead of an underline.
+.lt-rule-span.lt-role-4 {
+  padding: 0.1em 0.15em 0.3em;
+  border-bottom: 2px solid var(--lt-role);
+  border-radius: 4px;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lt-role) 9%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+
+  &.is-open { border-bottom-style: dashed; }
+}
+
+.lt-rule-tag,
+.lt-rule-label,
+.lt-rules-level,
+.lt-rule li {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-ink;
+}
+
+.lt-rule-tag {
+  display: inline-block;
+  margin-right: 0.3rem;
+  line-height: 1.4;
+  vertical-align: 0.1em;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+}
+
+// Clauses are numbered, and the rules panel repeats the numbers of the clauses each rule matches.
+.lt-rule-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 0.1em;
+  color: #fff;
+  background: $lt-navy;
+}
+
+.lt-rule-clause { border-radius: 4px; transition: background-color 0.4s ease; }
+
+.lt-rule-label,
+.lt-rules-level {
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-level);
+  }
+}
+
+.lt-rule-label {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--lt-level);
+  border-radius: 999px;
+  line-height: 1.5;
+  vertical-align: 0.1em;
+  background: color-mix(in srgb, var(--lt-level) 12%, transparent);
+}
+
+.lt-rules-panel { margin-top: 1.25rem; }
+
+.lt-rules-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.5rem;
+
+  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.lt-rules-col { display: grid; gap: 0.6rem; align-content: start; }
+
+.lt-rules-level {
+  margin: 0;
+  font-size: 0.75rem;
+
+  span { margin-left: 0.3rem; font-weight: 600; color: $lt-muted; }
+}
+
+.lt-rule {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid $lt-border;
+  border-left: 4px solid var(--lt-level);
+  border-radius: 8px;
+  background: #fff;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+
+  ul { display: flex; flex-wrap: wrap; gap: 0.25rem 0.8rem; margin: 0; padding: 0; list-style: none; }
+
+  li::before {
+    content: "";
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+
+  &.is-match {
+    box-shadow: 0 0 0 2px var(--lt-level), 0 8px 20px rgba(0, 48, 96, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+.lt-rule-name { margin: 0; font-size: 0.85rem; font-weight: 700; color: $lt-navy; }
+
+.lt-rule-matches {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+
+  .lt-rule-num { margin: 0; }
+}
+
+// The text keeps only the marks; the legend names their colors and lines, and the hierarchy names each mark.
+.lt-rules .lt-detect-doc .lt-rule-tag { display: none; }
+
+.lt-rules-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0.8rem 0 0;
+
+  span {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $lt-ink;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.3rem;
+      border-radius: 2px;
+      background: var(--lt-role);
+    }
+  }
+
+  .is-line::before {
+    width: 1.2rem;
+    height: 0;
+    border-radius: 0;
+    vertical-align: 0.2em;
+    background: none;
+    border-bottom: 2px solid $lt-ink;
+  }
+
+  .is-line.is-open::before { border-bottom-style: dashed; }
+}
+
+// Annotation hierarchy: one card per clause, with the category at the root, the specification under it,
+// and the subcategories under the specification, joined by guide lines.
+.lt-tree-panel { margin-top: 1.25rem; }
+
+.lt-tree-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(#{"min(100%, 22rem)"}, 1fr));
+  align-items: start;
+  gap: 1rem;
+}
+
+.lt-tree-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid $lt-border;
+  border-radius: 10px;
+  background: #fff;
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+
+  &.is-current {
+    box-shadow: 0 0 0 2px $lt-sky, 0 8px 20px rgba(0, 48, 96, 0.12);
+    transform: translateY(-2px);
+  }
+}
+
+.lt-tree-head {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $lt-navy;
+}
+
+.lt-tree,
+.lt-tree ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lt-tree ul { margin-left: 0.6rem; padding-left: 1rem; border-left: 2px solid $lt-border; }
+
+.lt-tree li { margin-top: 0.35rem; }
+
+.lt-tree-node {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid $lt-border;
+  border-left: 3px solid var(--lt-role);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $lt-navy;
+
+  &.is-open { border-left-style: dashed; }
+
+  .lt-rule-tag { display: block; margin: 0; }
+}
+
+.lt-tree-label { margin: 0; }
+
+.lt-tree-label .lt-rule-label { margin: 0; }
+
+// While the script plays a view, the marks, the hierarchy, the labels, the rules, and the summary appear only at their step.
+.lt-rules.is-ready {
+  &:not(.is-marked) .lt-rule-clause:not(.is-hit) .lt-rule-span {
+    text-decoration-color: transparent;
+    border-bottom-color: transparent;
+    background-color: transparent;
+  }
+
+  .lt-rule-clause.is-current { background: rgba($lt-sky, 0.3); }
+
+  &:not(.is-detecting) .lt-tree-panel,
+  &:not(.is-detecting) .lt-rules-legend { display: none; }
+
+  .lt-tree-card:not(.is-shown) { visibility: hidden; }
+
+  .lt-tree-card.is-shown li { animation: lt-detect-in 0.5s ease backwards; }
+
+  .lt-tree-card:not(.is-labelled) .lt-tree-label { visibility: hidden; }
+
+  .lt-tree-card.is-labelled .lt-tree-label { animation: lt-detect-in 0.5s ease; }
+
+  &:not(.is-classifying) .lt-rules-panel { display: none; }
+
+  .lt-rule-matches .lt-rule-num:not(.is-shown) { visibility: hidden; }
+
+  &:not(.is-classified) .lt-detect-summary { visibility: hidden; }
+}
+
+// Once a clause is classified, its number takes the color of its level in the text and in its card.
+.lt-rules:not(.is-ready) .lt-rule-clause .lt-rule-num,
+.lt-rules:not(.is-ready) .lt-tree-head .lt-rule-num,
+.lt-rules .is-labelled .lt-rule-num { background: var(--lt-level); }
+
+.dark {
+  .lt-rule-span, .lt-tree-node, .lt-tree-head { color: #f1f5fa; }
+  .lt-rules-legend span { color: #c9d6e3; }
+  .lt-rules-legend .is-line::before { border-bottom-color: #c9d6e3; }
+  .lt-tree-card, .lt-tree-node { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-tree-node { border-left-color: var(--lt-role); }
+  .lt-tree ul { border-left-color: $lt-dark-border; }
+  .lt-rule-tag, .lt-rule-label, .lt-rules-level, .lt-rule li { color: #c9d6e3; }
+  .lt-rules-level span { color: $lt-dark-muted; }
+  .lt-rule-num { color: $lt-navy; background: $lt-sky; }
+  .lt-rule { border-color: $lt-dark-border; border-left-color: var(--lt-level); background: $lt-dark-card; }
+  .lt-rule-name { color: #f1f5fa; }
 }
 
 // Field blocks: a grid of buttons; the open block shows its popup next to it.
@@ -2975,7 +3514,10 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   &:nth-of-type(even) { background: rgb(246, 248, 251); }
 
-  > .lt-arg-views, > .lt-fields, > .lt-focus { margin-block: 0; }
+  > .lt-overview-section, > .lt-arg-views, > .lt-fields, > .lt-focus { margin-block: 0; }
+
+  // The introduction band stacks several sections: each one after the first keeps a gap above it.
+  > * + .lt-overview-section, > * + .lt-arg-views { margin-top: 3rem; }
 
   > .lt-proj-body { padding-bottom: 0; }
 }
@@ -2986,6 +3528,13 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   & + .lt-band { border-top-color: rgba(255, 255, 255, 0.1); }
 
   &:nth-of-type(even) { background: $lt-dark-card; }
+}
+
+// A view that returns to its blank state does so at once (assets/js/ltlab.js), without fading its marks out.
+.lt-instant,
+.lt-instant * {
+  transition: none !important;
+  animation: none !important;
 }
 
 // View animation (assets/js/ltlab.js): the hidden states exist only while a view plays.

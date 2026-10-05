@@ -308,19 +308,32 @@ The For Students page suggests international challenges and academic workshops a
 1. Create `content/research/<slug>/index.md`.
    Copy an existing area, or run `uv run python scripts/site.py new research <slug>`.
 2. Set `title`, `summary`, and a `tagline` of at most 12 words.
-   The tagline appears on the homepage card.
+   The tagline appears on the homepage card only; the page header shows the title alone.
 3. Set `icon` to a [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name, such as `comments` or `balance-scale`.
 4. Set `weight` to order the cards, and `cover_pattern` to `dots`, `graph`, `tokens`, or `wave`.
-5. Write a short overview in the body, under a `## What is ...?` heading, that defines the area in plain words.
-   Optional `views` add tabs under the overview, one per argument model or domain.
+5. Define the area in plain words, either in the body under a `## What is ...?` heading or in `definition`, a short Markdown text shown in a box under the title.
+   Optional `overview` shows concept blocks under a "Core concepts" heading, two per row. Each block has an `icon`, a `title`, a short `text`, and an optional `schema`: an SVG file in the page folder, drawn with the `lt-s-*` classes so that it follows light and dark mode. The schemas of `content/research/am/` add `lt-s-node` boxes with a `lt-role-N` class, `lt-s-implicit` for dashed borders, and `lt-s-support` or `lt-s-attack` on edges.
+   Optional `concepts` gives the background of the examples in a few Markdown paragraphs above the views: the notions the examples rely on, not a list of tasks. Its heading is `views_title`, "Core concepts" by default.
+   The body, the definition, the core concepts, and the views share the first section band.
+   Optional `views` add tabs under that background, one per argument model or domain.
    Each view shows one argument as marked text and, below it, as a graph, with `roles`, `segments`, `rows`, and `edges`.
    Graph nodes repeat the marked text, so keep each example short and mark [...] where text is omitted.
    Use `texts` instead of `segments` to show several texts side by side, such as a clause and its translation.
    An implicit component with `kind: label` is a label assigned by the annotation, such as a category, drawn as a regular box.
    Each row of `rows` is one line of the graph; nodes line up in columns, and supports and attacks are drawn in green and red.
-   Picking a tab types the text; the Annotate and Show graph buttons then mark its components and move them into the argument graph.
-   On research area pages and on the homepage, the section in the middle of the window is in focus and the others shrink slightly and turn grey.
+   Picking a tab, or the first view coming into sight, types the text; the Annotate and Show graph buttons then mark its components and move them into the argument graph.
+   On research area pages and on the homepage, the section nearest a focus line is in focus, and the others shrink slightly and turn grey as they move away from it; the first section is in focus at the top of the page.
    Copy the views of `content/research/am/index.md`, and link the source of each example by name in its `caption`.
+   A view with `type: detect` shows a document instead, as `document` and `sections`, each with a `title` and `sentences`.
+   A sentence that the annotators marked has a `category` and a `level`: 1 clearly fair, 2 potentially unfair, or 3 clearly unfair.
+   The document is written as in the argument views, with a Skip button; the Detect button then scans the document one sentence at a time and highlights each marked clause with its category and level, and a summary counts the unfair clauses.
+   Copy the `terms` view of `content/research/legal/index.md`.
+   A view with `type: rules` also shows a document, but each clause about personal data has a `level`, a `rule`, and `parts`; a panel below the text shows the annotation hierarchy of each clause.
+   A part is plain `text`, or a mark with a `role` (category, specification, or subcategory) and a `type` (open or closed); a specification holds its own `parts`.
+   The view lists its annotation `rules`, each with a `level`, a number `n`, and the type that the category, the specification, and the subcategories need (open, closed, any, or none).
+   Detect marks the clauses in the text and builds their hierarchy, and Classify shows the rules and labels each clause with the rule that its hierarchy matches.
+   `site.py check` fails when the marks of a clause do not match the rule it names.
+   Copy the `privacy` view of `content/research/legal/index.md`.
 6. List the research areas in `fields`.
    Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.
    Selecting a block enlarges it and opens its tasks beside it.

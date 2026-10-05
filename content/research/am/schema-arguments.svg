@@ -1,0 +1,9 @@
+<svg viewBox="0 0 240 112" role="img" aria-label="Lines of text in which one span is marked as a claim and another as a premise.">
+  <text class="lt-s-sub" x="153" y="20" text-anchor="middle">CLAIM</text>
+  <rect class="lt-s-tok" x="10" y="28" width="60" height="14" rx="4"/>
+  <rect class="lt-s-node lt-role-1" x="76" y="28" width="154" height="14" rx="4"/>
+  <text class="lt-s-sub" x="85" y="60" text-anchor="middle">PREMISE</text>
+  <rect class="lt-s-node lt-role-2" x="10" y="68" width="150" height="14" rx="4"/>
+  <rect class="lt-s-tok" x="166" y="68" width="64" height="14" rx="4"/>
+  <rect class="lt-s-tok" x="10" y="92" width="130" height="14" rx="4"/>
+</svg>

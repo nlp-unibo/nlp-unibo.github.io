@@ -17,6 +17,19 @@ weight: 2
 tagline: Turning court decisions and contracts into structured legal knowledge.
 cover_pattern: tokens
 
+# Core concepts: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
+concepts: |
+  Legal analytics starts from annotation.
+  Legal experts mark the parts of a document that matter for a legal question, such as a clause, a category of personal data, or a premise.
+
+  An annotation schema fixes these parts, their labels, and their links.
+  Each annotated document thus becomes a structured record or a graph, which a legal expert can inspect faster than the full text.
+  Models trained on such annotations produce the same structure for new documents.
+
+  The examples below show such structures for three tasks.
+  They detect unfair clauses in terms of service, check privacy policies against data protection law, and analyse the arguments in court decisions.
+  The last example follows one annotated clause across two languages.
+
 # Overview figure: interactive views, grouped by document type and by method.
 # `roles` fixes the role labels and their color order; a segment with `id` is a marked component, one without is plain text.
 # `texts` replaces `segments` to show several texts side by side, each with a `label` and a `lang`.
@@ -26,43 +39,109 @@ cover_pattern: tokens
 # `edges` link components: `relation` is support, attack, or link, and `label` overrides the edge text.
 # `caption` is Markdown: link each cited paper by its name.
 views:
+  # `type: detect` shows a document whose sentences Detect scans; a sentence with a `category` and a `level`
+  # (1 clearly fair, 2 potentially unfair, 3 clearly unfair) is a clause marked by the annotators.
   - key: terms
+    type: detect
     group: Documents
     label: Terms of service
-    description: "Online terms of service often contain clauses that may be unfair to consumers under EU law. Each clause gets a category, such as unilateral termination, and a fairness level: clearly fair, potentially unfair, or clearly unfair."
-    caption: "Clause from the Academia.edu terms of service, as annotated in [Lippi et al. (2019)](/publication/lippi-2019-claudette/)."
-    roles:
-      - {key: clause, label: Clause}
-      - {key: category, label: Category}
-      - {key: level, label: Fairness level}
-    segments:
-      - {id: c, role: clause, text: "Academia.edu reserves the right, at its sole discretion, to discontinue or terminate the Site and Services and to terminate these Terms, at any time and without prior notice."}
-    implicit:
-      - {id: cat, role: category, kind: label, node: "Unilateral termination"}
-      - {id: lvl, role: level, kind: label, node: "Clearly unfair"}
-    rows: [[c], [cat, lvl]]
-    edges:
-      - {from: c, to: cat, relation: link, label: category}
-      - {from: c, to: lvl, relation: link, label: level}
+    description: "Online terms of service often contain clauses that may be unfair to consumers under EU law. Each such clause gets a category, such as unilateral termination, and a fairness level: clearly fair, potentially unfair, or clearly unfair."
+    caption: "Two sections of the Academia.edu terms of service, as annotated by legal experts in [Lippi et al. (2019)](/publication/lippi-2019-claudette/). Detect shows these expert labels, which the CLAUDETTE classifiers learn to reproduce."
+    document: Academia.edu terms of service
+    sections:
+      - title: Modification
+        sentences:
+          - {category: Unilateral change, level: 2, text: "Academia.edu reserves the right, at its sole discretion, to modify the Site, Services and these Terms, at any time and without prior notice."}
+          - {text: "If we modify these Terms we will post the modification on the Site or provide you with notice of the modification."}
+          - {text: "We will also update the “Last Updated Date” at the top of these Terms."}
+          - {category: Contract by using, level: 2, text: "By continuing to access or use the Site or Services after we have posted a modification on the Site or have provided you with notice of a modification, you are indicating that you agree to be bound by the modified Terms."}
+          - {text: "If the modified Terms are not acceptable to you, your only recourse is to cease using the Site and Services."}
+      - title: Termination and Account Cancellation
+        sentences:
+          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right, at its sole discretion, to discontinue or terminate the Site and Services and to terminate these Terms, at any time and without prior notice."}
+          - {category: Unilateral termination, level: 3, text: "If you breach any of these Terms, Academia.edu will have the right to suspend or disable your Account or terminate these Terms, at its sole discretion and without prior notice to you."}
+          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right to revoke your access to and use of the Site, Services and Collective Content at any time, with or without cause."}
+          - {text: "You may cancel your Account at any time by visiting your Account Settings page and clicking on “Remove” or by sending an email to feedback@academia.edu."}
+  # `type: rules` shows a document whose clauses Detect marks and Classify labels by the matching rule.
+  # A clause with a `level` and a `rule` concerns personal data; its `parts` are plain `text` or marks with a `role`
+  # (category, specification, or subcategory) and a `type` (open or closed), and a specification holds its own `parts`.
+  # `rules` lists the annotation rules: each states the type of the category, the specification, and the subcategories (open, closed, any, or none).
   - key: privacy
+    type: rules
     group: Documents
     label: Privacy policies
-    description: "Privacy policies are checked against the EU General Data Protection Regulation (GDPR). A clause can lack required information, allow unlawful processing, or use vague language."
-    caption: "Clause from the Epic Games privacy policy, as annotated in [Contissa et al. (2018)](/publication/contissa-2018-automated/)."
-    roles:
-      - {key: clause, label: Clause}
-      - {key: category, label: Category}
-      - {key: level, label: Level}
-    segments:
-      - {text: "[...]"}
-      - {id: c, role: clause, text: "when you use our websites, games, game engines, and applications, you agree to our collection, use, disclosure, and transfer of information as described in this policy, so please review it carefully."}
-    implicit:
-      - {id: cat, role: category, kind: label, tag: "Substantive compliance", node: "Consent by using"}
-      - {id: lvl, role: level, kind: label, node: "Unfair"}
-    rows: [[c], [cat, lvl]]
-    edges:
-      - {from: c, to: cat, relation: link, label: category}
-      - {from: c, to: lvl, relation: link, label: level}
+    description: "Under the EU General Data Protection Regulation (GDPR), a privacy policy must say which categories of personal data it processes. Experts mark each clause about data with its category of data, the specification that introduces a list, and the subcategories in that list. Each mark is open when its terms are vague or its list is open-ended, and closed when they are precise or exhaustive."
+    caption: "Clauses from the TikTok privacy policy of 19 November 2023, with the expert annotation used in [Grundler et al. (2025)](/publication/grundler-2025-detecting/). The rules are those of Table 2 of the paper."
+    document: TikTok privacy policy
+    levels:
+      "1": Sufficiently informative
+      "2": Insufficiently informative
+    rules:
+      - {level: 1, n: 1, category: closed, specification: none, subcategory: none}
+      - {level: 1, n: 2, category: closed, specification: any, subcategory: any}
+      - {level: 1, n: 3, category: open, specification: closed, subcategory: closed}
+      - {level: 2, n: 1, category: open, specification: none, subcategory: none}
+      - {level: 2, n: 2, category: open, specification: open, subcategory: any}
+      - {level: 2, n: 3, category: open, specification: closed, subcategory: open}
+    sections:
+      - sentences:
+          - level: 2
+            rule: 1
+            parts:
+              - {role: category, type: open, text: "Profile Information"}
+              - {text: "."}
+          - level: 1
+            rule: 2
+            parts:
+              - {text: "We collect"}
+              - {role: category, type: closed, text: "information that you provide when you set up an account"}
+              - {text: ","}
+              - role: specification
+                type: open
+                parts:
+                  - {text: "such as"}
+                  - {role: subcategory, type: closed, text: "your date of birth"}
+                  - {text: ","}
+                  - {role: subcategory, type: closed, text: "username"}
+                  - {text: ","}
+                  - {role: subcategory, type: closed, text: "email address"}
+                  - {text: "and/or"}
+                  - {role: subcategory, type: closed, text: "telephone number"}
+                  - {text: ", and"}
+                  - {role: subcategory, type: closed, text: "password"}
+                  - {text: "."}
+          - level: 2
+            rule: 2
+            parts:
+              - {text: "You can add"}
+              - {role: category, type: open, text: "other information to your profile"}
+              - {text: ","}
+              - role: specification
+                type: open
+                parts:
+                  - {text: "such as"}
+                  - {role: subcategory, type: open, text: "a bio"}
+                  - {text: "or"}
+                  - {role: subcategory, type: closed, text: "a profile photo"}
+                  - {text: "."}
+      - sentences:
+          - parts:
+              - {text: "Merchants, Payment and Transaction Fulfillment Providers."}
+          - level: 2
+            rule: 2
+            parts:
+              - {text: "We receive"}
+              - {role: category, type: open, text: "information about you"}
+              - {text: "from merchants as well as payment and transaction fulfillment providers,"}
+              - role: specification
+                type: open
+                parts:
+                  - {text: "such as"}
+                  - {role: subcategory, type: closed, text: "payment confirmation details"}
+                  - {text: ", and"}
+                  - {role: subcategory, type: closed, text: "information about the delivery of products you have purchased"}
+                  - {text: "through our shopping features"}
+              - {text: "."}
   - key: decisions
     group: Documents
     label: Court decisions
@@ -82,25 +161,6 @@ views:
     edges:
       - {from: d3, to: d2, relation: support}
       - {from: d2, to: d5, relation: support}
-  - key: memory
-    group: Methods
-    label: Memory networks
-    description: "A memory network stores legal rationales written by experts. It compares a clause with the stored rationales, uses the closest ones to decide whether the clause is potentially unfair, and shows them as the explanation."
-    caption: "Clause, rationale, and prediction from Table 9 of [Ruggeri et al. (2022)](/publication/ruggeri-etal-2022-detecting/), for the model trained with strong supervision."
-    roles:
-      - {key: clause, label: Clause}
-      - {key: rationale, label: Rationale from memory}
-      - {key: prediction, label: Prediction}
-    segments:
-      - {text: "[...],"}
-      - {id: q, role: clause, tag: "Unilateral change", text: "additionally, there may be times when we need to remove or change features or functionality of the service or stop providing a service or access to third-party apps and services altogether"}
-    implicit:
-      - {id: r, role: rationale, kind: label, node: "The provider has the right for unilateral change of the contract/services/goods/features for any reason at its full discretion, at any time"}
-      - {id: y, role: prediction, kind: label, node: "Potentially unfair"}
-    rows: [[q], [r], [y]]
-    edges:
-      - {from: q, to: r, relation: link, label: retrieves}
-      - {from: r, to: y, relation: support, label: explains}
   - key: languages
     group: Methods
     label: Across languages
