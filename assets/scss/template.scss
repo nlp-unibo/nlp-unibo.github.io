@@ -265,20 +265,23 @@ h1, h2, h3, h4, h5, h6,
 }
 
 // Section focus, added by assets/js/ltlab.js only when motion is allowed: the section in focus is at full
-// size and opacity, and the others fade and shrink slightly. Section backgrounds and separators stay in place.
+// size and color, and the others shrink slightly and lose their color. Opacity stays at 0.94 or more, the
+// lowest value that keeps the muted text at a 4.5:1 contrast, so every section stays readable.
 .lt-section-focus {
   .home-section > .container,
   .lt-band > * {
-    opacity: 0.3;
+    opacity: 0.94;
     scale: 0.96;
+    filter: grayscale(1);
     transform-origin: 50% 0;
-    transition: opacity 0.7s ease, scale 0.7s ease;
+    transition: opacity 0.7s ease, scale 0.7s ease, filter 0.7s ease;
   }
 
   .home-section.is-focus > .container,
   .lt-band.is-focus > * {
     opacity: 1;
     scale: none;
+    filter: none;
   }
 }
 
@@ -289,6 +292,7 @@ h1, h2, h3, h4, h5, h6,
     opacity: 1;
     translate: none;
     scale: none;
+    filter: none;
   }
 }
 
@@ -2257,7 +2261,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   align-items: center;
   gap: 0.5rem;
 
-  [role="tablist"] {
+  .lt-arg-tabrow {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
@@ -2312,6 +2316,24 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
     color: $lt-muted;
   }
 }
+
+// Several texts of one view sit side by side, each under a small label, and stack on phones.
+.lt-arg-texts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem 2rem;
+}
+
+.lt-arg-textlabel {
+  margin: 0 0 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.dark .lt-arg-textlabel { color: $lt-dark-muted; }
 
 // The text comes first and the graph below it, both at full width.
 .lt-arg-panels {
@@ -2738,14 +2760,17 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   }
 }
 
+// Neighbours are greyed and smaller; opacity stays at 0.94 to keep their text at a 4.5:1 contrast.
 .lt-carousel.is-centered.is-enhanced .lt-carousel-track > * {
-  opacity: 0.35;
+  opacity: 0.94;
   scale: 0.95;
-  transition: opacity 0.4s ease, scale 0.4s ease;
+  filter: grayscale(1);
+  transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease;
 
   &.is-active {
     opacity: 1;
     scale: none;
+    filter: none;
   }
 }
 
@@ -2968,7 +2993,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 .lt-arg-views { position: relative; }
 
 .lt-arg-span .lt-arg-tag {
-  max-width: 30em;
+  max-width: 60em;
   overflow: clip;
   white-space: nowrap;
 }
@@ -2991,13 +3016,13 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   .lt-arg-node:not(.is-shown) { visibility: hidden; }
 
-  &:not(.is-schema) .lt-arg-schema { display: none; }
+  &:not(.is-graph) .lt-arg-graph-panel { display: none; }
 
-  // The component whose box is on its way to the schema.
+  // The component whose box is on its way to the argument graph.
   .lt-arg-span.is-sending { background-color: rgba($lt-sky, 0.25); }
 }
 
-// Annotate, Show schema, and Replay sit between the text and the schema. The two steps are numbered and
+// Annotate, Show graph, and Replay sit between the text and the argument graph. The two steps are numbered and
 // joined by a connector that fills once the text is annotated; a finished step keeps a muted outline.
 .lt-arg-controls {
   display: flex;
@@ -3081,7 +3106,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-arg-link::after { background: $lt-sky; }
 }
 
-// A component on its way from the text to the schema (assets/js/ltlab.js): a frame in its role color that
+// A component on its way from the text to the argument graph (assets/js/ltlab.js): a frame in its role color that
 // encloses the marked text, then fills and carries a copy of the box at its final size. The script sets
 // --lt-ring (frame), --lt-fill (background), and --lt-lift (shadow), each from 0 to 1.
 .lt-arg-fly {

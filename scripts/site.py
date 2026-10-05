@@ -91,6 +91,25 @@ PLACEHOLDER_PATTERNS = {
 MAX_ASSET_BYTES = 5 * 1024 * 1024
 
 
+def view_errors(view: dict) -> list[str]:
+    """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
+    undefined components, or unknown relations."""
+    roles = {role.get("key") for role in view.get("roles") or []}
+    texts = view.get("texts") or [{"segments": view.get("segments") or []}]
+    parts = [segment for text in texts for segment in text.get("segments") or [] if segment.get("id")]
+    parts += view.get("implicit") or []
+    ids = {part.get("id") for part in parts}
+    errors = [f"component {part.get('id')!r} has an unknown role" for part in parts if part.get("role") not in roles]
+    listed = [part.get("id") for part in parts]
+    errors += [f"component {key!r} is repeated" for key in sorted({str(key) for key in listed if listed.count(key) > 1})]
+    errors += [f"edge relation {edge.get('relation')!r} is not support, attack, or link"
+               for edge in view.get("edges") or [] if edge.get("relation") not in {"support", "attack", "link"}]
+    named = [node for row in view.get("rows") or [] for node in row]
+    named += [edge.get(end) for edge in view.get("edges") or [] for end in ("from", "to")]
+    errors += [f"rows or edges name an undefined component {node!r}" for node in sorted({str(n) for n in named if n not in ids})]
+    return errors
+
+
 def category_error(section: str, categories: list) -> str | None:
     allowed = SECTION_CATEGORIES[section]
     if section == "publication":
@@ -474,9 +493,9 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            # Research area fields and focus topics need unique keys; focus items need a known status,
+            # Research area views, fields, and focus topics need unique keys; focus items need a known status,
             # and their citations must name existing publications.
-            for name in ("fields", "focus"):
+            for name in ("views", "fields", "focus"):
                 keys = [entry.get("key") for entry in metadata.get(name) or []]
                 for key in {key for key in keys if keys.count(key) > 1 or not key}:
                     failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
@@ -487,6 +506,8 @@ def validate_content_quality() -> None:
                     for slug in item.get("cite") or []:
                         if not (content_root / "publication" / str(slug) / "index.md").exists():
                             failures.append(f"{page.relative_to(ROOT)}: focus item cites unknown publication {slug!r}")
+            for view in metadata.get("views") or []:
+                failures += [f"{page.relative_to(ROOT)}: view {view.get('key')!r}: {error}" for error in view_errors(view)]
             for topic in metadata.get("topics") or []:
                 if topic not in project_topics:
                     failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")

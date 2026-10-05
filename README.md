@@ -315,9 +315,11 @@ The For Students page suggests international challenges and academic workshops a
    Optional `views` add tabs under the overview, one per argument model or domain.
    Each view shows one argument as marked text and, below it, as a graph, with `roles`, `segments`, `rows`, and `edges`.
    Graph nodes repeat the marked text, so keep each example short and mark [...] where text is omitted.
+   Use `texts` instead of `segments` to show several texts side by side, such as a clause and its translation.
+   An implicit component with `kind: label` is a label assigned by the annotation, such as a category, drawn as a regular box.
    Each row of `rows` is one line of the graph; nodes line up in columns, and supports and attacks are drawn in green and red.
-   Picking a tab types the text; the Annotate and Show schema buttons then mark its components and move them into the schema.
-   On research area pages and on the homepage, the section in the middle of the window is in focus and the others fade slightly.
+   Picking a tab types the text; the Annotate and Show graph buttons then mark its components and move them into the argument graph.
+   On research area pages and on the homepage, the section in the middle of the window is in focus and the others shrink slightly and turn grey.
    Copy the views of `content/research/am/index.md`, and link the source of each example by name in its `caption`.
 6. List the research areas in `fields`.
    Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.

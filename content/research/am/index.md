@@ -6,10 +6,10 @@ tags:
   - argument mining
   - research
   
-summary: The automatic extraction and identification of argumentative structures from text. Such argumentative structures include the premise, conclusions, the argument scheme and the relationship between arguments.
+summary: The automatic extraction and identification of argumentative structures from text. Such structures include premises, claims or conclusions, argumentation schemes, and the relations between arguments.
 
 # Font Awesome icon shown on the homepage research card
-icon: comments
+icon: network-wired
 weight: 1
 
 # Homepage research card: tagline and cover pattern (dots, graph, tokens, or wave).
@@ -26,8 +26,8 @@ views:
   - key: claim-premise
     group: Argument models
     label: Claim and premise
-    description: The most common model. A claim is the statement under discussion, and premises are the reasons that support or attack it.
-    caption: "Example reported by [Sun et al. (2024)](https://aclanthology.org/2024.findings-acl.689/)."
+    description: The most common model. A claim is the conclusion being argued, and premises are the reasons offered for it; some annotations also mark premises that attack a claim.
+    caption: "Example reported by [Sun et al. (2024)](https://aclanthology.org/2024.findings-acl.689/). Original wording preserved."
     roles:
       - {key: claim, label: Claim}
       - {key: premise, label: Premise}
@@ -131,14 +131,16 @@ fields:
     title: Finding arguments
     icon: search
     question: Where are the arguments in a text, and what are their parts?
-    summary: The first step separates argumentative text from the rest and cuts each argument into its components.
+    summary: The first step separates argumentative text from the rest, cuts each argument into its components, and groups arguments by the aspects they address.
     tasks:
       - name: Argumentative text detection
         text: Given a sentence or a passage, the task is to decide whether it contains an argument.
-      - name: Component classification
+      - name: Argument component identification
         text: Given an argumentative text, the task is to mark the boundaries of each component and to label it, for instance as a claim or a premise.
-      - name: Claim and evidence detection
+      - name: Claim and evidence retrieval
         text: Given a topic and a set of documents, the task is to retrieve the claims on the topic and the evidence for each claim.
+      - name: Aspect mining
+        text: Given an argument, the task is to identify the aspects it addresses, so that arguments on the same aspect can be grouped.
   - key: linking
     title: Linking arguments
     icon: project-diagram
@@ -159,8 +161,6 @@ fields:
         text: Given a topic and an argument, the task is to decide whether the argument is for or against the topic.
       - name: Argument quality assessment
         text: Given an argument, the task is to score its quality along dimensions such as clarity, relevance, and persuasiveness. A pairwise variant selects the more convincing of two arguments.
-      - name: Aspect mining
-        text: Given an argument, the task is to identify the aspects it addresses, so that arguments on the same aspect can be grouped.
   - key: reasoning
     title: Understanding the reasoning
     icon: lightbulb
@@ -174,7 +174,7 @@ fields:
       - name: Fallacy recognition
         text: Given an argument, the task is to decide whether its reasoning is flawed and, if so, which fallacy it commits.
   - key: producing
-    title: Producing arguments
+    title: Generating and retrieving arguments
     icon: pen-fancy
     question: Can a system write, condense, or retrieve arguments?
     summary: Generation tasks produce new text from arguments, while retrieval tasks find arguments in large collections.
@@ -204,8 +204,8 @@ focus:
   - key: fallacies
     title: Argumentative fallacies
     icon: exclamation-triangle
-    summary: "We study how machines can spot and name fallacies, which are arguments that seem convincing but rest on faulty reasoning. Spotting them takes careful reasoning, so they are a hard test for language models."
-    description: "A fallacy is an argument that looks persuasive but is flawed, such as attacking the speaker instead of the claim (ad hominem) or warning that one small step leads to disaster (slippery slope). Fallacy detection asks whether a passage contains a fallacy, and fallacy classification asks which type it is. In political debates, how something is said can matter as much as what is said. We ask whether models can recognize fallacies from both the words and the voice of a speaker, and what reasoning each type of fallacy requires."
+    summary: "We study how machines can spot and name fallacies, which are flaws or errors in reasoning that can make an argument seem convincing. Spotting them takes careful reasoning, so they are a hard test for language models."
+    description: "A fallacy is a flaw or error in reasoning, such as attacking the speaker instead of the claim (ad hominem) or warning that one small step leads to disaster (slippery slope). Fallacy detection asks whether a passage contains a fallacy, and fallacy classification asks which type it is. In political debates, how something is said can matter as much as what is said. We ask whether models can recognize fallacies from both the words and the voice of a speaker, and what reasoning each type of fallacy requires."
     items:
       - status: done
         text: "The first corpus of fallacies in debate audio and text."
@@ -220,7 +220,7 @@ focus:
         detail: "We plan to describe which reasoning steps a reader needs to recognize each type of fallacy. This can show where models fail and why some fallacy types are harder than others."
   - key: multimodality
     title: Multimodality
-    icon: microphone-alt
+    icon: layer-group
     summary: "Arguments are often spoken, not written. We study whether the sound of a voice helps a computer find and judge arguments better than the words alone."
     description: "Multimodality means using more than one kind of input, here the text of what people say and the audio of how they say it. Audio carries paralinguistic cues, such as tone, pitch, and pauses, that a written transcript loses. We ask whether these cues help with argument mining tasks, and for which tasks they help."
     items:
@@ -230,7 +230,7 @@ focus:
         cite: [lippi-torroni-2016, mancini-etal-2022-multimodal]
       - status: done
         text: "Fallacy classification that listens to the speaker."
-        detail: "A fallacy is an argument with a flawed reasoning pattern, such as an attack on the person instead of the point. We release the first corpus for multimodal fallacy classification in political debates. Our experiments show that adding audio to text improves classification performance."
+        detail: "A fallacy is a flaw or error in reasoning, such as an attack on the person instead of the point. We release the first corpus for multimodal fallacy classification in political debates. Our experiments show that adding audio to text improves classification performance."
         cite: [mancini-etal-2024-multimodal]
       - status: done
         text: "An open toolkit for multimodal argument mining."
@@ -238,7 +238,7 @@ focus:
         cite: [mancini-etal-2024-mamkit]
       - status: done
         text: "A shared task on fallacies in text, audio, and both."
-        detail: "We organize MM-ArgFallacy2025, a shared task in which teams detect and classify fallacies in U.S. presidential debates from text only, audio only, or both. Text-only systems perform best, audio-only systems improve over previous work, and combining the two gives limited gains."
+        detail: "We organized MM-ArgFallacy2025, a shared task in which teams detect and classify fallacies in U.S. presidential debates from text only, audio only, or both. Text-only systems perform best, audio-only systems improve over previous work, and combining the two gives limited gains."
         cite: [mancini-etal-2025-overview]
       - status: now
         text: "Measuring what audio adds to text, task by task."
@@ -250,32 +250,32 @@ focus:
     description: "A dialogue system is a computer program that talks with a person, such as a chatbot. An argumentative dialogue is a conversation in which the speakers give reasons for their claims and question the reasons of others. We ask how a dialogue system can reason with arguments, explain its answers, and discuss a topic the way people do."
     items:
       - status: done
-        text: "Dialogue systems that reason with arguments"
-        detail: "We propose a dialogue system architecture that uses computational argumentation, a formal way of modelling arguments and their conflicts, to reason and give consistent, explainable answers. A later version also manages user data according to data minimization, purpose limitation, and integrity, and gives motivations for its responses. We illustrate both systems with a COVID-19 vaccine information case study and evaluate the privacy-preserving version empirically."
+        text: "Dialogue systems that reason with arguments."
+        detail: "We propose a dialogue system architecture that uses computational argumentation, a formal way of modeling arguments and their conflicts, to reason and give consistent, explainable answers. A later version also manages user data according to data minimization, purpose limitation, and integrity, and gives motivations for its responses. We illustrate both systems with a COVID-19 vaccine information case study and evaluate the privacy-preserving version empirically."
         cite: [10-1007-978-3-030-89391-0-27, fazzinga-2022200113]
       - status: done
-        text: "A dataset of argumentative dialogues on scientific papers"
+        text: "A dataset of argumentative dialogues on scientific papers."
         detail: "We introduce ArgSciChat, a dataset of 41 dialogues between scientists on 20 NLP papers, with both exploratory and argumentative questions and answers. A pre-trained dialogue agent performs poorly on it. This result shows the need for dialogue agents that can reason and argue about their answers."
         cite: [ruggeri-etal-2023-dataset]
       - status: next
-        text: "From argumentative dialogue benchmarks to tools people use"
+        text: "From argumentative dialogue benchmarks to tools people use."
         detail: "We plan to move from building benchmarks, which are shared datasets for testing systems, to building argumentative dialogue tools that people use in practice."
   - key: interpretability
     title: Interpretability
-    icon: search
+    icon: eye
     summary: "We build models that show why they make a decision. This helps people check a prediction and learn which parts of a text make an argument."
     description: "A model is interpretable when people can understand why it gives a certain output. One common form is an explanation, which is a piece of evidence that justifies a prediction, such as a sentence of background knowledge or a highlighted span of the input text. We ask how models for argument analysis can explain their own decisions without losing accuracy. We also ask what these explanations tell us about the data."
     items:
       - status: done
-        text: "Models that explain their output with natural language knowledge"
-        detail: "We extend transformer models, a common type of neural network for text, with an external memory that stores explanations written in plain language. The model uses these stored texts to explain each classification it makes. Tests on legal texts and on argument mining show that the explanations are relevant and that classification performance is kept or even improved."
+        text: "Models that explain their output with natural language knowledge."
+        detail: "We extend transformer models, a common type of neural network for text, with an external memory that stores explanations written in plain language. The model uses these stored texts to explain each classification it makes. Tests on legal texts and on argument mining show that the explanations are relevant and that classification performance is maintained or improved."
         cite: [ruggeri-etal-2024-combining]
       - status: done
-        text: "Highlights that justify a prediction, learned end to end"
+        text: "Highlights that justify a prediction, learned end to end."
         detail: "In selective rationalization, one module picks highlights from the text and a second module predicts a label from those highlights alone. Training the two modules together often fails because one module dominates the other, a problem called interlocking. We present GenSPP, which trains the two modules separately with a genetic search and avoids interlocking without extra training heuristics."
         cite: [ruggeri-signorelli-2025-interlocking]
       - status: now
-        text: "Finding the textual patterns behind each argument component"
+        text: "Finding the textual patterns behind each argument component."
         detail: "Argument components are the parts of an argument, such as a claim or the evidence that supports it. We use local explanations, which justify one prediction at a time, to find which words and patterns typically mark each component."
   - key: reasoning
     title: Reasoning in LLMs
@@ -284,24 +284,28 @@ focus:
     description: "Large language models (LLMs) are AI systems trained on large amounts of text to read and write language. Reasoning is the ability to move from given information to a conclusion through steps that someone else can check. Argumentation studies exactly these steps: the claims people make, the reasons they give, and the links between them. We ask whether argumentation can serve as a tool to assess, and later improve, the reasoning of LLMs."
     items:
       - status: done
-        text: Reconstructing the implied reasoning behind misogynistic messages
+        text: Reconstructing the implied reasoning behind misogynistic messages.
         detail: "We frame misogyny detection as an argumentative reasoning task, where the model must generate the missing link between a message and the misogynistic meaning it implies. We build prompts in Italian and English on top of argumentation theory. LLMs fall short on this task and mostly rely on common stereotypes about women rather than on inductive reasoning, which means drawing general conclusions from specific cases."
         cite: [muti-etal-2024-language]
       - status: done
-        text: Breaking claim verification into atomic reasoning types
+        text: Breaking claim verification into atomic reasoning types.
         detail: "We propose a framework that splits a claim and its evidence into the basic reasoning steps needed to verify it. With this framework we build RECV, a benchmark of real-world claims that tests deductive reasoning (conclusions that follow necessarily) and abductive reasoning (inferring the most plausible explanation). LLMs handle deductive problems but consistently fail on abductive ones, and asking them to explain their answers does not always help."
         cite: [dougrez-lewis-etal-2025-assessing]
       - status: now
-        text: Using argument mining tasks to probe how LLMs reason
+        text: Using argument mining tasks to probe how LLMs reason.
         detail: "Argument mining is the automatic detection of arguments and their parts in text. We use its tasks as tests that show where LLM reasoning holds and where it breaks."
       - status: next
-        text: Benchmarks centred on argumentation to evaluate LLM reasoning
+        text: Benchmarks centered on argumentation to evaluate LLM reasoning.
         detail: "We plan to build evaluation benchmarks in which each test item is an argumentative problem. This would let us measure reasoning skills directly instead of only final answers."
 ---
 
 ## What is argument mining?
 
 Argument mining teaches computers to find arguments in text and speech.
-An argument links a claim, the statement under discussion, to premises, the reasons that support or attack it.
+An argument presents a claim or conclusion together with one or more premises offered as reasons for it.
+Argument mining also identifies counterarguments and the support or attack relations among components.
 Opinion mining tells us what people think; argument mining asks why they think it.
-The field covers five families of tasks: finding arguments, linking them, judging them, understanding the reasoning behind them, and producing new ones.
+The field covers five families of tasks: finding arguments, linking them, judging them, understanding the reasoning behind them, and generating or retrieving them.
+Large language models (LLMs) now cut across all five families.
+This page uses the term broadly, so it also covers computational argumentation, such as dialogue systems and argumentation as a way to evaluate LLMs.
+Argument models and domains use different labels for related roles, including premises, grounds, evidence, claims, and conclusions.

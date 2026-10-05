@@ -192,7 +192,7 @@
   });
 
   // Argument views play at reading pace. Picking a tab, or scrolling the first view into sight, writes the text;
-  // the Annotate button then marks its components, and the Show schema button shows the schema and moves each
+  // the Annotate button then marks its components, and the Show graph button shows the argument graph and moves each
   // component from the text to its box, with the page following the moving box; an edge grows once both of its
   // boxes are in place. Replay plays the view again. Under reduced motion, or without the script,
   // every view shows its final state and the buttons stay hidden.
@@ -215,7 +215,8 @@
         return {
           bar,
           annotate: bar.querySelector('[data-lt-action="annotate"]'),
-          schema: bar.querySelector('[data-lt-action="schema"]'),
+          skip: bar.querySelector('[data-lt-action="skip"]'),
+          graph: bar.querySelector('[data-lt-action="graph"]'),
           link: bar.querySelector(".lt-arg-link"),
           replay: bar.querySelector('[data-lt-action="replay"]'),
         };
@@ -225,70 +226,78 @@
         if (!run) return;
         view.ltRun = null;
         run.parts.forEach(([node, text]) => { node.textContent = text; });
-        run.text.style.minHeight = "";
+        run.texts.forEach((text) => { text.style.minHeight = ""; });
         run.flying.forEach((fly) => fly.remove());
         view.querySelectorAll(".lt-arg-span").forEach((span) => {
           span.style.transitionDelay = "";
           span.classList.remove("is-sending");
         });
         view.querySelectorAll(".is-shown").forEach((node) => node.classList.remove("is-shown"));
-        view.classList.remove("is-animating", "is-marked", "is-schema");
+        view.classList.remove("is-animating", "is-marked", "is-graph");
         run.graph.ltShow(null);
-        const { bar, annotate, schema, link, replay: again } = controls(view);
+        const { bar, skip, annotate, graph, link, replay: again } = controls(view);
+        skip.hidden = true;
         annotate.hidden = Boolean(replay);
-        schema.hidden = Boolean(replay);
+        graph.hidden = Boolean(replay);
         link.hidden = Boolean(replay);
         again.hidden = !replay;
         bar.hidden = !replay;
       };
-      // The blank state: the text is empty but keeps its final height, and the schema shows no box or edge.
+      // The blank state: the text is empty but keeps its final height, and the argument graph shows no box or edge.
       const prepare = (view) => {
         panels.forEach((other) => finish(other, false));
-        const text = view.querySelector(".lt-arg-text");
-        const run = { text, graph: view.querySelector("[data-lt-graph]"), ids: new Set(), flying: [], parts: [] };
-        text.style.minHeight = `${text.offsetHeight}px`;
-        const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT, {
-          acceptNode: (node) => (node.parentElement.closest(".lt-arg-tag") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+        // A view may hold several texts side by side; they are written one after the other.
+        const texts = [...view.querySelectorAll(".lt-arg-text")];
+        const run = { texts, graph: view.querySelector("[data-lt-graph]"), ids: new Set(), flying: [], parts: [] };
+        texts.forEach((text) => { text.style.minHeight = `${text.offsetHeight}px`; });
+        texts.forEach((text) => {
+          const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => (node.parentElement.closest(".lt-arg-tag") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+          });
+          while (walker.nextNode()) run.parts.push([walker.currentNode, walker.currentNode.textContent]);
         });
-        while (walker.nextNode()) run.parts.push([walker.currentNode, walker.currentNode.textContent]);
         run.parts.forEach(([node]) => { node.textContent = ""; });
         view.ltRun = run;
         view.classList.add("is-animating");
         run.graph.ltShow(run.ids);
-        const { bar, annotate, schema, link, replay } = controls(view);
+        const { bar, skip, annotate, graph, link, replay } = controls(view);
+        skip.hidden = false;
         bar.hidden = false;
         annotate.hidden = false;
-        schema.hidden = false;
+        graph.hidden = false;
         link.hidden = false;
         replay.hidden = true;
         bar.classList.remove("is-annotated");
         annotate.classList.remove("is-done");
         annotate.disabled = true;
-        schema.disabled = true;
+        graph.disabled = true;
         return run;
       };
-      // 1. The text is written at about 55 characters per second, between 1.5 and 6 seconds in total.
+      // 1. The text is written at about 55 characters per second, between 1.5 and 6 seconds in total; Skip writes the rest at once.
       const write = async (view) => {
         const run = view.ltRun && !view.ltRun.started ? view.ltRun : prepare(view);
         run.started = true;
         const total = run.parts.reduce((sum, [, text]) => sum + text.length, 0);
         await frames(Math.min(6000, Math.max(1500, total * 18)), (t) => {
           if (view.ltRun !== run) return false;
-          let left = Math.round(t * total);
+          let left = run.skip ? total : Math.round(t * total);
           run.parts.forEach(([node, text]) => {
             node.textContent = text.slice(0, Math.max(0, Math.min(text.length, left)));
             left -= text.length;
           });
-          return true;
+          return !run.skip;
         });
-        if (view.ltRun === run) controls(view).annotate.disabled = false;
+        if (view.ltRun !== run) return;
+        const { skip, annotate: next } = controls(view);
+        skip.hidden = true;
+        next.disabled = false;
       };
       // 2. The components are marked one after the other: each tag opens and its underline appears.
       const annotate = async (view) => {
         const run = view.ltRun;
         if (!run) return;
         const spans = [...view.querySelectorAll("[data-lt-span]")];
-        const { bar, annotate: button, schema: next } = controls(view);
+        const { bar, annotate: button, graph: next } = controls(view);
         button.disabled = true;
         button.classList.add("is-done");
         spans.forEach((span, i) => { span.style.transitionDelay = `${i * 500}ms`; });
@@ -306,15 +315,15 @@
         const want = Math.min(Math.max(scrollY, bottom - innerHeight + 40), top - 100);
         scrollTo(0, scrollY + (want - scrollY) * 0.12);
       };
-      // 3. Each component leaves the text as a copy of its box, which travels to its place in the schema;
+      // 3. Each component leaves the text as a copy of its box, which travels to its place in the argument graph;
       // the page follows the box unless the reader scrolls. Implicit components fade in after the others.
-      const schema = async (view) => {
+      const showGraph = async (view) => {
         const run = view.ltRun;
         if (!run) return;
-        controls(view).schema.disabled = true;
-        // The schema panel appears only now, and slides in before the first component leaves the text.
-        view.classList.add("is-schema");
-        view.querySelector(".lt-arg-schema").animate(
+        controls(view).graph.disabled = true;
+        // The argument graph panel appears only now, and slides in before the first component leaves the text.
+        view.classList.add("is-graph");
+        view.querySelector(".lt-arg-graph-panel").animate(
           [{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }],
           { duration: 700, easing: "ease-out" },
         );
@@ -343,7 +352,7 @@
             continue;
           }
           // The marked text is first enclosed, line by line, in frames of its role color; the frames then detach,
-          // fill, and travel to the schema, where they meet as one box while its content fades in. Only the frames
+          // fill, and travel to the argument graph, where they meet as one box while its content fades in. Only the frames
           // change size; the content keeps the final box size, so its text never re-wraps on the way.
           const base = views.getBoundingClientRect();
           const k = base.width / views.offsetWidth || 1;
@@ -404,9 +413,10 @@
       };
       panels.forEach((view) => {
         view.addEventListener("lt-show", () => write(view));
-        const { bar, annotate: a, schema: b, replay } = controls(view);
+        const { bar, skip, annotate: a, graph: b, replay } = controls(view);
+        skip.addEventListener("click", () => { if (view.ltRun) view.ltRun.skip = true; });
         a.addEventListener("click", () => annotate(view));
-        b.addEventListener("click", () => schema(view));
+        b.addEventListener("click", () => showGraph(view));
         // Replay scrolls smoothly back to the top of the views, below the navigation bar, once the view is reset
         // and the page has its new height, so the shorter page cannot cut the scroll short.
         replay.addEventListener("click", () => {
@@ -520,8 +530,18 @@
         if (open && cards[event.detail] && cards[event.detail].dataset.ltTopic !== open) close();
       });
     }
+    // A link to #topic-<key> centers that topic in the carousel and opens its box, which holds the rotation.
+    // This waits one frame, until the carousel below has been set up.
     const fromHash = boxes.find((box) => `#${box.id}` === location.hash);
-    show(fromHash ? fromHash.dataset.ltTopic : null);
+    show(null);
+    if (fromHash) {
+      requestAnimationFrame(() => {
+        const index = cards.findIndex((card) => card.dataset.ltTopic === fromHash.dataset.ltTopic);
+        if (carousel && carousel.ltGo) carousel.ltGo(index);
+        show(fromHash.dataset.ltTopic);
+        fromHash.scrollIntoView({ block: "start" });
+      });
+    }
   });
 
   // Bar charts grow when they scroll into view; without the observer they render complete.

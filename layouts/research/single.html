@@ -1,5 +1,5 @@
 {{/* Research area page. It adds detail from top to bottom, so each reader can stop at the depth they need. */}}
-{{/* 1. The body: a short overview, followed by `views` of one argument under different argument models and domains, with the text and its source caption above the schema. */}}
+{{/* 1. The body: a short overview, followed by `views` of one argument under different argument models and domains, with the text and its source caption above the argument graph. */}}
 {{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
 {{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
 {{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
@@ -27,13 +27,14 @@
   {{ $groups := slice }}{{ range . }}{{ if not (in $groups .group) }}{{ $groups = $groups | append .group }}{{ end }}{{ end }}
   <div class="lt-band">
   <section class="lt-arg-views" aria-label="Argument models and domains">
-    <div class="lt-arg-tabgroups">
+    {{/* One tablist for all views; the group names are visual labels that each tab also carries as its description. */}}
+    <div class="lt-arg-tabgroups" role="tablist" aria-label="Argument models and domains">
       {{ range $groups }}{{ $group := . }}
-      <div class="lt-arg-tabgroup">
-        <span class="lt-arg-tabgroup-label" id="views-{{ urlize $group }}">{{ $group }}</span>
-        <div role="tablist" aria-labelledby="views-{{ urlize $group }}">
+      <div class="lt-arg-tabgroup" role="presentation">
+        <span class="lt-arg-tabgroup-label" id="views-{{ urlize $group }}" aria-hidden="true">{{ $group }}</span>
+        <div class="lt-arg-tabrow" role="presentation">
           {{ range $i, $v := $.Params.views }}{{ if eq $v.group $group }}
-          <button type="button" role="tab" id="view-{{ $v.key }}-tab" aria-controls="view-{{ $v.key }}" aria-selected="{{ eq $i 0 }}" tabindex="{{ cond (eq $i 0) 0 -1 }}">{{ $v.label }}</button>
+          <button type="button" role="tab" id="view-{{ $v.key }}-tab" aria-controls="view-{{ $v.key }}" aria-describedby="views-{{ urlize $group }}" aria-selected="{{ eq $i 0 }}" tabindex="{{ cond (eq $i 0) 0 -1 }}">{{ $v.label }}</button>
           {{ end }}{{ end }}
         </div>
       </div>
@@ -41,7 +42,9 @@
     </div>
     {{ range $i, $v := . }}
     {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label)) }}{{ end }}
-    {{ $parts := slice }}{{ range $v.segments }}{{ if .id }}{{ $parts = $parts | append . }}{{ end }}{{ end }}
+    {{/* A view has one text in `segments`, or several side by side in `texts` (each with a `label`, a `lang`, and `segments`). */}}
+    {{ $texts := $v.texts | default (slice (dict "segments" $v.segments)) }}
+    {{ $parts := slice }}{{ range $texts }}{{ range .segments }}{{ if .id }}{{ $parts = $parts | append . }}{{ end }}{{ end }}{{ end }}
     {{ range $v.implicit }}{{ $parts = $parts | append (merge . (dict "implicit" true)) }}{{ end }}
     {{ $byid := dict }}{{ range $parts }}{{ $byid = merge $byid (dict .id .) }}{{ end }}
     <div class="lt-arg-view" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
@@ -49,22 +52,30 @@
       <div class="lt-arg-panels">
         <figure class="lt-arg-example">
           <div class="lt-arg-panel">
-            <h3 class="lt-arg-step"><span>1</span> The text</h3>
-            <p class="lt-arg-text">
-              {{- range $s, $seg := $v.segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag">{{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
-            </p>
+            <h3 class="lt-arg-step"><span>1</span> The text{{ if gt (len $texts) 1 }}s{{ end }}</h3>
+            <div class="lt-arg-texts">
+            {{ range $texts }}
+            <div class="lt-arg-textbox"{{ with .lang }} lang="{{ . }}"{{ end }}>
+              {{ with .label }}<p class="lt-arg-textlabel">{{ . }}</p>{{ end }}
+              <p class="lt-arg-text">
+                {{- range $s, $seg := .segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag">{{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
+              </p>
+            </div>
+            {{ end }}
+            </div>
           </div>
           {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
         </figure>
           <div class="lt-arg-controls" hidden>
-            {{/* Two steps in order: the connector between them fills once the text is annotated. */}}
+            {{/* Skip writes the rest of the text at once. Two steps follow in order: the connector between them fills once the text is annotated. */}}
+            <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
             <button type="button" data-lt-action="annotate"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
             <span class="lt-arg-link" aria-hidden="true"></span>
-            <button type="button" data-lt-action="schema"><span class="lt-arg-num" aria-hidden="true">2</span> Show schema</button>
+            <button type="button" data-lt-action="graph"><span class="lt-arg-num" aria-hidden="true">2</span> Show graph</button>
             <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
           </div>
-          <div class="lt-arg-panel lt-arg-schema">
-            <h3 class="lt-arg-step"><span>2</span> Schema</h3>
+          <div class="lt-arg-panel lt-arg-graph-panel">
+            <h3 class="lt-arg-step"><span>2</span> Argument graph</h3>
             <div class="lt-arg-graph-scroll">
             {{ $cols := 1 }}{{ range $v.rows }}{{ if gt (len .) $cols }}{{ $cols = len . }}{{ end }}{{ end }}
             <div class="lt-arg-graph" data-lt-graph style="--lt-cols: {{ $cols }}">
@@ -72,8 +83,10 @@
               {{ range $v.rows }}
               <div class="lt-arg-row">
                 {{ range . }}{{ $n := index $byid . }}{{ $r := index $slot $n.role }}
-                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $n.implicit }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}">
-                  <span class="lt-arg-tag">{{ $r.label }}{{ if $n.implicit }} (implicit){{ end }}</span>
+                {{/* An implicit component is unstated in the text and drawn dashed; one with `kind: label` is an assigned label, drawn as a regular box. */}}
+                {{ $unstated := and $n.implicit (ne $n.kind "label") }}
+                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $unstated }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}">
+                  <span class="lt-arg-tag">{{ $r.label }}{{ if $unstated }} (implicit){{ end }}</span>
                   {{ with $n.tag }}<span class="lt-arg-scheme">{{ . }}</span>{{ end }}
                   {{ $n.node | default $n.text }}
                 </div>

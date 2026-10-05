@@ -11,6 +11,7 @@ site_tools = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(site_tools)
 EMAIL, UniqueKeyLoader, local_link_targets = site_tools.EMAIL, site_tools.UniqueKeyLoader, site_tools.local_link_targets
 category_error = site_tools.category_error
+view_errors = site_tools.view_errors
 
 page = Path("content/news/example/index.md")
 body = """
@@ -39,5 +40,13 @@ assert category_error("publication", ["Highlight"])
 assert category_error("publication", ["Journal", "Conference"])
 assert category_error("publication", ["Highlight", "Highlight", "Journal"])
 assert category_error("theses", ["Highlight", "Master thesis"])
+
+view = {"roles": [{"key": "clause"}], "texts": [{"segments": [{"id": "a", "role": "clause", "text": "x"}]}],
+        "implicit": [{"id": "b", "role": "clause"}], "rows": [["a", "b"]], "edges": [{"from": "a", "to": "b", "relation": "support"}]}
+assert view_errors(view) == [], view_errors(view)
+assert view_errors({**view, "rows": [["a", "c"]]}) == ["rows or edges name an undefined component 'c'"]
+assert view_errors({**view, "roles": []}) == ["component 'a' has an unknown role", "component 'b' has an unknown role"]
+assert view_errors({**view, "implicit": [{"id": "a", "role": "clause"}, {"id": "b", "role": "clause"}]}) == ["component 'a' is repeated"]
+assert view_errors({**view, "edges": [{"from": "a", "to": "b", "relation": "rebut"}]}) == ["edge relation 'rebut' is not support, attack, or link"]
 
 print("site.py self-checks passed.")
