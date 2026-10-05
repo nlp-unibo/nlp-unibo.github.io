@@ -85,25 +85,19 @@ h1, h2, h3, h4, h5, h6,
   padding: 70px 0;
 }
 
-// Cards use a thin border and a subtle hover state instead of shadows
+// List cards (layouts/_partials/views/card.html) use the clickable surface of .lt-link-card.
+// Their title link covers the card, so other links in the card sit above it.
 .card-simple {
-  border: 1px solid $lt-border;
-  border-radius: 10px;
-  box-shadow: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  position: relative;
+  border-radius: 16px;
 
-  &:hover {
-    border-color: $lt-blue;
-    transform: translateY(-2px);
+  a:not(.lt-stretch) {
+    position: relative;
+    z-index: 2;
   }
-}
 
-.dark .card-simple {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: transparent;
-
-  &:hover {
-    border-color: $lt-sky;
+  &:hover .img-hover-zoom img {
+    transform: scale(1.06);
   }
 }
 
@@ -270,10 +264,31 @@ h1, h2, h3, h4, h5, h6,
   translate: none;
 }
 
+// Section focus, added by assets/js/ltlab.js only when motion is allowed: the section in focus is at full
+// size and opacity, and the others fade and shrink slightly. Section backgrounds and separators stay in place.
+.lt-section-focus {
+  .home-section > .container,
+  .lt-band > * {
+    opacity: 0.3;
+    scale: 0.96;
+    transform-origin: 50% 0;
+    transition: opacity 0.7s ease, scale 0.7s ease;
+  }
+
+  .home-section.is-focus > .container,
+  .lt-band.is-focus > * {
+    opacity: 1;
+    scale: none;
+  }
+}
+
 @media print {
-  .lt-reveal {
+  .lt-reveal,
+  .lt-section-focus .home-section > .container,
+  .lt-section-focus .lt-band > * {
     opacity: 1;
     translate: none;
+    scale: none;
   }
 }
 
@@ -285,8 +300,7 @@ h1, h2, h3, h4, h5, h6,
   }
 
   .card-simple,
-  .lt-card,
-  .lt-area {
+  .lt-link-card {
     transition: none;
   }
 }
@@ -520,8 +534,7 @@ $lt-dark-card: #112236;
   color: $lt-dark-muted;
 }
 
-.lt-pill,
-.lt-badge {
+.lt-pill {
   display: inline-block;
   padding: 0.1rem 0.6rem;
   border-radius: 999px;
@@ -541,17 +554,6 @@ $lt-dark-card: #112236;
   .lt-pill { background: rgba($lt-sky, 0.14); color: $lt-sky; }
   .lt-pill-call { background: rgba(#b98ad8, 0.16); color: #d2b2e8; }
   .lt-pill-event { background: rgba($lt-orange, 0.18); color: #f5c46b; }
-}
-
-.lt-badge {
-  background: rgba(255, 255, 255, 0.92);
-  color: $lt-navy;
-}
-
-.lt-badge-mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  letter-spacing: 0;
-  text-transform: none;
 }
 
 .lt-chips,
@@ -643,38 +645,52 @@ $lt-dark-card: #112236;
 }
 
 // Cards
+// A static card is a flat tinted panel: no border, no shadow, no hover state.
 .lt-card {
   position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid $lt-border;
   border-radius: 16px;
+  background: rgba($lt-blue, 0.05);
+}
+
+.dark .lt-card {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+// A clickable card is a raised white surface, so it reads as a link before any hover.
+.lt-link-card {
+  border: 1px solid $lt-border;
   background: #fff;
+  color: inherit !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     border-color: rgba($lt-blue, 0.45);
     transform: translateY(-3px);
     box-shadow: 0 18px 36px -24px rgba($lt-navy, 0.5);
   }
 
   &:hover .lt-cover-art {
-    transform: scale(1.06) translateX(-6px);
+    transform: scale(1.06);
   }
 }
 
-.dark .lt-card {
+.dark .lt-link-card {
   border-color: $lt-dark-border;
   background: $lt-dark-card;
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.8);
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     border-color: rgba($lt-sky, 0.5);
   }
 }
 
-.lt-card-cover,
-.lt-model-head,
 .lt-area-head {
   position: relative;
   aspect-ratio: 2 / 1;
@@ -703,20 +719,22 @@ img.lt-cover {
   to { translate: -10px 4px; }
 }
 
-.lt-cover-icon,
 .lt-area-icon {
-  position: absolute;
-  left: 1rem;
-  bottom: 1rem;
   display: inline-flex;
+  flex: none;
   align-items: center;
   justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 12px;
-  font-size: 1.1rem;
-  color: $lt-navy;
-  background: rgba(255, 255, 255, 0.94);
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: $lt-blue;
+  background: rgba($lt-sky, 0.16);
+}
+
+.dark .lt-area-icon {
+  color: $lt-sky;
+  background: rgba($lt-sky, 0.12);
 }
 
 .lt-card-body {
@@ -765,6 +783,8 @@ img.lt-cover {
 
 .lt-hero {
   max-width: 52rem;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .lt-hero-title {
@@ -786,6 +806,7 @@ img.lt-cover {
 
 .lt-hero-lead {
   max-width: 42rem;
+  margin: 0 auto;
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.6;
   color: $lt-ink;
@@ -801,6 +822,7 @@ img.lt-cover {
 
 .lt-hero-actions {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 0.75rem;
   margin-top: 1.8rem;
@@ -814,25 +836,11 @@ img.lt-cover {
 }
 
 .lt-area {
+  position: relative;
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  border: 1px solid $lt-border;
   border-radius: 16px;
-  background: #fff;
-  color: inherit !important;
-  text-decoration: none !important;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-
-  &:hover {
-    border-color: rgba($lt-blue, 0.45);
-    transform: translateY(-3px);
-    box-shadow: 0 18px 36px -24px rgba($lt-navy, 0.5);
-  }
-
-  &:hover .lt-cover-art {
-    transform: scale(1.06);
-  }
 }
 
 .lt-area-head {
@@ -848,6 +856,9 @@ img.lt-cover {
 }
 
 .lt-area-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
   margin: 0;
   font-size: 1.25rem;
 }
@@ -877,129 +888,208 @@ img.lt-cover {
   }
 }
 
-.lt-area-more {
-  margin-top: auto;
-  padding-top: 0.5rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: $lt-blue;
-
-  i {
-    transition: transform 0.15s ease;
-  }
-}
-
-.lt-area:hover .lt-area-more i {
-  transform: translateX(3px);
-}
-
 .dark {
-  .lt-area { border-color: $lt-dark-border; background: $lt-dark-card; }
   .lt-area-tagline { color: #c9d6e3; }
   .lt-area-topics li { color: $lt-sky; background: rgba($lt-sky, 0.12); }
-  .lt-area-more { color: $lt-sky; }
 }
 
-.lt-threads {
+// Preprint carousel (layouts/_partials/blocks/lt-preprints.html)
+// The track is a scroll-snap row, so it works without JavaScript; the script adds `is-enhanced` and shows the controls.
+.lt-carousel-track {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+
+  &:focus-visible {
+    outline: 2px solid $lt-blue;
+    outline-offset: 4px;
+  }
+}
+
+// With the script, the track moves only through ltlab.js: swipes, wheel gestures, arrow keys, and controls.
+.is-enhanced .lt-carousel-track {
+  overflow-x: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.lt-slide {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
-  align-items: center;
-  gap: 2rem;
-  margin-top: 2rem;
-  padding: 1.6rem;
-  border-radius: 16px;
-  background: rgba($lt-blue, 0.05);
+  flex: 0 0 88%;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  min-height: 22rem;
+  scroll-snap-align: start;
 
   @media (max-width: 767.98px) {
+    flex-basis: 92%;
     grid-template-columns: minmax(0, 1fr);
-    gap: 1rem;
-  }
-
-  h3 {
-    margin: 0 0 0.3rem;
-    font-size: 1.15rem;
-  }
-
-  p {
-    margin: 0;
-    font-size: 0.92rem;
-    color: $lt-muted;
+    min-height: 0;
   }
 }
 
-.lt-threads-scroll {
-  overflow-x: auto;
+.lt-slide-media {
+  position: relative;
+  overflow: hidden;
+
+  .lt-cover {
+    position: absolute;
+    inset: 0;
+  }
+
+  // A paper figure is shown whole on white, never cropped.
+  img.lt-cover {
+    padding: 1rem;
+    object-fit: contain;
+  }
+
+  @media (max-width: 767.98px) {
+    aspect-ratio: 2 / 1;
+  }
 }
 
-.lt-threads-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
+.lt-slide-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2rem 2.2rem;
 
-  th,
-  td {
-    padding: 0.5rem 0.4rem;
-    border-bottom: 1px solid rgba($lt-blue, 0.12);
+  @media (max-width: 767.98px) {
+    padding: 1.3rem;
   }
+}
 
-  thead th {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-align: center;
-    text-transform: uppercase;
-    color: $lt-muted;
+.lt-slide-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.3;
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
   }
+}
 
-  tbody th {
-    font-weight: 600;
+.lt-slide-authors {
+  margin: 0;
+  font-size: 0.88rem;
+  color: $lt-ink;
+}
+
+.lt-slide-text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: $lt-ink;
+}
+
+
+.lt-carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.lt-carousel-dots {
+  display: flex;
+
+  // Each dot keeps a 24px target around its small visible mark.
+  button {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    border: 0;
+    background: none;
+
+    &::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: rgba($lt-blue, 0.3);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    &[aria-current="true"]::before {
+      width: 1.4rem;
+      background: $lt-blue;
+    }
+  }
+}
+
+// Autoplay: the current dot becomes a longer bar that fills over the delay; the fill holds with the rotation.
+.lt-carousel.is-autoplay .lt-carousel-dots button {
+  &[aria-current="true"] { width: 3.2rem; }
+
+  &[aria-current="true"]::before {
+    width: 2.6rem;
+    background: linear-gradient($lt-blue, $lt-blue) no-repeat left / 0% 100%, rgba($lt-blue, 0.3);
+    animation: lt-dot-fill var(--lt-autoplay) linear forwards;
+  }
+}
+
+.lt-carousel.is-autoplay.is-holding .lt-carousel-dots button[aria-current="true"]::before {
+  animation-play-state: paused;
+}
+
+@keyframes lt-dot-fill {
+  to { background-size: 100% 100%, auto; }
+}
+
+.lt-carousel-arrows {
+  display: flex;
+  gap: 0.5rem;
+
+  button {
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid $lt-border;
+    border-radius: 50%;
     color: $lt-navy;
+    background: #fff;
+
+    &:hover:not(:disabled) {
+      border-color: $lt-blue;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
   }
-
-  td {
-    text-align: center;
-  }
-
-  tr,
-  th,
-  td {
-    background: none !important;
-  }
-
-  tr:last-child th,
-  tr:last-child td {
-    border-bottom: 0;
-  }
-}
-
-.lt-dot,
-.lt-dot-empty {
-  display: inline-block;
-  width: 0.8rem;
-  height: 0.8rem;
-  border-radius: 50%;
-}
-
-.lt-dot {
-  background: $lt-orange;
-  box-shadow: 0 0 0 4px rgba($lt-orange, 0.18);
-}
-
-.lt-dot-empty {
-  border: 1.5px solid rgba($lt-blue, 0.25);
 }
 
 .dark {
-  .lt-threads { background: rgba($lt-sky, 0.06); }
-  .lt-threads p, .lt-threads-table thead th { color: $lt-dark-muted; }
-  .lt-threads-table tbody th { color: #f1f5fa; }
-  .lt-threads-table th, .lt-threads-table td { border-bottom-color: $lt-dark-border; }
-  .lt-dot-empty { border-color: $lt-dark-border; }
+  .lt-slide-text, .lt-slide-authors { color: #c9d6e3; }
+  .lt-carousel-dots button::before { background: rgba($lt-sky, 0.3); }
+  .lt-carousel-dots button[aria-current="true"]::before { background: $lt-sky; }
+  .lt-carousel.is-autoplay .lt-carousel-dots button[aria-current="true"]::before {
+    background: linear-gradient($lt-sky, $lt-sky) no-repeat left / 0% 100%, rgba($lt-sky, 0.3);
+  }
+  .lt-carousel-arrows button { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-carousel-arrows button:hover:not(:disabled) { border-color: $lt-sky; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-carousel-dots button::before { transition: none; }
 }
 
 // News
-.lt-news-grid,
-.lt-model-grid {
+.lt-news-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.25rem;
@@ -1075,61 +1165,6 @@ img.lt-cover {
 .lt-news-row-title { color: #f1f5fa !important; }
 }
 
-// Model cards for preprints
-.lt-model-badges {
-  position: absolute;
-  top: 0.9rem;
-  left: 0.9rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.lt-model-specs {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 0;
-  border: 1px solid $lt-border;
-  border-radius: 10px;
-
-  div {
-    padding: 0.45rem 0.7rem;
-    min-width: 0;
-  }
-
-  div + div {
-    border-left: 1px solid $lt-border;
-  }
-
-  dt {
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: $lt-muted;
-  }
-
-  dd {
-    margin: 0;
-    overflow: hidden;
-    font-size: 0.88rem;
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-}
-
-.lt-model-authors {
-  margin: 0;
-  font-size: 0.85rem;
-  color: $lt-ink;
-}
-
-.dark {
-  .lt-model-specs, .lt-model-specs div + div { border-color: $lt-dark-border; }
-  .lt-model-specs dt { color: $lt-dark-muted; }
-  .lt-model-authors { color: #c9d6e3; }
-}
 
 // Publication page in the style of a research project page (layouts/publication/single.html)
 .lt-proj-header {
@@ -2154,24 +2189,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 
-// News cards are not links, so they do not lift on hover
-.lt-news-card:hover {
-  border-color: $lt-border;
-  transform: none;
-  box-shadow: none;
-}
-
-.dark .lt-news-card:hover {
-  border-color: $lt-dark-border;
-}
-
 .lt-news-row:hover {
   background: none;
-}
-
-.lt-news-row-main .lt-topics,
-.lt-card-body .lt-topics {
-  margin-top: 0;
 }
 
 // Phones: headings stack above their "see all" links
@@ -2188,496 +2207,909 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   }
 }
 
-// Research map (layouts/research/single.html): an overview graph of subareas, then one detail panel per subarea.
-// Status is carried by a text label and an icon, never by color alone.
-// assets/js/ltlab.js adds `is-waiting` until the map scrolls into view, `is-interactive` once panels switch, and `data-lt-focus` for the legend.
-.lt-rmap {
+// Research area pages (layouts/research/single.html)
+// Sections share the reading width of the page body; status is carried by a text label and an icon, never by color alone.
+.lt-arg-views,
+.lt-fields,
+.lt-focus {
   max-width: 1180px;
-  margin: 1rem auto 3rem;
+  margin: 2.5rem auto;
   padding: 0 16px;
+
+  > h2 {
+    margin: 0 0 1.2rem;
+    font-size: 1.6rem;
+  }
 }
 
-.lt-rmap-head {
+// Argument views: tabs by argument model and domain, then the marked text and the argument graph.
+// Roles take categorical colors in fixed order (validated for color vision deficiency in both modes),
+// and every colored mark also carries its role as text.
+.lt-arg-views {
+  --lt-role-1: #1f6fb2;
+  --lt-role-2: #c26a00;
+  --lt-role-3: #0f8a7a;
+  --lt-role-4: #9a4fb5;
+}
+
+.dark .lt-arg-views {
+  --lt-role-1: #3f8fd6;
+  --lt-role-2: #c97a14;
+  --lt-role-3: #13917d;
+  --lt-role-4: #a866c8;
+}
+
+.lt-role-1 { --lt-role: var(--lt-role-1); }
+.lt-role-2 { --lt-role: var(--lt-role-2); }
+.lt-role-3 { --lt-role: var(--lt-role-3); }
+.lt-role-4 { --lt-role: var(--lt-role-4); }
+
+.lt-arg-tabgroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.lt-arg-tabgroup {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem 1.5rem;
-  margin-bottom: 1.2rem;
-
-  h2 {
-    margin: 0;
-  }
-}
-
-.lt-rmap-legend {
-  display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
-}
 
-.lt-rmap-key {
-  padding: 0.3rem 0.85rem;
-  border: 2px solid transparent;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
+  [role="tablist"] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
 
-  &[aria-pressed="true"] {
-    box-shadow: 0 0 0 3px rgba($lt-blue, 0.3);
+  [role="tab"] {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid $lt-border;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: $lt-navy;
+    background: #fff;
+
+    &[aria-selected="true"] {
+      border-color: $lt-blue;
+      color: #fff;
+      background: $lt-blue;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $lt-blue;
+      outline-offset: 2px;
+    }
   }
 }
 
-// Overview: nodes sit at percent positions over an SVG of curved links.
-.lt-rmap-overview {
-  padding: 1.2rem 1rem 1.5rem;
-  border: 1px solid $lt-border;
-  border-radius: 18px;
-  background:
-    radial-gradient(circle, rgba($lt-blue, 0.12) 1px, transparent 1.5px) 0 0 / 18px 18px,
-    #fff;
+.lt-arg-tabgroup-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
 }
 
-.lt-rmap-colheads {
-  display: grid;
-  grid-template-columns: repeat(var(--lt-cols), minmax(0, 1fr));
-  margin-bottom: 0.4rem;
+.lt-arg-description {
+  max-width: 48rem;
+  margin: 0 0 1rem;
+  color: $lt-ink;
+}
 
-  span {
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-align: center;
-    text-transform: uppercase;
+.lt-arg-view + .lt-arg-view {
+  margin-top: 2rem;
+}
+
+.lt-arg-example {
+  margin: 0;
+
+  figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
     color: $lt-muted;
   }
 }
 
-.lt-rmap-canvas {
-  position: relative;
-  height: calc(var(--lt-rows) * 7.5rem);
-
-  svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-  }
-}
-
-.lt-rmap-edge {
-  fill: none;
-  stroke: rgba($lt-blue, 0.5);
-  stroke-width: 2;
-  stroke-dasharray: 6 5;
-  vector-effect: non-scaling-stroke;
-  transition: stroke 0.2s ease, opacity 0.2s ease;
-  animation: lt-rmap-dash 1.2s linear infinite;
-}
-
-.lt-rmap-edge.is-active {
-  stroke: $lt-orange;
-  stroke-width: 3;
-}
-
-.lt-rmap.is-interactive .lt-rmap-edge:not(.is-active) {
-  opacity: 0.6;
-}
-
-@keyframes lt-rmap-dash {
-  to { stroke-dashoffset: -11; }
-}
-
-.lt-rmap-node {
-  position: absolute;
-  z-index: 1;
+// The text comes first and the graph below it, both at full width.
+.lt-arg-panels {
   display: grid;
-  justify-items: center;
-  gap: 0.35rem;
-  width: 27%;
-  max-width: 15rem;
-  padding: 0.7rem 0.8rem;
-  border: 2px solid rgba($lt-blue, 0.3);
-  border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 6px 18px rgba($lt-navy, 0.08);
-  color: $lt-navy;
-  text-align: center;
-  text-decoration: none !important;
-  translate: -50% -50%;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, opacity 0.5s ease;
-  transition-delay: 0s, 0s, 0s, calc(var(--lt-c) * 200ms);
-
-  &:hover,
-  &:focus-visible {
-    z-index: 2;
-    border-color: $lt-blue;
-    transform: translateY(-2px);
-  }
-
-  &[aria-current="true"] {
-    border-color: $lt-orange;
-    box-shadow: 0 0 0 4px rgba($lt-orange, 0.25);
-  }
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
 }
 
-.lt-rmap.is-waiting .lt-rmap-node {
-  opacity: 0;
+.lt-arg-panel {
+  padding: 1.3rem;
+  border-radius: 16px;
+  background: rgba($lt-blue, 0.05);
 }
 
-.lt-rmap-node-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.lt-rmap-counts {
+.lt-arg-step {
   display: flex;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-
-  i {
-    font-size: 0.6rem;
-  }
-
-  .is-done { color: $lt-blue; }
-  .is-now { color: #9a5600; }
-  .is-next { color: $lt-muted; }
-}
-
-// Hover and focus show a short summary; the outer columns align it inward so it never leaves the page.
-.lt-rmap-tip {
-  position: absolute;
-  bottom: calc(100% + 0.5rem);
-  left: 50%;
-  width: 15rem;
-  padding: 0.55rem 0.75rem;
-  border-radius: 10px;
-  background: $lt-navy;
-  color: #fff;
-  font-size: 0.82rem;
-  font-weight: 500;
-  line-height: 1.4;
-  text-align: left;
-  opacity: 0;
-  pointer-events: none;
-  translate: -50% 4px;
-  transition: opacity 0.15s ease, translate 0.15s ease;
-}
-
-.lt-rmap-c0 .lt-rmap-tip { left: 0; translate: 0 4px; }
-.lt-rmap-c2 .lt-rmap-tip { left: auto; right: 0; translate: 0 4px; }
-
-.lt-rmap-node:hover .lt-rmap-tip,
-.lt-rmap-node:focus-visible .lt-rmap-tip {
-  opacity: 1;
-  translate: -50% 0;
-}
-
-.lt-rmap-c0:hover .lt-rmap-tip,
-.lt-rmap-c0:focus-visible .lt-rmap-tip,
-.lt-rmap-c2:hover .lt-rmap-tip,
-.lt-rmap-c2:focus-visible .lt-rmap-tip {
-  translate: 0 0;
-}
-
-// Detail panels: the summary, then Done, Now, and Next lanes joined by flowing arrows.
-.lt-rmap-details {
-  margin-top: 1.5rem;
-}
-
-.lt-rmap-detail {
-  padding: 1.4rem 1.4rem 1.2rem;
-  border: 2px solid $lt-orange;
-  border-radius: 18px;
-  outline: none;
-
-  & + & {
-    margin-top: 1.5rem;
-  }
-}
-
-.lt-rmap.is-interactive .lt-rmap-detail + .lt-rmap-detail {
-  margin-top: 0;
-}
-
-.lt-rmap-detail-head {
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem 0.75rem;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
 
-  h3 {
-    margin: 0;
-    font-size: 1.35rem;
-  }
-
-  .lt-topics {
-    margin: 0;
+  span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: #fff;
+    background: $lt-blue;
+    letter-spacing: 0;
   }
 }
 
-.lt-rmap-summary {
-  margin: 0.5rem 0 1.2rem;
+.lt-arg-text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.9;
   color: $lt-ink;
 }
 
-.lt-rmap-flow {
-  display: grid;
-  grid-auto-columns: minmax(0, 1fr);
-  grid-auto-flow: column;
-  gap: 2.5rem;
+// A marked component: its role as a small tag, then the text with a colored underline.
+.lt-arg-span {
+  text-decoration: underline 2px var(--lt-role);
+  text-underline-offset: 0.3em;
+  color: $lt-navy;
 }
 
-.lt-rmap-lane {
+.lt-arg-tag {
+  margin-right: 0.3rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+  color: $lt-ink;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+}
+
+.lt-arg-span .lt-arg-tag {
+  display: inline-block;
+  text-decoration: none;
+}
+
+// The graph: rows of nodes over an SVG layer where the script draws the edges.
+// All nodes share one width, set by the longest row (`--lt-cols`), so nodes line up in columns
+// and a shorter row sits centered under the longer one. Nodes in a row share one height.
+.lt-arg-graph {
+  --lt-gap: 3.2rem;
   position: relative;
+  display: grid;
+  gap: 3.4rem;
+  max-width: calc(var(--lt-cols) * 16rem + (var(--lt-cols) - 1) * var(--lt-gap));
+  margin-inline: auto;
+}
 
-  & + &::before {
-    content: "";
-    position: absolute;
-    top: 0.6rem;
-    left: -2.1rem;
-    width: 1.7rem;
-    height: 2px;
-    background: repeating-linear-gradient(90deg, $lt-blue 0 6px, transparent 6px 10px);
-    background-size: 20px 2px;
-    animation: lt-flow 1s linear infinite;
+// The edge layer sits above the nodes so that labels stay readable; edges end at node borders.
+.lt-arg-edges-svg {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.lt-arg-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--lt-gap);
+}
+
+.lt-arg-node {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 calc((100% - (var(--lt-cols) - 1) * var(--lt-gap)) / var(--lt-cols));
+  padding: 0.55rem 0.75rem;
+  border: 1px solid $lt-border;
+  border-left: 4px solid var(--lt-role);
+  border-radius: 8px;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: $lt-navy;
+  background: #fff;
+
+  .lt-arg-tag {
+    display: block;
+    margin-bottom: 0.2rem;
   }
 
-  & + &::after {
-    content: "";
-    position: absolute;
-    top: calc(0.6rem - 4px);
-    left: -0.6rem;
-    border: 5px solid transparent;
-    border-left-color: $lt-blue;
+  &.is-implicit {
+    border-style: dashed;
+    border-left-style: dashed;
+    color: $lt-ink;
+    background: transparent;
   }
 }
 
-.lt-rmap-status {
-  margin: 0 0 0.5rem;
-  font-size: 0.75rem;
+.lt-arg-scheme {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  padding: 0 0.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: $lt-ink;
+}
+
+// Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red; the pair
+// passes the color vision deficiency check in light mode and stays in the 6 to 8 floor band in dark mode,
+// which is legal only because every edge also has a text label.
+.lt-arg-views {
+  --lt-support: #17663a;
+  --lt-attack: #e8584e;
+}
+
+.dark .lt-arg-views {
+  --lt-support: #45ad64;
+  --lt-attack: #d8443a;
+}
+
+.lt-arg-edge {
+  fill: none;
+  stroke: $lt-ink;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+
+  &.is-support { stroke: var(--lt-support); }
+  &.is-attack { stroke: var(--lt-attack); }
+}
+
+.lt-arg-edge-head {
+  fill: $lt-ink;
+
+  &.is-support { fill: var(--lt-support); }
+  &.is-attack { fill: var(--lt-attack); }
+}
+
+.lt-arg-edge-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: $lt-ink;
+  paint-order: stroke;
+  stroke: #f3f6f9;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+// Without the script, edges are a plain list; once drawn they stay available to screen readers only.
+.lt-arg-edges {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.82rem;
+  color: $lt-ink;
+}
+
+.is-drawn .lt-arg-edges {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Narrow screens: the graph keeps its layout and scrolls inside its own panel.
+.lt-arg-graph-scroll {
+  overflow-x: auto;
+}
+
+@media (max-width: 575.98px) {
+  .lt-arg-graph { --lt-gap: 1.4rem; min-width: 27rem; }
+  .lt-arg-node { font-size: 0.78rem; padding: 0.45rem 0.55rem; }
+}
+
+.dark {
+  .lt-arg-tabgroup [role="tab"] { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-arg-tabgroup [role="tab"][aria-selected="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
+  .lt-arg-tabgroup-label, .lt-arg-example figcaption { color: $lt-dark-muted; }
+  .lt-arg-description, .lt-arg-text, .lt-arg-tag, .lt-arg-scheme, .lt-arg-edges { color: #c9d6e3; }
+  .lt-arg-span, .lt-arg-node { color: #f1f5fa; }
+  .lt-arg-panel { background: rgba(255, 255, 255, 0.04); }
+  .lt-arg-node { border-color: $lt-dark-border; border-left-color: var(--lt-role); background: $lt-dark-card; }
+  .lt-arg-node.is-implicit { background: transparent; }
+  .lt-arg-scheme { border-color: $lt-dark-border; }
+  .lt-arg-edge.is-link { stroke: #c9d6e3; }
+  .lt-arg-edge-head.is-link { fill: #c9d6e3; }
+  .lt-arg-edge-label { fill: #c9d6e3; stroke: #15243a; }
+}
+
+// Field blocks: a grid of buttons; the open block shows its popup next to it.
+// Without `is-interactive` (no JavaScript), every popup sits below its block.
+.lt-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 991.98px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 575.98px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.lt-field-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.lt-field {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid $lt-border;
+  border-radius: 16px;
+  color: inherit;
+  text-align: left;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover,
+  &[aria-expanded="true"] {
+    border-color: $lt-blue;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $lt-blue;
+    outline-offset: 3px;
+  }
+}
+
+.lt-field-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $lt-navy;
+}
+
+.lt-field-question {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $lt-ink;
+}
+
+.lt-field-panel {
+  margin-top: 0.6rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  background: rgba($lt-blue, 0.06);
+
+  > p {
+    margin: 0 0 0.8rem;
+    color: $lt-ink;
+  }
+}
+
+.lt-field-tasks {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+
+  dt {
+    font-weight: 700;
+    color: $lt-navy;
+  }
+
+  dd {
+    margin: 0.1rem 0 0;
+    line-height: 1.5;
+    color: $lt-ink;
+  }
+}
+
+// With JavaScript, opening a block hides the others: the block grows in the first column
+// and its panel fills the rest of the row. A back button returns to the grid.
+.lt-field-back {
+  margin-bottom: 0.8rem;
+  padding: 0;
+  border: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $lt-blue;
+  background: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+.lt-fields-grid.has-open {
+  grid-template-columns: minmax(0, 1fr);
+
+  > .lt-field-cell:not(.is-open) { display: none; }
+}
+
+.lt-field-cell.is-open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1.25rem;
+
+  .lt-field {
+    padding: 1.8rem;
+    gap: 0.8rem;
+  }
+
+  .lt-field-title { font-size: 1.5rem; }
+
+  .lt-field-question { font-size: 1.05rem; }
+
+  .lt-area-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .lt-field-panel {
+    margin: 0;
+    padding: 1.6rem 1.8rem;
+    font-size: 0.95rem;
+    animation: lt-panel-in 0.25s ease-out;
+  }
+
+  .lt-field-tasks {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem 1.6rem;
+  }
+
+  @media (max-width: 767.98px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@keyframes lt-panel-in {
+  from { opacity: 0; translate: 12px 0; }
+  to { opacity: 1; translate: none; }
+}
+
+.dark {
+  .lt-field { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-field:hover, .lt-field[aria-expanded="true"] { border-color: $lt-sky; }
+  .lt-field-title, .lt-field-tasks dt { color: #f1f5fa; }
+  .lt-field-question, .lt-field-panel > p, .lt-field-tasks dd { color: #c9d6e3; }
+  .lt-field-panel { background: rgba(255, 255, 255, 0.05); }
+  .lt-field-back { color: $lt-sky; }
+}
+
+// Status labels: Explored (blue check), Current (orange dot), Future (grey arrow).
+.lt-status {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 
-  i {
-    font-size: 0.65rem;
+  i { font-size: 0.65rem; }
+
+  .is-done > &, &.is-done { color: $lt-blue; }
+  .is-now > &, &.is-now { color: #9a5600; }
+  .is-next > &, &.is-next { color: $lt-muted; }
+}
+
+.dark {
+  .is-done > .lt-status, .lt-status.is-done { color: $lt-sky; }
+  .is-now > .lt-status, .lt-status.is-now { color: #f5c46b; }
+  .is-next > .lt-status, .lt-status.is-next { color: $lt-dark-muted; }
+}
+
+// Focus cards in the carousel; a selected card keeps a blue border.
+// A centered carousel shows one slide at a time; its neighbours peek in, faded, on both sides.
+// The script marks the centered slide with `is-active`; without it every slide stays fully visible.
+// Spacers before the first slide and after the last one let both end slides reach the center:
+// each spacer plus the track gap is half of the space beside a centered slide (78% wide, 90% on phones).
+.lt-carousel.is-centered .lt-carousel-track {
+  &::before, &::after {
+    content: "";
+    flex: 0 0 calc(11% - 1.25rem);
+  }
+
+  @media (max-width: 767.98px) {
+    &::before, &::after { flex-basis: 0; }
   }
 }
 
-.lt-rmap-lane.is-done .lt-rmap-status { color: $lt-blue; }
-.lt-rmap-lane.is-now .lt-rmap-status { color: #9a5600; }
-.lt-rmap-lane.is-next .lt-rmap-status { color: $lt-muted; }
+.lt-carousel.is-centered.is-enhanced .lt-carousel-track > * {
+  opacity: 0.35;
+  scale: 0.95;
+  transition: opacity 0.4s ease, scale 0.4s ease;
 
-.lt-rmap-lane.is-now .lt-rmap-status i {
-  animation: lt-rmap-pulse 1.6s ease-in-out infinite;
+  &.is-active {
+    opacity: 1;
+    scale: none;
+  }
 }
 
-@keyframes lt-rmap-pulse {
-  50% { opacity: 0.25; }
+.lt-carousel.is-jumping .lt-carousel-track > * {
+  transition: none !important;
 }
 
-.lt-rmap-items {
+.lt-focus-card {
+  flex: 0 0 78%;
+  scroll-snap-align: center;
+  padding: 1.6rem 1.8rem;
+  gap: 0.9rem;
+
+  @media (max-width: 767.98px) {
+    flex-basis: 90%;
+    padding: 1.3rem;
+  }
+
+  &.is-selected { border-color: $lt-blue; }
+
+  .lt-area-title { margin: 0; font-size: 1.35rem; }
+
+  .lt-area-title a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+
+.lt-focus-summary {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: $lt-ink;
+}
+
+.lt-focus-lanes {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.8rem 1.6rem;
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: $lt-ink;
+  }
+}
+
+.lt-focus-more {
+  margin-top: auto;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: $lt-blue;
+}
+
+.dark {
+  .lt-focus-card.is-selected { border-color: $lt-sky; }
+  .lt-focus-summary, .lt-focus-lanes ul { color: #c9d6e3; }
+  .lt-focus-more { color: $lt-sky; }
+}
+
+// Topic detail boxes: the description, then each objective with its publications on the right.
+.lt-topics-detail {
+  margin-top: 1.5rem;
+}
+
+// The script fades a box out before hiding it when the carousel moves to another topic.
+.lt-topic-box {
+  padding: 1.6rem;
+  transition: opacity 0.3s ease;
+  border: 1px solid $lt-border;
+  border-radius: 16px;
+
+  & + & { margin-top: 1.25rem; }
+
+  > .lt-area-title { margin: 0 0 0.8rem; font-size: 1.4rem; }
+
+  > .lt-status { margin-top: 1.4rem; }
+
+  &:focus { outline: none; }
+
+  &.is-leaving { opacity: 0; }
+}
+
+.lt-topic-close {
+  display: inline-flex;
+  align-items: center;
   gap: 0.5rem;
+  margin-top: 1.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: $lt-navy;
+  background: #fff;
+
+  &:hover { border-color: $lt-blue; }
+
+  &[hidden] { display: none; }
+}
+
+.lt-topic-description {
+  max-width: 48rem;
+  color: $lt-ink;
+
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-topic-items {
+  display: grid;
+  gap: 0.75rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.lt-rmap-item {
+.lt-topic-item {
   display: grid;
-  gap: 0.2rem;
-  padding: 0.6rem 0.75rem;
-  border: 2px solid transparent;
-  border-radius: 10px;
-  color: $lt-navy;
-  font-size: 0.9rem;
-  line-height: 1.4;
-  transition: opacity 0.2s ease;
-}
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem 2rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid $lt-border;
+  border-radius: 0 10px 10px 0;
+  background: rgba($lt-blue, 0.04);
 
-.lt-rmap-cite {
-  font-size: 0.8rem;
+  &.is-done { border-left-color: $lt-blue; }
+  &.is-now { border-left-color: $lt-orange; }
+  &.is-next { border-left-style: dashed; border-left-color: $lt-muted; }
 
-  a {
-    font-weight: 600;
+  &:has(.lt-topic-pubs) {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+
+    @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); }
   }
 }
 
-// Done: solid blue. Now: orange with a pulsing dot. Next: dashed outline, because it is a plan.
-.lt-rmap-item.is-done,
-.lt-rmap-key.is-done {
-  background: rgba($lt-blue, 0.08);
-  border-color: rgba($lt-blue, 0.18);
+.lt-topic-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: $lt-ink;
+}
+
+.lt-topic-text .lt-topic-item-title {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
   color: $lt-navy;
 }
 
-.lt-rmap-item.is-now,
-.lt-rmap-key.is-now {
-  background: rgba($lt-orange, 0.14);
-  border-color: rgba($lt-orange, 0.5);
-  color: $lt-navy;
-}
+.lt-topic-pubs {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-.lt-rmap-item.is-next,
-.lt-rmap-key.is-next {
-  background: transparent;
-  border: 2px dashed $lt-muted;
-  color: $lt-navy;
-}
-
-.lt-rmap-related {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 1.2rem 0 0;
-  font-size: 0.85rem;
+  a {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
 
   span {
-    margin-right: 0.2rem;
-    font-weight: 700;
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.78rem;
     color: $lt-muted;
   }
-
-  a {
-    padding: 0.15rem 0.65rem;
-    border: 1px solid rgba($lt-blue, 0.3);
-    border-radius: 999px;
-    font-weight: 600;
-    text-decoration: none;
-  }
-}
-
-// A pressed legend key dims every item and node without that status.
-.lt-rmap[data-lt-focus="done"] .lt-rmap-item:not(.is-done),
-.lt-rmap[data-lt-focus="now"] .lt-rmap-item:not(.is-now),
-.lt-rmap[data-lt-focus="next"] .lt-rmap-item:not(.is-next),
-.lt-rmap[data-lt-focus="done"] .lt-rmap-node:not(.has-done),
-.lt-rmap[data-lt-focus="now"] .lt-rmap-node:not(.has-now),
-.lt-rmap[data-lt-focus="next"] .lt-rmap-node:not(.has-next) {
-  opacity: 0.25;
-}
-
-// Phones: smaller nodes, and the lanes stack with downward arrows.
-@media (max-width: 767.98px) {
-  .lt-rmap-overview {
-    padding: 1rem 0.4rem 1.2rem;
-  }
-
-  .lt-rmap-colheads span {
-    font-size: 0.62rem;
-  }
-
-  .lt-rmap-canvas {
-    height: calc(var(--lt-rows) * 6.5rem);
-  }
-
-  .lt-rmap-node {
-    width: 30%;
-    padding: 0.45rem 0.35rem;
-    border-radius: 10px;
-  }
-
-  .lt-rmap-node-title {
-    font-size: 0.74rem;
-  }
-
-  .lt-rmap-counts {
-    gap: 0.35rem;
-    font-size: 0.64rem;
-  }
-
-  .lt-rmap-tip {
-    display: none;
-  }
-
-  .lt-rmap-detail {
-    padding: 1.1rem 1rem 1rem;
-  }
-
-  .lt-rmap-flow {
-    grid-auto-flow: row;
-    gap: 2rem;
-  }
-
-  .lt-rmap-lane + .lt-rmap-lane::before {
-    top: -1.6rem;
-    left: 1rem;
-    width: 2px;
-    height: 1.2rem;
-    background: repeating-linear-gradient(180deg, $lt-blue 0 6px, transparent 6px 10px);
-    background-size: 2px 20px;
-    animation-name: lt-flow-down;
-  }
-
-  .lt-rmap-lane + .lt-rmap-lane::after {
-    top: -0.5rem;
-    left: calc(1rem - 4px);
-    border-left-color: transparent;
-    border-top-color: $lt-blue;
-  }
-}
-
-@keyframes lt-flow-down {
-  to { background-position: 0 20px; }
 }
 
 .dark {
-  .lt-rmap-overview {
-    border-color: $lt-dark-border;
-    background:
-      radial-gradient(circle, rgba($lt-sky, 0.12) 1px, transparent 1.5px) 0 0 / 18px 18px,
-      $lt-dark-card;
-  }
-
-  .lt-rmap-colheads span, .lt-rmap-related span { color: $lt-dark-muted; }
-  .lt-rmap-edge { stroke: rgba($lt-sky, 0.4); }
-  .lt-rmap-edge.is-active { stroke: $lt-orange; }
-  .lt-rmap-node { background: #0d1a2a; border-color: rgba($lt-sky, 0.35); color: #f1f5fa; box-shadow: none; }
-  .lt-rmap-node:hover, .lt-rmap-node:focus-visible { border-color: $lt-sky; }
-  .lt-rmap-node[aria-current="true"] { border-color: $lt-orange; }
-  .lt-rmap-counts .is-done, .lt-rmap-lane.is-done .lt-rmap-status { color: $lt-sky; }
-  .lt-rmap-counts .is-now, .lt-rmap-lane.is-now .lt-rmap-status { color: #f5c46b; }
-  .lt-rmap-counts .is-next, .lt-rmap-lane.is-next .lt-rmap-status { color: $lt-dark-muted; }
-  .lt-rmap-tip { background: #f1f5fa; color: $lt-navy; }
-  .lt-rmap-summary { color: #c9d6e3; }
-  .lt-rmap .lt-topic { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.3); }
-  .lt-rmap-item, .lt-rmap-key { color: #f1f5fa; }
-  .lt-rmap-item.is-done, .lt-rmap-key.is-done { background: rgba($lt-sky, 0.1); border-color: rgba($lt-sky, 0.25); }
-  .lt-rmap-item.is-now, .lt-rmap-key.is-now { background: rgba($lt-orange, 0.16); border-color: rgba($lt-orange, 0.55); }
-  .lt-rmap-item.is-next, .lt-rmap-key.is-next { border-color: $lt-dark-muted; }
-  .lt-rmap-key[aria-pressed="true"] { box-shadow: 0 0 0 3px rgba($lt-sky, 0.35); }
-  .lt-rmap-related a { border-color: rgba($lt-sky, 0.35); }
-  .lt-rmap-lane + .lt-rmap-lane::before { background-image: repeating-linear-gradient(90deg, $lt-sky 0 6px, transparent 6px 10px); }
-  .lt-rmap-lane + .lt-rmap-lane::after { border-left-color: $lt-sky; }
-}
-
-@media (max-width: 767.98px) {
-  .dark .lt-rmap-lane + .lt-rmap-lane::before {
-    background-image: repeating-linear-gradient(180deg, $lt-sky 0 6px, transparent 6px 10px);
-  }
-
-  .dark .lt-rmap-lane + .lt-rmap-lane::after {
-    border-left-color: transparent;
-    border-top-color: $lt-sky;
-  }
+  .lt-topic-box { border-color: $lt-dark-border; }
+  .lt-topic-close { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-topic-close:hover { border-color: $lt-sky; }
+  .lt-topic-description, .lt-topic-text p { color: #c9d6e3; }
+  .lt-topic-text .lt-topic-item-title { color: #f1f5fa; }
+  .lt-topic-item { background: rgba(255, 255, 255, 0.04); border-left-color: $lt-dark-border; }
+  .lt-topic-item.is-done { border-left-color: $lt-sky; }
+  .lt-topic-item.is-next { border-left-color: $lt-dark-muted; }
+  .lt-topic-pubs span { color: $lt-dark-muted; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lt-rmap-edge,
-  .lt-rmap-lane + .lt-rmap-lane::before,
-  .lt-rmap-lane.is-now .lt-rmap-status i {
-    animation: none;
+  .lt-field { transition: none; }
+  .lt-field-cell.is-open .lt-field-panel { animation: none; }
+  .lt-carousel.is-centered.is-enhanced .lt-carousel-track > * { transition: none; }
+  .lt-topic-box { transition: none; }
+}
+
+// Research area page bands: each section spans the page width, and bands alternate the two homepage
+// section colors (`home_section_odd` and `home_section_even` in data/themes/ltlab.toml), with a hairline between them.
+.lt-band {
+  padding: 3rem 0;
+  background: #fff;
+
+  & + & { border-top: 1px solid $lt-border; }
+
+  &:nth-of-type(even) { background: rgb(246, 248, 251); }
+
+  > .lt-arg-views, > .lt-fields, > .lt-focus { margin-block: 0; }
+
+  > .lt-proj-body { padding-bottom: 0; }
+}
+
+.dark .lt-band {
+  background: #0d1a2a;
+
+  & + .lt-band { border-top-color: rgba(255, 255, 255, 0.1); }
+
+  &:nth-of-type(even) { background: $lt-dark-card; }
+}
+
+// View animation (assets/js/ltlab.js): the hidden states exist only while a view plays.
+// Tags take no space until the text is annotated, so the written text has no gaps; they then open in place.
+.lt-arg-views { position: relative; }
+
+.lt-arg-span .lt-arg-tag {
+  max-width: 30em;
+  overflow: clip;
+  white-space: nowrap;
+}
+
+.lt-arg-view.is-animating {
+  .lt-arg-span { transition: text-decoration-color 0.7s ease, background-color 0.5s ease; }
+
+  .lt-arg-span .lt-arg-tag {
+    transition: max-width 0.7s ease, margin-right 0.7s ease, opacity 0.7s ease;
+    transition-delay: inherit;
   }
 
-  .lt-rmap-node,
-  .lt-rmap-tip {
-    transition: none;
+  &:not(.is-marked) .lt-arg-span { text-decoration-color: transparent; }
+
+  &:not(.is-marked) .lt-arg-span .lt-arg-tag {
+    max-width: 0;
+    margin-right: 0;
+    opacity: 0;
   }
+
+  .lt-arg-node:not(.is-shown) { visibility: hidden; }
+
+  &:not(.is-schema) .lt-arg-schema { display: none; }
+
+  // The component whose box is on its way to the schema.
+  .lt-arg-span.is-sending { background-color: rgba($lt-sky, 0.25); }
+}
+
+// Annotate, Show schema, and Replay sit between the text and the schema. The two steps are numbered and
+// joined by a connector that fills once the text is annotated; a finished step keeps a muted outline.
+.lt-arg-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  .lt-arg-num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  button:disabled .lt-arg-num { background: rgba($lt-blue, 0.12); }
+
+  button.is-done:disabled {
+    border-color: $lt-blue;
+    color: $lt-blue;
+  }
+
+  .lt-arg-link {
+    position: relative;
+    width: 2.5rem;
+    height: 2px;
+    background: $lt-border;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $lt-blue;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+  }
+
+  &.is-annotated .lt-arg-link::after { transform: none; }
+
+  &[hidden] { display: none; }
+
+  [hidden] { display: none; }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 1rem;
+    border: 1px solid $lt-blue;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fff;
+    background: $lt-blue;
+
+    &:disabled {
+      border-color: $lt-border;
+      color: $lt-muted;
+      background: transparent;
+    }
+  }
+}
+
+.dark .lt-arg-controls {
+  button {
+    border-color: $lt-sky;
+    color: $lt-navy;
+    background: $lt-sky;
+
+    &:disabled { border-color: $lt-dark-border; color: $lt-dark-muted; background: transparent; }
+    &.is-done:disabled { border-color: $lt-sky; color: $lt-sky; }
+    &:disabled .lt-arg-num { background: rgba($lt-sky, 0.15); }
+  }
+
+  .lt-arg-link { background: $lt-dark-border; }
+  .lt-arg-link::after { background: $lt-sky; }
+}
+
+// A component on its way from the text to the schema (assets/js/ltlab.js): a frame in its role color that
+// encloses the marked text, then fills and carries a copy of the box at its final size. The script sets
+// --lt-ring (frame), --lt-fill (background), and --lt-lift (shadow), each from 0 to 1.
+.lt-arg-fly {
+  --lt-fly-bg: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  overflow: hidden;
+  border-radius: 8px;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--lt-fly-bg) calc(var(--lt-fill, 0) * 100%), transparent);
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--lt-role) calc(var(--lt-ring, 0) * 100%), transparent),
+    0 10px 28px rgba(0, 48, 96, calc(var(--lt-lift, 0) * 0.2));
+  will-change: transform, width, height;
+}
+
+.dark .lt-arg-fly { --lt-fly-bg: #{$lt-dark-card}; }
+
+// The copy of the box draws only its content and its role border; the frame behind it supplies the fill.
+.lt-arg-ghost,
+.dark .lt-arg-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  border-color: transparent;
+  border-left-color: var(--lt-role);
+  background: transparent;
 }

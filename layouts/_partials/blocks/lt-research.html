@@ -1,58 +1,28 @@
-{{/* Research map: one card per page of the research section, then a matrix of the threads shared across areas. */}}
-{{/* Card topics are the research map block titles of each area page, or its h3 headings when it has no map. Shared threads are keys of data/topics.yaml in its `threads` front matter. */}}
+{{/* Research map: one card per page of the research section. */}}
+{{/* Card topics are the focus topic titles of each area page, or its h3 headings when it has no focus topics. */}}
 {{ $block := .wcBlock }}
 {{ $section := site.GetPage ($block.content.section | default "research") }}
 {{ $areas := $section.RegularPages.ByWeight }}
 {{ partial "lt/section-head.html" $block }}
 <div class="lt-areas">
   {{ range $areas }}
-  <a class="lt-area" href="{{ .RelPermalink }}">
+  <a class="lt-area lt-link-card" href="{{ .RelPermalink }}">
     <div class="lt-area-head">
       {{ partial "lt/cover.html" (dict "seed" .Title "pattern" (.Params.cover_pattern | default "dots")) }}
-      {{ with .Params.icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}
     </div>
     <div class="lt-area-body">
-      <h3 class="lt-area-title">{{ .Title }}</h3>
+      <h3 class="lt-area-title">{{ with .Params.icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}{{ .Title }}</h3>
       <p class="lt-area-tagline">{{ .Params.tagline | default (.Summary | plainify | truncate 110) }}</p>
-      {{ with .Params.map }}
+      {{ with .Params.focus }}
       <ul class="lt-area-topics">
-        {{ range . }}{{ range .blocks }}<li>{{ .title }}</li>{{ end }}{{ end }}
+        {{ range . }}<li>{{ .title }}</li>{{ end }}
       </ul>
       {{ else }}{{ with findRESubmatch `<h3[^>]*>(.*?)</h3>` .Content }}
       <ul class="lt-area-topics">
         {{ range . }}<li>{{ index . 1 | plainify | htmlUnescape }}</li>{{ end }}
       </ul>
       {{ end }}{{ end }}
-      <span class="lt-area-more">Explore {{ .Title | lower }} <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
     </div>
   </a>
   {{ end }}
 </div>
-
-{{ $threads := slice }}
-{{ range $areas }}{{ range .Params.threads }}{{ if not (in $threads .) }}{{ $threads = $threads | append . }}{{ end }}{{ end }}{{ end }}
-{{ with $threads }}
-<div class="lt-threads">
-  <div class="lt-threads-intro">
-    <h3>Shared threads</h3>
-    <p>{{ $block.content.threads_text | default "Questions we study across every area." }}</p>
-  </div>
-  <div class="lt-threads-scroll">
-  <table class="lt-threads-table">
-    <thead>
-      <tr><th scope="col"><span class="sr-only">Thread</span></th>{{ range $areas }}<th scope="col">{{ .Params.short_title | default .Title }}</th>{{ end }}</tr>
-    </thead>
-    <tbody>
-      {{ range $thread := . }}
-      <tr>
-        <th scope="row">{{ partial "lt/topic-tags.html" (slice $thread) }}</th>
-        {{ range $areas }}
-        <td>{{ if in .Params.threads $thread }}<span class="lt-dot" role="img" aria-label="yes"></span>{{ else }}<span class="lt-dot-empty" role="img" aria-label="no"></span>{{ end }}</td>
-        {{ end }}
-      </tr>
-      {{ end }}
-    </tbody>
-  </table>
-  </div>
-</div>
-{{ end }}

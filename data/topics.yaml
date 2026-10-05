@@ -1,5 +1,5 @@
-# Topics shown as colored tags on project, tool, and news cards, and in the homepage research map.
-# A page lists keys from this file in its `topics` field. Research areas also use them in `topic` and `threads`.
+# Topics shown as colored tags on publication pages and research map panels.
+# A page lists keys from this file in its `topics` field.
 # Change a label or a color here to update every card that uses it.
 legal:
   label: Legal

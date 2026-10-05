@@ -10,29 +10,42 @@ icon: "TODO: icon name"
 # Position of the card on the homepage, after the existing areas
 weight: 10
 
-# Homepage research map: one-line tagline, cover pattern (dots, graph, tokens, or wave), and shared threads
+# Homepage research card: one-line tagline and cover pattern (dots, graph, tokens, or wave)
 tagline: "TODO: Add a tagline of at most 12 words."
 cover_pattern: dots
-threads:
-  - "TODO: thread shared with other areas, such as Interpretability"
 
-# Research map: an overview graph of subareas, then one detail panel per subarea.
-# `key` names the node, `summary` is the hover text, and `links` lists related node keys.
-# `status` is done (published), now (current work), or next (where we are heading).
-# `cite` lists publication folder names, shown as "Surname et al., Year" links.
-map:
-  - column: "TODO: Column title"
-    blocks:
-      - key: first-subarea
-        title: "TODO: Subarea title"
-        summary: "TODO: One or two short sentences shown on hover."
-        topics: []
-        links: []
-        items:
-          - status: done
-            text: "TODO: One short sentence on published work."
-            cite: []
+# Argument views (optional): tabs under the overview, one argument each, grouped by argument model or domain.
+# See content/research/am/index.md for the fields of a view.
+# views: []
+
+# Research areas: one block per area; selecting a block enlarges it and opens its tasks beside it.
+fields:
+  - key: first-field
+    title: "TODO: Block title"
+    icon: search
+    question: "TODO: The question this family of tasks answers."
+    summary: "TODO: One or two sentences."
+    tasks:
+      - name: "TODO: Task name"
+        text: "TODO: Given <input>, the task is to <output>."
+
+# Our focus: the lab topics, shown as a rotating carousel and one detail box per topic.
+# `status` is done (Explored), now (Current), or next (Future); `text` is the card bullet and `detail` explains it.
+# `cite` lists publication folder names, shown on the right of Explored objectives.
+focus:
+  - key: first-topic
+    title: "TODO: Topic title"
+    icon: comments
+    summary: "TODO: Card text of at most two sentences."
+    description: "TODO: Two to four sentences that define the topic for a reader outside the field."
+    items:
+      - status: done
+        text: "TODO: Short bullet of at most 12 words."
+        detail: "TODO: Two or three sentences on what was done and what it shows."
+        cite: []
 ---
 
-TODO: Define the research area in two or three plain sentences.
+## What is TODO?
+
+TODO: Define the research area in three or four plain sentences.
 

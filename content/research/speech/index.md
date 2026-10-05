@@ -12,16 +12,9 @@ summary: The development of automatic tools for handling and digesting speech da
 icon: microphone-alt
 weight: 3
 
-# Homepage research map: tagline, cover pattern (dots, graph, tokens, or wave), own topic, and shared threads.
-# Topic and thread keys come from data/topics.yaml.
+# Homepage research card: tagline and cover pattern (dots, graph, tokens, or wave).
 tagline: Models that listen, from spoken arguments to clinical speech.
 cover_pattern: wave
-topic: speech
-threads:
-  - argument-mining
-  - interpretability
-  - multimodal
-  - benchmark
 ---
 
 ### Argumentation 

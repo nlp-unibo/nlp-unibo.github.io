@@ -32,7 +32,7 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'We propose a study on multimodal argument mining in the domain of political debates. We collate and extend existing corpora and provide an initial empirical study on multimodal architectures, with a special emphasis on input encoding methods. Our results provide interesting indications about future directions in this important domain.'
 
 # Summary. An optional shortened abstract.
 summary: ''

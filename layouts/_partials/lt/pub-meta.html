@@ -19,9 +19,6 @@
 {{- range .Params.links -}}
   {{- if not (and $arxiv (strings.Contains .url "arxiv.org")) }}{{ $links = $links | append (dict "name" (cond (eq .name "URL") "Paper" .name) "url" .url "icon" "fas fa-link") }}{{ end -}}
 {{- end -}}
-{{- $authors := .Params.authors | default slice -}}
-{{- $short := delimit (first 3 $authors) ", " -}}
-{{- if gt (len $authors) 3 }}{{ $short = printf "%s, et al." $short }}{{ end -}}
-{{- $tldr := .Params.summary | default "" -}}
+{{- $tldr := .Params.card_summary | default .Params.summary | default "" -}}
 {{- if and (not $tldr) .Params.abstract }}{{ $tldr = .Params.abstract | plainify | truncate 170 }}{{ end -}}
-{{- return dict "kind" $kind "venue" $venue "arxiv" $arxiv "links" $links "authors" $authors "authors_short" $short "tldr" $tldr -}}
+{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr -}}

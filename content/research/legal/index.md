@@ -13,16 +13,9 @@ summary: The process of automatically understanding and extracting legal knowled
 icon: balance-scale
 weight: 2
 
-# Homepage research map: tagline, cover pattern (dots, graph, tokens, or wave), own topic, and shared threads.
-# Topic and thread keys come from data/topics.yaml.
+# Homepage research card: tagline and cover pattern (dots, graph, tokens, or wave).
 tagline: Turning court decisions and contracts into structured legal knowledge.
 cover_pattern: tokens
-topic: legal
-threads:
-  - argument-mining
-  - interpretability
-  - benchmark
-  - llm-reasoning
 ---
 
 ### Argumentation and Argument Schema 

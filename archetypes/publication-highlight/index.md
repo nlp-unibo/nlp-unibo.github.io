@@ -15,6 +15,8 @@ doi: ""
 abstract: "TODO: Add abstract."
 # One sentence shown under the title of the publication page and on publication cards
 summary: ""
+# Optional shorter summary of at most 15 words for the homepage preprint card
+card_summary: ""
 tags:
   - selected
 featured: false

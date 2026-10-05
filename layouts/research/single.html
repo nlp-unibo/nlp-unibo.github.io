@@ -1,10 +1,14 @@
-{{/* Research area page: header, short introduction, and the research map. */}}
-{{/* The map comes from the `map` front matter: columns of blocks. The overview draws each block as a node, joined by its `links`. */}}
-{{/* Below the overview, each block has a detail panel with its items in Done, Now, and Next lanes. assets/js/ltlab.js shows one panel at a time; without JavaScript every panel is visible and the nodes are anchor links. */}}
-{{/* An item cites publications by folder name; each citation renders as "Surname et al., Year" and links to the publication page. */}}
+{{/* Research area page. It adds detail from top to bottom, so each reader can stop at the depth they need. */}}
+{{/* 1. The body: a short overview, followed by `views` of one argument under different argument models and domains, with the text and its source caption above the schema. */}}
+{{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
+{{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
+{{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
+{{/* assets/js/ltlab.js opens one area and one detail box at a time; without JavaScript every panel and box is visible. */}}
 {{- define "main" -}}
-{{ $status := dict "done" (dict "label" "Done" "icon" "fas fa-check") "now" (dict "label" "Now" "icon" "fas fa-circle") "next" (dict "label" "Next" "icon" "fas fa-arrow-right") }}
+{{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
 <article class="lt-proj">
+  {{/* Each section sits in a full-width band; bands alternate their background, as on the homepage. */}}
+  <div class="lt-band">
   <header class="lt-proj-header">
     <p class="lt-proj-venue"><span class="lt-pill">Research area</span></p>
     <h1 class="lt-proj-title">{{ .Title }}</h1>
@@ -14,109 +18,179 @@
   <div class="lt-proj-body article-style">
     {{ .Content }}
   </div>
+  </div>
 
-  {{ with .Params.map }}
-  {{/* Node positions in percent of the overview canvas: one column per map column, blocks centered vertically in their column. */}}
-  {{ $cols := len . }}
-  {{ $rows := 0 }}{{ range . }}{{ $rows = math.Max $rows (len .blocks) }}{{ end }}
-  {{ $nodes := dict }}
-  {{ $blocks := slice }}
-  {{ range $c, $column := . }}
-    {{ $n := len $column.blocks }}
-    {{ range $r, $b := $column.blocks }}
-      {{ $x := div (mul 100.0 (add $c 0.5)) $cols }}
-      {{ $y := div (mul 100.0 (add $r 0.5 (div (sub $rows $n) 2.0))) $rows }}
-      {{ $nodes = merge $nodes (dict $b.key (dict "x" $x "y" $y "c" $c "title" $b.title)) }}
-      {{ $blocks = $blocks | append $b }}
-    {{ end }}
-  {{ end }}
-  {{/* Links are declared once, so each block's neighbours are its own links plus the blocks that link to it. */}}
-  {{ $neighbours := dict }}
-  {{ range $blocks }}{{ $from := .key }}{{ range .links }}
-    {{ $neighbours = merge $neighbours (dict $from ((index $neighbours $from | default slice) | append .)) }}
-    {{ $neighbours = merge $neighbours (dict . ((index $neighbours . | default slice) | append $from)) }}
-  {{ end }}{{ end }}
-
-  <section class="lt-rmap" aria-labelledby="research-map">
-    <div class="lt-rmap-head">
-      <h2 id="research-map">Research map</h2>
-      <div class="lt-rmap-legend" role="group" aria-label="Highlight items">
-        {{ range slice "done" "now" "next" }}{{ $s := index $status . }}
-        <button type="button" class="lt-rmap-key is-{{ . }}" data-lt-status="{{ . }}" aria-pressed="false"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</button>
-        {{ end }}
-      </div>
-    </div>
-
-    <div class="lt-rmap-overview">
-      <div class="lt-rmap-colheads" style="--lt-cols: {{ $cols }}">
-        {{ range . }}<span>{{ .column }}</span>{{ end }}
-      </div>
-      <div class="lt-rmap-canvas" style="--lt-rows: {{ $rows }}">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
-          {{ range $blocks }}{{ $from := .key }}{{ $a := index $nodes $from }}{{ range .links }}{{ $b := index $nodes . }}
-          {{ $mx := div (add $a.x $b.x) 2 }}
-          <path class="lt-rmap-edge" data-lt-a="{{ $from }}" data-lt-b="{{ . }}" d="M{{ $a.x }} {{ $a.y }} C{{ $mx }} {{ $a.y }} {{ $mx }} {{ $b.y }} {{ $b.x }} {{ $b.y }}"/>
+  {{ with .Params.views }}
+  {{/* Argument views: one tab per argument model or domain, each with the marked text and the argument graph. */}}
+  {{/* assets/js/ltlab.js switches tabs and draws the graph edges; without it every view is visible and edges are listed as text. */}}
+  {{ $relations := dict "support" "supports" "attack" "attacks" "link" "links" }}
+  {{ $groups := slice }}{{ range . }}{{ if not (in $groups .group) }}{{ $groups = $groups | append .group }}{{ end }}{{ end }}
+  <div class="lt-band">
+  <section class="lt-arg-views" aria-label="Argument models and domains">
+    <div class="lt-arg-tabgroups">
+      {{ range $groups }}{{ $group := . }}
+      <div class="lt-arg-tabgroup">
+        <span class="lt-arg-tabgroup-label" id="views-{{ urlize $group }}">{{ $group }}</span>
+        <div role="tablist" aria-labelledby="views-{{ urlize $group }}">
+          {{ range $i, $v := $.Params.views }}{{ if eq $v.group $group }}
+          <button type="button" role="tab" id="view-{{ $v.key }}-tab" aria-controls="view-{{ $v.key }}" aria-selected="{{ eq $i 0 }}" tabindex="{{ cond (eq $i 0) 0 -1 }}">{{ $v.label }}</button>
           {{ end }}{{ end }}
-        </svg>
-        {{ range $blocks }}{{ $p := index $nodes .key }}
-        <a class="lt-rmap-node lt-rmap-c{{ $p.c }}{{ range (uniq (apply .items "index" "." "status")) }} has-{{ . }}{{ end }}" href="#area-{{ .key }}" data-lt-area="{{ .key }}" aria-describedby="tip-{{ .key }}" style="left: {{ $p.x }}%; top: {{ $p.y }}%; --lt-c: {{ $p.c }}">
-          <span class="lt-rmap-node-title">{{ .title }}</span>
-          <span class="lt-rmap-counts">
-            {{- $item_status := slice }}{{ range .items }}{{ $item_status = $item_status | append .status }}{{ end }}
-            {{- range slice "done" "now" "next" }}{{ $k := . }}{{ $count := 0 }}{{ range $item_status }}{{ if eq . $k }}{{ $count = add $count 1 }}{{ end }}{{ end }}{{ if $count }}<span class="is-{{ $k }}"><i class="{{ (index $status $k).icon }}" aria-hidden="true"></i> {{ $count }}<span class="sr-only"> {{ (index $status $k).label }}</span></span>{{ end }}{{ end -}}
-          </span>
-          <span class="lt-rmap-tip" role="tooltip" id="tip-{{ .key }}">{{ .summary }}</span>
-        </a>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    {{ range $i, $v := . }}
+    {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label)) }}{{ end }}
+    {{ $parts := slice }}{{ range $v.segments }}{{ if .id }}{{ $parts = $parts | append . }}{{ end }}{{ end }}
+    {{ range $v.implicit }}{{ $parts = $parts | append (merge . (dict "implicit" true)) }}{{ end }}
+    {{ $byid := dict }}{{ range $parts }}{{ $byid = merge $byid (dict .id .) }}{{ end }}
+    <div class="lt-arg-view" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <div class="lt-arg-panels">
+        <figure class="lt-arg-example">
+          <div class="lt-arg-panel">
+            <h3 class="lt-arg-step"><span>1</span> The text</h3>
+            <p class="lt-arg-text">
+              {{- range $s, $seg := $v.segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag">{{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
+            </p>
+          </div>
+          {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+        </figure>
+          <div class="lt-arg-controls" hidden>
+            {{/* Two steps in order: the connector between them fills once the text is annotated. */}}
+            <button type="button" data-lt-action="annotate"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
+            <span class="lt-arg-link" aria-hidden="true"></span>
+            <button type="button" data-lt-action="schema"><span class="lt-arg-num" aria-hidden="true">2</span> Show schema</button>
+            <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+          </div>
+          <div class="lt-arg-panel lt-arg-schema">
+            <h3 class="lt-arg-step"><span>2</span> Schema</h3>
+            <div class="lt-arg-graph-scroll">
+            {{ $cols := 1 }}{{ range $v.rows }}{{ if gt (len .) $cols }}{{ $cols = len . }}{{ end }}{{ end }}
+            <div class="lt-arg-graph" data-lt-graph style="--lt-cols: {{ $cols }}">
+              <svg class="lt-arg-edges-svg" aria-hidden="true" focusable="false"></svg>
+              {{ range $v.rows }}
+              <div class="lt-arg-row">
+                {{ range . }}{{ $n := index $byid . }}{{ $r := index $slot $n.role }}
+                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $n.implicit }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}">
+                  <span class="lt-arg-tag">{{ $r.label }}{{ if $n.implicit }} (implicit){{ end }}</span>
+                  {{ with $n.tag }}<span class="lt-arg-scheme">{{ . }}</span>{{ end }}
+                  {{ $n.node | default $n.text }}
+                </div>
+                {{ end }}
+              </div>
+              {{ end }}
+              <ul class="lt-arg-edges">
+                {{ range $v.edges }}{{ $from := index $byid .from }}{{ $to := index $byid .to }}
+                <li data-from="{{ .from }}" data-to="{{ .to }}" data-relation="{{ .relation }}" data-label="{{ .label | default (index $relations .relation) }}">{{ (index $slot $from.role).label }} "{{ $from.node | default $from.text }}" {{ .label | default (index $relations .relation) }} {{ (index $slot $to.role).label }} "{{ $to.node | default $to.text }}"</li>
+                {{ end }}
+              </ul>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    {{ end }}
+  </section>
+  </div>
+  {{ end }}
+
+  {{ with .Params.fields }}
+  <div class="lt-band">
+  <section class="lt-fields" aria-labelledby="fields-title" data-lt-fields>
+    <h2 id="fields-title">Research areas</h2>
+    <div class="lt-fields-grid">
+      {{ range . }}
+      <div class="lt-field-cell">
+        <button type="button" class="lt-field" id="field-{{ .key }}" aria-expanded="false" aria-controls="field-{{ .key }}-panel">
+          {{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}
+          <span class="lt-field-title">{{ .title }}</span>
+          <span class="lt-field-question">{{ .question }}</span>
+        </button>
+        <div class="lt-field-panel" id="field-{{ .key }}-panel" role="region" aria-labelledby="field-{{ .key }}">
+          <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All research areas</button>
+          <p>{{ .summary }}</p>
+          <dl class="lt-field-tasks">
+            {{ range .tasks }}<div><dt>{{ .name }}</dt><dd>{{ .text }}</dd></div>{{ end }}
+          </dl>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  </div>
+  {{ end }}
+
+  {{ with .Params.focus }}
+  {{ $topics := . }}
+  <div class="lt-band">
+  <section class="lt-focus" aria-labelledby="focus-title">
+    <h2 id="focus-title">Our focus</h2>
+    <div class="lt-carousel is-centered" data-lt-carousel data-lt-loop data-lt-autoplay="8000">
+      <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Focus topics">
+        {{ range $topics }}{{ $topic := . }}
+        <article class="lt-card lt-link-card lt-focus-card" data-lt-topic="{{ .key }}">
+          <h3 class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}<a class="lt-stretch" href="#topic-{{ .key }}" data-lt-topic="{{ .key }}">{{ .title }}</a></h3>
+          <p class="lt-focus-summary">{{ .summary }}</p>
+          <div class="lt-focus-lanes">
+            {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
+            {{ with where $topic.items "status" $k }}
+            <div class="lt-focus-lane is-{{ $k }}">
+              <h4 class="lt-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+              <ul>{{ range . }}<li>{{ .text }}</li>{{ end }}</ul>
+            </div>
+            {{ end }}
+            {{ end }}
+          </div>
+          <span class="lt-focus-more">Read more <i class="fas fa-arrow-down" aria-hidden="true"></i></span>
+        </article>
         {{ end }}
+      </div>
+      <div class="lt-carousel-nav" hidden>
+        <div class="lt-carousel-dots">
+          {{ range $i, $t := $topics }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $t.title }}"></button>{{ end }}
+        </div>
+        <div class="lt-carousel-arrows">
+          <button type="button" data-lt-step="-1" aria-label="Previous topic"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+          <button type="button" data-lt-step="1" aria-label="Next topic"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
       </div>
     </div>
 
-    <div class="lt-rmap-details">
-      {{ range $blocks }}{{ $key := .key }}
-      <section class="lt-rmap-detail" id="area-{{ $key }}" data-lt-area="{{ $key }}" aria-labelledby="area-{{ $key }}-title" tabindex="-1">
-        <div class="lt-rmap-detail-head">
-          <h3 id="area-{{ $key }}-title">{{ .title }}</h3>
-          {{ partial "lt/topic-tags.html" .topics }}
-        </div>
-        <p class="lt-rmap-summary">{{ .summary }}</p>
-        <div class="lt-rmap-flow">
-          {{ $items := .items }}
-          {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
-          {{ $lane := where $items "status" $k }}
-          {{ with $lane }}
-          <div class="lt-rmap-lane is-{{ $k }}">
-            <h4 class="lt-rmap-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
-            <ul class="lt-rmap-items">
-              {{ range . }}
-              <li class="lt-rmap-item is-{{ $k }}">
-                <span class="lt-rmap-text">{{ .text }}</span>
-                {{ with .cite }}
-                <span class="lt-rmap-cite">
-                  {{- range $i, $slug := . }}{{ with site.GetPage (printf "/publication/%v" $slug) }}
-                    {{- $names := apply (.Params.authors | default slice) "split" "." " " }}
-                    {{- $surnames := slice }}{{ range $names }}{{ $surnames = $surnames | append (index . (sub (len .) 1)) }}{{ end }}
-                    {{- $who := index $surnames 0 }}
-                    {{- if eq (len $surnames) 2 }}{{ $who = printf "%s and %s" $who (index $surnames 1) }}{{ else if gt (len $surnames) 2 }}{{ $who = printf "%s et al." $who }}{{ end }}
-                    {{- if $i }}; {{ end }}<a href="{{ .RelPermalink }}" title="{{ .Title }}">{{ $who }}, {{ .Date.Year }}</a>
-                  {{- end }}{{ end -}}
-                </span>
-                {{ end }}
-              </li>
-              {{ end }}
+    <div class="lt-topics-detail">
+      {{ range $topics }}{{ $topic := . }}
+      <section class="lt-topic-box" id="topic-{{ .key }}" data-lt-topic="{{ .key }}" aria-labelledby="topic-{{ .key }}-title" tabindex="-1">
+        <h3 id="topic-{{ .key }}-title" class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}{{ .title }}</h3>
+        <div class="lt-topic-description">{{ .description | markdownify }}</div>
+        {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
+        {{ with where $topic.items "status" $k }}
+        <h4 class="lt-status is-{{ $k }}"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+        <ul class="lt-topic-items">
+          {{ range . }}
+          <li class="lt-topic-item is-{{ $k }}">
+            <div class="lt-topic-text">
+              <p class="lt-topic-item-title">{{ .text }}</p>
+              {{ with .detail }}<p>{{ . }}</p>{{ end }}
+            </div>
+            {{ with .cite }}
+            <ul class="lt-topic-pubs" aria-label="Publications">
+              {{ range . }}{{ with site.GetPage (printf "/publication/%v" .) }}
+              {{ $authors := .Params.authors | default slice }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
+              {{ end }}{{ end }}
             </ul>
-          </div>
+            {{ end }}
+          </li>
           {{ end }}
-          {{ end }}
-        </div>
-        {{ with index $neighbours $key }}
-        <p class="lt-rmap-related"><span>Connected to</span>
-          {{ range . }}<a href="#area-{{ . }}" data-lt-area="{{ . }}">{{ (index $nodes .).title }}</a>{{ end }}
-        </p>
+        </ul>
         {{ end }}
+        {{ end }}
+        <button type="button" class="lt-topic-close" hidden><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to our focus</button>
       </section>
       {{ end }}
     </div>
   </section>
+  </div>
   {{ end }}
 </article>
 {{- end -}}

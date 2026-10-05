@@ -34,6 +34,7 @@ abstract: Many NLP applications require models to be interpretable. However, man
 
 # Summary. An optional shortened abstract.
 summary: A transformer extension that stores natural language explanations in an external memory and uses them to explain its predictions.
+card_summary: A transformer that stores natural language explanations in memory to explain its predictions.
 
 tags:
 - interpretability

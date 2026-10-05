@@ -1,28 +1,20 @@
-{{/* Model card for one publication. Input: the publication page. */}}
+{{/* Wide carousel card for one publication: figure, title, date, authors, a short summary, and links. Input: the publication page. */}}
 {{ $meta := partial "lt/pub-meta.html" . }}
-<article class="lt-card lt-model-card">
-  <div class="lt-model-head">
+{{ $authors := .Params.authors | default slice }}
+<article class="lt-card lt-link-card lt-slide">
+  <div class="lt-slide-media">
     {{ with (.Resources.ByType "image").GetMatch "*featured*" }}
-      {{ $img := .Fill "800x400 webp Center" }}
+      {{ $img := .Fit "1000x700 webp" }}
       <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
     {{ else }}
-      {{ partial "lt/cover.html" (dict "seed" .Title) }}
+      {{ partial "lt/cover.html" (dict "seed" .Title "tall" true) }}
     {{ end }}
-    <div class="lt-model-badges">
-      <span class="lt-badge">{{ $meta.kind }}</span>
-      {{ with $meta.arxiv }}<span class="lt-badge lt-badge-mono">arXiv:{{ . }}</span>{{ end }}
-    </div>
   </div>
-  <div class="lt-card-body">
-    <dl class="lt-model-specs">
-      <div><dt>Year</dt><dd>{{ .Date.Format "2006" }}</dd></div>
-      <div><dt>Venue</dt><dd>{{ $meta.venue | default (cond (ne $meta.arxiv "") "arXiv" "Unpublished") }}</dd></div>
-      <div><dt>Authors</dt><dd>{{ len $meta.authors }}</dd></div>
-    </dl>
-    <h3 class="lt-card-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-    <p class="lt-model-authors">{{ $meta.authors_short }}</p>
-    {{ with $meta.tldr }}<p class="lt-card-text">{{ . }}</p>{{ end }}
-    {{ with .Params.topics }}{{ partial "lt/topic-tags.html" . }}{{ else }}{{ with .Params.tags }}<ul class="lt-tags">{{ range first 3 . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}{{ end }}
-    {{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 2) }}
+  <div class="lt-slide-body">
+    <h3 class="lt-slide-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <div class="lt-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time></div>
+    {{ with $authors }}<p class="lt-slide-authors">{{ delimit (first 4 .) ", " }}{{ if gt (len .) 4 }}, et al.{{ end }}</p>{{ end }}
+    {{ with $meta.tldr }}<p class="lt-slide-text">{{ . }}</p>{{ end }}
+    {{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 3) }}
   </div>
 </article>

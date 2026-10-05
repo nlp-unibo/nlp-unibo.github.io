@@ -119,6 +119,7 @@ content/publication/rossi-etal-2026-example/
 | `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which selects the list on the Publications page. Add `Highlight` as a second value to also list the paper under Highlights |
 | `abstract` | The abstract, shown in full on the publication page |
 | `summary` | One sentence shown under the title of the publication page and on publication cards |
+| `card_summary` | Optional sentence of at most 15 words that replaces the summary on the homepage preprint card |
 | `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
 | `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
 | `award` | Optional award name, for example `Best Paper Award`. It appears with a trophy under the title in every publication list |
@@ -197,13 +198,14 @@ Our paper has been accepted at ACL 2026.
 ```
 
 The homepage shows the six most recent news items automatically.
-The three newest appear as cards with generated cover art, and the others appear as rows.
+The three newest appear as text cards, and the others appear as rows.
 A preview does not link to the news page.
 The title, the summary, and the links must therefore be enough on their own.
 
 Every link in the text appears as a button on the preview, so a reader can open a program or a paper directly.
 For a paper, use the paper title as the news title and write the venue in the summary.
-List `topics` from `data/topics.yaml` to show colored tags, preferably the topics of the research areas.
+List `topics` from `data/topics.yaml`, preferably the topics of the research areas.
+Topics classify the item and do not appear on the preview.
 
 The tags set the label on the preview.
 The tag `paper` gives **Paper**, `special issue` gives **Call for papers**, `workshop` gives **Workshop**, and `event` gives **Event**.
@@ -286,8 +288,7 @@ Copy the `_index.md` of an existing topic and replace its title, summary, and de
    The Projects page shows only the summary, and the card opens `external_link` directly.
    The date orders the list and is not displayed.
 3. List one or more `topics`, using the keys defined in `data/topics.yaml`.
-   Each topic appears as a colored tag on the card.
-   To add a topic or change its label or color, edit `data/topics.yaml`.
+   Topics classify the project and do not appear on the card.
 4. Keep `categories` as `International project` or `National project`.
    It selects the list on the Projects page.
 
@@ -310,18 +311,27 @@ The For Students page suggests international challenges and academic workshops a
    The tagline appears on the homepage card.
 3. Set `icon` to a [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name, such as `comments` or `balance-scale`.
 4. Set `weight` to order the cards, and `cover_pattern` to `dots`, `graph`, `tokens`, or `wave`.
-5. Set `topic` to the key of the area in `data/topics.yaml`, and list in `threads` the topic keys that the area shares with other areas, such as `interpretability`.
-   The homepage matrix shows one row per thread, with the label and color from `data/topics.yaml`.
-6. Write a short introduction in the body that defines the area in plain words.
-7. Describe the area in a `map`: columns of blocks, one block per subarea.
-   The page draws each block as a node of an overview graph, joined to the blocks named in its `links`.
-   Hovering a node shows its `summary`, and selecting it opens a panel with its items marked `done`, `now`, or `next`.
-   An item cites publications in `cite` by folder name, and each citation appears as a link such as "Mancini et al., 2024".
-   A block lists `topics` from `data/topics.yaml`, shown as colored tags, and its `title` appears as a topic chip on the homepage card.
-   Copy the map of `content/research/am/index.md` as a starting point.
-   The check fails on a repeated block key, a link to a missing block, an unknown status, or a citation of a missing publication.
+5. Write a short overview in the body, under a `## What is ...?` heading, that defines the area in plain words.
+   Optional `views` add tabs under the overview, one per argument model or domain.
+   Each view shows one argument as marked text and, below it, as a graph, with `roles`, `segments`, `rows`, and `edges`.
+   Graph nodes repeat the marked text, so keep each example short and mark [...] where text is omitted.
+   Each row of `rows` is one line of the graph; nodes line up in columns, and supports and attacks are drawn in green and red.
+   Picking a tab types the text; the Annotate and Show schema buttons then mark its components and move them into the schema.
+   On research area pages and on the homepage, the section in the middle of the window is in focus and the others fade slightly.
+   Copy the views of `content/research/am/index.md`, and link the source of each example by name in its `caption`.
+6. List the research areas in `fields`.
+   Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.
+   Selecting a block enlarges it and opens its tasks beside it.
+7. List the lab topics in `focus`.
+   The topics rotate in a carousel; the current dot fills until the next topic, and the rotation holds under the pointer, under keyboard focus, and while a detail box is open.
+   Each topic has a card `summary`, a longer `description`, and `items` marked `done` (Explored), `now` (Current), or `next` (Future).
+   An item has a short `text` for the card and a `detail` for the box below the carousel.
+   An Explored item cites publications in `cite` by folder name, and the box lists them on the right.
+   The topic titles appear as chips on the homepage card.
+   Copy `content/research/am/index.md` as a starting point.
+   The check fails on a missing or repeated key, an unknown status, or a citation of a missing publication.
 
-The homepage shows one card per research area and a matrix of shared threads automatically.
+The homepage shows one card per research area automatically.
 
 ### Add a tool
 
@@ -333,7 +343,7 @@ A tool card links directly to the tool's own website, and the tool page redirect
    The date orders the list and is not displayed.
 3. Set `external_link` to the tool's website.
 4. List one or more `topics`, using the keys defined in `data/topics.yaml`.
-   Each topic appears as a colored tag on the card.
+   Topics classify the tool and do not appear on the card.
 
 ### Publish the Work with us page
 

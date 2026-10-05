@@ -34,6 +34,7 @@ abstract: We propose a novel architecture for Graph Neural Networks that is insp
 
 # Summary. An optional shortened abstract.
 summary: A graph neural network whose pooling is inspired by tree kernels, evaluated on sentence classification across several argument mining corpora.
+card_summary: A graph neural network with tree-kernel-inspired pooling for argument mining sentence classification.
 
 tags:
 - argument mining

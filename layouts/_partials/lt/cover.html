@@ -1,5 +1,6 @@
 {{/* Generated cover art for cards. The `seed` string fixes the palette and the pattern, so a page always gets the same image. */}}
 {{/* Patterns: tokens (text lines), graph (argument nodes), wave (speech bars), and dots. Each shape hashes the seed with its own index. */}}
+{{/* `tall` extends the background to a square around the 400x200 pattern band, so tall boxes crop less of the pattern. */}}
 {{- $h := hash.FNV32a .seed -}}
 {{- $palettes := slice
   (slice "#003060" "#105080" "#f09010")
@@ -10,14 +11,14 @@
 {{- $p := index $palettes (mod $h (len $palettes)) -}}
 {{- $pattern := .pattern | default (index (slice "tokens" "graph" "wave" "dots") (mod (div $h 7) 4)) -}}
 {{- $id := printf "lt-cover-%d" $h -}}
-<svg class="lt-cover lt-cover-{{ $pattern }}" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+<svg class="lt-cover lt-cover-{{ $pattern }}" viewBox="{{ cond .tall "0 -100 400 400" "0 0 400 200" }}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
   <defs>
     <linearGradient id="{{ $id }}" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="{{ index $p 0 }}"/>
       <stop offset="1" stop-color="{{ index $p 1 }}"/>
     </linearGradient>
   </defs>
-  <rect width="400" height="200" fill="url(#{{ $id }})"/>
+  <rect y="{{ cond .tall -100 0 }}" width="400" height="{{ cond .tall 400 200 }}" fill="url(#{{ $id }})"/>
   <g class="lt-cover-art">
   {{- if eq $pattern "tokens" }}
     {{- range $row := seq 0 6 }}
