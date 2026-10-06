@@ -56,13 +56,16 @@
   // Argument views render every panel, so without the script all views stay visible.
   document.querySelectorAll(".lt-stages, .lt-arg-views").forEach((figure) => {
     const tabs = [...figure.querySelectorAll('[role="tab"]')];
-    // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation.
+    // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation, and
+    // the panel it hides with an `lt-hide` event, which stops a view still playing.
     const select = (tab, chosen) => {
       tabs.forEach((other) => {
         const selected = other === tab;
+        const panel = document.getElementById(other.getAttribute("aria-controls"));
         other.setAttribute("aria-selected", String(selected));
         other.tabIndex = selected ? 0 : -1;
-        document.getElementById(other.getAttribute("aria-controls")).hidden = !selected;
+        if (!selected && !panel.hidden) panel.dispatchEvent(new CustomEvent("lt-hide"));
+        panel.hidden = !selected;
       });
       if (chosen) document.getElementById(tab.getAttribute("aria-controls")).dispatchEvent(new CustomEvent("lt-show"));
     };
@@ -103,6 +106,26 @@
     change();
     void view.offsetWidth;
     view.classList.remove("lt-instant");
+  };
+  // A side panel (argument graph or clause matrix) appears with `name` on its view: below the text it slides in,
+  // and beside the text the text narrows to make room. Its content is laid out at once at its final width, measured
+  // with transitions off, so it does not grow tall in the narrow opening column.
+  const reveal = (view, panel, content, name) => new Promise((resolve) => {
+    const below = getComputedStyle(view.querySelector(".lt-arg-panels")).gridTemplateColumns.split(" ").length < 2;
+    instantly(view, () => view.classList.add(name));
+    const width = content.offsetWidth;
+    instantly(view, () => view.classList.remove(name));
+    content.style.width = `${width}px`;
+    view.classList.add(name);
+    if (below) panel.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 700, easing: "ease-out" });
+    setTimeout(() => { content.style.width = ""; resolve(); }, 900);
+  });
+  // Replay scrolls smoothly back to the example tabs, with about two lines of their introduction above them and below
+  // the navigation bar, once the view is reset and the page has its new height, so the shorter page cannot cut it short.
+  const backToTabs = (view) => {
+    const views = view.closest(".lt-arg-views");
+    const top = (views.querySelector(".lt-arg-tabgroups") || views).getBoundingClientRect().top + scrollY - 150;
+    requestAnimationFrame(() => scrollTo({ top, behavior: "smooth" }));
   };
   const svgNS = "http://www.w3.org/2000/svg";
   const svgElement = (name, attributes) => {
@@ -146,10 +169,21 @@
       ends.filter((end) => !end.across).forEach((end) => {
         (entering[`${end.edge.dataset.to}:${end.a.y < end.b.y ? "top" : "bottom"}`] ||= []).push(end);
       });
-      const label = (x, y, text) => {
-        const element = svgElement("text", { x, y, "text-anchor": "middle", class: "lt-arg-edge-label" });
+      // A label takes the first of its candidate places that overlaps no box and no label already placed.
+      const placed = edges.map((edge) => box(edge.dataset.from)).concat(edges.map((edge) => box(edge.dataset.to)));
+      const clear = (r) => placed.every((o) => r.x + r.width + 3 < o.x || o.x + o.w + 3 < r.x || r.y + r.height + 2 < o.y || o.y + o.h + 2 < r.y);
+      const label = (spots, text) => {
+        const element = svgElement("text", { "text-anchor": "middle", class: "lt-arg-edge-label" });
         element.textContent = text;
         svg.append(element);
+        let rect = null;
+        for (const [x, y] of [...spots, spots[0]]) {
+          element.setAttribute("x", x);
+          element.setAttribute("y", y);
+          rect = element.getBBox();
+          if (clear(rect)) break;
+        }
+        placed.push({ x: rect.x, y: rect.y, w: rect.width, h: rect.height });
       };
       ends.forEach((end) => {
         const { edge, a, b } = end;
@@ -166,7 +200,9 @@
           const y = (Math.max(a.y, b.y) + Math.min(a.y + a.h, b.y + b.h)) / 2 + (twin ? (a.x < b.x ? -8 : 8) : 0);
           const [x1, x2] = a.x < b.x ? [a.x + a.w, b.x] : [a.x, b.x + b.w];
           d = `M${x1} ${y} H${x2}`;
-          if (writes) label((x1 + x2) / 2, y - (twin ? 14 : 7), edge.dataset.label);
+          // A label too wide for the gap between the boxes moves below or above the row.
+          const xm = (x1 + x2) / 2;
+          if (writes) label([[xm, y - (twin ? 14 : 7)], [xm, Math.max(a.y + a.h, b.y + b.h) + 14], [xm, Math.min(a.y, b.y) - 6]], edge.dataset.label);
         } else {
           const down = a.y < b.y;
           const y1 = down ? a.y + a.h : a.y;
@@ -177,10 +213,11 @@
           const ym = (y1 + y2) / 2;
           if (Math.abs(a.cx - x2) < 1) {
             d = `M${x2} ${y1} V${y2}`;
-            if (writes) label(x2, ym + 4, edge.dataset.label);
+            if (writes) label([[x2, ym + 4]], edge.dataset.label);
           } else {
             d = `M${a.cx} ${y1} V${ym} H${x2} V${y2}`;
-            if (writes) label((a.cx + x2) / 2, ym - 6, edge.dataset.label);
+            // The label sits on the middle leg, or on the leg into its target or out of its source when that is taken.
+            if (writes) label([[(a.cx + x2) / 2, ym - 6], [x2, (ym + y2) / 2 + 4], [a.cx, (y1 + ym) / 2 + 4]], edge.dataset.label);
           }
         }
         const path = svgElement("path", { d, class: `lt-arg-edge is-${relation}` });
@@ -211,9 +248,38 @@
     draw();
   });
 
+  // Pointing at or focusing a box of an argument graph, or a component in the text, lights the pair and dims the rest of the text.
+  document.querySelectorAll(".lt-arg-view [data-lt-graph]").forEach((graph) => {
+    const view = graph.closest(".lt-arg-view");
+    const link = (event, on) => {
+      const item = event.target.closest("[data-lt-node], [data-lt-span]");
+      const id = item && (item.dataset.ltNode || item.dataset.ltSpan);
+      // While a view plays, components exist for the reader only once Annotate has marked them.
+      if (on && view.classList.contains("is-animating") && !view.classList.contains("is-marked")) return;
+      if (!id || !view.querySelector(`[data-lt-span="${id}"]`)) return;
+      view.classList.toggle("is-linking", on);
+      view.querySelectorAll(`[data-lt-span="${id}"], [data-lt-node="${id}"]`).forEach((element) => element.classList.toggle("is-linked", on));
+    };
+    ["pointerover", "focusin"].forEach((type) => view.addEventListener(type, (event) => link(event, true)));
+    ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
+  });
+
+  // Pointing at or focusing a clause in a rules view, or its row in the matrix, lights both; while the view plays,
+  // only once Detect has marked the clauses.
+  document.querySelectorAll(".lt-rules").forEach((view) => {
+    const link = (event, on) => {
+      const item = event.target.closest("[data-lt-clause], [data-lt-card]");
+      if (!item || (on && view.classList.contains("is-ready") && !view.classList.contains("is-marked"))) return;
+      const n = item.dataset.ltClause || item.dataset.ltCard;
+      view.querySelectorAll(`[data-lt-clause="${n}"], [data-lt-card="${n}"]`).forEach((element) => element.classList.toggle("is-linked", on));
+    };
+    ["pointerover", "focusin"].forEach((type) => view.addEventListener(type, (event) => link(event, true)));
+    ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
+  });
+
   // Argument views play at reading pace. Picking a tab, or scrolling the first view into sight, writes the text;
-  // the Annotate button then marks its components, and the Show graph button shows the argument graph and moves each
-  // component from the text to its box, with the page following the moving box; an edge grows once both of its
+  // the Annotate button then marks its components, and the Show graph button shows the argument graph, beside the text
+  // or below it, and moves each component from the text to its box, with the page following the moving box; an edge grows once both of its
   // boxes are in place. Replay plays the view again. Under reduced motion, or without the script,
   // every view shows its final state and the buttons stay hidden.
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -253,8 +319,8 @@
           span.classList.remove("is-sending");
         });
         instantly(view, () => {
-          view.querySelectorAll(".is-shown").forEach((node) => node.classList.remove("is-shown"));
-          view.classList.remove("is-animating", "is-marked", "is-graph");
+          view.querySelectorAll(".is-shown, .is-linked").forEach((node) => node.classList.remove("is-shown", "is-linked"));
+          view.classList.remove("is-animating", "is-marked", "is-graph", "is-linking");
         });
         run.graph.ltShow(null);
         const { bar, skip, annotate, graph, link, replay: again } = controls(view);
@@ -268,9 +334,12 @@
       // The blank state: the text is empty but keeps its final height, and the argument graph shows no box or edge.
       const prepare = (view) => {
         panels.forEach((other) => finish(other, false));
-        // A view may hold several texts side by side; they are written one after the other.
-        const texts = [...view.querySelectorAll(".lt-arg-text")];
+        // A view may hold several texts side by side; they are written one after the other. Unstated components are
+        // not written: each appears just before its box is placed.
+        const texts = [...view.querySelectorAll(".lt-arg-text:not(.lt-arg-unstated)")];
         const run = { texts, graph: view.querySelector("[data-lt-graph]"), ids: new Set(), flying: [], parts: [] };
+        // The text is measured at the full width it takes before Show graph.
+        instantly(view, () => view.classList.add("is-animating"));
         texts.forEach((text) => { text.style.minHeight = `${text.offsetHeight}px`; });
         texts.forEach((text) => {
           const walker = document.createTreeWalker(text, NodeFilter.SHOW_TEXT, {
@@ -280,7 +349,6 @@
         });
         run.parts.forEach(([node]) => { node.textContent = ""; });
         view.ltRun = run;
-        instantly(view, () => view.classList.add("is-animating"));
         run.graph.ltShow(run.ids);
         const { bar, skip, annotate, graph, link, replay } = controls(view);
         skip.hidden = false;
@@ -343,13 +411,9 @@
         const run = view.ltRun;
         if (!run) return;
         controls(view).graph.disabled = true;
-        // The argument graph panel appears only now, and slides in before the first component leaves the text.
-        view.classList.add("is-graph");
-        view.querySelector(".lt-arg-graph-panel").animate(
-          [{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }],
-          { duration: 700, easing: "ease-out" },
-        );
-        await pause(900);
+        // The argument graph panel appears only now, before the first component leaves the text.
+        const panel = view.querySelector(".lt-arg-graph-panel");
+        await reveal(view, panel, panel.querySelector(".lt-arg-graph-scroll"), "is-graph");
         if (view.ltRun !== run) return;
         const stop = () => { run.manual = true; };
         ["wheel", "touchmove", "keydown"].forEach((type) => addEventListener(type, stop, { once: true, passive: true }));
@@ -367,23 +431,37 @@
         for (const node of order) {
           if (view.ltRun !== run) return;
           const span = spans.find((other) => other.dataset.ltSpan === node.dataset.ltNode);
+          const unsaid = span?.closest(".lt-arg-unstated");
+          if (unsaid && !unsaid.classList.contains("is-shown")) {
+            unsaid.classList.add("is-shown");
+            unsaid.animate([{ opacity: 0, transform: "translateY(6px)" }, { opacity: 1, transform: "none" }], { duration: 500, easing: "ease-out" });
+            await pause(700);
+            if (view.ltRun !== run) return;
+          }
           if (!span) {
             land(node);
-            node.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 900, easing: "ease" });
-            await pause(1300);
+            node.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 700, easing: "ease" });
+            await pause(900);
             continue;
           }
           // The marked text is first enclosed, line by line, in frames of its role color; the frames then detach,
           // fill, and travel to the argument graph, where they meet as one box while its content fades in. Only the frames
           // change size; the content keeps the final box size, so its text never re-wraps on the way.
-          const base = views.getBoundingClientRect();
-          const k = base.width / views.offsetWidth || 1;
-          const baseTop = base.top + scrollY;
-          const local = (rect, pad) => ({
-            x: (rect.left - base.left) / k - pad, y: (rect.top - base.top) / k - pad / 2, w: rect.width / k + 2 * pad, h: rect.height / k + pad,
-          });
-          const lines = [...span.getClientRects()].filter((rect) => rect.width > 2).map((rect) => local(rect, 5));
-          const b = local(node.getBoundingClientRect(), 0);
+          // Positions are measured again at every frame, because a sticky text moves against the views as the page scrolls.
+          const measure = () => {
+            const base = views.getBoundingClientRect();
+            const k = base.width / views.offsetWidth || 1;
+            const local = (rect, pad) => ({
+              x: (rect.left - base.left) / k - pad, y: (rect.top - base.top) / k - pad / 2, w: rect.width / k + 2 * pad, h: rect.height / k + pad,
+            });
+            return {
+              k,
+              baseTop: base.top + scrollY,
+              lines: [...span.getClientRects()].filter((rect) => rect.width > 2).map((rect) => local(rect, 5)),
+              b: local(node.getBoundingClientRect(), 0),
+            };
+          };
+          const { lines, b } = measure();
           const role = [...node.classList].find((name) => name.startsWith("lt-role-"));
           const widest = lines.reduce((best, line) => (line.w > best.w ? line : best), lines[0]);
           const ghost = node.cloneNode(true);
@@ -398,10 +476,13 @@
             if (line === widest) frame.append(ghost);
             views.append(frame);
             run.flying.push(frame);
-            return { frame, a: line, lead: line === widest };
+            return { frame, lead: line === widest };
           });
           span.classList.add("is-sending");
           const place = (e, ring, fill, content, lift) => {
+            const now = measure();
+            const { b } = now;
+            flights.forEach((flight, i) => { flight.a = now.lines[i] || flight.a || lines[i]; });
             flights.forEach(({ frame, a, lead }) => {
               const r = { x: a.x + (b.x - a.x) * e, y: a.y + (b.y - a.y) * e, w: a.w + (b.w - a.w) * e, h: a.h + (b.h - a.h) * e };
               frame.style.transform = `translate(${r.x}px, ${r.y}px)`;
@@ -414,11 +495,11 @@
             ghost.style.opacity = content;
             const top = Math.min(...flights.map(({ a }) => a.y + (b.y - a.y) * e));
             const bottom = Math.max(...flights.map(({ a }) => a.y + a.h + (b.y + b.h - a.y - a.h) * e));
-            follow(run, baseTop + top * k, baseTop + bottom * k);
+            follow(run, now.baseTop + top * now.k, now.baseTop + bottom * now.k);
           };
-          await frames(700, (t) => { if (view.ltRun !== run) return false; place(0, ease(t), 0, 0, 0); return true; });
-          await pause(250);
-          await frames(1800, (t) => {
+          await frames(500, (t) => { if (view.ltRun !== run) return false; place(0, ease(t), 0, 0, 0); return true; });
+          await pause(150);
+          await frames(1200, (t) => {
             if (view.ltRun !== run) return false;
             const e = ease(t);
             place(e, Math.min(1, (1 - e) / 0.4), e, Math.max(0, (e - 0.25) / 0.75), Math.sin(Math.PI * e));
@@ -428,25 +509,22 @@
           land(node);
           span.classList.remove("is-sending");
           flights.forEach(({ frame }) => frame.remove());
-          await pause(500);
+          await pause(300);
         }
         await pause(1500);
         if (view.ltRun === run) finish(view, true);
       };
       panels.forEach((view) => {
         view.addEventListener("lt-show", () => write(view));
-        const { bar, skip, annotate: a, graph: b, replay } = controls(view);
+        view.addEventListener("lt-hide", () => finish(view, false));
+        const { skip, annotate: a, graph: b, replay } = controls(view);
         skip.addEventListener("click", () => { if (view.ltRun) view.ltRun.skip = true; });
         a.addEventListener("click", () => annotate(view));
         b.addEventListener("click", () => showGraph(view));
-        // Replay scrolls smoothly back to the top of the views, below the navigation bar, once the view is reset
-        // and the page has its new height, so the shorter page cannot cut the scroll short.
         replay.addEventListener("click", () => {
           write(view);
-          const top = views.getBoundingClientRect().top + scrollY - 90;
-          requestAnimationFrame(() => scrollTo({ top, behavior: "smooth" }));
+          backToTabs(view);
         });
-        bar.hidden = true;
       });
       // The first view is written once it comes into sight.
       const first = panels.find((view) => !view.hidden);
@@ -461,9 +539,9 @@
   // Document views (detect and rules): picking a tab, or the first view coming into sight, writes the
   // document at about 55 characters per second, between 1.5 and 6 seconds in total; Skip writes the rest at once.
   // Detect then plays the first step. In a detect view it scans the document one sentence at a time and highlights
-  // each annotated clause with its category and level. In a rules view it marks each clause and builds its card in the
-  // annotation hierarchy, and Classify then shows the rules and, clause by clause, lights the rule that the hierarchy
-  // matches and labels the clause. The page follows the step unless the reader scrolls. Replay writes the document
+  // each annotated clause with its category and level. In a rules view it opens the clause matrix beside the text, marks
+  // each clause and fills its row, and Classify then shows the rules and, clause by clause, lights the rule with the
+  // same pattern and labels the clause. The page follows the step unless the reader scrolls. Replay writes the document
   // again. Under reduced motion, or without the script, every view shows its final state and the buttons stay hidden.
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const pause = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
@@ -499,7 +577,7 @@
           view.classList.add("is-ready");
           view.classList.remove("is-detected", "is-marked", "is-detecting", "is-classifying", "is-classified");
           bar.classList.remove("is-annotated");
-          view.querySelectorAll(".is-current, .is-hit, .is-shown, .is-labelled, .is-match").forEach((node) => node.classList.remove("is-current", "is-hit", "is-shown", "is-labelled", "is-match"));
+          view.querySelectorAll(".is-current, .is-hit, .is-shown, .is-labelled, .is-match, .is-linked").forEach((node) => node.classList.remove("is-current", "is-hit", "is-shown", "is-labelled", "is-match", "is-linked"));
           view.querySelectorAll("[style*=delay]").forEach((node) => { node.style.transitionDelay = ""; node.style.animationDelay = ""; });
         });
         steps.forEach((node) => { node.hidden = false; node.classList.remove("is-done"); });
@@ -569,20 +647,22 @@
         const id = run;
         detect.disabled = true;
         detect.classList.add("is-done");
-        view.classList.add("is-detecting");
+        const panel = view.querySelector(".lt-matrix-panel");
+        await reveal(view, panel, panel.querySelector(".lt-matrix-scroll"), "is-detecting");
+        if (run !== id) return;
         watch();
         for (const clause of units) {
           const card = view.querySelector(`[data-lt-card="${clause.dataset.ltClause}"]`);
           const spans = [...clause.querySelectorAll(".lt-rule-span")];
           spans.forEach((span, i) => { span.style.transitionDelay = `${i * 200}ms`; });
-          card.querySelectorAll("li").forEach((li, i) => { li.style.animationDelay = `${300 + i * 200}ms`; });
+          card.querySelectorAll("th, td").forEach((cell, i) => { cell.style.animationDelay = `${i * 200}ms`; });
           clause.classList.add("is-current", "is-hit");
           follow(clause);
           await pause(spans.length * 200 + 500);
           if (run !== id) return;
           card.classList.add("is-shown", "is-current");
           follow(card);
-          await pause(card.querySelectorAll("li").length * 200 + 900);
+          await pause(card.querySelectorAll("td").length * 200 + 700);
           if (run !== id) return;
           clause.classList.remove("is-current");
           card.classList.remove("is-current");
@@ -597,8 +677,7 @@
         classify.disabled = true;
         classify.classList.add("is-done");
         view.classList.add("is-classifying");
-        const panel = view.querySelector(".lt-rules-panel");
-        panel.animate([{ opacity: 0, transform: "translateY(16px)" }, { opacity: 1, transform: "none" }], { duration: 600, easing: "ease-out" });
+        view.querySelector(".lt-matrix-rules").animate([{ opacity: 0 }, { opacity: 1 }], { duration: 600, easing: "ease-out" });
         watch();
         await pause(800);
         for (const clause of units) {
@@ -614,7 +693,6 @@
           follow(rule);
           await pause(900);
           if (run !== id) return;
-          rule.querySelector(`[data-lt-match="${n}"]`).classList.add("is-shown");
           card.classList.add("is-labelled");
           clause.classList.add("is-labelled");
           follow(card);
@@ -631,10 +709,10 @@
       if (classify) classify.addEventListener("click", label);
       replay.addEventListener("click", () => {
         write();
-        const top = view.getBoundingClientRect().top + scrollY - 90;
-        requestAnimationFrame(() => scrollTo({ top, behavior: "smooth" }));
+        backToTabs(view);
       });
       view.addEventListener("lt-show", write);
+      view.addEventListener("lt-hide", clear);
       view.ltWrite = write;
       view.ltBlank = blank;
     });

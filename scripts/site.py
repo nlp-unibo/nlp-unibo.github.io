@@ -133,7 +133,7 @@ def rules_view_errors(view: dict) -> list[str]:
 
 def view_errors(view: dict) -> list[str]:
     """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
-    undefined components, or unknown relations. A detect view needs sentences with text, and each annotated
+    undefined components, unknown relations, or roles sharing a short name. A detect view needs sentences with text, and each annotated
     clause needs a category and a level of 1, 2, or 3."""
     if view.get("type") == "rules":
         return rules_view_errors(view)
@@ -159,6 +159,9 @@ def view_errors(view: dict) -> list[str]:
     named = [node for row in view.get("rows") or [] for node in row]
     named += [edge.get(end) for edge in view.get("edges") or [] for end in ("from", "to")]
     errors += [f"rows or edges name an undefined component {node!r}" for node in sorted({str(n) for n in named if n not in ids})]
+    # Component IDs start with the role's short name (layouts/research/single.html), so short names must differ.
+    shorts = [role.get("short") or "".join(word[:1].upper() for word in str(role.get("label", "")).split(" ")) for role in view.get("roles") or []]
+    errors += [f"roles share the short name {short!r}; set `short` on one of them" for short in sorted({s for s in shorts if shorts.count(s) > 1})]
     return errors
 
 

@@ -48,6 +48,8 @@ assert view_errors({**view, "rows": [["a", "c"]]}) == ["rows or edges name an un
 assert view_errors({**view, "roles": []}) == ["component 'a' has an unknown role", "component 'b' has an unknown role"]
 assert view_errors({**view, "implicit": [{"id": "a", "role": "clause"}, {"id": "b", "role": "clause"}]}) == ["component 'a' is repeated"]
 assert view_errors({**view, "edges": [{"from": "a", "to": "b", "relation": "rebut"}]}) == ["edge relation 'rebut' is not support, attack, or link"]
+assert view_errors({**view, "roles": [{"key": "clause", "label": "Claim"}, {"key": "c", "label": "Conclusion"}]}) == ["roles share the short name 'C'; set `short` on one of them"]
+assert view_errors({**view, "roles": [{"key": "clause", "label": "Claim"}, {"key": "c", "label": "Conclusion", "short": "Co"}]}) == []
 
 detect = {"type": "detect", "sections": [{"sentences": [{"text": "x"}, {"text": "y", "category": "Arbitration", "level": 2}]}]}
 assert view_errors(detect) == [], view_errors(detect)

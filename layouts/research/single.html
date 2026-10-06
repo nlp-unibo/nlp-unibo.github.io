@@ -1,6 +1,6 @@
 {{/* Research area page. It adds detail from top to bottom, so each reader can stop at the depth they need. */}}
 {{/* 1. The introduction, in one band: the body, a `definition`, the `overview` blocks under "Core concepts", and `views` of one argument */}}
-{{/*    under different argument models and domains, with the text and its source caption above the argument graph. */}}
+{{/*    under different argument models and domains, with the text beside its argument graph on wide screens, above it on narrow ones. */}}
 {{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
 {{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
 {{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
@@ -103,167 +103,164 @@
       </div>
     </div>
     {{ else if eq $v.type "rules" }}
-    {{/* A rules view: the text, then the annotation hierarchy of each clause about personal data, then the rules. */}}
-    {{/* Detect marks the clauses in the text and builds their hierarchy; Classify labels each clause with the rule its hierarchy matches. */}}
-    {{ $values := dict "open" "Open" "closed" "Closed" "any" "Any" }}
-    {{ $roles := dict "category" (dict "n" 1 "label" "Category") "specification" (dict "n" 4 "label" "Specification") "subcategory" (dict "n" 3 "label" "Subcategory") }}
+    {{/* A rules view: the text beside a clause matrix. Each clause about personal data (C1, C2, ...) is a row with the type of */}}
+    {{/* its category, its specification, and its subcategories; the rules follow in the same columns, so a clause matches */}}
+    {{/* the rule with the same pattern. Detect marks the clauses and fills their rows; Classify lights the matching rules */}}
+    {{/* and adds the rule ID (level and rule number) beside each clause ID. */}}
     {{ $k := 0 }}{{ $ns := dict }}{{ $count := dict }}{{ $clauses := slice }}
     {{ range $si, $sec := $v.sections }}{{ range $ci, $c := .sentences }}{{ with $c.level }}{{ $k = add $k 1 }}{{ $ns = merge $ns (dict (printf "%d-%d" $si $ci) $k) }}{{ $clauses = $clauses | append (merge $c (dict "n" $k)) }}{{ $l := string . }}{{ $count = merge $count (dict $l (add (index $count $l | default 0) 1)) }}{{ end }}{{ end }}{{ end }}
+    {{ $roles := dict "category" 1 "specification" 4 "subcategory" 3 }}
     <div class="lt-arg-view lt-rules" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
       <p class="lt-arg-description">{{ $v.description }}</p>
       <figure class="lt-arg-example">
-        <div class="lt-arg-panel">
-          <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
-          <div class="lt-detect-doc">
-            {{ range $si, $sec := $v.sections }}
-            {{ with .title }}<h4>{{ . }}</h4>{{ end }}
-            <p>
-              {{- range $ci, $c := .sentences }}{{ if $ci }} {{ end }}{{ $n := index $ns (printf "%d-%d" $si $ci) }}
-              {{- if $c.level }}<span class="lt-rule-clause is-level-{{ $c.level }}" data-lt-clause="{{ $n }}" data-lt-rule="{{ $c.level }}-{{ $c.rule }}"><span class="lt-rule-num" aria-label="Clause {{ $n }}">{{ $n }}</span>{{ partial "lt/rule-parts.html" $c.parts }}</span>
-              {{- else }}{{ partial "lt/rule-parts.html" $c.parts }}{{ end }}{{ end -}}
+        <div class="lt-arg-panels" style="--lt-cols: 3">
+          <div class="lt-arg-panel lt-arg-text-panel">
+            <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
+            <div class="lt-detect-doc">
+              {{ range $si, $sec := $v.sections }}
+              {{ with .title }}<h4>{{ . }}</h4>{{ end }}
+              <p>
+                {{- range $ci, $c := .sentences }}{{ if $ci }} {{ end }}{{ $n := index $ns (printf "%d-%d" $si $ci) }}
+                {{- if $c.level }}<span class="lt-rule-clause is-level-{{ $c.level }}" data-lt-clause="{{ $n }}" data-lt-rule="{{ $c.level }}-{{ $c.rule }}"><span class="lt-rule-num" aria-label="Clause {{ $n }}">C<sub>{{ $n }}</sub></span>{{ partial "lt/rule-parts.html" $c.parts }}</span>
+                {{- else }}{{ partial "lt/rule-parts.html" $c.parts }}{{ end }}{{ end -}}
+              </p>
+              {{ end }}
+            </div>
+            {{/* The marks in the text carry no tag; the legend names their colors and lines. */}}
+            <p class="lt-rules-legend">
+              <span class="lt-role-1">Category</span><span class="lt-role-4">Specification</span><span class="lt-role-3">Subcategory</span>
+              <span class="is-line is-open">Open</span><span class="is-line">Closed</span>
             </p>
-            {{ end }}
           </div>
-          {{/* The marks in the text carry no tag; the legend names their colors and lines, and the hierarchy names each mark. */}}
-          <p class="lt-rules-legend">
-            {{ range slice "category" "specification" "subcategory" }}{{ $r := index $roles . }}<span class="lt-role-{{ $r.n }}">{{ $r.label }}</span>{{ end }}
-            <span class="is-line is-open">Open</span><span class="is-line">Closed</span>
+          <div class="lt-arg-panel lt-arg-graph-panel lt-matrix-panel">
+            <h3 class="lt-arg-step"><span>2</span> Clauses and rules</h3>
+            <div class="lt-matrix-scroll">
+            <table class="lt-matrix">
+              <thead>
+                <tr><th scope="col"><span class="sr-only">Clause</span></th><th scope="col" class="lt-role-1"><span class="lt-matrix-head">Category</span></th><th scope="col" class="lt-role-4"><span class="lt-matrix-head">Specification</span></th><th scope="col" class="lt-role-3"><span class="lt-matrix-head">Subcategories</span></th></tr>
+              </thead>
+              <tbody>
+                {{ range $clauses }}
+                {{ $spec := where .parts "role" "specification" }}
+                {{ $subs := slice }}{{ range $spec }}{{ range where .parts "role" "subcategory" }}{{ $subs = $subs | append . }}{{ end }}{{ end }}
+                <tr class="lt-matrix-row is-level-{{ .level }}" data-lt-card="{{ .n }}">
+                  <th scope="row"><span class="lt-rule-num">C<sub>{{ .n }}</sub></span><span class="lt-rule-label lt-matrix-level">L{{ .level }} · R{{ .rule }}</span></th>
+                  <td>{{ range first 1 (where .parts "role" "category") }}<span class="lt-cell lt-role-1 is-{{ .type }}">{{ .type }}</span>{{ end }}</td>
+                  <td>{{ with $spec }}{{ range first 1 . }}<span class="lt-cell lt-role-4 is-{{ .type }}">{{ .type }}</span>{{ end }}{{ else }}<span class="lt-cell is-none">none</span>{{ end }}</td>
+                  {{/* Subcategories count as open when any of them is open; a count under the type gives each type. */}}
+                  <td>{{ with $subs }}{{ $open := len (where . "type" "open") }}{{ $type := cond (gt $open 0) "open" "closed" }}<span class="lt-cell lt-role-3 is-{{ $type }}">{{ $type }}</span><span class="lt-cell-count">{{ with $open }}{{ . }} open{{ end }}{{ if and $open (lt $open (len .)) }} · {{ end }}{{ with sub (len .) $open }}{{ . }} closed{{ end }}</span>{{ else }}<span class="lt-cell is-none">none</span>{{ end }}</td>
+                </tr>
+                {{ end }}
+              </tbody>
+              <tbody class="lt-matrix-rules">
+                <tr class="lt-matrix-sep"><th scope="colgroup" colspan="4">Rules</th></tr>
+                {{ range $v.rules }}{{ $rule := . }}
+                <tr class="lt-matrix-rule is-level-{{ .level }}" data-lt-rulecard="{{ .level }}-{{ .n }}">
+                  <th scope="row"><span class="lt-rule-label">L{{ .level }} · R{{ .n }}</span></th>
+                  {{ range $role := slice "category" "specification" "subcategory" }}{{ $val := index $rule $role }}
+                  <td><span class="lt-cell is-{{ $val }}{{ if in (slice "open" "closed") $val }} lt-role-{{ index $roles $role }}{{ end }}">{{ $val }}</span></td>
+                  {{ end }}
+                </tr>
+                {{ end }}
+              </tbody>
+            </table>
+            </div>
+            <p class="lt-matrix-levels">{{ range $lv := slice "1" "2" }}<span><span class="lt-rule-label is-level-{{ $lv }}">L{{ $lv }}</span>{{ lower (index $v.levels $lv) }}</span>{{ end }}</p>
+          </div>
+        </div>
+        <div class="lt-detect-foot">
+          <p class="lt-detect-summary" aria-live="polite">
+            <span>{{ $k }} clauses about personal data:</span>
+            {{ range $lv := slice "1" "2" }}{{ with index $count $lv }}<span class="lt-detect-count lt-rule-count is-level-{{ $lv }}">{{ . }} {{ lower (index $v.levels $lv) }}</span>{{ end }}{{ end }}
           </p>
+          <div class="lt-arg-controls lt-detect-controls" hidden>
+            <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+            <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Detect</button>
+            <span class="lt-arg-link" aria-hidden="true"></span>
+            <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
+            <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+          </div>
         </div>
         {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
       </figure>
-      <div class="lt-detect-foot">
-        <p class="lt-detect-summary" aria-live="polite">
-          <span>{{ $k }} clauses about personal data:</span>
-          {{ range $lv := slice "1" "2" }}{{ with index $count $lv }}<span class="lt-detect-count lt-rule-count is-level-{{ $lv }}">{{ . }} {{ lower (index $v.levels $lv) }}</span>{{ end }}{{ end }}
-        </p>
-        <div class="lt-arg-controls lt-detect-controls" hidden>
-          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
-          <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Detect</button>
-          <span class="lt-arg-link" aria-hidden="true"></span>
-          <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
-          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
-        </div>
-      </div>
-      {{/* The hierarchy of each clause: its category, the specification that introduces a list (shown by its opening words), */}}
-      {{/* and the subcategories in that list. A specification hangs under the category of its clause. */}}
-      <div class="lt-arg-panel lt-tree-panel">
-        <h3 class="lt-arg-step"><span><i class="fas fa-sitemap" aria-hidden="true"></i></span> Annotation hierarchy</h3>
-        <div class="lt-tree-grid">
-          {{ range $clauses }}{{ $c := . }}
-          <div class="lt-tree-card is-level-{{ .level }}" data-lt-card="{{ .n }}">
-            <p class="lt-tree-head"><span class="lt-rule-num">{{ .n }}</span> Clause {{ .n }}</p>
-            <ul class="lt-tree">
-              {{ range where .parts "role" "category" }}
-              <li><span class="lt-tree-node lt-role-1 is-{{ .type }}"><span class="lt-rule-tag">Category · {{ .type }}</span> {{ .text }}</span>
-                {{ with where $c.parts "role" "specification" }}
-                <ul>
-                  {{ range . }}{{ $opening := index (where .parts "role" "eq" nil) 0 }}
-                  <li><span class="lt-tree-node lt-role-4 is-{{ .type }}"><span class="lt-rule-tag">Specification · {{ .type }}</span> {{ with $opening }}{{ .text }}{{ end }}</span>
-                    <ul>
-                      {{ range where .parts "role" "subcategory" }}
-                      <li><span class="lt-tree-node lt-role-3 is-{{ .type }}"><span class="lt-rule-tag">Subcategory · {{ .type }}</span> {{ .text }}</span></li>
-                      {{ end }}
-                    </ul>
-                  </li>
-                  {{ end }}
-                </ul>
-                {{ end }}
-              </li>
-              {{ end }}
-            </ul>
-            <p class="lt-tree-label"><span class="lt-rule-label">{{ index $v.levels (string .level) }} · level {{ .level }}, rule {{ .rule }}</span></p>
-          </div>
-          {{ end }}
-        </div>
-      </div>
-      {{/* The rules, one column per level; each rule lists the clauses that match it. */}}
-      <div class="lt-arg-panel lt-rules-panel">
-        <h3 class="lt-arg-step"><span><i class="fas fa-balance-scale" aria-hidden="true"></i></span> Annotation rules</h3>
-        <div class="lt-rules-grid">
-          {{ range $lv := slice 1 2 }}
-          <div class="lt-rules-col is-level-{{ $lv }}">
-            <p class="lt-rules-level">{{ index $v.levels (string $lv) }} <span>level {{ $lv }}</span></p>
-            {{ range $v.rules }}{{ if eq .level $lv }}{{ $rule := . }}
-            <div class="lt-rule" data-lt-rulecard="{{ .level }}-{{ .n }}">
-              <p class="lt-rule-name">Rule {{ .n }}</p>
-              <ul>
-                <li class="lt-role-1">Category {{ index $values .category }}</li>
-                <li class="lt-role-4">{{ if eq .specification "none" }}No specification{{ else }}Specification {{ index $values .specification }}{{ end }}</li>
-                <li class="lt-role-3">{{ if eq .subcategory "none" }}No subcategories{{ else }}Subcategories {{ index $values .subcategory }}{{ end }}</li>
-              </ul>
-              <p class="lt-rule-matches">
-                {{- range $clauses }}{{ if and (eq .level $rule.level) (eq .rule $rule.n) }}<span class="lt-rule-num" data-lt-match="{{ .n }}">{{ .n }}</span>{{ end }}{{ end -}}
-              </p>
-            </div>
-            {{ end }}{{ end }}
-          </div>
-          {{ end }}
-        </div>
-      </div>
     </div>
     {{ else }}
-    {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label)) }}{{ end }}
+    {{/* Each role has a short name, `short` or the initials of its label, and each component an ID: the short name and its */}}
+    {{/* number within the role, in text order, such as P1 and P2. The graph shows IDs, so its boxes stay small. */}}
+    {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $short := $role.short | default "" }}{{ if not $short }}{{ range split $role.label " " }}{{ $short = print $short (upper (substr . 0 1)) }}{{ end }}{{ end }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label "short" $short)) }}{{ end }}
     {{/* A view has one text in `segments`, or several side by side in `texts` (each with a `label`, a `lang`, and `segments`). */}}
     {{ $texts := $v.texts | default (slice (dict "segments" $v.segments)) }}
     {{ $parts := slice }}{{ range $texts }}{{ range .segments }}{{ if .id }}{{ $parts = $parts | append . }}{{ end }}{{ end }}{{ end }}
     {{ range $v.implicit }}{{ $parts = $parts | append (merge . (dict "implicit" true)) }}{{ end }}
-    {{ $byid := dict }}{{ range $parts }}{{ $byid = merge $byid (dict .id .) }}{{ end }}
+    {{ $byid := dict }}{{ $count := dict }}{{ range $parts }}{{ $c := add (index $count .role | default 0) 1 }}{{ $count = merge $count (dict .role $c) }}{{ $byid = merge $byid (dict .id (merge . (dict "short" (index $slot .role).short "num" $c))) }}{{ end }}
     <div class="lt-arg-view" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
       <p class="lt-arg-description">{{ $v.description }}</p>
-      <div class="lt-arg-panels">
-        <figure class="lt-arg-example">
-          <div class="lt-arg-panel">
+      {{/* The text and the argument graph sit side by side on wide screens, where the text stays in view while the graph builds, and stack on narrow ones. */}}
+      {{ $cols := 1 }}{{ range $v.rows }}{{ if gt (len .) $cols }}{{ $cols = len . }}{{ end }}{{ end }}
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panels" style="--lt-cols: {{ $cols }}">
+          <div class="lt-arg-panel lt-arg-text-panel">
             <h3 class="lt-arg-step"><span>1</span> The text{{ if gt (len $texts) 1 }}s{{ end }}</h3>
             <div class="lt-arg-texts">
             {{ range $texts }}
             <div class="lt-arg-textbox"{{ with .lang }} lang="{{ . }}"{{ end }}>
               {{ with .label }}<p class="lt-arg-textlabel">{{ . }}</p>{{ end }}
               <p class="lt-arg-text">
-                {{- range $s, $seg := .segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag">{{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
+                {{- range $s, $seg := .segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}{{ $p := index $byid $seg.id }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag"><b class="lt-arg-id">{{ $p.short }}<sub>{{ $p.num }}</sub></b> {{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
               </p>
             </div>
             {{ end }}
             </div>
-          </div>
-          {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
-        </figure>
-          <div class="lt-arg-controls" hidden>
-            {{/* Skip writes the rest of the text at once. Two steps follow in order: the connector between them fills once the text is annotated. */}}
-            <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
-            <button type="button" data-lt-action="annotate"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
-            <span class="lt-arg-link" aria-hidden="true"></span>
-            <button type="button" data-lt-action="graph"><span class="lt-arg-num" aria-hidden="true">2</span> Show graph</button>
-            <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+            {{/* Components the text leaves unstated follow it in dashed boxes, so the graph can show IDs only. */}}
+            {{ $unsaid := slice }}{{ range $parts }}{{ if and .implicit (ne .kind "label") }}{{ $unsaid = $unsaid | append . }}{{ end }}{{ end }}
+            {{ with $unsaid }}
+            <p class="lt-arg-text lt-arg-unstated">
+              {{- range $i, $u := . }}{{ if $i }} {{ end }}{{ $r := index $slot $u.role }}{{ $p := index $byid $u.id }}<span class="lt-arg-span is-implicit lt-role-{{ $r.n }}" data-lt-span="{{ $u.id }}"><span class="lt-arg-tag"><b class="lt-arg-id">{{ $p.short }}<sub>{{ $p.num }}</sub></b> {{ $r.label }} (implicit)</span>{{ $u.node | default $u.text }}</span>{{ end -}}
+            </p>
+            {{ end }}
           </div>
           <div class="lt-arg-panel lt-arg-graph-panel">
-            <h3 class="lt-arg-step"><span>2</span> Argument graph</h3>
+            {{/* `graph_title` names the graph panel when the view is not an argument, such as a clause alignment. */}}
+            <h3 class="lt-arg-step"><span>2</span> {{ $v.graph_title | default "Argument graph" }}</h3>
             <div class="lt-arg-graph-scroll">
-            {{ $cols := 1 }}{{ range $v.rows }}{{ if gt (len .) $cols }}{{ $cols = len . }}{{ end }}{{ end }}
-            <div class="lt-arg-graph" data-lt-graph style="--lt-cols: {{ $cols }}">
+            <div class="lt-arg-graph" data-lt-graph>
               <svg class="lt-arg-edges-svg" aria-hidden="true" focusable="false"></svg>
               {{ range $v.rows }}
               <div class="lt-arg-row">
                 {{ range . }}{{ $n := index $byid . }}{{ $r := index $slot $n.role }}
-                {{/* An implicit component is unstated in the text and drawn dashed; one with `kind: label` is an assigned label, drawn as a regular box. */}}
+                {{/* A box shows the ID of its component, and pointing at it or focusing it lights its text; a component unstated */}}
+                {{/* in the text is drawn dashed. One with `kind: label` is an assigned label, a regular box with its own text. */}}
                 {{ $unstated := and $n.implicit (ne $n.kind "label") }}
-                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $unstated }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}">
+                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $unstated }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}"{{ if ne $n.kind "label" }} tabindex="0"{{ end }}>
                   <span class="lt-arg-tag">{{ $r.label }}{{ if $unstated }} (implicit){{ end }}</span>
-                  {{ with $n.tag }}<span class="lt-arg-scheme">{{ . }}</span>{{ end }}
-                  {{ $n.node | default $n.text }}
+                  <b class="lt-arg-id">{{ $n.short }}<sub>{{ $n.num }}</sub></b>
+                  {{/* A box omits its tag when an edge into it already carries the same label. */}}
+                  {{ $said := false }}{{ range $v.edges }}{{ if and (eq .to $n.id) (eq .label $n.tag) }}{{ $said = true }}{{ end }}{{ end }}
+                  {{ with $n.tag }}{{ if not $said }}<span class="lt-arg-scheme">{{ . }}</span>{{ end }}{{ end }}
+                  {{ if eq $n.kind "label" }}<span class="lt-arg-node-text">{{ $n.node | default $n.text }}</span>{{ end }}
                 </div>
                 {{ end }}
               </div>
               {{ end }}
               <ul class="lt-arg-edges">
                 {{ range $v.edges }}{{ $from := index $byid .from }}{{ $to := index $byid .to }}
-                <li data-from="{{ .from }}" data-to="{{ .to }}" data-relation="{{ .relation }}" data-label="{{ .label | default (index $relations .relation) }}">{{ (index $slot $from.role).label }} "{{ $from.node | default $from.text }}" {{ .label | default (index $relations .relation) }} {{ (index $slot $to.role).label }} "{{ $to.node | default $to.text }}"</li>
+                <li data-from="{{ .from }}" data-to="{{ .to }}" data-relation="{{ .relation }}" data-label="{{ .label | default (index $relations .relation) }}">{{ (index $slot $from.role).label }} {{ $from.short }}{{ $from.num }} "{{ $from.node | default $from.text }}" {{ .label | default (index $relations .relation) }} {{ (index $slot $to.role).label }} {{ $to.short }}{{ $to.num }} "{{ $to.node | default $to.text }}"</li>
                 {{ end }}
               </ul>
             </div>
             </div>
           </div>
-      </div>
+        </div>
+        <div class="lt-arg-controls" hidden>
+          {{/* Skip writes the rest of the text at once. Two steps follow in order: the connector between them fills once the text is annotated. */}}
+          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+          <button type="button" data-lt-action="annotate"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
+          <span class="lt-arg-link" aria-hidden="true"></span>
+          <button type="button" data-lt-action="graph"><span class="lt-arg-num" aria-hidden="true">2</span> Show graph</button>
+          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
     </div>
     {{ end }}
     {{ end }}

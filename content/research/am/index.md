@@ -66,7 +66,7 @@ concepts: |
 
 # Views: interactive examples of one argument each, grouped by argument model and by domain.
 # `roles` fixes the role labels and their color order; a segment with `id` is a marked component, one without is plain text.
-# Graph nodes repeat the marked text; keep examples short. `implicit` adds components that the text leaves unstated, with a `node` text.
+# Graph nodes show component IDs (role initials, or a role's `short`, plus a number). `implicit` adds components that the text leaves unstated, with a `node` text shown below the text in a dashed box.
 # `tag` adds a type label to a component; `rows` places nodes in the graph from top to bottom.
 # `edges` link components: `relation` is support, attack, or link, and `label` overrides the edge text.
 # `caption` is Markdown: link each cited paper by its name.
@@ -93,7 +93,7 @@ views:
     group: Argument models
     label: Toulmin
     description: "A richer model. Grounds support a claim through a warrant, the general rule that links them, while a rebuttal states when the claim does not hold."
-    caption: "Example from [Gupta et al. (2024)](https://aclanthology.org/2024.acl-long.552/), shortened. The warrant is not written in the text, so the graph shows it reconstructed, with a dashed border."
+    caption: "Example from [Gupta et al. (2024)](https://aclanthology.org/2024.acl-long.552/), shortened. The warrant is not written in the text, so it is shown reconstructed below the text, with a dashed border."
     roles:
       - {key: claim, label: Claim}
       - {key: ground, label: Ground}

@@ -1,0 +1,10 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="A document split into parts: facts, a request of a party, and the arguments of a lawyer.">
+  <rect class="lt-s-tok" x="108" y="4" width="126" height="12" rx="4"/>
+  <text class="lt-s-sub" x="6" y="34">FACTS</text>
+  <rect class="lt-s-node lt-role-1" x="108" y="24" width="126" height="14" rx="4"/>
+  <rect class="lt-s-tok" x="108" y="46" width="90" height="12" rx="4"/>
+  <text class="lt-s-sub" x="6" y="76">REQUEST</text>
+  <rect class="lt-s-node lt-role-2" x="108" y="66" width="126" height="14" rx="4"/>
+  <text class="lt-s-sub" x="6" y="98">ARGUMENTS</text>
+  <rect class="lt-s-node lt-role-3" x="108" y="88" width="126" height="14" rx="4"/>
+</svg>

@@ -17,59 +17,64 @@ weight: 2
 tagline: Turning court decisions and contracts into structured legal knowledge.
 cover_pattern: tokens
 
-# Core concepts: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
+# Definition: a short answer to "What is legal analytics?" under the title. Markdown, one idea per sentence.
+definition: |
+  Legal analytics applies artificial intelligence and natural language processing, the study of how computers handle language, to legal documents such as laws, court decisions, contracts, and privacy policies ([Lippi et al., 2019](/publication/lippi-2019-claudette/); [Zhong et al., 2020](https://doi.org/10.18653/v1/2020.acl-main.466)).
+  It finds the parts of a document, the arguments of a court, the unfair terms of a contract, and the likely outcome of a case.
+  These documents are long and hard to read, so such tools can support consumers, lawyers, judges, and public agencies.
+
+# Core concepts: one block per concept, with a short text and a small schema (an SVG file in this folder, drawn with the `lt-s-*` classes).
+overview:
+  - icon: stream
+    title: Structure
+    text: "Legal documents are long and unstructured. Systems first parse a raw document into its relevant parts, such as the facts, the requests of a party, or the arguments of a lawyer. Each sentence can also receive a rhetorical role, the function it plays in the document."
+    schema: schema-structure.svg
+  - icon: landmark
+    title: Arguments
+    text: "Argument mining retrieves the chains of premises and conclusions behind a decision, which show the reasoning of a court. Legal arguments use components tailored to the domain, such as factual and legal premises, and argument schemes such as rule or precedent."
+    schema: schema-arguments.svg
+  - icon: gavel
+    title: Outcome
+    text: "Outcome prediction links the text of a case to the decision of the court. For instance, a system predicts whether the court upholds or rejects the request of a party."
+    schema: schema-outcome.svg
+  - icon: user-shield
+    title: Compliance
+    text: "Compliance analysis checks whether a document respects the law. Systems flag terms of service clauses that may be unfair to consumers, and check privacy policies against the General Data Protection Regulation (GDPR), the EU data protection law."
+    schema: schema-compliance.svg
+
+# What is legal annotation?: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
+views_title: What is legal annotation?
 concepts: |
   Legal analytics starts from annotation.
-  Legal experts mark the parts of a document that matter for a legal question, such as a clause, a category of personal data, or a premise.
-
-  An annotation schema fixes these parts, their labels, and their links.
-  Each annotated document thus becomes a structured record or a graph, which a legal expert can inspect faster than the full text.
+  Legal experts mark the parts of a document that matter for a legal question and give each part a label.
+  An annotation schema fixes these parts, their labels, and their links, and guidelines tell the annotators how to apply it.
+  The agreement between annotators measures how reliable the labels are.
   Models trained on such annotations produce the same structure for new documents.
 
-  The examples below show such structures for three tasks.
-  They detect unfair clauses in terms of service, check privacy policies against data protection law, and analyse the arguments in court decisions.
+  The examples below follow the four core concepts.
+  For structure, privacy policies are annotated through explicit rules that the GDPR motivates.
+  For arguments, court decisions are annotated with chains of premises and conclusions.
+  For outcome, decisions are annotated with the requests of the parties, their claims and arguments, and the final ruling.
+  For compliance, terms of service are annotated with the category and the fairness level of each clause.
   The last example follows one annotated clause across two languages.
 
-# Overview figure: interactive views, grouped by document type and by method.
+# Views: interactive examples, grouped by annotation concept and by method.
 # `roles` fixes the role labels and their color order; a segment with `id` is a marked component, one without is plain text.
 # `texts` replaces `segments` to show several texts side by side, each with a `label` and a `lang`.
-# Graph nodes repeat the marked text; keep examples short. `implicit` adds components that the text leaves unstated, with a `node` text;
+# Graph nodes show component IDs (role initials, or a role's `short`, plus a number). `implicit` adds components that the text leaves unstated, with a `node` text;
 # an implicit component with `kind: label` is a label assigned by the annotation, drawn as a regular box.
 # `tag` adds a type label to a component; `rows` places nodes in the graph from top to bottom.
 # `edges` link components: `relation` is support, attack, or link, and `label` overrides the edge text.
-# `caption` is Markdown: link each cited paper by its name.
+# `caption` is Markdown: link each cited paper by its name. `graph_title` renames the graph panel, "Argument graph" by default.
 views:
-  # `type: detect` shows a document whose sentences Detect scans; a sentence with a `category` and a `level`
-  # (1 clearly fair, 2 potentially unfair, 3 clearly unfair) is a clause marked by the annotators.
-  - key: terms
-    type: detect
-    group: Documents
-    label: Terms of service
-    description: "Online terms of service often contain clauses that may be unfair to consumers under EU law. Each such clause gets a category, such as unilateral termination, and a fairness level: clearly fair, potentially unfair, or clearly unfair."
-    caption: "Two sections of the Academia.edu terms of service, as annotated by legal experts in [Lippi et al. (2019)](/publication/lippi-2019-claudette/). Detect shows these expert labels, which the CLAUDETTE classifiers learn to reproduce."
-    document: Academia.edu terms of service
-    sections:
-      - title: Modification
-        sentences:
-          - {category: Unilateral change, level: 2, text: "Academia.edu reserves the right, at its sole discretion, to modify the Site, Services and these Terms, at any time and without prior notice."}
-          - {text: "If we modify these Terms we will post the modification on the Site or provide you with notice of the modification."}
-          - {text: "We will also update the “Last Updated Date” at the top of these Terms."}
-          - {category: Contract by using, level: 2, text: "By continuing to access or use the Site or Services after we have posted a modification on the Site or have provided you with notice of a modification, you are indicating that you agree to be bound by the modified Terms."}
-          - {text: "If the modified Terms are not acceptable to you, your only recourse is to cease using the Site and Services."}
-      - title: Termination and Account Cancellation
-        sentences:
-          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right, at its sole discretion, to discontinue or terminate the Site and Services and to terminate these Terms, at any time and without prior notice."}
-          - {category: Unilateral termination, level: 3, text: "If you breach any of these Terms, Academia.edu will have the right to suspend or disable your Account or terminate these Terms, at its sole discretion and without prior notice to you."}
-          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right to revoke your access to and use of the Site, Services and Collective Content at any time, with or without cause."}
-          - {text: "You may cancel your Account at any time by visiting your Account Settings page and clicking on “Remove” or by sending an email to feedback@academia.edu."}
-  # `type: rules` shows a document whose clauses Detect marks and Classify labels by the matching rule.
+  # `type: rules` shows a document beside a clause matrix: Detect marks the clauses and fills their rows, Classify lights the matching rule.
   # A clause with a `level` and a `rule` concerns personal data; its `parts` are plain `text` or marks with a `role`
   # (category, specification, or subcategory) and a `type` (open or closed), and a specification holds its own `parts`.
   # `rules` lists the annotation rules: each states the type of the category, the specification, and the subcategories (open, closed, any, or none).
   - key: privacy
     type: rules
-    group: Documents
-    label: Privacy policies
+    group: Annotation
+    label: Structure
     description: "Under the EU General Data Protection Regulation (GDPR), a privacy policy must say which categories of personal data it processes. Experts mark each clause about data with its category of data, the specification that introduces a list, and the subcategories in that list. Each mark is open when its terms are vague or its list is open-ended, and closed when they are precise or exhaustive."
     caption: "Clauses from the TikTok privacy policy of 19 November 2023, with the expert annotation used in [Grundler et al. (2025)](/publication/grundler-2025-detecting/). The rules are those of Table 2 of the paper."
     document: TikTok privacy policy
@@ -143,8 +148,8 @@ views:
                   - {text: "through our shopping features"}
               - {text: "."}
   - key: decisions
-    group: Documents
-    label: Court decisions
+    group: Annotation
+    label: Arguments
     description: "In court decisions, legal premises state rules, precedents, or principles, and factual premises describe the case. Legal premises also carry the argumentation scheme they follow."
     caption: "Paragraph 46 of Case C-850/19 P of the Court of Justice of the European Union, shortened, as annotated by [Santin et al. (2023)](/publication/10-1145-3594536-3595174/)."
     roles:
@@ -161,9 +166,55 @@ views:
     edges:
       - {from: d3, to: d2, relation: support}
       - {from: d2, to: d5, relation: support}
+  - key: outcome
+    group: Annotation
+    label: Outcome
+    description: "Tax decisions are annotated with the request of each party, the claims that ground it, the arguments that support the claims, and the decision of the court on the request. Outcome prediction learns from these annotated parts whether the court upholds or rejects a request."
+    caption: "Decision 362/2018 of an Italian Regional Tax Commission from the italianVAT corpus, shortened, as annotated by [Galli et al. (2022)](/publication/galli-etal-2022-outcomes/). The English text is our translation of the Italian original."
+    roles:
+      - {key: request, label: Request}
+      - {key: claim, label: Claim}
+      - {key: argument, label: Argument}
+      - {key: decision, label: Decision}
+    segments:
+      - {text: "[...]"}
+      - {id: r, role: request, text: "The first-instance decision was appealed by the tax office before this Regional Tax Commission,"}
+      - {id: c, role: claim, text: "which insisted that its assessment was correct"}
+      - {id: a, role: argument, text: "because the analysis of the company revealed undeclared revenues, assessed inductively, and the disallowance of non-deductible costs."}
+      - {text: "[...] For these reasons, [the Commission]"}
+      - {id: d, role: decision, tag: Upheld, text: "upholds the appeal of the tax office and reverses the first-instance decision."}
+    rows: [[d], [r], [c], [a]]
+    edges:
+      - {from: d, to: r, relation: link, label: upholds}
+      - {from: c, to: r, relation: support}
+      - {from: a, to: c, relation: support}
+  # `type: detect` shows a document whose sentences Detect scans; a sentence with a `category` and a `level`
+  # (1 clearly fair, 2 potentially unfair, 3 clearly unfair) is a clause marked by the annotators.
+  - key: terms
+    type: detect
+    group: Annotation
+    label: Compliance
+    description: "Online terms of service often contain clauses that may be unfair to consumers under EU law. Each such clause gets a category, such as unilateral termination, and a fairness level: clearly fair, potentially unfair, or clearly unfair."
+    caption: "Two sections of the Academia.edu terms of service, as annotated by legal experts in [Lippi et al. (2019)](/publication/lippi-2019-claudette/). Detect shows these expert labels, which the CLAUDETTE classifiers learn to reproduce."
+    document: Academia.edu terms of service
+    sections:
+      - title: Modification
+        sentences:
+          - {category: Unilateral change, level: 2, text: "Academia.edu reserves the right, at its sole discretion, to modify the Site, Services and these Terms, at any time and without prior notice."}
+          - {text: "If we modify these Terms we will post the modification on the Site or provide you with notice of the modification."}
+          - {text: "We will also update the “Last Updated Date” at the top of these Terms."}
+          - {category: Contract by using, level: 2, text: "By continuing to access or use the Site or Services after we have posted a modification on the Site or have provided you with notice of a modification, you are indicating that you agree to be bound by the modified Terms."}
+          - {text: "If the modified Terms are not acceptable to you, your only recourse is to cease using the Site and Services."}
+      - title: Termination and Account Cancellation
+        sentences:
+          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right, at its sole discretion, to discontinue or terminate the Site and Services and to terminate these Terms, at any time and without prior notice."}
+          - {category: Unilateral termination, level: 3, text: "If you breach any of these Terms, Academia.edu will have the right to suspend or disable your Account or terminate these Terms, at its sole discretion and without prior notice to you."}
+          - {category: Unilateral termination, level: 3, text: "Academia.edu reserves the right to revoke your access to and use of the Site, Services and Collective Content at any time, with or without cause."}
+          - {text: "You may cancel your Account at any time by visiting your Account Settings page and clicking on “Remove” or by sending an email to feedback@academia.edu."}
   - key: languages
-    group: Methods
-    label: Across languages
+    group: Annotation
+    label: Cross-linguality
+    graph_title: Clause alignment
     description: "Annotation projection copies the labels of an English contract to the same contract in another language, so that a classifier can be trained there without new annotation. The example shows why sentence-level projection is hard: one English sentence matches two German ones."
     caption: "Example 4.1 of [Galassi et al. (2020)](/publication/galassi-etal-2020-cross/), from the Box.com terms of service. Both versions show the annotation of legal experts."
     roles:
@@ -455,10 +506,3 @@ focus:
     text: Rhetorical roles in EU and Italian decisions.
     detail: "We plan to label the functional parts of EU and Italian decisions. These parts could then guide argument mining, outcome prediction, and summarization."
 ---
-
-## What is legal analytics?
-
-Legal analytics applies computers to legal texts, such as laws, court decisions, contracts, and privacy policies.
-It relies on natural language processing, the study of how computers handle language, to find contract terms, arguments, names, and case outcomes.
-These texts are long and hard to read, so such tools can support consumers, lawyers, judges, and public agencies.
-Task families include reading documents, mining arguments (finding reasons and conclusions), predicting outcomes, protecting consumers, handling many languages, and testing large text-generating models.

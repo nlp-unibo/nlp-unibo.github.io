@@ -2175,10 +2175,6 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   // Role boxes and relation edges take the colors of the argument views; their text stays neutral for contrast.
   .lt-s-node { fill: color-mix(in srgb, var(--lt-role) 12%, transparent); stroke: var(--lt-role); stroke-width: 1.5; }
   .lt-s-implicit { stroke-dasharray: 4 3; }
-  .lt-s-arrow.lt-s-support { stroke: var(--lt-support); }
-  .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
-  .lt-s-head.lt-s-support { fill: var(--lt-support); }
-  .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
 }
 
 .dark .lt-svg {
@@ -2191,6 +2187,14 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-s-labeltxt { fill: $lt-navy; }
   .lt-s-arrow { stroke: $lt-dark-muted; }
   .lt-s-head { fill: $lt-dark-muted; }
+}
+
+// Relation colors come after the dark rules above, so they hold in both modes (the tokens switch themselves).
+.lt-svg {
+  .lt-s-arrow.lt-s-support { stroke: var(--lt-support); }
+  .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
+  .lt-s-head.lt-s-support { fill: var(--lt-support); }
+  .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
 }
 
 
@@ -2430,11 +2434,43 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 .dark .lt-arg-textlabel { color: $lt-dark-muted; }
 
-// The text comes first and the graph below it, both at full width.
+// The text comes first and the graph below it, both at full width. On wide screens the text sits beside the graph
+// and stays below the navigation bar while the reader scrolls the taller graph. While a view plays, the text takes
+// the full width until Show graph, then narrows to make room for the graph.
 .lt-arg-panels {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 1.25rem;
+
+  & + .lt-arg-controls { margin-top: 1rem; }
+}
+
+@media (min-width: 992px) {
+  // The graph column takes the width of its graph (--lt-cols columns of boxes, see .lt-arg-graph), between 16rem and
+  // half the row, and the text the rest.
+  .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, unquote("min(max(16rem, calc(var(--lt-cols) * 10rem + (var(--lt-cols) - 1) * 3.2rem + 2.6rem)), 50%)"));
+    align-items: start;
+    transition: grid-template-columns 0.7s ease, column-gap 0.7s ease;
+  }
+
+  // The hidden graph panel takes no room; while its column opens, it clips a graph already laid out at its final width
+  // (assets/js/ltlab.js), so the row has its final height from the start.
+  .lt-arg-view.is-animating:not(.is-graph) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+
+  .lt-arg-view.is-animating .lt-arg-graph-panel {
+    overflow: hidden;
+
+    .lt-arg-step { white-space: nowrap; }
+  }
+
+  .lt-arg-text-panel {
+    position: sticky;
+    top: 5.5rem;
+  }
 }
 
 .lt-arg-panel {
@@ -2505,15 +2541,26 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   text-decoration: none;
 }
 
+// A component the text leaves unstated follows the text in a dashed box of its role color.
+.lt-arg-unstated { margin-top: 0.9rem; }
+
+.lt-arg-span.is-implicit {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border: 1.5px dashed var(--lt-role);
+  border-radius: 6px;
+  text-decoration: none;
+}
+
 // The graph: rows of nodes over an SVG layer where the script draws the edges.
 // All nodes share one width, set by the longest row (`--lt-cols`), so nodes line up in columns
-// and a shorter row sits centered under the longer one. Nodes in a row share one height.
+// and a shorter row sits centered under the longer one. Each node takes the height of its content.
 .lt-arg-graph {
   --lt-gap: 3.2rem;
   position: relative;
   display: grid;
   gap: 3.4rem;
-  max-width: calc(var(--lt-cols) * 16rem + (var(--lt-cols) - 1) * var(--lt-gap));
+  max-width: calc(var(--lt-cols) * 10rem + (var(--lt-cols) - 1) * var(--lt-gap));
   margin-inline: auto;
 }
 
@@ -2528,8 +2575,10 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   pointer-events: none;
 }
 
+// A box takes the height of its own content, so an ID box stays small beside a box with text.
 .lt-arg-row {
   display: flex;
+  align-items: flex-start;
   justify-content: center;
   gap: var(--lt-gap);
 }
@@ -2538,6 +2587,10 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   position: relative;
   z-index: 1;
   flex: 0 0 calc((100% - (var(--lt-cols) - 1) * var(--lt-gap)) / var(--lt-cols));
+  // A long word wraps instead of widening the box past its column.
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
   padding: 0.55rem 0.75rem;
   border: 1px solid $lt-border;
   border-left: 4px solid var(--lt-role);
@@ -2558,6 +2611,28 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
     color: $lt-ink;
     background: transparent;
   }
+}
+
+// A component ID, such as P1: small inside a text tag, large in its graph box.
+.lt-arg-id sub {
+  bottom: 0;
+  font-size: 0.75em;
+  vertical-align: -0.15em;
+}
+
+.lt-arg-node {
+  text-align: center;
+}
+
+.lt-arg-node .lt-arg-id {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.lt-arg-node-text {
+  display: block;
+  text-align: left;
 }
 
 .lt-arg-scheme {
@@ -2629,13 +2704,13 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   white-space: nowrap;
 }
 
-// Narrow screens: the graph keeps its layout and scrolls inside its own panel.
+// Narrow screens: a graph too wide for its panel scrolls inside it.
 .lt-arg-graph-scroll {
   overflow-x: auto;
 }
 
 @media (max-width: 575.98px) {
-  .lt-arg-graph { --lt-gap: 1.4rem; min-width: 27rem; }
+  .lt-arg-graph { --lt-gap: 1.4rem; }
   .lt-arg-node { font-size: 0.78rem; padding: 0.45rem 0.55rem; }
 }
 
@@ -2817,9 +2892,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .lt-rule-tag,
-.lt-rule-label,
-.lt-rules-level,
-.lt-rule li {
+.lt-rule-label {
   font-size: 0.66rem;
   font-weight: 700;
   letter-spacing: 0.05em;
@@ -2845,14 +2918,16 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   }
 }
 
-// Clauses are numbered, and the rules panel repeats the numbers of the clauses each rule matches.
+// Clauses carry IDs (C1, C2, ...), repeated in the matrix row of each clause and in the rules it matches.
 .lt-rule-num {
   display: inline-grid;
+  grid-auto-flow: column;
   place-items: center;
   min-width: 1.3rem;
   height: 1.3rem;
   margin-right: 0.35rem;
-  border-radius: 50%;
+  padding: 0 0.4rem;
+  border-radius: 999px;
   font-size: 0.72rem;
   font-weight: 700;
   line-height: 1;
@@ -2863,8 +2938,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 .lt-rule-clause { border-radius: 4px; transition: background-color 0.4s ease; }
 
-.lt-rule-label,
-.lt-rules-level {
+.lt-rule-label {
   &::before {
     content: "";
     display: inline-block;
@@ -2887,64 +2961,9 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   background: color-mix(in srgb, var(--lt-level) 12%, transparent);
 }
 
-.lt-rules-panel { margin-top: 1.25rem; }
-
-.lt-rules-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1rem 1.5rem;
-
-  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
-}
-
-.lt-rules-col { display: grid; gap: 0.6rem; align-content: start; }
-
-.lt-rules-level {
-  margin: 0;
-  font-size: 0.75rem;
-
-  span { margin-left: 0.3rem; font-weight: 600; color: $lt-muted; }
-}
-
-.lt-rule {
-  display: grid;
-  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid $lt-border;
-  border-left: 4px solid var(--lt-level);
-  border-radius: 8px;
-  background: #fff;
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
-
-  ul { display: flex; flex-wrap: wrap; gap: 0.25rem 0.8rem; margin: 0; padding: 0; list-style: none; }
-
-  li::before {
-    content: "";
-    display: inline-block;
-    width: 0.5rem;
-    height: 0.5rem;
-    margin-right: 0.25rem;
-    border-radius: 2px;
-    background: var(--lt-role);
-  }
-
-  &.is-match {
-    box-shadow: 0 0 0 2px var(--lt-level), 0 8px 20px rgba(0, 48, 96, 0.12);
-    transform: translateY(-2px);
-  }
-}
-
-.lt-rule-name { margin: 0; font-size: 0.85rem; font-weight: 700; color: $lt-navy; }
-
-.lt-rule-matches {
-  display: flex;
-  gap: 0.25rem;
-  margin: 0;
-
-  .lt-rule-num { margin: 0; }
-}
+// The rule ID chip in a matrix row or rule row: L1 or L2 and the rule number, in the level color.
+.lt-rule-label sub,
+.lt-rule-num sub { bottom: 0; font-size: 0.8em; vertical-align: -0.1em; }
 
 // The text keeps only the marks; the legend names their colors and lines, and the hierarchy names each mark.
 .lt-rules .lt-detect-doc .lt-rule-tag { display: none; }
@@ -2985,71 +3004,122 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .is-line.is-open::before { border-bottom-style: dashed; }
 }
 
-// Annotation hierarchy: one card per clause, with the category at the root, the specification under it,
-// and the subcategories under the specification, joined by guide lines.
-.lt-tree-panel { margin-top: 1.25rem; }
+// Clause matrix: one row per clause with the type of its category, specification, and subcategories, then the rules
+// in the same columns. A type is written and drawn as the line of its marks in the text: dashed when open, solid
+// when closed; "none" and "any" stay muted. Subcategories also count their open and closed members.
+.lt-matrix-scroll { overflow-x: auto; }
 
-.lt-tree-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(#{"min(100%, 22rem)"}, 1fr));
-  align-items: start;
-  gap: 1rem;
-}
+.lt-matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.35rem;
+  font-size: 0.85rem;
 
-.lt-tree-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  padding: 0.8rem 1rem;
-  border: 1px solid $lt-border;
-  border-radius: 10px;
-  background: #fff;
-  transition: box-shadow 0.4s ease, transform 0.4s ease;
+  // The theme stripes and borders tables; the matrix sets its own backgrounds and lines in both modes.
+  th, td { padding: 0.35rem 0.45rem; border: 0; text-align: left; vertical-align: middle; background: transparent; }
 
-  &.is-current {
-    box-shadow: 0 0 0 2px $lt-sky, 0 8px 20px rgba(0, 48, 96, 0.12);
-    transform: translateY(-2px);
+  thead th {
+    border-bottom: 1px solid $lt-border;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: $lt-ink;
+  }
+
+  thead th[class*="lt-role-"]::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+
+  tbody th { width: 1%; white-space: nowrap; }
+
+  .lt-rule-num, .lt-rule-label { margin: 0; white-space: nowrap; }
+
+  .lt-matrix-level { margin-left: 0.35rem; }
+
+  // Phones: column headers keep only their role color, which the legend under the text names, and a rule ID
+  // stacks under its clause ID.
+  @media (max-width: 575.98px) {
+    th, td { padding: 0.3rem; }
+
+    .lt-matrix-head {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    tbody th .lt-matrix-level { display: block; width: max-content; margin: 0.25rem 0 0; }
   }
 }
 
-.lt-tree-head {
-  margin: 0;
-  font-size: 0.85rem;
+.lt-matrix .lt-matrix-row > *,
+.lt-matrix .lt-matrix-rule > * { background: #fff; transition: background-color 0.3s ease; }
+
+.lt-matrix-row > :first-child,
+.lt-matrix-rule > :first-child { border-radius: 8px 0 0 8px; box-shadow: inset 4px 0 0 var(--lt-level); }
+
+.lt-matrix-row > :last-child,
+.lt-matrix-rule > :last-child { border-radius: 0 8px 8px 0; }
+
+.lt-matrix .lt-matrix-row.is-current > *,
+.lt-matrix .lt-matrix-row.is-linked > *,
+.lt-matrix .lt-matrix-rule.is-match > * { background: color-mix(in srgb, #{$lt-sky} 22%, #fff); }
+
+.lt-matrix-sep th {
+  padding-top: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 700;
-  color: $lt-navy;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
 }
 
-.lt-tree,
-.lt-tree ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.lt-tree ul { margin-left: 0.6rem; padding-left: 1rem; border-left: 2px solid $lt-border; }
-
-.lt-tree li { margin-top: 0.35rem; }
-
-.lt-tree-node {
+.lt-cell {
   display: inline-block;
-  padding: 0.15rem 0.5rem;
-  border: 1px solid $lt-border;
-  border-left: 3px solid var(--lt-role);
-  border-radius: 6px;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  padding-bottom: 0.1rem;
+  border-bottom: 2px solid var(--lt-role);
+  font-weight: 600;
+  line-height: 1.3;
   color: $lt-navy;
 
-  &.is-open { border-left-style: dashed; }
+  &.is-open { border-bottom-style: dashed; }
 
-  .lt-rule-tag { display: block; margin: 0; }
+  &.is-none, &.is-any { border-bottom-color: transparent; font-weight: 400; color: $lt-muted; }
 }
 
-.lt-tree-label { margin: 0; }
+.lt-cell-count {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  white-space: nowrap;
+  color: $lt-muted;
+}
 
-.lt-tree-label .lt-rule-label { margin: 0; }
+.dark .lt-cell-count { color: $lt-dark-muted; }
 
-// While the script plays a view, the marks, the hierarchy, the labels, the rules, and the summary appear only at their step.
+.lt-matrix-levels {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: $lt-ink;
+
+  > span { display: inline-block; margin-right: 0.8rem; white-space: nowrap; }
+
+  .lt-rule-label { margin: 0 0.3rem 0 0; }
+}
+
+.lt-rule-clause.is-linked { background: rgba($lt-sky, 0.3); }
+
+// While the script plays a view, the marks, the matrix rows, the labels, the rules, and the summary appear only at their step.
+// The matrix panel takes no room until Detect, when the text narrows to make room for it (assets/js/ltlab.js).
 .lt-rules.is-ready {
   &:not(.is-marked) .lt-rule-clause:not(.is-hit) .lt-rule-span {
     text-decoration-color: transparent;
@@ -3059,41 +3129,47 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   .lt-rule-clause.is-current { background: rgba($lt-sky, 0.3); }
 
-  &:not(.is-detecting) .lt-tree-panel,
+  &:not(.is-detecting) .lt-matrix-panel,
   &:not(.is-detecting) .lt-rules-legend { display: none; }
 
-  .lt-tree-card:not(.is-shown) { visibility: hidden; }
+  .lt-matrix-panel { overflow: hidden; }
 
-  .lt-tree-card.is-shown li { animation: lt-detect-in 0.5s ease backwards; }
+  .lt-matrix-row:not(.is-shown) { visibility: hidden; }
 
-  .lt-tree-card:not(.is-labelled) .lt-tree-label { visibility: hidden; }
+  .lt-matrix-row.is-shown > * { animation: lt-detect-in 0.5s ease backwards; }
 
-  .lt-tree-card.is-labelled .lt-tree-label { animation: lt-detect-in 0.5s ease; }
+  .lt-matrix-row:not(.is-labelled) .lt-matrix-level { visibility: hidden; }
 
-  &:not(.is-classifying) .lt-rules-panel { display: none; }
+  .lt-matrix-row.is-labelled .lt-matrix-level { animation: lt-detect-in 0.5s ease; }
 
-  .lt-rule-matches .lt-rule-num:not(.is-shown) { visibility: hidden; }
+  &:not(.is-classifying) .lt-matrix-rules { visibility: hidden; }
 
   &:not(.is-classified) .lt-detect-summary { visibility: hidden; }
 }
 
-// Once a clause is classified, its number takes the color of its level in the text and in its card.
+@media (min-width: 992px) {
+  .lt-rules.is-ready:not(.is-detecting) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+}
+
+// Once a clause is classified, its ID takes the color of its level in the text and in its row.
 .lt-rules:not(.is-ready) .lt-rule-clause .lt-rule-num,
-.lt-rules:not(.is-ready) .lt-tree-head .lt-rule-num,
+.lt-rules:not(.is-ready) .lt-matrix-row .lt-rule-num,
 .lt-rules .is-labelled .lt-rule-num { background: var(--lt-level); }
 
 .dark {
-  .lt-rule-span, .lt-tree-node, .lt-tree-head { color: #f1f5fa; }
-  .lt-rules-legend span { color: #c9d6e3; }
+  .lt-rule-span, .lt-cell { color: #f1f5fa; }
+  .lt-rules-legend span, .lt-matrix thead th, .lt-matrix-levels { color: #c9d6e3; }
   .lt-rules-legend .is-line::before { border-bottom-color: #c9d6e3; }
-  .lt-tree-card, .lt-tree-node { border-color: $lt-dark-border; background: $lt-dark-card; }
-  .lt-tree-node { border-left-color: var(--lt-role); }
-  .lt-tree ul { border-left-color: $lt-dark-border; }
-  .lt-rule-tag, .lt-rule-label, .lt-rules-level, .lt-rule li { color: #c9d6e3; }
-  .lt-rules-level span { color: $lt-dark-muted; }
+  .lt-rule-tag, .lt-rule-label { color: #c9d6e3; }
+  .lt-cell.is-none, .lt-cell.is-any, .lt-matrix-sep th { color: $lt-dark-muted; }
   .lt-rule-num { color: $lt-navy; background: $lt-sky; }
-  .lt-rule { border-color: $lt-dark-border; border-left-color: var(--lt-level); background: $lt-dark-card; }
-  .lt-rule-name { color: #f1f5fa; }
+  .lt-matrix thead th { border-bottom-color: $lt-dark-border; }
+  .lt-matrix .lt-matrix-sep th { background: transparent; }
+  .lt-matrix .lt-matrix-row > *, .lt-matrix .lt-matrix-rule > * { background: $lt-dark-card; }
+  .lt-matrix .lt-matrix-row.is-current > *, .lt-matrix .lt-matrix-row.is-linked > *, .lt-matrix .lt-matrix-rule.is-match > * { background: color-mix(in srgb, #{$lt-sky} 18%, #{$lt-dark-card}); }
 }
 
 // Field blocks: a grid of buttons; the open block shows its popup next to it.
@@ -3541,21 +3617,26 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // Tags take no space until the text is annotated, so the written text has no gaps; they then open in place.
 .lt-arg-views { position: relative; }
 
+// A tag never runs past its line; it stays on one line only while it opens, and wraps once the view is still.
 .lt-arg-span .lt-arg-tag {
-  max-width: 60em;
+  max-width: unquote("min(60em, 100%)");
   overflow: clip;
-  white-space: nowrap;
 }
 
 .lt-arg-view.is-animating {
-  .lt-arg-span { transition: text-decoration-color 0.7s ease, background-color 0.5s ease; }
+  .lt-arg-span { transition: color 0.7s ease, text-decoration-color 0.7s ease, border-color 0.7s ease, background-color 0.5s ease; }
 
   .lt-arg-span .lt-arg-tag {
+    white-space: nowrap;
     transition: max-width 0.7s ease, margin-right 0.7s ease, opacity 0.7s ease;
     transition-delay: inherit;
   }
 
-  &:not(.is-marked) .lt-arg-span { text-decoration-color: transparent; }
+  &:not(.is-marked) .lt-arg-span {
+    border-color: transparent;
+    color: inherit;
+    text-decoration-color: transparent;
+  }
 
   &:not(.is-marked) .lt-arg-span .lt-arg-tag {
     max-width: 0;
@@ -3565,13 +3646,36 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   .lt-arg-node:not(.is-shown) { visibility: hidden; }
 
+  // Unstated components appear just before their boxes are placed (assets/js/ltlab.js).
+  .lt-arg-unstated:not(.is-shown) { display: none; }
+
+  // Below the text, the argument graph panel appears only with Show graph; beside it, the panel is in place from the start.
   &:not(.is-graph) .lt-arg-graph-panel { display: none; }
 
   // The component whose box is on its way to the argument graph.
   .lt-arg-span.is-sending { background-color: rgba($lt-sky, 0.25); }
 }
 
-// Annotate, Show graph, and Replay sit between the text and the argument graph. The two steps are numbered and
+// A component and its box, lit together by pointer or focus (assets/js/ltlab.js); the rest of the text dims.
+.lt-arg-text,
+.lt-arg-span { transition: color 0.2s ease, opacity 0.2s ease; }
+
+.lt-arg-view.is-linking {
+  .lt-arg-text { color: rgba($lt-ink, 0.45); }
+  .lt-arg-span:not(.is-linked) { opacity: 0.45; }
+}
+
+.dark .lt-arg-view.is-linking .lt-arg-text { color: rgba(#c9d6e3, 0.45); }
+
+.lt-arg-span.is-linked { background-color: rgba($lt-sky, 0.25); }
+
+.lt-arg-node.is-linked,
+.lt-arg-node:focus-visible {
+  outline: 2px solid var(--lt-role);
+  outline-offset: 2px;
+}
+
+// Annotate, Show graph, and Replay sit below the text and the argument graph. The two steps are numbered and
 // joined by a connector that fills once the text is annotated; a finished step keeps a muted outline.
 .lt-arg-controls {
   display: flex;
