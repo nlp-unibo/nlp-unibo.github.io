@@ -335,6 +335,11 @@ The For Students page suggests international challenges and academic workshops a
    A graph view can set `graph_title` to rename its graph panel, such as Clause alignment for the cross-lingual view.
    `site.py check` fails when the marks of a clause do not match the rule it names.
    Copy the `privacy` view of `content/research/legal/index.md`.
+   A view with `type: speech` shows the transcripts of one spoken fragment beside an audio panel: a schematic audio strip, a `question` with the annotators' `gold` answer, and a table of `models`.
+   Each model gives one of `answers`, compared with `gold`, or one of `scores` (quoted, as printed in the paper) per entry of `inputs`; the best score of each column is marked.
+   The strip follows the first transcript, or all of them with `strip: all` when the transcripts are consecutive parts of one recording, such as a context and the sentence to classify. Segments with `time` ([start, end] in seconds) set the bar widths and add a time axis; the caption must say what in the strip is schematic.
+   Annotate marks the components, and Listen opens the panel, lights the strip bar by bar, and shows the rows; `site.py check` fails when a model does not give one answer or score per input.
+   Copy the views of `content/research/speech/index.md`.
 6. List the research areas in `fields`.
    Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.
    Selecting a block enlarges it and opens its tasks beside it.
