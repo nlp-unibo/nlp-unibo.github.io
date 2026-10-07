@@ -50,58 +50,118 @@ concepts: |
   The examples below compare models that read the transcript alone with models that also use the audio.
 
 # Views: interactive examples, grouped by research area.
-# `type: speech` shows the transcripts of one spoken fragment beside a schematic audio strip and the answers of models
-# that read the text alone or the text with the audio. `roles` and `segments` mark components as in the argument views;
-# `question` and `gold` give the task and the annotators' answer; `inputs` names the transcript columns, and each of
-# `models` lists one answer per input, or `scores` (quoted, as printed in the paper). `strip: all` spreads the audio strip
-# over every transcript, for consecutive parts of one recording; segments with `time` ([start, end] in seconds) set the bar widths. `caption` is Markdown: link each cited paper by its name.
+# `type: voices` draws illustrative readings of short sentences as cue strips: each word has a duration `dur` and an optional
+# `pause` after it (seconds), a `pitch` pair (start and end, 0 to 1), and a `loud` value (0 to 1). Each reading has a `gold`
+# answer (`gold_label` names the row, Annotators by default), and each of `models` lists one answer per reading, with what
+# the model `hears`. Captions are Markdown: link each cited paper by its name.
 views:
   - key: claims
-    type: speech
+    type: voices
     group: Argumentation
     label: Claims in debates
-    description: "Claim detection decides whether a sentence states a claim. In this fragment, a model that reads only the words mistakes evidence for a claim, while the same model with acoustic features of the speech does not."
-    caption: "Fragment by David Cameron in the UK leaders' debate of 2 April 2015, with the analysis and model answers reported by [Lippi and Torroni (2016)](/publication/lippi-torroni-2016/), p. 2983. The audio strip is schematic: the paper gives no timestamps."
-    roles:
-      - {key: evidence, label: Evidence}
-    transcripts:
-      - label: Manual transcript
-        segments:
-          - {id: e, role: evidence, text: "we've created 2 million jobs"}
-          - {text: ", let's create a job for everyone who wants and needs one"}
-      - label: Speech recognizer
-        segments:
-          - {text: "who created 2 million jobs that create a job for everyone who wants and needs one."}
-    question: Does the fragment contain a claim?
-    gold: No claim
-    inputs: [Manual transcript, Speech recognizer]
+    description: "Claim detection decides whether a sentence states a claim, an opinion or thesis that the speaker asserts. A speech recognizer writes the words without punctuation, so a statement and a question with the same words give the same transcript. The pitch of the voice tells them apart."
+    caption: "Illustrative example: the sentences, cue values, and answers are constructed. No recording or model output is shown. The task follows the claim detection setting of [Lippi and Torroni (2016)](/publication/lippi-torroni-2016/), who combine text and audio features of a televised political debate."
+    question: Is the sentence a claim?
+    readings:
+      - label: Said as a statement
+        summary: "Stress on cut, and the pitch falls at the end."
+        gold: "Yes"
+        words:
+          - {w: we, dur: 0.2, pitch: [0.45, 0.5], loud: 0.5}
+          - {w: will, dur: 0.25, pitch: [0.55, 0.55], loud: 0.6}
+          - {w: cut, dur: 0.35, pitch: [0.85, 0.75], loud: 0.95}
+          - {w: taxes, dur: 0.5, pitch: [0.5, 0.1], loud: 0.6}
+      - label: Same words, asked as a question
+        summary: "No stress, and the pitch rises at the end."
+        gold: "No"
+        words:
+          - {w: we, dur: 0.2, pitch: [0.4, 0.4], loud: 0.45}
+          - {w: will, dur: 0.25, pitch: [0.4, 0.42], loud: 0.45}
+          - {w: cut, dur: 0.3, pitch: [0.45, 0.5], loud: 0.5}
+          - {w: taxes, dur: 0.6, pitch: [0.55, 0.95], loud: 0.6}
+      - label: Other words, said firmly
+        summary: "Stress on evening, a short pause, and the pitch falls at the end."
+        gold: "No"
+        words:
+          - {w: good, dur: 0.25, pitch: [0.6, 0.55], loud: 0.7}
+          - {w: evening, dur: 0.45, pitch: [0.8, 0.6], loud: 0.9, pause: 0.3}
+          - {w: all, dur: 0.5, pitch: [0.5, 0.1], loud: 0.65}
     models:
-      - {label: Text only, answers: [Claim, Claim]}
-      - {label: Text and audio, answers: [No claim, No claim]}
+      - {label: Text only, hears: "The words, without punctuation", answers: ["Yes", "Yes", "No"]}
+      - {label: Audio only, hears: "Pitch, loudness, pauses, and rate", answers: ["Yes", "No", "Yes"]}
+      - {label: Text and audio, hears: "Both", answers: ["Yes", "No", "No"]}
   - key: fallacies
-    type: speech
+    type: voices
     group: Argumentation
     label: Fallacies in debates
-    description: "A fallacy is a deceptive, misleading, or generally invalid argument. In the last sentence below, loaded language makes an appeal to emotion, and models classify that sentence together with the dialogue that precedes it."
-    caption: "Consecutive sentences of a dialogue from the US presidential debate of 7 October 1960, with timings and labels from the MM-USED-fallacy corpus (CC BY 4.0) of [Mancini et al. (2024)](/publication/mancini-etal-2024-multimodal/), where the annotated span \"the same kind of woolly thinking\" labels its sentence. Scores are the macro F1 of Table 6 for BERT, Wav2Vec, and their combination; the paper reports the average gain of BERT with audio as significant (p < 0.05). Bar widths follow the timings, and bar heights are schematic."
-    roles:
-      - {key: emotion, label: Appeal to emotion, short: AE}
-    transcripts:
-      - label: Context
-        segments:
-          - {text: "The Nationalists have these two islands.", time: [3217.80, 3220.72]}
-          - {text: "We should not uh - force our Nationalist allies to get off of them and give them to the Communists.", time: [3220.72, 3226.92]}
-          - {text: "If we do that we start a chain reaction; because the Communists aren't after Quemoy and Matsu, they're a- they're after Formosa.", time: [3226.92, 3235.48]}
-      - label: Sentence to classify
-        segments:
-          - {id: ae, role: emotion, tag: Loaded language, text: "In my opinion this is the same kind of woolly thinking that led to disaster for America in Korea.", time: [3235.48, 3242.56]}
-    strip: all
-    question: Macro F1 on MM-USED-fallacy (higher is better)
-    inputs: [Appeal to emotion, Average over categories]
+    description: "A fallacy is a deceptive, misleading, or generally invalid argument. An appeal to emotion seeks agreement by stirring feelings instead of giving reasons. A transcript keeps the words but loses the anger in the voice."
+    caption: "Illustrative example: the sentences, cue values, and answers are constructed. No recording or model output is shown. The task follows the fallacy classification setting of [Mancini et al. (2024)](/publication/mancini-etal-2024-multimodal/), who pair sentences of US presidential debates with their audio."
+    question: Is the sentence an appeal to emotion?
+    readings:
+      - label: Said calmly
+        summary: "Even loudness, and the pitch stays level."
+        gold: "No"
+        words:
+          - {w: this, dur: 0.2, pitch: [0.45, 0.45], loud: 0.5}
+          - {w: plan, dur: 0.3, pitch: [0.5, 0.45], loud: 0.5}
+          - {w: hurts, dur: 0.35, pitch: [0.5, 0.45], loud: 0.55}
+          - {w: families, dur: 0.6, pitch: [0.45, 0.3], loud: 0.5}
+      - label: Same words, said with anger
+        summary: "Loud throughout, a pitch peak on hurts, and a pause for effect."
+        gold: "Yes"
+        words:
+          - {w: this, dur: 0.2, pitch: [0.6, 0.65], loud: 0.75}
+          - {w: plan, dur: 0.3, pitch: [0.7, 0.65], loud: 0.8}
+          - {w: hurts, dur: 0.45, pitch: [0.95, 0.8], loud: 1.0, pause: 0.4}
+          - {w: families, dur: 0.7, pitch: [0.8, 0.4], loud: 0.9}
+      - label: Other words, said with anger
+        summary: "Loud throughout, and a pitch peak on vote."
+        gold: "No"
+        words:
+          - {w: we, dur: 0.2, pitch: [0.6, 0.65], loud: 0.75}
+          - {w: vote, dur: 0.4, pitch: [0.95, 0.8], loud: 1.0}
+          - {w: on, dur: 0.15, pitch: [0.7, 0.7], loud: 0.8}
+          - {w: tuesday, dur: 0.6, pitch: [0.8, 0.4], loud: 0.9}
     models:
-      - {label: Text only (BERT), scores: [".70", ".32"]}
-      - {label: Audio only (Wav2Vec), scores: [".45", ".13"]}
-      - {label: Text and audio, scores: [".80", ".40"]}
+      - {label: Text only, hears: "The words, without punctuation", answers: ["No", "No", "No"]}
+      - {label: Audio only, hears: "Pitch, loudness, pauses, and rate", answers: ["No", "Yes", "Yes"]}
+      - {label: Text and audio, hears: "Both", answers: ["No", "Yes", "No"]}
+  - key: depression
+    type: voices
+    group: Mental health
+    label: Depression in speech
+    description: "Depression detection predicts whether a person has depression from signals such as their speech. A transcript keeps what the person says, but not how flat or slow the voice is. The voice and the words can each carry signs that the other misses."
+    caption: "Illustrative example: the sentences, cue values, and labels are constructed. The answers are not a diagnosis. No recording or model output is shown. The task follows the depression detection setting of [Nurfidausi et al. (2025)](/publication/nurfidausi-2025-trideptrimodalcomparativestudy/), who compare speech, text, and EEG."
+    question: Does the speaker show signs of depression?
+    gold_label: Clinical label
+    readings:
+      - label: Said with varied pitch
+        summary: "Varied pitch and a regular pace."
+        gold: "No"
+        words:
+          - {w: i, dur: 0.15, pitch: [0.5, 0.6], loud: 0.6}
+          - {w: slept, dur: 0.35, pitch: [0.7, 0.55], loud: 0.7}
+          - {w: well, dur: 0.3, pitch: [0.75, 0.5], loud: 0.7}
+          - {w: today, dur: 0.5, pitch: [0.6, 0.3], loud: 0.6}
+      - label: Same words, said flat and slow
+        summary: "Flat pitch, low loudness, a slow pace, and a long pause."
+        gold: "Yes"
+        words:
+          - {w: i, dur: 0.25, pitch: [0.3, 0.3], loud: 0.35}
+          - {w: slept, dur: 0.5, pitch: [0.3, 0.28], loud: 0.35}
+          - {w: well, dur: 0.45, pitch: [0.28, 0.28], loud: 0.3, pause: 0.8}
+          - {w: today, dur: 0.7, pitch: [0.28, 0.25], loud: 0.3}
+      - label: Other words, said with varied pitch
+        summary: "Varied pitch and a regular pace."
+        gold: "Yes"
+        words:
+          - {w: nothing, dur: 0.3, pitch: [0.7, 0.55], loud: 0.7}
+          - {w: matters, dur: 0.3, pitch: [0.75, 0.5], loud: 0.7}
+          - {w: anymore, dur: 0.45, pitch: [0.6, 0.3], loud: 0.6}
+    models:
+      - {label: Text only, hears: "The words, without punctuation", answers: ["No", "No", "Yes"]}
+      - {label: Audio only, hears: "Pitch, loudness, pauses, and rate", answers: ["No", "Yes", "No"]}
+      - {label: Text and audio, hears: "Both", answers: ["No", "Yes", "Yes"]}
 
 # Research areas: one block per macro topic. Selecting a block enlarges it and opens its tasks beside it.
 # Each task states its input and the expected output.

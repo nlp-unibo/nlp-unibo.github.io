@@ -184,51 +184,58 @@
         {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
       </figure>
     </div>
-    {{ else if eq $v.type "speech" }}
-    {{/* A speech view: the transcripts of one spoken fragment beside a schematic audio strip and the answers of models that */}}
-    {{/* read the text alone or the text with the audio. Annotate marks the components; Listen plays the strip and shows the */}}
-    {{/* answers. The strip is schematic: its bars follow the length of the first transcript's segments, not real audio, or of */}}
-    {{/* every transcript's segments with `strip: all`, when the transcripts are consecutive parts of one recording, such as a context and */}}
-    {{/* a sentence. When segments carry `time` ([start, end] in seconds), bar widths follow the timings and an axis gives the duration. */}}
-    {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $short := $role.short | default "" }}{{ if not $short }}{{ range split $role.label " " }}{{ $short = print $short (upper (substr . 0 1)) }}{{ end }}{{ end }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label "short" $short)) }}{{ end }}
-    {{ $count := dict }}{{ $num := dict }}
-    {{ range $v.transcripts }}{{ range .segments }}{{ if and .id (not (index $num .id)) }}{{ $c := add (index $count .role | default 0) 1 }}{{ $count = merge $count (dict .role $c) }}{{ $num = merge $num (dict .id $c) }}{{ end }}{{ end }}{{ end }}
-    {{ $segs := (index $v.transcripts 0).segments }}{{ if eq $v.strip "all" }}{{ $segs = slice }}{{ range $v.transcripts }}{{ $segs = $segs | append .segments }}{{ end }}{{ end }}{{ $timed := false }}{{ range $segs }}{{ if .time }}{{ $timed = true }}{{ end }}{{ end }}
-    {{ $spans := slice }}{{ $total := 0.0 }}{{ range $segs }}{{ $l := float (len .text) }}{{ if $timed }}{{ $l = sub (float (index .time 1)) (float (index .time 0)) }}{{ end }}{{ $spans = $spans | append (dict "seg" . "len" $l) }}{{ $total = add $total $l }}{{ end }}
-    <div class="lt-arg-view lt-speech" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+    {{ else if eq $v.type "voices" }}
+    {{/* A voices view: illustrative readings of short sentences, each drawn as a cue strip that aligns pitch, loudness, */}}
+    {{/* words, and pauses on one time grid (column widths follow `dur` and `pause`, in seconds), beside the answers of */}}
+    {{/* models that read the text, hear the audio, or both. Listen draws the cues; Classify shows the answers. */}}
+    {{/* Listen opens the readings one after the other: reading r starts at --t (seconds), spreads its words for 0.6 s, */}}
+    {{/* then draws its cues 120 ms apart; `data-lt-play` is the end of the last reading, in milliseconds. */}}
+    {{ $starts := slice }}{{ $t := 0.0 }}{{ range $v.readings }}{{ $starts = $starts | append $t }}{{ $t = add $t (add 1.2 (mul (float (len .words)) 0.12)) }}{{ end }}
+    <div class="lt-arg-view lt-speech lt-voices" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0" data-lt-play="{{ int (mul $t 1000) }}">
       <p class="lt-arg-description">{{ $v.description }}</p>
       <figure class="lt-arg-example">
-        <div class="lt-arg-panels" style="--lt-cols: 3">
+        <div class="lt-arg-panels" style="--lt-cols: 2">
           <div class="lt-arg-panel lt-arg-text-panel">
-            <h3 class="lt-arg-step"><span>1</span> The transcript{{ if gt (len $v.transcripts) 1 }}s{{ end }}</h3>
+            <h3 class="lt-arg-step"><span>1</span> What a listener hears</h3>
             <div class="lt-detect-doc">
-              {{ range $v.transcripts }}
-              {{ with .label }}<p class="lt-arg-textlabel">{{ . }}</p>{{ end }}
-              <p class="lt-arg-text">
-                {{- range $s, $seg := .segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag"><b class="lt-arg-id">{{ $r.short }}<sub>{{ index $num $seg.id }}</sub></b> {{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
-              </p>
+              {{ range $r, $read := $v.readings }}
+              {{/* Timed columns follow the durations; tight columns (0fr) set the words as plain text until Listen. */}}
+              {{ $cols := slice "var(--lt-voice-label)" }}{{ $tight := slice "var(--lt-voice-label)" }}{{ $time := 0.0 }}
+              {{ range .words }}{{ $cols = $cols | append (printf "minmax(min-content, %gfr)" (float .dur)) }}{{ $tight = $tight | append "minmax(min-content, 0fr)" }}{{ $time = add $time (float .dur) }}{{ with .pause }}{{ $cols = $cols | append (printf "minmax(min-content, %gfr)" (float .)) }}{{ $tight = $tight | append "minmax(min-content, 0fr)" }}{{ $time = add $time (float .) }}{{ end }}{{ end }}
+              <div class="lt-voice-reading" style="--t: {{ index $starts $r }}s">
+                <p class="lt-arg-textlabel">{{ add $r 1 }}. {{ .label }}</p>
+                <div class="lt-voice-scroll">
+                  <div class="lt-voice-cues" style="--lt-voice-timed: {{ delimit $cols " " | safeCSS }}; --lt-voice-tight: {{ delimit $tight " " | safeCSS }}">
+                    <span class="lt-voice-row lt-voice-cuename" aria-hidden="true">Pitch</span>
+                    {{- range $j, $w := .words }}
+                    <span class="lt-voice-pitch" style="--j: {{ $j }}" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="{{ sub 90 (mul (float (index .pitch 0)) 80) }}" x2="100" y2="{{ sub 90 (mul (float (index .pitch 1)) 80) }}"/></svg></span>{{ with .pause }}<span aria-hidden="true"></span>{{ end }}
+                    {{- end }}
+                    <span class="lt-voice-row lt-voice-cuename" aria-hidden="true">Loudness</span>
+                    {{- range $j, $w := .words }}
+                    <span class="lt-voice-loud" style="--j: {{ $j }}" aria-hidden="true"><i style="--h: {{ mul (float .loud) 100 }}%"></i></span>{{ with .pause }}<span aria-hidden="true"></span>{{ end }}
+                    {{- end }}
+                    <span class="lt-voice-row" aria-hidden="true">Words</span>
+                    {{- range .words }}
+                    <span class="lt-voice-word">{{ .w }}</span>{{ with .pause }}<span class="lt-voice-pause">pause<br>{{ . }} s</span>{{ end }}
+                    {{- end }}
+                  </div>
+                </div>
+                <p class="lt-voice-summary">{{ .summary }} Rate: {{ lang.FormatNumber 1 (div (float (len .words)) $time) }} words per second.</p>
+              </div>
               {{ end }}
             </div>
           </div>
           <div class="lt-arg-panel lt-arg-graph-panel lt-speech-panel">
-            <h3 class="lt-arg-step"><span>2</span> Audio and answers</h3>
+            <h3 class="lt-arg-step"><span>2</span> Answers</h3>
             <div class="lt-speech-body">
-              <div class="lt-speech-wave" role="img" aria-label="Schematic audio strip of the fragment, with the marked components colored">
-                {{- $n := 48 }}{{ range $i := seq 0 (sub $n 1) }}{{ $pos := div (mul (float $i) $total) $n }}{{ $acc := 0.0 }}{{ $at := dict }}{{ range $spans }}{{ if and (ge $pos $acc) (lt $pos (add $acc .len)) }}{{ $at = .seg }}{{ end }}{{ $acc = add $acc .len }}{{ end }}
-                <i style="--h: {{ add 20 (mod (add (mul $i 37) (mul (mod $i 7) 11)) 72) }}%; --i: {{ $i }}"{{ with $at.id }} class="lt-role-{{ (index $slot $at.role).n }}" data-lt-seg="{{ . }}"{{ end }}></i>
-                {{- end }}
-              </div>
-              {{ if $timed }}<p class="lt-speech-axis" aria-hidden="true"><span>0 s</span><span>{{ lang.FormatNumber 1 $total }} s</span></p>{{ end }}
-              <p class="lt-speech-question">{{ $v.question }}{{ with $v.gold }} <span>Annotators: <b>{{ . }}</b></span>{{ end }}</p>
+              <p class="lt-speech-question">{{ $v.question }}</p>
               <table class="lt-speech-answers">
-                <thead><tr><th scope="col">Model</th>{{ range $v.inputs }}<th scope="col">{{ . }}</th>{{ end }}</tr></thead>
+                <thead><tr><th scope="col">Input</th>{{ range $r, $_ := $v.readings }}<th scope="col">{{ add $r 1 }}</th>{{ end }}</tr></thead>
                 <tbody>
-                  {{/* A model has `answers`, compared with `gold`, or `scores`, one number per input column; the best score of a column is bold and labelled. */}}
-                  {{ $best := slice }}{{ range $c, $_ := $v.inputs }}{{ $m := -1.0 }}{{ range $v.models }}{{ with .scores }}{{ $x := float (index . $c) }}{{ if gt $x $m }}{{ $m = $x }}{{ end }}{{ end }}{{ end }}{{ $best = $best | append $m }}{{ end }}
+                  <tr><th scope="row">{{ $v.gold_label | default "Annotators" }}</th>{{ range $v.readings }}<td><b>{{ .gold }}</b></td>{{ end }}</tr>
                   {{ range $v.models }}
-                  <tr class="lt-speech-row"><th scope="row">{{ .label }}</th>
-                    {{- range .answers }}{{ $right := eq . $v.gold }}<td><span class="lt-speech-answer is-{{ cond $right "right" "wrong" }}"><i class="fas fa-{{ cond $right "check" "times" }}" aria-hidden="true"></i> {{ . }}<span class="sr-only"> ({{ cond $right "correct" "wrong" }})</span></span></td>{{ end }}
-                    {{- range $c, $x := .scores }}{{ $top := eq (float $x) (index $best $c) }}<td class="lt-speech-score{{ if $top }} is-best{{ end }}">{{ $x }}{{ if $top }} <span class="lt-speech-best">best</span>{{ end }}</td>{{ end -}}
+                  <tr class="lt-speech-row"><th scope="row">{{ .label }}{{ with .hears }}<span class="lt-voice-hears">{{ . }}</span>{{ end }}</th>
+                    {{- range $r, $a := .answers }}{{ $right := eq $a (index $v.readings $r).gold }}<td><span class="lt-speech-answer is-{{ cond $right "right" "wrong" }}"><i class="fas fa-{{ cond $right "check" "times" }}" aria-hidden="true"></i> {{ $a }}<span class="sr-only"> ({{ cond $right "correct" "wrong" }})</span></span></td>{{ end -}}
                   </tr>
                   {{ end }}
                 </tbody>
@@ -240,9 +247,9 @@
           <span></span>
           <div class="lt-arg-controls lt-detect-controls" hidden>
             <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
-            <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
+            <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Listen</button>
             <span class="lt-arg-link" aria-hidden="true"></span>
-            <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Listen</button>
+            <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
             <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
           </div>
         </div>

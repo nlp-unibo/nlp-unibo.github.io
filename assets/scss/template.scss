@@ -2852,48 +2852,12 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   &:not(.is-detected) .lt-detect-summary { visibility: hidden; }
 }
 
-// Speech views: the transcripts beside a schematic audio strip, the task question with the annotators' answer, and a
-// table of model answers, right in green and wrong in red (the validated support and attack pair), each with an icon
-// and a word. The strip has one bar per slice of the first transcript; bars of a marked component take its role color.
-.lt-speech .lt-arg-textlabel:not(:first-child) { margin-top: 0.8rem; }
-
-.lt-speech-wave {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  height: 5rem;
-  padding: 0.4rem 0;
-
-  i {
-    flex: 1;
-    height: var(--h);
-    border-radius: 2px;
-    background: color-mix(in srgb, #{$lt-ink} 35%, transparent);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  i[class*="lt-role-"] { background: var(--lt-role); }
-
-  i.is-linked { transform: scaleY(1.12); }
-}
-
-.lt-speech-axis {
-  display: flex;
-  justify-content: space-between;
-  margin: 0.2rem 0 0;
-  font-size: 0.72rem;
-  font-variant-numeric: tabular-nums;
-  color: $lt-muted;
-}
-
-.dark .lt-speech-axis { color: $lt-dark-muted; }
-
+// Voices views: the answers panel holds the task question and a table of model answers, right in green and wrong in
+// red (the validated support and attack pair), each with an icon and a word.
 .lt-speech-question {
   margin: 1rem 0 0.6rem;
   font-weight: 600;
   color: $lt-navy;
-
-  span { display: block; font-weight: 400; color: $lt-ink; }
 }
 
 .lt-speech-answers {
@@ -2933,61 +2897,132 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   &.is-wrong { --lt-answer: var(--lt-attack); }
 }
 
-.lt-speech-score { white-space: nowrap; font-variant-numeric: tabular-nums; }
 
-.lt-speech-score.is-best { font-weight: 700; color: $lt-navy; }
 
-.lt-speech-best {
-  margin-left: 0.3rem;
-  padding: 0 0.4rem;
-  border: 1px solid currentColor;
-  border-radius: 999px;
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  vertical-align: 0.1em;
-}
 
-.dark .lt-speech-score.is-best { color: #f1f5fa; }
-
-// Phones: the label goes under its score, so the table fits the panel.
-@media (max-width: 575.98px) {
-  .lt-speech-answers th, .lt-speech-answers td { padding: 0.35rem 0.3rem; }
-  .lt-speech-best { display: block; width: max-content; margin: 0.15rem 0 0; }
-}
-
-.lt-speech.is-linking .lt-arg-span:not(.is-linked) { opacity: 0.45; }
-
-// While the script plays a speech view, tags and underlines appear with Annotate, and the audio panel takes no room
-// until Listen, when the strip lights bar by bar and the answers follow row by row (assets/js/ltlab.js).
+// While the script plays a voices view, the answers panel takes no room until Classify, and the answers follow row by
+// row (assets/js/ltlab.js).
 .lt-speech.is-ready {
-  .lt-arg-span { transition: text-decoration-color 0.7s ease, color 0.7s ease; }
-
-  &:not(.is-marked) .lt-arg-span {
-    color: inherit;
-    text-decoration-color: transparent;
-
-    .lt-arg-tag { display: none; }
-  }
-
-  &.is-marked .lt-arg-span .lt-arg-tag { animation: lt-detect-in 0.5s ease backwards; animation-delay: inherit; }
-
   &:not(.is-listening) .lt-speech-panel { display: none; }
 
   .lt-speech-panel { overflow: hidden; }
-
-  &:not(.is-playing) .lt-speech-wave i { opacity: 0.2; }
-
-  &.is-playing .lt-speech-wave i { animation: lt-speech-bar 0.3s ease backwards; animation-delay: calc(var(--i) * 50ms); }
 
   .lt-speech-row:not(.is-shown) { visibility: hidden; }
 
   .lt-speech-row.is-shown > * { animation: lt-detect-in 0.5s ease; }
 }
 
-@keyframes lt-speech-bar {
-  from { opacity: 0.2; transform: scaleY(0.4); }
+// Voices views: each reading is a cue strip, one grid whose columns follow the duration of each word and pause, so the
+// pitch line, the loudness bars, and the words stay aligned; the strip scrolls inside its box on narrow screens. Each row
+// carries its name as text.
+.lt-voice-scroll { overflow-x: auto; margin: 0.3rem 0 0.2rem; }
+
+.lt-voice-cues {
+  --lt-voice-label: 4.6rem;
+  display: grid;
+  grid-template-columns: var(--lt-voice-timed);
+  align-items: end;
+  gap: 0.25rem 2px;
+}
+
+// Phones: a narrower name column and smaller words, so a short sentence fits without scrolling.
+@media (max-width: 575.98px) {
+  .lt-voice-cues { --lt-voice-label: 4rem; }
+  .lt-voice-row { font-size: 0.58rem; }
+  .lt-voice-word { padding: 0 0.05rem; font-size: 0.85rem; }
+}
+
+.lt-voice-row {
+  align-self: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.lt-voice-pitch {
+  height: 3rem;
+
+  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  line { stroke: var(--lt-role-1); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+}
+
+.lt-voice-loud {
+  display: flex;
+  align-items: flex-end;
+  height: 2rem;
+
+  i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 2px 2px 0 0;
+    background: color-mix(in srgb, #{$lt-ink} 35%, transparent);
+    transform-origin: bottom;
+  }
+}
+
+.lt-voice-word {
+  padding: 0 0.15rem;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  text-align: center;
+  color: $lt-navy;
+}
+
+.lt-voice-pause {
+  padding: 0 0.2rem;
+  border-top: 1px dashed currentColor;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  color: $lt-muted;
+}
+
+.lt-voice-reading + .lt-voice-reading { margin-top: 0.8rem; }
+
+.lt-voice-summary { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-ink; }
+
+.lt-voice-hears { display: block; font-size: 0.75rem; font-weight: 400; color: $lt-muted; }
+
+// Until Listen, the strip is plain text: tight columns, no cue rows, and no pause cells. Listen takes the readings in
+// order, from the start --t of each: it spreads the words on the time grid, opens the cue rows, and draws the cues
+// word by word. While the script writes the view, a reading appears once its text starts (assets/js/ltlab.js).
+.lt-voices.is-ready {
+  .lt-voice-cues { transition: grid-template-columns 0.6s ease var(--t), row-gap 0.6s ease var(--t); }
+
+  .lt-voice-cuename, .lt-voice-loud { transition: height 0.6s ease var(--t), max-height 0.6s ease var(--t), opacity 0.4s ease var(--t); }
+
+  .lt-voice-pitch { transition: height 0.6s ease var(--t), opacity 0.4s ease calc(var(--t) + 0.6s + var(--j) * 120ms); }
+
+  .lt-voice-loud i { transition: opacity 0.4s ease, transform 0.4s ease; transition-delay: calc(var(--t) + 0.6s + var(--j) * 120ms); }
+
+  .lt-voice-cuename { max-height: 2rem; overflow: hidden; }
+
+  .lt-voice-pause { max-width: 100%; overflow: hidden; transition: max-width 0.6s ease var(--t), opacity 0.6s ease var(--t); }
+
+  &:not(.is-marked) {
+    .lt-voice-cues { grid-template-columns: var(--lt-voice-tight); row-gap: 0; }
+
+    .lt-voice-cuename { max-height: 0; opacity: 0; }
+
+    .lt-voice-pitch, .lt-voice-loud { height: 0; }
+
+    .lt-voice-pitch { opacity: 0; }
+
+    .lt-voice-loud i { opacity: 0; transform: scaleY(0); }
+
+    .lt-voice-pause { max-width: 0; padding: 0; border-top-color: transparent; opacity: 0; }
+  }
+}
+
+.dark {
+  .lt-voice-row, .lt-voice-pause, .lt-voice-hears { color: $lt-dark-muted; }
+  .lt-voice-loud i { background: color-mix(in srgb, #c9d6e3 30%, transparent); }
+  .lt-voice-word { color: #f1f5fa; }
+  .lt-voice-summary { color: #c9d6e3; }
 }
 
 @media (min-width: 992px) {
@@ -2998,9 +3033,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .dark {
-  .lt-speech-wave i:not([class*="lt-role-"]) { background: color-mix(in srgb, #c9d6e3 30%, transparent); }
   .lt-speech-question { color: #f1f5fa; }
-  .lt-speech-question span, .lt-speech-answers thead th { color: #c9d6e3; }
+  .lt-speech-answers thead th { color: #c9d6e3; }
   .lt-speech-answers thead th { border-bottom-color: $lt-dark-border; }
   .lt-speech-answers tbody th, .lt-speech-answer { color: #f1f5fa; }
 }
