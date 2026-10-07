@@ -24,7 +24,6 @@ Part 5 is a reference for maintainers.
   - [Add a challenge or workshop suggestion](#add-a-challenge-or-workshop-suggestion)
   - [Add a research area](#add-a-research-area)
   - [Add a tool](#add-a-tool)
-  - [Publish the Work with us page](#publish-the-work-with-us-page)
   - [Edit the homepage or the menu](#edit-the-homepage-or-the-menu)
 - [Part 3. Publish your change](#part-3-publish-your-change)
 - [Part 4. Common problems](#part-4-common-problems)
@@ -308,7 +307,8 @@ The For Students page suggests international challenges and academic workshops a
 1. Create `content/research/<slug>/index.md`.
    Copy an existing area, or run `uv run python scripts/site.py new research <slug>`.
 2. Set `title`, `summary`, and a `tagline` of at most 12 words.
-   The tagline appears on the homepage card only; the page header shows the title alone.
+   The tagline appears on the homepage card and on the research page; the page header shows the title alone.
+   The research page (`layouts/research/list.html`) gives each area a full-width band: a mosaic of its `overview` schemas, then the tagline, the first line of `definition` (citations dropped), the `focus` topic titles, and the number of focus items by status. Its one-sentence `intro` lives in `content/research/_index.md`.
 3. Set `icon` to a [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name, such as `comments` or `balance-scale`.
 4. Set `weight` to order the cards, and `cover_pattern` to `dots`, `graph`, `tokens`, or `wave`.
 5. Define the area in plain words, either in the body under a `## What is ...?` heading or in `definition`, a short Markdown text shown in a box under the title.
@@ -365,16 +365,6 @@ A tool card links directly to the tool's own website, and the tool page redirect
 3. Set `external_link` to the tool's website.
 4. List one or more `topics`, using the keys defined in `data/topics.yaml`.
    Topics classify the tool and do not appear on the card.
-
-### Publish the Work with us page
-
-The Work with us page is written but hidden, because its procedures are still being finalized.
-It lives in `content/work-with-us/index.md` and appears in the local preview at `/work-with-us/`.
-
-1. Delete the `draft: true` line and its comment in `content/work-with-us/index.md`.
-2. In `config/_default/menus.yaml`, remove the `#` at the start of the three `Work with us` lines, and delete the comment above them.
-
-The **Work with us** button in the homepage hero appears by itself once the page is published.
 
 ### Edit the homepage or the menu
 

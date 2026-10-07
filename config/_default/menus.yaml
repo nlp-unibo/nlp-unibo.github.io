@@ -32,7 +32,6 @@ main:
   - name: For Students
     url: students
     weight: 70
-  # Hidden while content/work-with-us/ is a draft.
-  # - name: Work with us
-  #   url: work-with-us
-  #   weight: 80
+  - name: Work with us
+    url: work-with-us
+    weight: 80

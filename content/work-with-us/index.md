@@ -1,8 +1,6 @@
 ---
 title: Work with us
 date: 2026-09-28
-# Hidden until the application procedures are finalized. Remove this line and restore the menu entry to publish.
-draft: true
 type: landing
 
 sections:
