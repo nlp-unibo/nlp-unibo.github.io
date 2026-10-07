@@ -61,7 +61,6 @@ REQUIRED_FIELDS = {
     "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
-    "opportunities": ("title", "categories"),
     "tools": ("title", "date", "summary", "external_link", "topics"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
@@ -79,7 +78,6 @@ SECTION_CATEGORIES = {
     "publication": {"Journal", "Conference", "Workshop", "Preprint"},
     "projects": {"International project", "National project"},
     "theses": {"Master thesis", "Bachelor thesis"},
-    "opportunities": {"Challenge", "Academic workshop"},
 }
 PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),

@@ -3906,6 +3906,251 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-research-more i { transition: none; }
 }
 
+// Work with us page (layouts/work-with-us/single.html): path tabs, a path card with its email form, and expandable
+// sections for research proposals and work done with students. Filter buttons take the look of the tabs.
+.lt-paths .lt-arg-tabgroup { flex-direction: column; align-items: flex-start; }
+
+.lt-paths [role="tab"] i { margin-right: 0.3rem; color: $lt-blue; }
+
+.lt-paths [role="tab"][aria-selected="true"] i { color: inherit; }
+
+.lt-path-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 22rem);
+  gap: 1.5rem 2rem;
+  margin-top: 1rem;
+  padding: 1.6rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+  background: #fff;
+
+  @media (max-width: 991.98px) { grid-template-columns: auto minmax(0, 1fr); }
+
+  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); padding: 1.2rem; }
+}
+
+.lt-path-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 14px;
+  font-size: 1.6rem;
+  color: $lt-blue;
+  background: rgba($lt-sky, 0.16);
+}
+
+.lt-path-title { margin: 0 0 1rem; font-size: 1.5rem; }
+
+.lt-path-facts {
+  margin: 0;
+
+  dt, .lt-path-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  dd { margin: 0.2rem 0 1rem; line-height: 1.6; color: $lt-ink; }
+
+  dd p, dd ol { margin: 0; }
+
+  dd ol { padding-left: 1.2rem; }
+
+  dd ol + p { margin-top: 0.5rem; }
+}
+
+.lt-path-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+.lt-path-projects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li + li { margin-top: 0.4rem; }
+
+  a { display: flex; gap: 0.6rem; align-items: baseline; text-decoration: none; }
+
+  b { flex: none; color: $lt-navy; }
+
+  span { font-size: 0.85rem; color: $lt-muted; }
+}
+
+// The contact column: recipients, the live subject, the fields, and the email link that works without JavaScript.
+.lt-path-contact {
+  padding-left: 2rem;
+  border-left: 3px solid $lt-orange;
+
+  @media (max-width: 991.98px) { grid-column: 1 / -1; padding: 1.2rem 0 0; border-left: 0; border-top: 3px solid $lt-orange; }
+}
+
+.lt-mail-to {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: baseline;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: $lt-ink;
+
+  span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  output { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.82rem; overflow-wrap: anywhere; }
+}
+
+.lt-mail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+
+  label { display: flex; flex-direction: column; gap: 0.25rem; margin: 0; font-size: 0.82rem; font-weight: 600; color: $lt-navy; }
+
+  small { font-weight: 400; color: $lt-muted; }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid $lt-border;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: $lt-ink;
+    background: #fff;
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+  }
+
+  button { align-self: flex-start; margin-top: 0.3rem; }
+}
+
+.lt-mail-hint { margin: 0; font-size: 0.78rem; color: $lt-muted; }
+
+.lt-mail-direct { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; font-size: 0.88rem; font-weight: 600; }
+
+// Expandable sections: the summary is the section heading with a count and a chevron.
+.lt-expand {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 1rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+
+    &::after { content: "\f078"; margin-left: auto; font-family: "Font Awesome 5 Free"; font-weight: 900; color: $lt-blue; transition: transform 0.2s ease; }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 4px; border-radius: 6px; }
+  }
+
+  &[open] > summary::after { transform: rotate(180deg); }
+
+  &[open] > summary { margin-bottom: 1.2rem; }
+}
+
+// The theme draws a rule beside every paragraph inside <details>; expandable sections keep plain paragraphs.
+.lt-expand p { margin-left: 0; padding-left: 0; border-left: 0; }
+
+.lt-expand-title { font-size: 1.6rem; font-weight: 700; color: $lt-navy; }
+
+.lt-expand-count { font-size: 0.9rem; color: $lt-muted; }
+
+.lt-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+
+  button {
+    padding: 0.3rem 0.85rem;
+    border: 1px solid $lt-border;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $lt-navy;
+    background: #fff;
+
+    &[aria-pressed="true"] { border-color: $lt-blue; color: #fff; background: $lt-blue; }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
+  }
+}
+
+// The filter works only with the script, so without it the buttons are not shown.
+.lt-filter:not(.is-enhanced) { display: none; }
+
+.lt-proposals {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
+  gap: 1rem;
+}
+
+.lt-proposal .lt-card-text { -webkit-line-clamp: unset; }
+
+.lt-proposal-more {
+  font-size: 0.88rem;
+  color: $lt-ink;
+
+  summary { cursor: pointer; font-weight: 600; color: $lt-blue; }
+
+  p { margin: 0.5rem 0 0; }
+}
+
+.lt-proposal-pick { align-self: flex-start; margin-top: auto; cursor: pointer; }
+
+.lt-work-year {
+  h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; color: $lt-muted; }
+
+  &:first-of-type h3 { margin-top: 0; }
+}
+
+.lt-work-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+
+  li {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 0.2rem 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid $lt-border;
+
+    @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .lt-pill { justify-self: start; align-self: start; margin-top: 0.15rem; }
+
+  a { font-weight: 600; color: $lt-navy; text-decoration: none; }
+
+  a:hover { color: $lt-blue; }
+
+  .lt-work-by { grid-column: 2; font-size: 0.85rem; color: $lt-muted; @media (max-width: 575.98px) { grid-column: 1; } }
+}
+
+.dark {
+  .lt-paths [role="tab"] i { color: $lt-sky; }
+  .lt-paths [role="tab"][aria-selected="true"] i { color: inherit; }
+  .lt-path-card { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
+  .lt-path-facts dd, .lt-mail-to, .lt-proposal-more { color: #c9d6e3; }
+  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a { color: #f1f5fa; }
+  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); }
+  .lt-expand > summary::after, .lt-proposal-more summary { color: $lt-sky; }
+  .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
+  .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }
+  .lt-filter button[aria-pressed="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-expand > summary::after { transition: none; }
+}
+
 // A view that returns to its blank state does so at once (assets/js/ltlab.js), without fading its marks out.
 .lt-instant,
 .lt-instant * {

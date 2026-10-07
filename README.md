@@ -21,7 +21,7 @@ Part 5 is a reference for maintainers.
   - [Add a thesis](#add-a-thesis)
   - [Add a research proposal](#add-a-research-proposal)
   - [Add a project](#add-a-project)
-  - [Add a challenge or workshop suggestion](#add-a-challenge-or-workshop-suggestion)
+  - [Edit the Work with us page](#edit-the-work-with-us-page)
   - [Add a research area](#add-a-research-area)
   - [Add a tool](#add-a-tool)
   - [Edit the homepage or the menu](#edit-the-homepage-or-the-menu)
@@ -122,7 +122,7 @@ content/publication/rossi-etal-2026-example/
 | `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
 | `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
 | `award` | Optional award name, for example `Best Paper Award`. It appears with a trophy under the title in every publication list |
-| `tags` | Topic keywords. Add `student publication` to show the paper on the For Students page |
+| `tags` | Topic keywords. Add `student publication` to list the paper under "Work done with students" on the Work with us page |
 
 Each publication page is a project page, like the pages that research groups publish for their papers.
 It shows the title, the authors, the research topics, link buttons, a teaser, the body sections, and the citation.
@@ -252,14 +252,14 @@ Keep the folder, because their publications still link to it.
    Use `bachelors-thesis` for a bachelor's thesis.
 2. Set `title`, `authors` with the student's name, and `date` as the graduation date.
 3. Keep `categories` as `Master thesis` or `Bachelor thesis`.
-   It selects the list on the For Students page.
+   It sets the tag of the thesis under "Work done with students" on the Work with us page.
 4. Set `url_pdf` to the thesis record, for example its AMS Laurea page, when it exists.
 
 ### Add a research proposal
 
 Research proposals are grouped by topic under `content/proposals/`.
 Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
-The For Students page shows one card per topic automatically.
+The Work with us page lists every proposal automatically, with a filter by topic, and offers its title in the master thesis form.
 
 ```text
 content/proposals/legal/
@@ -293,14 +293,14 @@ Copy the `_index.md` of an existing topic and replace its title, summary, and de
 
 Projects have no page of their own, so the file needs no body text.
 
-### Add a challenge or workshop suggestion
+### Edit the Work with us page
 
-The For Students page suggests international challenges and academic workshops as project-work topics.
-
-1. Copy an existing folder in `content/opportunities/`, for example `content/opportunities/semeval/`.
-2. Set `title`, `tags`, and `url_project` as the website of the challenge or workshop.
-3. Set `categories` to `Challenge` or `Academic workshop`.
-4. Describe it in two or three sentences in the body.
+`content/work-with-us/index.md` holds the page as data: an `intro`, the `contacts` who receive every message, and one entry in `paths` per tab under "What are you looking for?".
+Contacts are folder names in `content/authors/`, whose `email` field is used; a path may set its own `contacts`.
+Each path has a `key` (its anchor, such as `/work-with-us/#thesis`), a tab `label`, an `icon`, a `title`, and Markdown `who`, `what`, `steps`, and an optional `note`.
+Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill; `show` lists the sections the path opens below its card: `proposals`, `student-work`, or `projects`.
+The form opens the visitor's email app with recipients, subject, and body filled in; nothing passes through the site.
+Without JavaScript every path is visible, and each offers a plain email link with the same subject and an empty template.
 
 ### Add a research area
 
@@ -496,9 +496,9 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/projects/` | All projects; `categories` selects International or National |
 | `content/theses/` | Master's and bachelor's theses; `categories` selects the list |
 | `content/proposals/` | Research proposals, one folder per topic |
-| `content/opportunities/` | Challenges and academic workshops suggested to students |
 | `content/research/`, `content/tools/` | Research areas and tools |
-| `content/students/`, `content/people/`, `content/work-with-us/` | Landing pages |
+| `content/people/` | Landing page |
+| `content/work-with-us/` | Work with us page, as data for `layouts/work-with-us/single.html` |
 | `content/categories/_index.md` | Citation view for category pages |
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
 | `config/_default/module.yaml` | Theme modules, with one blox-seo file excluded |
@@ -508,7 +508,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
-| `layouts/_shortcodes/` | `section-cards` (proposal topics) |
+| `layouts/_shortcodes/` | Components for publication pages, such as `svg`, `stages`, and `pipeline` |
 | `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero, research map, news, and preprints |
 | `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, and publication cards |
 | `layouts/publication/single.html` | Publication page in the style of a research project page |
@@ -528,7 +528,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 
 ### Categories
 
-Publications, projects, theses, and opportunities use one `categories` value to select the list they appear in.
+Publications, projects, and theses use one `categories` value to select the list they appear in.
 A publication may also add `Highlight`, which lists it under Highlights as well.
 Validation rejects a missing or unknown value.
 The theme would print categories in the page metadata, so `template.scss` hides them.
@@ -538,7 +538,6 @@ The theme would print categories in the page metadata, so `template.scss` hides 
 | `content/publication/` | `Journal`, `Conference`, `Workshop`, `Preprint`, plus an optional `Highlight` |
 | `content/projects/` | `International project`, `National project` |
 | `content/theses/` | `Master thesis`, `Bachelor thesis` |
-| `content/opportunities/` | `Challenge`, `Academic workshop` |
 
 The allowed values live in `SECTION_CATEGORIES` in `scripts/site.py`.
 A new value also needs a list block on the matching landing page.
@@ -560,7 +559,7 @@ When moving a published page, keep its old path under `aliases`, so that externa
 | `uv run python scripts/test_site.py` | Run the self-checks of the validator's link parser and front-matter loader |
 
 The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, and `preprint`.
-Research proposals and opportunities have no template, so contributors copy an existing entry.
+Research proposals have no template, so contributors copy an existing entry.
 
 The Hugo version comes from `.github/workflows/hugo.yml`, so local and GitHub builds always use the same version.
 The production build uses its own resource folder, so `check` can run while the preview is open.

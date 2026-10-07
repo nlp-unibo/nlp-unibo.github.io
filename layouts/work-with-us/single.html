@@ -1,0 +1,147 @@
+{{/* Work with us page: the title and `intro`, then one tab per `path` under "What are you looking for?". A path opens a card */}}
+{{/* with who can apply, what it is, the steps, and an email form, and opens the sections it lists in `show` below it. */}}
+{{/* assets/js/ltlab.js starts with no path open (or the one in the URL hash), fills the email from the form, and filters */}}
+{{/* the sections; without JavaScript every card and section is visible, and each card offers a plain email link. */}}
+{{- define "main" -}}
+{{ $page := . }}
+{{ $proposals := slice }}{{ with site.GetPage "/proposals" }}{{ range .Sections }}{{ $topic := .Title }}{{ range .RegularPages }}{{ $proposals = $proposals | append (dict "page" . "topic" $topic) }}{{ end }}{{ end }}{{ end }}
+<article class="lt-proj lt-work">
+  <div class="lt-band">
+    <header class="lt-proj-header">
+      <h1 class="lt-proj-title">{{ .Title }}</h1>
+      {{ with .Params.intro }}<div class="lt-proj-tagline">{{ . | markdownify }}</div>{{ end }}
+    </header>
+  </div>
+
+  <div class="lt-band">
+    <section class="lt-arg-views lt-paths" data-lt-empty aria-label="Ways to work with us">
+      <div class="lt-arg-tabgroups" role="tablist" aria-label="What are you looking for?">
+        <div class="lt-arg-tabgroup" role="presentation">
+          <span class="lt-arg-tabgroup-label" aria-hidden="true">What are you looking for?</span>
+          <div class="lt-arg-tabrow" role="presentation">
+            {{ range .Params.paths }}
+            <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1"><i class="fas fa-{{ .icon }}" aria-hidden="true"></i> {{ .label }}</button>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+
+      {{ range .Params.paths }}
+      {{ $path := . }}
+      {{/* Recipients: the path's `contacts`, or the page's, looked up in content/authors. */}}
+      {{ $people := slice }}
+      {{ range $path.contacts | default $page.Params.contacts }}
+        {{ $key := . }}{{ with site.GetPage (printf "/authors/%s" $key) }}{{ $author := . }}{{ with $author.Params.email }}{{ $people = $people | append (dict "name" $author.Title "email" .) }}{{ else }}{{ errorf "author %q has no email" $key }}{{ end }}{{ else }}{{ errorf "contact %q is not in content/authors" $key }}{{ end }}
+      {{ end }}
+      {{ $names := slice }}{{ $emails := slice }}{{ range $people }}{{ $names = $names | append .name }}{{ $emails = $emails | append .email }}{{ end }}
+      {{ $greeting := printf "Dear %s," (delimit $names ", " (cond (eq (len $names) 2) " and " ", and ")) }}
+      {{/* The plain email: the subject with each {field} written as <Field>, and a body that lists every field to fill. */}}
+      {{ $subject := $path.form.subject }}{{ $lines := slice }}
+      {{ range $path.form.fields }}{{ $subject = replace $subject (printf "{%s}" .key) (printf "<%s>" .label) }}{{ $lines = $lines | append (printf "%s: " .label) }}{{ end }}
+      {{ $body := printf "%s\n\n%s\n\nBest regards,\n" $greeting (delimit $lines "\n") }}
+      {{ $mailto := printf "mailto:%s?subject=%s&body=%s" (delimit $emails ",") (replace (urlquery $subject) "+" "%20") (replace (urlquery $body) "+" "%20") }}
+      <div class="lt-path" role="tabpanel" id="{{ .key }}" aria-labelledby="{{ .key }}-tab" tabindex="0" data-lt-show="{{ delimit (.show | default slice) " " }}">
+        <div class="lt-path-card">
+          <div class="lt-path-logo" aria-hidden="true"><i class="fas fa-{{ .icon }}"></i></div>
+          <div class="lt-path-info">
+            <h2 class="lt-path-title">{{ .title }}</h2>
+            <dl class="lt-path-facts">
+              <dt>Who can apply</dt><dd>{{ .who | markdownify }}</dd>
+              <dt>What it is</dt><dd>{{ .what | markdownify }}</dd>
+              <dt>How it works</dt><dd><ol>{{ range .steps }}<li>{{ . | markdownify }}</li>{{ end }}</ol>{{ with .note }}<p>{{ . | markdownify }}</p>{{ end }}</dd>
+            </dl>
+            {{ if in .show "projects" }}
+            <p class="lt-path-label">Recent projects</p>
+            <ul class="lt-path-projects">
+              {{ range first 3 (where site.RegularPages "Section" "projects").ByDate.Reverse }}
+              <li><a href="{{ .Params.external_link }}" target="_blank" rel="noopener"><b>{{ replaceRE `^.*\(([^()]+)\)\s*$` "$1" .Title }}</b> <span>{{ .Title }}</span></a></li>
+              {{ end }}
+            </ul>
+            {{ end }}
+          </div>
+          <div class="lt-path-contact">
+            <p class="lt-path-label">Contact us</p>
+            <p class="lt-mail-to"><span>To</span> {{ delimit $names ", " }}</p>
+            <form class="lt-mail-form" hidden data-lt-to="{{ delimit $emails "," }}" data-lt-subject="{{ $path.form.subject }}" data-lt-greeting="{{ $greeting }}">
+              <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
+              <label>Your name<input name="name" type="text" required autocomplete="name"></label>
+              {{ range $path.form.fields }}
+              <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
+                {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
+                {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
+                  <option value="">Choose…</option>
+                  {{- if eq .options "proposals" }}{{ range $proposals }}<option>{{ .page.Title }}</option>{{ end }}<option>Another topic</option>
+                  {{- else }}{{ range .options }}<option>{{ . }}</option>{{ end }}{{ end }}
+                </select>
+                {{- else }}<input name="{{ .key }}" type="text" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}>{{ end }}
+              </label>
+              {{ end }}
+              <button type="submit" class="lt-btn lt-btn-primary">Write the email <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+              <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
+            </form>
+            <a class="lt-mail-direct" href="{{ $mailto | safeURL }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </section>
+  </div>
+
+  {{ with $proposals }}
+  <div class="lt-band" data-lt-section="proposals">
+    <details class="lt-expand" id="proposals">
+      <summary><span class="lt-expand-title">Research proposals</span> <span class="lt-expand-count">{{ len . }} proposals</span></summary>
+      <div class="lt-filter" role="group" aria-label="Show proposals by topic" data-lt-filter-group>
+        <button type="button" aria-pressed="true" data-lt-filter="">All</button>
+        {{ range (site.GetPage "/proposals").Sections }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .Title }}">{{ .Title }}</button>{{ end }}
+      </div>
+      <div class="lt-proposals">
+        {{ range . }}
+        <article class="lt-card lt-proposal" data-lt-tag="{{ urlize .topic }}">
+          <div class="lt-card-body">
+            <div class="lt-meta"><span class="lt-pill">{{ .topic }}</span></div>
+            <h3 class="lt-card-title">{{ .page.Title }}</h3>
+            {{ with .page.Params.summary }}<p class="lt-card-text">{{ . }}</p>{{ end }}
+            <details class="lt-proposal-more"><summary>Description and supervisors</summary>{{ .page.Content }}</details>
+            <button type="button" class="lt-chip lt-proposal-pick" data-lt-proposal="{{ .page.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+    </details>
+  </div>
+  {{ end }}
+
+  {{/* Work done with students: theses and publications tagged `student publication`, newest first, grouped by year. */}}
+  {{ $theses := where site.RegularPages "Section" "theses" }}
+  {{ $pubs := where (where site.RegularPages "Section" "publication") "Params.tags" "intersect" (slice "student publication") }}
+  {{ $work := union $theses $pubs }}
+  {{ with $work }}
+  {{ $kinds := dict "Master thesis" "paper" "Bachelor thesis" "call" "Publication" "event" }}
+  <div class="lt-band" data-lt-section="student-work">
+    <details class="lt-expand" id="student-work">
+      <summary><span class="lt-expand-title">Work done with students</span> <span class="lt-expand-count">{{ len . }} theses and publications</span></summary>
+      <div class="lt-filter" role="group" aria-label="Show work by kind" data-lt-filter-group>
+        <button type="button" aria-pressed="true" data-lt-filter="">All</button>
+        {{ range $k := slice "Master thesis" "Bachelor thesis" "Publication" }}{{ $n := 0 }}{{ range $work }}{{ $kind := "Publication" }}{{ if eq .Section "theses" }}{{ $kind = index .Params.categories 0 }}{{ end }}{{ if eq $kind $k }}{{ $n = add $n 1 }}{{ end }}{{ end }}{{ if $n }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize $k }}">{{ $k }} ({{ $n }})</button>{{ end }}{{ end }}
+      </div>
+      {{ range .ByDate.Reverse.GroupByDate "2006" }}
+      <div class="lt-work-year">
+        <h3>{{ .Key }}</h3>
+        <ul class="lt-work-list">
+          {{ range .Pages }}
+          {{ $kind := "Publication" }}{{ if eq .Section "theses" }}{{ $kind = index .Params.categories 0 }}{{ end }}
+          <li data-lt-tag="{{ urlize $kind }}">
+            <span class="lt-pill lt-pill-{{ index $kinds $kind }}">{{ $kind }}</span>
+            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            <span class="lt-work-by">{{ if eq .Section "theses" }}{{ delimit .Params.authors ", " }}{{ else }}{{ .Params.publication | markdownify | plainify }}{{ end }}</span>
+          </li>
+          {{ end }}
+        </ul>
+      </div>
+      {{ end }}
+    </details>
+  </div>
+  {{ end }}
+</article>
+{{- end -}}

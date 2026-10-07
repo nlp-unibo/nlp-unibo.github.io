@@ -29,9 +29,6 @@ main:
     url: events
     parent: updates
     weight: 2
-  - name: For Students
-    url: students
-    weight: 70
   - name: Work with us
     url: work-with-us
     weight: 80

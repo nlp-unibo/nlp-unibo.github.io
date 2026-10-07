@@ -58,16 +58,19 @@
     const tabs = [...figure.querySelectorAll('[role="tab"]')];
     // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation, and
     // the panel it hides with an `lt-hide` event, which stops a view still playing.
+    // A tablist with `data-lt-empty` starts with no tab selected, so all its panels are hidden until the reader picks one;
+    // a URL hash naming a panel selects that panel's tab. Every selection is announced to the tablist with `lt-select`.
     const select = (tab, chosen) => {
       tabs.forEach((other) => {
         const selected = other === tab;
         const panel = document.getElementById(other.getAttribute("aria-controls"));
         other.setAttribute("aria-selected", String(selected));
-        other.tabIndex = selected ? 0 : -1;
+        other.tabIndex = selected || (!tab && other === tabs[0]) ? 0 : -1;
         if (!selected && !panel.hidden) panel.dispatchEvent(new CustomEvent("lt-hide"));
         panel.hidden = !selected;
       });
       if (chosen) document.getElementById(tab.getAttribute("aria-controls")).dispatchEvent(new CustomEvent("lt-show"));
+      figure.dispatchEvent(new CustomEvent("lt-select", { detail: tab }));
     };
     tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => select(tab, true));
@@ -79,7 +82,71 @@
         next.focus();
       });
     });
-    select(tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || tabs[0]);
+    const hashed = () => tabs.find((tab) => location.hash === `#${tab.getAttribute("aria-controls")}`);
+    addEventListener("hashchange", () => { if (hashed()) select(hashed(), true); });
+    select(hashed() || tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || ("ltEmpty" in figure.dataset ? null : tabs[0]));
+  });
+
+  // Work with us paths. Picking a path writes its anchor in the URL and shows only the sections below the cards that the
+  // path lists in `data-lt-show`; with no path picked, the sections stay hidden. Filter buttons show the items of one tag.
+  // A path's form becomes an email: its subject fills {field} names from the form, and its body greets the recipients
+  // and lists every filled field. "Choose this proposal" copies a proposal title into the open path's proposal field.
+  document.querySelectorAll(".lt-paths").forEach((paths) => {
+    const sections = [...document.querySelectorAll("[data-lt-section]")];
+    const picks = [...document.querySelectorAll(".lt-proposal-pick")];
+    let open = null;
+    const show = (tab) => {
+      open = tab && document.getElementById(tab.getAttribute("aria-controls"));
+      const wanted = open ? open.dataset.ltShow.split(" ") : [];
+      sections.forEach((section) => { section.hidden = !wanted.includes(section.dataset.ltSection); });
+      const field = open && open.querySelector("[data-lt-proposals]");
+      picks.forEach((pick) => { pick.hidden = !field; });
+    };
+    paths.addEventListener("lt-select", (event) => {
+      show(event.detail);
+      if (event.detail) history.replaceState(null, "", `#${open.id}`);
+    });
+    show(paths.querySelector('[role="tab"][aria-selected="true"]'));
+    picks.forEach((pick) => pick.addEventListener("click", () => {
+      const field = open && open.querySelector("[data-lt-proposals]");
+      if (!field) return;
+      field.value = pick.dataset.ltProposal;
+      field.dispatchEvent(new Event("input", { bubbles: true }));
+      field.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      field.focus({ preventScroll: true });
+    }));
+  });
+
+  document.querySelectorAll("[data-lt-filter-group]").forEach((group) => {
+    const scope = group.parentElement;
+    group.classList.add("is-enhanced");
+    const buttons = [...group.querySelectorAll("[data-lt-filter]")];
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      const tag = button.dataset.ltFilter;
+      buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+      scope.querySelectorAll("[data-lt-tag]").forEach((item) => { item.hidden = Boolean(tag) && item.dataset.ltTag !== tag; });
+      // A year with no item left hides its heading.
+      scope.querySelectorAll(".lt-work-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+    }));
+  });
+
+  document.querySelectorAll(".lt-mail-form").forEach((form) => {
+    const value = (key) => (form.elements[key] ? form.elements[key].value.trim() : "");
+    const subject = () => form.dataset.ltSubject.replace(/\{(\w+)\}/g, (_, key) => value(key) || `<${form.elements[key] ? form.elements[key].dataset.ltLabel : key}>`);
+    const output = form.querySelector(".lt-mail-subject");
+    const update = () => { output.textContent = subject(); };
+    form.hidden = false;
+    form.addEventListener("input", update);
+    form.addEventListener("change", update);
+    update();
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const lines = [...form.elements]
+        .filter((field) => field.dataset.ltLabel && field.value.trim())
+        .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
+      const body = `${form.dataset.ltGreeting}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
+      location.href = `mailto:${form.dataset.ltTo}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+    });
   });
 
   // A view starts once it comes into sight, above the bottom quarter of the window, so its writing is seen from
