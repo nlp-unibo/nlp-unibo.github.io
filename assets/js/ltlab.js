@@ -277,6 +277,20 @@
     ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
   });
 
+  // Pointing at or focusing a component in a speech view, or its bars in the audio strip, lights both; while the view
+  // plays, only once Annotate has marked the components.
+  document.querySelectorAll(".lt-speech").forEach((view) => {
+    const link = (event, on) => {
+      const item = event.target.closest("[data-lt-span], [data-lt-seg]");
+      if (!item || (on && view.classList.contains("is-ready") && !view.classList.contains("is-marked"))) return;
+      const id = item.dataset.ltSpan || item.dataset.ltSeg;
+      view.classList.toggle("is-linking", on);
+      view.querySelectorAll(`[data-lt-span="${id}"], [data-lt-seg="${id}"]`).forEach((element) => element.classList.toggle("is-linked", on));
+    };
+    ["pointerover", "focusin"].forEach((type) => view.addEventListener(type, (event) => link(event, true)));
+    ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
+  });
+
   // Argument views play at reading pace. Picking a tab, or scrolling the first view into sight, writes the text;
   // the Annotate button then marks its components, and the Show graph button shows the argument graph, beside the text
   // or below it, and moves each component from the text to its box, with the page following the moving box; an edge grows once both of its
@@ -295,7 +309,7 @@
       requestAnimationFrame(frame);
     });
     document.querySelectorAll(".lt-arg-views").forEach((views) => {
-      const panels = [...views.querySelectorAll(".lt-arg-view:not(.lt-detect, .lt-rules)")];
+      const panels = [...views.querySelectorAll(".lt-arg-view:not(.lt-detect, .lt-rules, .lt-speech)")];
       const controls = (view) => {
         const bar = view.querySelector(".lt-arg-controls");
         return {
@@ -536,7 +550,7 @@
     });
   }
 
-  // Document views (detect and rules): picking a tab, or the first view coming into sight, writes the
+  // Document views (detect, rules, and speech): picking a tab, or the first view coming into sight, writes the
   // document at about 55 characters per second, between 1.5 and 6 seconds in total; Skip writes the rest at once.
   // Detect then plays the first step. In a detect view it scans the document one sentence at a time and highlights
   // each annotated clause with its category and level. In a rules view it opens the clause matrix beside the text, marks
@@ -545,20 +559,21 @@
   // again. Under reduced motion, or without the script, every view shows its final state and the buttons stay hidden.
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const pause = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
-    const docs = [...document.querySelectorAll(".lt-detect, .lt-rules")];
+    const docs = [...document.querySelectorAll(".lt-detect, .lt-rules, .lt-speech")];
     docs.forEach((view) => {
       const rules = view.classList.contains("lt-rules");
+      const speech = view.classList.contains("lt-speech");
       const bar = view.querySelector(".lt-detect-controls");
       const button = (action) => bar.querySelector(`[data-lt-action="${action}"]`);
       const [skip, detect, classify, replay] = ["skip", "detect", "classify", "replay"].map(button);
       const link = bar.querySelector(".lt-arg-link");
       const steps = [detect, classify, link].filter(Boolean);
       const doc = view.querySelector(".lt-detect-doc");
-      const units = [...view.querySelectorAll(rules ? "[data-lt-clause]" : "[data-lt-sentence]")];
+      const units = [...view.querySelectorAll(speech ? "[data-lt-span]" : rules ? "[data-lt-clause]" : "[data-lt-sentence]")];
       // The written text: every text node of the document except tags and clause numbers.
       const parts = [];
       const walker = document.createTreeWalker(doc, NodeFilter.SHOW_TEXT, {
-        acceptNode: (node) => (node.parentElement.closest(".lt-detect-tag, .lt-rule-tag, .lt-rule-num") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+        acceptNode: (node) => (node.parentElement.closest(".lt-detect-tag, .lt-rule-tag, .lt-rule-num, .lt-arg-tag") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
       });
       while (walker.nextNode()) parts.push([walker.currentNode, walker.currentNode.textContent]);
       const total = parts.reduce((sum, [, text]) => sum + text.length, 0);
@@ -575,7 +590,7 @@
         run += 1;
         instantly(view, () => {
           view.classList.add("is-ready");
-          view.classList.remove("is-detected", "is-marked", "is-detecting", "is-classifying", "is-classified");
+          view.classList.remove("is-detected", "is-marked", "is-detecting", "is-classifying", "is-classified", "is-listening", "is-playing");
           bar.classList.remove("is-annotated");
           view.querySelectorAll(".is-current, .is-hit, .is-shown, .is-labelled, .is-match, .is-linked").forEach((node) => node.classList.remove("is-current", "is-hit", "is-shown", "is-labelled", "is-match", "is-linked"));
           view.querySelectorAll("[style*=delay]").forEach((node) => { node.style.transitionDelay = ""; node.style.animationDelay = ""; });
@@ -704,9 +719,43 @@
         view.classList.add("is-classified");
         finish();
       };
+      // A speech view marks its components one after the other, then Listen opens the audio panel, plays the strip
+      // bar by bar, and shows the answer of each model.
+      const annotate = async () => {
+        const id = run;
+        detect.disabled = true;
+        detect.classList.add("is-done");
+        units.forEach((span, i) => { span.style.transitionDelay = `${i * 500}ms`; });
+        view.classList.add("is-marked");
+        await pause((units.length - 1) * 500 + 900);
+        if (run !== id) return;
+        bar.classList.add("is-annotated");
+        await pause(600);
+        if (run === id) classify.disabled = false;
+      };
+      const listen = async () => {
+        const id = run;
+        classify.disabled = true;
+        classify.classList.add("is-done");
+        const panel = view.querySelector(".lt-speech-panel");
+        await reveal(view, panel, panel.querySelector(".lt-speech-body"), "is-listening");
+        if (run !== id) return;
+        watch();
+        view.classList.add("is-playing");
+        follow(panel);
+        await pause(view.querySelectorAll(".lt-speech-wave i").length * 50 + 600);
+        for (const row of view.querySelectorAll(".lt-speech-row")) {
+          if (run !== id) return;
+          row.classList.add("is-shown");
+          await pause(900);
+        }
+        if (run !== id) return;
+        view.classList.add("is-classified");
+        finish();
+      };
       skip.addEventListener("click", () => { skipping = true; });
-      detect.addEventListener("click", rules ? mark : scan);
-      if (classify) classify.addEventListener("click", label);
+      detect.addEventListener("click", speech ? annotate : rules ? mark : scan);
+      if (classify) classify.addEventListener("click", speech ? listen : label);
       replay.addEventListener("click", () => {
         write();
         backToTabs(view);

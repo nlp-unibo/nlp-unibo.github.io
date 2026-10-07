@@ -2852,6 +2852,159 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   &:not(.is-detected) .lt-detect-summary { visibility: hidden; }
 }
 
+// Speech views: the transcripts beside a schematic audio strip, the task question with the annotators' answer, and a
+// table of model answers, right in green and wrong in red (the validated support and attack pair), each with an icon
+// and a word. The strip has one bar per slice of the first transcript; bars of a marked component take its role color.
+.lt-speech .lt-arg-textlabel:not(:first-child) { margin-top: 0.8rem; }
+
+.lt-speech-wave {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 5rem;
+  padding: 0.4rem 0;
+
+  i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 2px;
+    background: color-mix(in srgb, #{$lt-ink} 35%, transparent);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  i[class*="lt-role-"] { background: var(--lt-role); }
+
+  i.is-linked { transform: scaleY(1.12); }
+}
+
+.lt-speech-axis {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.2rem 0 0;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+  color: $lt-muted;
+}
+
+.dark .lt-speech-axis { color: $lt-dark-muted; }
+
+.lt-speech-question {
+  margin: 1rem 0 0.6rem;
+  font-weight: 600;
+  color: $lt-navy;
+
+  span { display: block; font-weight: 400; color: $lt-ink; }
+}
+
+.lt-speech-answers {
+  width: 100%;
+  font-size: 0.88rem;
+
+  th, td { padding: 0.4rem 0.5rem; border: 0; text-align: left; background: transparent; }
+
+  // The theme stripes table rows in dark mode; answer rows stay unstriped.
+  tr, tr > * { background: transparent !important; }
+
+  thead th {
+    border-bottom: 1px solid $lt-border;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $lt-ink;
+  }
+
+  tbody th { font-weight: 600; color: $lt-navy; }
+}
+
+.lt-speech-answer {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid var(--lt-answer);
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: $lt-navy;
+  background: color-mix(in srgb, var(--lt-answer) 12%, transparent);
+
+  i { color: var(--lt-answer); }
+
+  &.is-right { --lt-answer: var(--lt-support); }
+  &.is-wrong { --lt-answer: var(--lt-attack); }
+}
+
+.lt-speech-score { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.lt-speech-score.is-best { font-weight: 700; color: $lt-navy; }
+
+.lt-speech-best {
+  margin-left: 0.3rem;
+  padding: 0 0.4rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+}
+
+.dark .lt-speech-score.is-best { color: #f1f5fa; }
+
+// Phones: the label goes under its score, so the table fits the panel.
+@media (max-width: 575.98px) {
+  .lt-speech-answers th, .lt-speech-answers td { padding: 0.35rem 0.3rem; }
+  .lt-speech-best { display: block; width: max-content; margin: 0.15rem 0 0; }
+}
+
+.lt-speech.is-linking .lt-arg-span:not(.is-linked) { opacity: 0.45; }
+
+// While the script plays a speech view, tags and underlines appear with Annotate, and the audio panel takes no room
+// until Listen, when the strip lights bar by bar and the answers follow row by row (assets/js/ltlab.js).
+.lt-speech.is-ready {
+  .lt-arg-span { transition: text-decoration-color 0.7s ease, color 0.7s ease; }
+
+  &:not(.is-marked) .lt-arg-span {
+    color: inherit;
+    text-decoration-color: transparent;
+
+    .lt-arg-tag { display: none; }
+  }
+
+  &.is-marked .lt-arg-span .lt-arg-tag { animation: lt-detect-in 0.5s ease backwards; animation-delay: inherit; }
+
+  &:not(.is-listening) .lt-speech-panel { display: none; }
+
+  .lt-speech-panel { overflow: hidden; }
+
+  &:not(.is-playing) .lt-speech-wave i { opacity: 0.2; }
+
+  &.is-playing .lt-speech-wave i { animation: lt-speech-bar 0.3s ease backwards; animation-delay: calc(var(--i) * 50ms); }
+
+  .lt-speech-row:not(.is-shown) { visibility: hidden; }
+
+  .lt-speech-row.is-shown > * { animation: lt-detect-in 0.5s ease; }
+}
+
+@keyframes lt-speech-bar {
+  from { opacity: 0.2; transform: scaleY(0.4); }
+}
+
+@media (min-width: 992px) {
+  .lt-speech.is-ready:not(.is-listening) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+}
+
+.dark {
+  .lt-speech-wave i:not([class*="lt-role-"]) { background: color-mix(in srgb, #c9d6e3 30%, transparent); }
+  .lt-speech-question { color: #f1f5fa; }
+  .lt-speech-question span, .lt-speech-answers thead th { color: #c9d6e3; }
+  .lt-speech-answers thead th { border-bottom-color: $lt-dark-border; }
+  .lt-speech-answers tbody th, .lt-speech-answer { color: #f1f5fa; }
+}
+
 @keyframes lt-detect-in {
   from { opacity: 0; transform: translateY(4px); }
 }

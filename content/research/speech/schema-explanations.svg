@@ -1,0 +1,9 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="An explanation marks the part of the audio that the model relied on for its decision.">
+  <rect class="lt-s-on" x="28" y="24" width="28" height="68" rx="4"/>
+  <g transform="scale(1.6 1) translate(-2 0)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <path class="lt-s-arrow" d="M42 92 V104 H186 V84"/>
+  <polygon class="lt-s-head" points="180,85 192,85 186,77"/>
+  <text class="lt-s-sub" x="148" y="34">EXPLANATION</text>
+  <rect class="lt-s-label" x="148" y="44" width="86" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="191" y="63">Relied on</text>
+</svg>

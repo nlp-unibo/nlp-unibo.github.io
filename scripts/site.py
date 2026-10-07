@@ -131,12 +131,32 @@ def rules_view_errors(view: dict) -> list[str]:
     return errors
 
 
+def speech_view_errors(view: dict) -> list[str]:
+    """Return the problems of one speech view: no transcript, a marked component with an unknown role, a missing
+    question, a missing gold answer for models with answers, or a model whose answers or scores do not match the inputs one
+    to one."""
+    roles = {role.get("key") for role in view.get("roles") or []}
+    transcripts = view.get("transcripts") or []
+    errors = [] if transcripts and all(t.get("segments") for t in transcripts) else ["speech view needs transcripts with segments"]
+    errors += [f"component {seg.get('id')!r} has an unknown role" for t in transcripts for seg in t.get("segments") or []
+               if seg.get("id") and seg.get("role") not in roles]
+    models = view.get("models") or []
+    if not view.get("question") or (any("answers" in model for model in models) and not view.get("gold")):
+        errors.append("speech view needs a question and a gold answer")
+    inputs = view.get("inputs") or []
+    errors += [f"model {model.get('label')!r} needs one answer or score per input" for model in models
+               if len(model.get("answers") or model.get("scores") or []) != len(inputs)]
+    return errors
+
+
 def view_errors(view: dict) -> list[str]:
     """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
     undefined components, unknown relations, or roles sharing a short name. A detect view needs sentences with text, and each annotated
     clause needs a category and a level of 1, 2, or 3."""
     if view.get("type") == "rules":
         return rules_view_errors(view)
+    if view.get("type") == "speech":
+        return speech_view_errors(view)
     if view.get("type") == "detect":
         sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
         errors = [] if sentences else ["detect view has no sentences"]
