@@ -18,7 +18,7 @@ cover_pattern: graph
 
 # Definition: a short answer to "What is argument mining?" under the title. Markdown, one idea per sentence.
 definition: |
-  Argument mining is the automatic identification and extraction of arguments from natural language, in text and in speech.
+  Argument mining automatically identifies and extracts arguments from natural language, in text and in speech.
   It finds the claims people make, the premises they offer as reasons, and the relations between them.
   Opinion mining tells what people think about a topic, while argument mining asks why they think it ([Lawrence and Reed, 2019](https://doi.org/10.1162/COLI_a_00364)).
 

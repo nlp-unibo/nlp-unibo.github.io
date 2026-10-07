@@ -1,0 +1,49 @@
+{{/* Research section page: the title with an optional `intro`, then one full-width band per research area, by weight. */}}
+{{/* Each band shows a mosaic of the area's `overview` schemas on the left, an accent rule, and a summary on the right: */}}
+{{/* the `tagline`, the first line of the `definition` without its citations, the `focus` topic titles, and the number of */}}
+{{/* focus items by status. On phones the summary comes first and the mosaic below it. */}}
+{{/* The title link covers the whole band. */}}
+{{- define "main" -}}
+{{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
+<article class="lt-proj">
+  <div class="lt-band">
+    <header class="lt-proj-header">
+      <h1 class="lt-proj-title">{{ .Title }}</h1>
+      {{ with .Params.intro }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
+    </header>
+  </div>
+  {{ range .RegularPages.ByWeight }}
+  {{ $page := . }}
+  <section class="lt-band" aria-labelledby="area-{{ .File.ContentBaseName }}">
+    <div class="lt-research-row">
+      {{ with .Params.overview }}
+      <div class="lt-research-mosaic">
+        {{ range . }}
+        <figure class="lt-research-tile">
+          {{ with .schema }}{{ with $page.Resources.Get . }}<div class="lt-svg">{{ .Content | safeHTML }}</div>{{ else }}{{ errorf "overview schema %q not found in %s" . $page.File.Path }}{{ end }}{{ end }}
+          <figcaption>{{ .title }}</figcaption>
+        </figure>
+        {{ end }}
+      </div>
+      {{ end }}
+      <div class="lt-research-summary">
+        <h2 class="lt-research-title" id="area-{{ .File.ContentBaseName }}">{{ with .Params.icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}<a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+        {{ with .Params.tagline }}<p class="lt-research-lead">{{ . }}</p>{{ end }}
+        {{ with .Params.definition }}<p class="lt-research-text">{{ index (split (trim . "\n") "\n") 0 | markdownify | plainify | replaceRE ` \([^()]*\d{4}\)` "" }}</p>{{ end }}
+        {{ with .Params.focus }}
+        <p class="lt-research-label">We study</p>
+        <ul class="lt-area-topics">{{ range . }}<li>{{ .title }}</li>{{ end }}</ul>
+        {{ $count := dict }}{{ range . }}{{ range .items }}{{ $count = merge $count (dict .status (add (index $count .status | default 0) 1)) }}{{ end }}{{ end }}
+        <p class="lt-research-status">
+          {{- range $k := slice "done" "now" "next" }}{{ with index $count $k }}{{ $s := index $status $k }}
+          <span class="lt-status is-{{ $k }}"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ . }} {{ $s.label }}</span>
+          {{- end }}{{ end }}
+        </p>
+        {{ end }}
+        <span class="lt-btn lt-btn-primary lt-research-more" aria-hidden="true">Explore <i class="fas fa-arrow-right"></i></span>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+</article>
+{{- end -}}

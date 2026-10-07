@@ -13,7 +13,7 @@ icon: microphone-alt
 weight: 3
 
 # Homepage research card: tagline and cover pattern (dots, graph, tokens, or wave).
-tagline: Models that listen, from spoken arguments to clinical speech.
+tagline: Combining audio and text, from spoken arguments to clinical speech.
 cover_pattern: wave
 
 # Definition: a short answer to "What is speech processing?" under the title. Markdown, one idea per sentence.
@@ -183,7 +183,7 @@ fields:
   - name: Fallacy detection and classification
     text: "Given a sentence of a debate, the task is to say whether it contains a fallacy. A second task assigns the category of the fallacy, such as ad hominem or appeal to emotion."
 - key: modalities
-  title: Combining text and audio
+  title: Text and audio together
   icon: layer-group
   question: "What does the audio add to the words?"
   summary: "Multimodal models combine an encoding of the text with an encoding of the audio. Comparing them with text-only and audio-only models shows what each modality contributes."

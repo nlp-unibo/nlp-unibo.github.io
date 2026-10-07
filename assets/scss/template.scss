@@ -2327,7 +2327,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // Roles take categorical colors in fixed order (validated for color vision deficiency in both modes),
 // and every colored mark also carries its role as text.
 .lt-arg-views,
-.lt-overview {
+.lt-overview,
+.lt-research-mosaic {
   --lt-role-1: #1f6fb2;
   --lt-role-2: #c26a00;
   --lt-role-3: #0f8a7a;
@@ -2335,7 +2336,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .dark .lt-arg-views,
-.dark .lt-overview {
+.dark .lt-overview,
+.dark .lt-research-mosaic {
   --lt-role-1: #3f8fd6;
   --lt-role-2: #c97a14;
   --lt-role-3: #13917d;
@@ -2649,13 +2651,15 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // passes the color vision deficiency check in light mode and stays in the 6 to 8 floor band in dark mode,
 // which is legal only because every edge also has a text label.
 .lt-arg-views,
-.lt-overview {
+.lt-overview,
+.lt-research-mosaic {
   --lt-support: #17663a;
   --lt-attack: #e8584e;
 }
 
 .dark .lt-arg-views,
-.dark .lt-overview {
+.dark .lt-overview,
+.dark .lt-research-mosaic {
   --lt-support: #45ad64;
   --lt-attack: #d8443a;
 }
@@ -3791,6 +3795,115 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   & + .lt-band { border-top-color: rgba(255, 255, 255, 0.1); }
 
   &:nth-of-type(even) { background: $lt-dark-card; }
+}
+
+// Research section page (layouts/research/list.html): one band per area, with a mosaic of its concept schemas on the
+// left, an accent rule, and a summary on the right. The title link covers the band; on phones the band stacks, summary
+// first, and the rule becomes a short bar above the summary, as under page titles.
+.lt-research-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+}
+
+.lt-research-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @media (max-width: 767.98px) { order: 1; }
+}
+
+.lt-research-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px solid $lt-border;
+  border-radius: 12px;
+  background: #fff;
+
+  .lt-svg { width: 100%; max-width: 220px; margin: auto; }
+
+  figcaption {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    color: $lt-muted;
+  }
+}
+
+.lt-research-summary {
+  padding-left: 2.5rem;
+  border-left: 3px solid $lt-orange;
+
+  @media (max-width: 767.98px) {
+    padding-left: 0;
+    border-left: 0;
+
+    &::before { content: ""; display: block; width: 3rem; height: 3px; margin-bottom: 1.2rem; border-radius: 2px; background: $lt-orange; }
+  }
+}
+
+.lt-research-title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.8rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+
+  a { color: $lt-navy; text-decoration: none; }
+
+  a::after { content: ""; position: absolute; inset: 0; }
+
+  a:focus-visible { outline: none; }
+}
+
+.lt-research-row:hover .lt-research-title a { color: $lt-blue; }
+
+.lt-research-row:has(a:focus-visible) { outline: 2px solid $lt-blue; outline-offset: 0.75rem; border-radius: 12px; }
+
+.lt-research-lead { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 600; line-height: 1.45; color: $lt-navy; }
+
+.lt-research-text { margin: 0 0 1.2rem; line-height: 1.6; color: $lt-ink; }
+
+.lt-research-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+.lt-research-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 1rem 0 1.4rem;
+
+  .lt-status { margin: 0; }
+}
+
+.lt-research-more i { transition: transform 0.2s ease; }
+
+.lt-research-row:hover .lt-research-more i { transform: translateX(3px); }
+
+.dark {
+  .lt-research-tile { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-research-tile figcaption, .lt-research-label { color: $lt-dark-muted; }
+  .lt-research-title a, .lt-research-lead { color: #f1f5fa; }
+  .lt-research-row:hover .lt-research-title a { color: $lt-sky; }
+  .lt-research-row:has(a:focus-visible) { outline-color: $lt-sky; }
+  .lt-research-text { color: #c9d6e3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-research-more i { transition: none; }
 }
 
 // A view that returns to its blank state does so at once (assets/js/ltlab.js), without fading its marks out.
