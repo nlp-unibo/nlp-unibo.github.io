@@ -460,7 +460,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
 | `config/_default/module.yaml` | Theme modules, with one blox-seo file excluded |
 | `data/topics.yaml` | Topic labels and tag colors for projects, tools, news, and research areas |
-| `data/themes/ltlab.toml` | Site colors for light and dark mode, taken from the lab logo |
+| `data/themes/ltlab.toml` | Site colors, taken from the lab logo. The site shows only dark mode (`config/_default/params.yaml` sets no `theme_day`), and the light colors stay for a possible return |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
