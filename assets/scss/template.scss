@@ -2363,7 +2363,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // and every colored mark also carries its role as text.
 .lt-arg-views,
 .lt-overview,
-.lt-research-mosaic {
+.lt-research-mosaic,
+.lt-tool-figure {
   --lt-role-1: #1f6fb2;
   --lt-role-2: #c26a00;
   --lt-role-3: #0f8a7a;
@@ -2372,7 +2373,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 .dark .lt-arg-views,
 .dark .lt-overview,
-.dark .lt-research-mosaic {
+.dark .lt-research-mosaic,
+.dark .lt-tool-figure {
   --lt-role-1: #3f8fd6;
   --lt-role-2: #c97a14;
   --lt-role-3: #13917d;
@@ -2687,14 +2689,16 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // which is legal only because every edge also has a text label.
 .lt-arg-views,
 .lt-overview,
-.lt-research-mosaic {
+.lt-research-mosaic,
+.lt-tool-figure {
   --lt-support: #17663a;
   --lt-attack: #e8584e;
 }
 
 .dark .lt-arg-views,
 .dark .lt-overview,
-.dark .lt-research-mosaic {
+.dark .lt-research-mosaic,
+.dark .lt-tool-figure {
   --lt-support: #45ad64;
   --lt-attack: #d8443a;
 }
@@ -4803,3 +4807,26 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-timeline-key.is-international-project { color: $lt-sky; }
   .lt-timeline-key.is-national-project { color: #f5c46b; }
 }
+
+// Tools page (layouts/tools/list.html): one research-style band per tool, with a single schema in place of the mosaic.
+.lt-tool-figure {
+  @media (max-width: 767.98px) { order: 1; }
+
+  .lt-svg { max-width: 420px; }
+
+  figcaption { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
+}
+
+.lt-tool-row .lt-research-title { margin-bottom: 0.4rem; }
+
+.lt-tool-row .lt-meta { margin: 0 0 0.8rem; }
+
+.lt-tool-row .lt-topics { margin: 0 0 1rem; }
+
+.lt-tool-install {
+  margin: 0 0 1rem;
+
+  code { padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; color: $lt-navy; background: rgba($lt-blue, 0.08); }
+}
+
+.dark .lt-tool-install code { color: #f1f5fa; background: rgba(255, 255, 255, 0.08); }

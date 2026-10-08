@@ -384,15 +384,20 @@ The homepage shows one card per research area automatically.
 
 ### Add a tool
 
-A tool card links directly to the tool's own website, and the tool page redirects there.
+The Tools page lists only systems that readers can use today: an online service or demo, or an installable package.
+A system built only to demonstrate a paper is a prototype: give its publication or thesis the `prototype` topic instead.
+Each tool is one band with a schematic on the left and its description on the right, and the tool page redirects to `external_link`.
 
 1. Create `content/tools/<slug>/index.md`.
    Copy an existing tool, or run `uv run python scripts/site.py new tool <slug>`.
-2. Set `title`, `date`, and `summary`.
-   The date orders the list and is not displayed.
-3. Set `external_link` to the tool's website.
-4. List one or more `topics`, using the keys defined in `data/topics.yaml`.
-   Topics classify the tool and do not appear on the card.
+2. Set `title`, `summary` in at most two sentences, and `date` as the first public release.
+   The date orders the bands, newest first, and is not displayed.
+3. Set `kind`, such as `Web service`, `Web demo`, or `Python library`. It appears as a pill under the name.
+4. Add `schema: schema.svg`, an SVG file in the tool folder drawn with the `lt-s-*` classes, and a `caption` that names its source.
+5. Set the links. Each one becomes a chip, and each is optional except `external_link`:
+   `external_link` for the website, `demo` for a web demo, `code` for the repository, and `publication` for the folder name of the paper under `content/publication/`.
+   Set `package` to the PyPI name to show its `pip install` command.
+6. List one or more `topics`, using the keys defined in `data/topics.yaml`. They appear as colored tags.
 
 ### Edit the homepage or the menu
 

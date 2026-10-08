@@ -37,6 +37,8 @@ sustainability:
   label: Sustainability
   background: '#9bc53d'
   text: '#1f3a10'
+# `prototype` marks a publication or thesis that presents a system built to demonstrate its method, which may no
+# longer be available. A system that readers can use today goes on the Tools page instead, without this topic.
 prototype:
   label: Prototype
   background: '#2b2f36'
