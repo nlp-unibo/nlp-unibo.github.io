@@ -89,4 +89,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/korre-etal-2025-untangling-sca/
+topics: [benchmark]
 ---

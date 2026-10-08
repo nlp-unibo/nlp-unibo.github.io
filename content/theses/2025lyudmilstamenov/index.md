@@ -30,4 +30,5 @@ categories:
   - Master thesis
 aliases:
   - /students_mscs/2025lyudmilstamenov/
+topics: [llm-reasoning, llms]
 ---

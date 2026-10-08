@@ -84,4 +84,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/struss-etal-2024-clef-task-2/
+topics: [fact-checking, benchmark]
 ---

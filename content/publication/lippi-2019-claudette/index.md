@@ -77,4 +77,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/lippi-2019-claudette/
+topics: [legal, prototype]
 ---

@@ -81,6 +81,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/grundler-2025-detecting/
+topics: [privacy, legal, llms]
 ---
 
 :trophy: Awarded the Honorable Mention in the Best Paper Award Consideration

@@ -41,7 +41,7 @@ abstract: Recent advances in NLP suggest that some tasks, such as argument detec
   arguments.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Releases the first corpus pairing political debate text with audio for classifying six fallacy types, and shows that adding audio improves classification for several models.
 
 tags: []
 
@@ -66,7 +66,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: 'Architecture used in the experiments, adopted from Mancini et al. (2022): text and audio modules encode the input, their outputs are concatenated and a classification module predicts the fallacy category. Figure 1 of the paper, CC BY 4.0.'
   focal_point: ''
   preview_only: false
 
@@ -84,4 +84,5 @@ categories:
   - Conference
 aliases:
   - /publication_highlights/mancini-etal-2024-multimodal/
+topics: [argument-mining, multimodal, benchmark]
 ---

@@ -115,7 +115,7 @@ content/publication/rossi-etal-2026-example/
 | `date` and `publishDate` | The publication date as `YYYY-MM-DD` |
 | `publication_types` | `article-journal` for a journal paper, `paper-conference` for a conference or workshop paper, `article` for a preprint, or `chapter` for a book chapter |
 | `publication` | The full venue name, for example `Proceedings of ACL 2026` |
-| `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which selects the list on the Publications page. Add `Highlight` as a second value to also list the paper under Highlights |
+| `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which sets its type in the filter of the Publications page. Add `Highlight` as a second value to also show the paper in the Highlights carousel |
 | `abstract` | The abstract, shown in full on the publication page |
 | `summary` | One sentence shown under the title of the publication page and on publication cards |
 | `card_summary` | Optional sentence of at most 15 words that replaces the summary on the homepage preprint card |
@@ -145,7 +145,7 @@ Each `##` heading also appears in the section menu below the teaser.
 | Extra | How to add it |
 | --- | --- |
 | Teaser and preview | The most representative figure of the paper, saved as `featured.png`. It appears as the teaser and on every publication card. A video named `teaser.mp4` replaces the teaser image on the page |
-| Topics | `topics`, a list of keys from `data/topics.yaml`, shown as colored tags |
+| Topics | `topics`, one to three keys from `data/topics.yaml`, shown as colored tags; they also feed the topic filter of the Publications page |
 | Affiliations | `affiliations`, a list of institution names shown under the authors |
 | Buttons | `url_pdf`, `url_code`, `url_dataset`, `url_project` (demo), `url_video`, `url_slides`, `url_poster`, `doi`, and `links` |
 
@@ -166,7 +166,12 @@ Each component except `figure` and `svg` takes YAML between its opening and clos
 
 A page without body sections shows only its abstract, so a new entry can be published before its page is complete.
 
-A `Highlight` publication appears both under Highlights and in its venue list.
+The Publications page (`layouts/publication/section.html`) starts with the Highlights carousel, which loops and advances every eight seconds.
+Every publication follows, newest first and grouped by year, with a search box, a filter by type, and a filter by topic.
+The topic counts follow the chosen type and the search, and a topic without matches is hidden.
+A `Highlight` publication appears both in the carousel and in the list.
+Its card shows `featured.png` and the one-sentence `summary`, so give every highlight both.
+When the figure is too detailed to read at card size, add a simpler `card.png` (1600 by 1000 pixels, large text) to the same folder: the card shows it, and the page keeps `featured.png` as its teaser.
 Leave `featured: false` unchanged, because the Highlight category replaces it.
 
 ### Add a news item
@@ -217,6 +222,63 @@ The site rebuilds every day at 04:00 UTC, so the item appears on the morning of 
 
 1. Create `content/events/<slug>/index.md`, for example `content/events/2026clef/index.md`.
    Copy an existing event, or run `uv run python scripts/site.py new event 2026clef`.
+2. Set `title`, `date`, `summary`, and `tags`.
+3. Describe the event in the body, and link its website and any PDF placed in the same folder.
+
+### Add or update a team member
+
+Each member has a folder in `content/authors/` named after the full name in lowercase with hyphens, for example `content/authors/maria-rossi/`.
+The folder contains `_index.md`, with an underscore, and a photo named `avatar.jpg` or `avatar.png`.
+
+1. Copy the folder of an existing member, or run `uv run python scripts/site.py new person maria-rossi`.
+2. Set `title` to the full name exactly as it appears in publications, for example `Maria Rossi`.
+   The folder name must match it: validation rejects `maria-rossi` for a profile titled `Mario Rossi`.
+3. Set `first_name`, `last_name`, `bio`, `interests`, `email`, and the `social` links.
+   Leave out `role`, which only the head and the deputy of the lab set.
+   For a member with a University of Bologna page, add a first social link with `icon: unibo` and `icon_pack: custom`, which shows the university seal.
+   For a personal website, use `icon: globe` and `icon_pack: fas`.
+4. Set `user_groups` to one of `Members`, `Associate Fellows`, or `Former Members`, with this exact spelling.
+   The group selects the section of the People page.
+   Set `weight` to order the people within a group, where lower values appear first.
+5. Keep `highlight_name: true`, which shows the member in bold in author lists.
+6. Replace the default `avatar.png` with a square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
+   Delete the default file when the photo is a JPEG, because the page shows only one avatar.
+
+When a member leaves the lab, set their `user_groups` to `Former Members`.
+Former members may omit `email`.
+Without a photo, keep the default person avatar from `archetypes/person/avatar.png`.
+Validation requires exactly one of the three groups.
+Keep the folder, because their publications still link to it.
+
+### Add a thesis
+
+1. Create `content/theses/<year><name>/index.md`, for example `content/theses/2026mariarossi/index.md`.
+   Copy an existing thesis, or run `uv run python scripts/site.py new masters-thesis 2026mariarossi`.
+   Use `bachelors-thesis` for a bachelor's thesis.
+2. Set `title`, `authors` with the student's name, and `date` as the graduation date.
+3. Keep `categories` as `Master thesis` or `Bachelor thesis`.
+   It sets the tag of the thesis under "Work done with students" on the Work with us page.
+4. Set `url_pdf` to the thesis record, for example its AMS Laurea page, when it exists.
+5. Set `topics` to one to three keys from `data/topics.yaml`, such as `[llms, legal]`.
+   The topics appear as colored tags under "Work done with students" and feed its topic filter, next to a filter by kind and a search box.
+
+### Add a research proposal
+
+Research proposals are grouped by topic under `content/proposals/`.
+Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
+The Work with us page lists every proposal automatically as a card, with a filter by topic.
+Opening a card shows the `brief`, the contacts, the first three tags, **Choose this proposal**, and a **Full proposal** link when the proposal has a body.
+A reader who chooses a proposal writes to its contacts.
+
+```text
+content/proposals/legal/
+├── _index.md          the topic: title, summary, description
+├── am/index.md        one proposal
+└── unfairclauses/index.md
+```
+
+1. Run `uv run python scripts/site.py new proposal <topic>/<name>`, for example `new proposal legal/new-idea`.
+   The topic folder must exist; the command creates a draft from `archetypes/proposal/index.md`, with a flow diagram to adapt.
 2. Set `title`, `date`, `summary`, `brief`, `contacts`, and `tags`.
    The `summary` is one sentence for the card, and the `brief` is two to four sentences for the opened card.
    Each contact is a folder name in `content/authors/`, or, for a person outside the lab, a `name` and an `email`, for example `{name: Maria Rossi, email: maria.rossi@example.org}`.
@@ -224,9 +286,11 @@ The site rebuilds every day at 04:00 UTC, so the item appears on the morning of 
    Validation requires `title`, `date`, `summary`, `brief`, and `contacts`.
    A topic `_index.md` needs `title` and `summary`.
 3. Optionally, write the body: the proposal page, in the style of a publication page.
-   Use `##` sections such as `Context`, `Objective`, `Directions`, and `References`; each section appears in the page menu.
+   Use `##` sections such as `Context`, `Objective`, `Directions`, and `References`; from 1200 px wide they appear in a side menu that marks the current section.
+   Use `pipeline` flows for the method, built only from the proposal's own definitions and captioned as such.
    Set `math: true` when the body uses LaTeX.
    Without a body, the proposal page shows the `brief`, and the Work with us page shows no **Full proposal** link.
+4. Remove `draft: true` when the proposal is ready.
 
 To add a new topic, create a folder such as `content/proposals/new-topic/` with an `_index.md`.
 Copy the `_index.md` of an existing topic and replace its title, summary, and description.
@@ -252,12 +316,17 @@ Projects have no page of their own, so the file needs no body text.
 Contacts are folder names in `content/authors/`, whose `email` field is used; a path may set its own `contacts`.
 Each path has a `key` (its anchor, such as `/work-with-us/#thesis`), a card `label` and `summary` of at most two sentences, an `icon`, a `title`, and Markdown `who` and `what`.
 Its `steps` appear as a numbered list after the path card.
-Each step has a `title`, Markdown `text`, and an optional `show`, which places a section in the step: `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), or `contact` (the email form).
+From 1200 px wide, a side menu beside the open path links to its summary and to each step.
+Each step has a `title`, Markdown `text`, and an optional `show`, which places a section in the step.
+The sections are `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), and `contact` (the email form).
 `inspiration: student-work` adds a last, unnumbered step with the work done with students.
 Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill.
-A field with `options: proposals` lists the research proposals in a select, or, as a text field, receives the title chosen with **Choose this proposal**.
+A field with `when`, such as `when: {funding: I need funding from the lab}`, appears only while the named field has that value.
+A select field with `options: proposals` lists the research proposals.
+A text field with `options: proposals` receives the title chosen with **Choose this proposal**.
 The form opens the visitor's email app with recipients, subject, and body filled in; nothing passes through the site.
-Without JavaScript the path cards are hidden, every path and the research proposals are visible, the work done with students stays collapsed, and each path offers a plain email link with the same subject and an empty template.
+Without JavaScript the path cards are hidden, and every path and the research proposals are visible.
+The work done with students then stays collapsed, and each path offers a plain email link with the same subject and an empty template.
 
 ### Add a research area
 
@@ -459,7 +528,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/categories/_index.md` | Citation view for category pages |
 | `config/_default/` | Site settings (`hugo.yaml`, `params.yaml`) and the menu (`menus.yaml`) |
 | `config/_default/module.yaml` | Theme modules, with one blox-seo file excluded |
-| `data/topics.yaml` | Topic labels and tag colors for projects, tools, news, and research areas |
+| `data/topics.yaml` | Topic labels and tag colors for projects, tools, news, research areas, theses, and student publications |
 | `data/themes/ltlab.toml` | Site colors, taken from the lab logo. The site shows only dark mode (`config/_default/params.yaml` sets no `theme_day`), and the light colors stay for a possible return |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Self-hosted Inter font, under the SIL Open Font License |
 | `assets/scss/template.scss` | Site-wide style rules layered over the theme |
@@ -469,6 +538,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero, research map, news, and preprints |
 | `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, publication cards, and contact people (`contacts.html`, `people-row.html`) |
 | `layouts/publication/single.html` | Publication page in the style of a research project page |
+| `layouts/publication/section.html` | Publications page: highlights carousel, then every publication with search, type, and topic filters |
 | `layouts/proposals/single.html` | Research proposal page in the style of a publication page |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar logo and the favicon generated from it |
 | `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
@@ -487,7 +557,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 ### Categories
 
 Publications, projects, and theses use one `categories` value to select the list they appear in.
-A publication may also add `Highlight`, which lists it under Highlights as well.
+A publication may also add `Highlight`, which also shows it in the Highlights carousel.
 Validation rejects a missing or unknown value.
 The theme would print categories in the page metadata, so `template.scss` hides them.
 
@@ -516,8 +586,8 @@ When moving a published page, keep its old path under `aliases`, so that externa
 | `uv run python scripts/site.py clean` | Remove build output and caches, and keep the downloaded tools |
 | `uv run python scripts/test_site.py` | Run the self-checks of the validator's link parser and front-matter loader |
 
-The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, and `preprint`.
-Research proposals have no template, so contributors copy an existing entry.
+The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
+A proposal slug names its topic folder, as in `new proposal legal/new-idea`.
 
 The Hugo version comes from `.github/workflows/hugo.yml`, so local and GitHub builds always use the same version.
 The production build uses its own resource folder, so `check` can run while the preview is open.

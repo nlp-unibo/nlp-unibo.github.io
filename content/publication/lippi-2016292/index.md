@@ -41,7 +41,7 @@ abstract: Argumentation mining is a recent challenge concerning the automatic ex
   in the analysis of content from various domains.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: 'MARGOT is an online web server that automatically extracts arguments from unstructured text, giving a wide community of users access to argumentation mining.'
 
 tags:
 - argumentation mining
@@ -67,7 +67,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: 'Illustrative schema built from the paper''s abstract: MARGOT takes unstructured text and returns the arguments it extracts.'
   focal_point: ''
   preview_only: false
 
@@ -85,4 +85,5 @@ categories:
   - Journal
 aliases:
   - /publication_highlights/lippi-2016292/
+topics: [argument-mining, prototype]
 ---

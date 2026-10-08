@@ -94,4 +94,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/donati-etal-2024-generation/
+topics: [llms]
 ---

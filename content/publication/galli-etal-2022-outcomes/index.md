@@ -82,4 +82,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/galli-etal-2022-outcomes/
+topics: [legal]
 ---

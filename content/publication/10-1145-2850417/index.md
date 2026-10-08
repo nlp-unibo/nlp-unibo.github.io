@@ -88,4 +88,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/10-1145-2850417/
+topics: [argument-mining]
 ---

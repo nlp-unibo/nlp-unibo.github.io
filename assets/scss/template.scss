@@ -934,6 +934,39 @@ img.lt-cover {
   }
 }
 
+// In a centered carousel a slide is narrower, so both neighbours peek in.
+.lt-carousel.is-centered .lt-slide {
+  flex-basis: 78%;
+  scroll-snap-align: center;
+
+  @media (max-width: 767.98px) { flex-basis: 90%; }
+}
+
+// Publications highlights: wide, low slides, with the figure and compact text side by side in equal halves.
+.lt-carousel.lt-highlights {
+  .lt-slide {
+    flex-basis: 92%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 18rem;
+
+    @media (max-width: 767.98px) { flex-basis: 92%; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  }
+
+  .lt-slide-media { @media (max-width: 767.98px) { aspect-ratio: 16 / 10; } }
+
+  .lt-slide-body { gap: 0.5rem; padding: 1.4rem 1.6rem; }
+
+  .lt-slide-title { font-size: 1.1rem; }
+
+  .lt-meta, .lt-slide-authors { font-size: 0.8rem; }
+
+  .lt-slide-text { font-size: 0.88rem; line-height: 1.5; }
+
+  .lt-award { font-size: 0.8rem; }
+}
+
+.lt-nowrap { white-space: nowrap; }
+
 .lt-slide-media {
   position: relative;
   overflow: hidden;
@@ -2000,6 +2033,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 .dark {
   .lt-viz figcaption, .lt-viz-note, .lt-bars .lt-viz-title span, .lt-pipeline-step span:last-child { color: $lt-dark-muted; }
   .lt-pipeline-step, .lt-bars, .lt-annotate { border-color: $lt-dark-border; background: transparent; }
+  .lt-pipeline-step.is-highlight { border-color: $lt-orange; }
+  .lt-pipeline-index { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-pipeline-step strong, .lt-takeaways strong, .lt-bars .lt-viz-title, .lt-gap tr.is-ours th { color: #f1f5fa; }
   .lt-gap th, .lt-gap td { border-bottom-color: $lt-dark-border; }
   .lt-gap thead th { color: $lt-dark-muted; border-bottom-color: $lt-sky; }
@@ -4223,6 +4258,43 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
 }
 
+// Student work tools: a search box above the kind and topic filters, and a live count of the items shown.
+.lt-work-search {
+  width: 100%;
+  max-width: 28rem;
+  margin-bottom: 0.8rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: $lt-ink;
+  background: #fff;
+
+  &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+}
+
+// On phones the topic filter is one row that scrolls inside its own box.
+.lt-filter-topics {
+  margin-top: -0.6rem;
+
+  @media (max-width: 575.98px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+
+    button { flex: none; }
+  }
+}
+
+.lt-filter-swatch { display: inline-block; width: 0.6rem; height: 0.6rem; margin-right: 0.35rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba($lt-muted, 0.5); vertical-align: 0.05em; }
+
+.lt-work-count { margin: -0.4rem 0 1rem; font-size: 0.85rem; color: $lt-muted; }
+
+.lt-work-list .lt-work-topics { grid-column: 2; @media (max-width: 575.98px) { grid-column: 1; } }
+
+.lt-work-topics .lt-topic { font-size: 0.72rem; }
+
 .lt-work-year {
   h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; color: $lt-muted; }
 
@@ -4270,6 +4342,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-expand p { border-left: 0; }
   .lt-proposal-more { color: $lt-sky; }
   .lt-people a { color: #f1f5fa; }
+  .lt-work-search { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); color-scheme: dark; }
+  .lt-work-count { color: $lt-dark-muted; }
   .lt-people .lt-people-initials { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
@@ -4477,3 +4551,129 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 // Research proposal page (layouts/proposals/single.html): the contacts sit under the summary, centered like the authors.
 .lt-proj-people { display: flex; justify-content: center; margin: 1rem 0 0; }
+
+// Side section menu (layouts/proposals/single.html): from 1200px the menu leaves the sticky bar and becomes a sticky
+// column left of the body, on a rule like the Work with us steps; the current section is marked by the script.
+.lt-proj-side-label { display: none; }
+
+@media (min-width: 1200px) {
+  .lt-proj-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 860px) minmax(0, 1fr);
+    align-items: start;
+    margin-top: 1.5rem;
+    padding: 0 16px;
+
+    > .lt-proj-body { grid-column: 2; grid-row: 1; }
+  }
+
+  .lt-proj-nav.lt-proj-side {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    width: calc(100% - 1.5rem);
+    max-width: 13rem;
+    margin: 4.2rem 1.5rem 0 0;
+    padding: 0;
+    border: 0;
+    border-left: 2px solid $lt-border;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    top: 100px;
+
+    a { margin-left: -2px; padding: 0.35rem 0 0.35rem 1rem; border-left: 2px solid transparent; }
+
+    a[aria-current="true"] { border-left-color: $lt-blue; color: $lt-navy !important; }
+  }
+
+  .lt-proj-side-label { display: block; margin: 0 0 0.5rem 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  .dark {
+    .lt-proj-nav.lt-proj-side { border-left-color: $lt-dark-border; background: none; }
+    .lt-proj-nav.lt-proj-side a[aria-current="true"] { border-left-color: $lt-sky; color: #f1f5fa !important; }
+    .lt-proj-side-label { color: $lt-dark-muted; }
+  }
+}
+
+// Work with us: from 1200px the open path puts its side menu in a sticky column left of the path card and the steps;
+// narrower, the menu is hidden, since the numbered steps already guide the reader.
+.lt-path-side { display: none !important; }
+
+@media (min-width: 1200px) {
+  .lt-path:not([hidden]) {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    column-gap: 2rem;
+
+    > :not(.lt-path-side) { grid-column: 2; }
+  }
+
+  .lt-path-side.lt-proj-nav.lt-proj-side {
+    display: flex !important;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    margin: 1.5rem 0 0;
+  }
+
+  .lt-path-side-back { margin-bottom: 0.8rem; font-size: 0.82rem !important; }
+}
+
+// Publications page (layouts/publication/section.html): the highlights carousel, then search, type and topic filters,
+// and every publication by year, with a link back to the filters at the end.
+.lt-pubs-section {
+  max-width: 1180px;
+  margin: 2.5rem auto;
+  padding: 0 16px;
+}
+
+// The highlights band uses more of a wide screen than the reading width, so its slides stay low.
+.lt-pubs-section.lt-pubs-wide { max-width: 1400px; }
+
+.lt-pub-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+}
+
+.lt-pub-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid $lt-border;
+
+  p { margin: 0; }
+
+  .lt-chips { margin: 0.2rem 0 0; }
+
+  .lt-award { margin: 0; }
+}
+
+.lt-pub-row-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; color: $lt-navy; text-decoration: none; }
+
+.lt-pub-row-title:hover { color: $lt-blue; text-decoration: underline; }
+
+.lt-pub-row-authors { font-size: 0.9rem; color: $lt-ink; }
+
+.lt-pub-row-venue { font-size: 0.88rem; color: $lt-muted; }
+
+.lt-pub-row-venue span { font-style: italic; }
+
+.lt-pubs-top { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-weight: 600; }
+
+.dark {
+  .lt-pub-row-title { color: #f1f5fa; }
+  .lt-pub-row-title:hover { color: $lt-sky; }
+  .lt-pub-row-authors { color: #c9d6e3; }
+  .lt-pub-row-venue { color: $lt-dark-muted; }
+  .lt-pub-list, .lt-pub-row { border-color: $lt-dark-border; }
+}

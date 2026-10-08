@@ -35,7 +35,16 @@
       {{ $body := printf "%s\n\n%s\n\nBest regards,\n" $greeting (delimit $lines "\n") }}
       {{ $mailto := printf "mailto:%s?subject=%s&body=%s" (delimit $emails ",") (replace (urlquery $subject) "+" "%20") (replace (urlquery $body) "+" "%20") }}
       <div class="lt-path" role="tabpanel" id="{{ .key }}" aria-labelledby="{{ .key }}-tab" tabindex="0">
-        <div class="lt-path-card">
+        {{/* Side menu of the path, a sticky column from 1200px: a link back to the path cards, the path summary, then */}}
+        {{/* each step, numbered as in the list. */}}
+        <nav class="lt-proj-nav lt-proj-side lt-path-side" aria-label="{{ .title }} steps">
+          <a class="lt-path-side-back" href="#paths-label"><i class="fas fa-arrow-up" aria-hidden="true"></i> What are you looking for?</a>
+          <p class="lt-proj-side-label">{{ .title }}</p>
+          <a href="#{{ .key }}-about">Who and what</a>
+          {{ range $i, $step := .steps }}<a href="#{{ if eq $step.show "contact" }}{{ $path.key }}-contact{{ else }}{{ $path.key }}-step-{{ add $i 1 }}{{ end }}">{{ add $i 1 }}. {{ $step.title }}</a>{{ end }}
+          {{ with .inspiration }}<a href="#{{ $path.key }}-inspiration">For inspiration</a>{{ end }}
+        </nav>
+        <div class="lt-path-card" id="{{ .key }}-about">
           <div class="lt-path-logo" aria-hidden="true"><i class="fas fa-{{ .icon }}"></i></div>
           <div class="lt-path-info">
             <h2 class="lt-path-title">{{ .title }}</h2>
@@ -46,8 +55,8 @@
           </div>
         </div>
         <ol class="lt-steps">
-          {{ range .steps }}
-          <li class="lt-step{{ if eq .show "contact" }} is-contact{{ end }}"{{ if eq .show "contact" }} id="{{ $path.key }}-contact"{{ end }}>
+          {{ range $i, $step := .steps }}
+          <li class="lt-step{{ if eq .show "contact" }} is-contact{{ end }}" id="{{ $path.key }}-{{ if eq .show "contact" }}contact{{ else }}step-{{ add $i 1 }}{{ end }}">
             <h3 class="lt-step-title">{{ .title }}</h3>
             <p class="lt-step-text">{{ .text | markdownify }}</p>
             {{ if eq .show "contact" }}
@@ -57,7 +66,7 @@
                 <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
                 <label>Your name<input name="name" type="text" required autocomplete="name"></label>
                 {{ range $path.form.fields }}
-                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
+                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}{{ range $k, $v := .when }} data-lt-when="{{ $k }}" data-lt-when-value="{{ $v }}"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
                   {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
                   {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
                     <option value="">Choose…</option>
@@ -70,7 +79,7 @@
                 <button type="submit" class="lt-btn lt-btn-primary">Write the email <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
                 <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
               </form>
-              <a class="lt-mail-direct" href="{{ $mailto | safeURL }}" data-lt-template="{{ delimit $lines "\n" }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
+              <a class="lt-mail-direct" href="{{ $mailto | safeURL }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
             </div>
             {{ else if eq .show "projects" }}
             <ul class="lt-path-projects">
@@ -84,7 +93,7 @@
           </li>
           {{ end }}
           {{ with .inspiration }}
-          <li class="lt-step is-extra">
+          <li class="lt-step is-extra" id="{{ $path.key }}-inspiration">
             <h3 class="lt-step-title">For inspiration</h3>
             <div data-lt-slot="{{ . }}"></div>
           </li>
@@ -138,29 +147,40 @@
   </div>
   {{ end }}
 
-  {{/* Work done with students: theses and publications tagged `student publication`, newest first, grouped by year. */}}
+  {{/* Work done with students: theses and publications tagged `student publication`, newest first, grouped by year, */}}
+  {{/* with their `topics` as colored tags. A search box and two filters, by kind and by topic, combine. */}}
   {{ $theses := where site.RegularPages "Section" "theses" }}
   {{ $pubs := where (where site.RegularPages "Section" "publication") "Params.tags" "intersect" (slice "student publication") }}
   {{ $work := union $theses $pubs }}
   {{ with $work }}
   {{ $kinds := dict "Master thesis" "paper" "Bachelor thesis" "call" "Publication" "event" }}
   <div class="lt-band" data-lt-section="student-work">
-    <details class="lt-expand" id="student-work">
+    <details class="lt-expand" id="student-work" data-lt-filter-scope>
       <summary><span class="lt-expand-title">Work done with students</span> <span class="lt-expand-count">{{ len . }} theses and publications</span></summary>
+      <input class="lt-work-search" type="search" placeholder="Search titles and authors" aria-label="Search titles and authors" data-lt-search hidden>
       <div class="lt-filter" role="group" aria-label="Show work by kind" data-lt-filter-group>
-        <button type="button" aria-pressed="true" data-lt-filter="">All</button>
+        <button type="button" aria-pressed="true" data-lt-filter="">All kinds</button>
         {{ range $k := slice "Master thesis" "Bachelor thesis" "Publication" }}{{ $n := 0 }}{{ range $work }}{{ $kind := "Publication" }}{{ if eq .Section "theses" }}{{ $kind = index .Params.categories 0 }}{{ end }}{{ if eq $kind $k }}{{ $n = add $n 1 }}{{ end }}{{ end }}{{ if $n }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize $k }}">{{ $k }} ({{ $n }})</button>{{ end }}{{ end }}
       </div>
+      {{/* Topic buttons: every topic used by the work, most frequent first. */}}
+      {{ $counts := dict }}{{ range $work }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+      {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
+      <div class="lt-filter lt-filter-topics" role="group" aria-label="Show work by topic" data-lt-filter-group data-lt-filter-key="ltTopics">
+        <button type="button" aria-pressed="true" data-lt-filter="">All topics</button>
+        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}"><span class="lt-filter-swatch" style="{{ printf "background:%s" .background | safeCSS }}" aria-hidden="true"></span>{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
+      </div>
+      <p class="lt-work-count" aria-live="polite" data-lt-count></p>
       {{ range .ByDate.Reverse.GroupByDate "2006" }}
       <div class="lt-work-year">
         <h3>{{ .Key }}</h3>
         <ul class="lt-work-list">
           {{ range .Pages }}
           {{ $kind := "Publication" }}{{ if eq .Section "theses" }}{{ $kind = index .Params.categories 0 }}{{ end }}
-          <li data-lt-tag="{{ urlize $kind }}">
+          <li data-lt-tag="{{ urlize $kind }}" data-lt-topics="{{ delimit (.Params.topics | default slice) " " }}">
             <span class="lt-pill lt-pill-{{ index $kinds $kind }}">{{ $kind }}</span>
             <a href="{{ .RelPermalink }}">{{ .Title }}</a>
             <span class="lt-work-by">{{ if eq .Section "theses" }}{{ delimit .Params.authors ", " }}{{ else }}{{ .Params.publication | markdownify | plainify }}{{ end }}</span>
+            {{ with .Params.topics }}<span class="lt-work-topics">{{ partial "lt/topic-tags.html" . }}</span>{{ end }}
           </li>
           {{ end }}
         </ul>

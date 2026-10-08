@@ -100,4 +100,5 @@ categories:
 aliases:
   - /publication_conferences/10-1145-3594536-3595174/
   - /publication_conferences/santin-etal-2023-argumentation-cjeu/
+topics: [argument-mining, legal]
 ---

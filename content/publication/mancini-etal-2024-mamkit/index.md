@@ -93,4 +93,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/mancini-etal-2024-mamkit/
+topics: [argument-mining, multimodal, toolkit]
 ---

@@ -34,10 +34,10 @@ publication_short: ''
 
 doi: 10.1613/JAIR.1.16406
 
-abstract: ''
+abstract: 'Current research in machine learning and artificial intelligence is largely centered on modeling and performance evaluation, less so on data collection. However, recent research demonstrated that limitations and biases in data may negatively impact trustworthiness and reliability. These aspects are particularly impactful on sensitive domains such as mental health and neurological disorders, where speech data are used to develop AI applications for patients and healthcare providers. In this paper, we chart the landscape of available speech datasets for this domain, to highlight possible pitfalls and opportunities for improvement and promote fairness and diversity. We present a comprehensive list of desiderata for building speech datasets for mental health and neurological disorders and distill it into an actionable checklist focused on ethical concerns to foster more responsible research.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: 'Proposes desiderata and an ethical checklist for speech datasets on mental health and neurological disorders; reviewing 36 papers shows privacy and storage measures are underreported.'
 
 tags: []
 
@@ -62,7 +62,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: "Seven desiderata distilled into checklist items C1 to C7, used to review 36 papers on speech datasets by target issue, discourse genre and source. Illustrative schema built from the paper's definitions."
   focal_point: ''
   preview_only: false
 
@@ -81,4 +81,5 @@ categories:
   - Journal
 aliases:
   - /publication_highlights/mancini-etal-2025-promoting-datasets/
+topics: [speech, biomedical, ethics]
 ---

@@ -87,4 +87,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/galassi-etal-2023-clef-task-2/
+topics: [fact-checking, benchmark]
 ---

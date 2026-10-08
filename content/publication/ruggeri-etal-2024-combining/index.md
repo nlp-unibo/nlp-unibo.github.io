@@ -79,4 +79,5 @@ categories:
   - Preprint
 aliases:
   - /publication_preprints/ruggeri-etal-2024-combining/
+topics: [interpretability, legal, argument-mining]
 ---

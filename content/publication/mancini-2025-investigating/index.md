@@ -76,4 +76,5 @@ categories:
   - Workshop
 aliases:
   - /publication_conferences/mancini-2025-investigating/
+topics: [interpretability, speech, biomedical]
 ---

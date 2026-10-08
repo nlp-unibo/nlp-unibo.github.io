@@ -1,9 +1,14 @@
-{{/* Wide carousel card for one publication: figure, title, date, authors, a short summary, and links. Input: the publication page. */}}
+{{/* Wide carousel card for one publication: figure, title, venue and date, award, authors, a short summary, and links. */}}
+{{/* Input: the publication page, or a dict with `page` and `year: true` to show the year instead of the full date. */}}
+{{ $yearOnly := false }}{{ $page := . }}
+{{ if reflect.IsMap . }}{{ $page = .page }}{{ $yearOnly = .year }}{{ end }}
+{{ with $page }}
 {{ $meta := partial "lt/pub-meta.html" . }}
 {{ $authors := .Params.authors | default slice }}
 <article class="lt-card lt-link-card lt-slide">
   <div class="lt-slide-media">
-    {{ with (.Resources.ByType "image").GetMatch "*featured*" }}
+    {{/* A simpler `card` image, readable at card size, replaces the `featured` teaser figure when present. */}}
+    {{ with or ((.Resources.ByType "image").GetMatch "card.*") ((.Resources.ByType "image").GetMatch "*featured*") }}
       {{ $img := .Fit "1000x700 webp" }}
       <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
     {{ else }}
@@ -12,9 +17,11 @@
   </div>
   <div class="lt-slide-body">
     <h3 class="lt-slide-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-    <div class="lt-meta"><time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time></div>
+    <div class="lt-meta"><span>{{ with $meta.venue }}<span class="lt-slide-venue">{{ . }}</span> {{ end }}<span class="lt-nowrap">{{ with $meta.venue }}· {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ if $yearOnly }}{{ .Date.Format "2006" }}{{ else }}{{ .Date | time.Format ":date_medium" }}{{ end }}</time></span></span></div>
+    {{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
     {{ with $authors }}<p class="lt-slide-authors">{{ delimit (first 4 .) ", " }}{{ if gt (len .) 4 }}, et al.{{ end }}</p>{{ end }}
     {{ with $meta.tldr }}<p class="lt-slide-text">{{ . }}</p>{{ end }}
     {{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 3) }}
   </div>
 </article>
+{{ end }}

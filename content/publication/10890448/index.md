@@ -85,4 +85,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/10890448/
+topics: [interpretability, speech]
 ---

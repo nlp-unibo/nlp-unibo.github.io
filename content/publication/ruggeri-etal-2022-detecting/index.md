@@ -76,4 +76,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/ruggeri-etal-2022-detecting/
+topics: [legal, interpretability]
 ---

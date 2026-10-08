@@ -1,0 +1,9 @@
+{{/* Compact publication entry for the publications page: title, authors, venue and year, award, topics, and links. */}}
+{{/* Input: the publication page. */}}
+{{ $meta := partial "lt/pub-meta.html" . }}
+<a class="lt-pub-row-title" href="{{ .RelPermalink }}">{{ .Title }}</a>
+<p class="lt-pub-row-authors">{{ partial "page_metadata_authors" . }}</p>
+<p class="lt-pub-row-venue">{{ with $meta.venue }}<span>{{ . }}</span> · {{ end }}{{ .Date.Format "2006" }}</p>
+{{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
+{{ with .Params.topics }}{{ partial "lt/topic-tags.html" . }}{{ end }}
+{{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 4) }}

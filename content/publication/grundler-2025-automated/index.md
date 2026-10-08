@@ -79,4 +79,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/grundler-2025-automated/
+topics: [legal, knowledge-extraction]
 ---

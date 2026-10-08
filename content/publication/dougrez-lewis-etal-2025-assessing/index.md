@@ -92,4 +92,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/dougrez-lewis-etal-2025-assessing/
+topics: [llm-reasoning, fact-checking, benchmark]
 ---

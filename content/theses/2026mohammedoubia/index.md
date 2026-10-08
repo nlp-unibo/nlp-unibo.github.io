@@ -30,4 +30,5 @@ categories:
   - Master thesis
 aliases:
   - /students_mscs/2026mohammedoubia/
+topics: [privacy, information-retrieval, llms]
 ---

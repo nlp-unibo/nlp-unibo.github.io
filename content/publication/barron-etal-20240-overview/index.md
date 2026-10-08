@@ -86,4 +86,5 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/barron-etal-20240-overview/
+topics: [fact-checking, benchmark]
 ---

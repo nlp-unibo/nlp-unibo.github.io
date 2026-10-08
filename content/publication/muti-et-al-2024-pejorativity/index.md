@@ -95,4 +95,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/muti-et-al-2024-pejorativity/
+topics: [benchmark]
 ---

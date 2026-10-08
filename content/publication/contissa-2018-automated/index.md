@@ -78,4 +78,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/contissa-2018-automated/
+topics: [privacy, legal]
 ---

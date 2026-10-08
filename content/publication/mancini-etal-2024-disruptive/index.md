@@ -98,4 +98,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/mancini-etal-2024-disruptive/
+topics: [speech]
 ---

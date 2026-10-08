@@ -30,4 +30,5 @@ categories:
   - Master thesis
 aliases:
   - /students_mscs/2026davidecremonini/
+topics: [llm-reasoning, llms]
 ---

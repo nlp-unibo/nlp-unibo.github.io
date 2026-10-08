@@ -49,7 +49,7 @@ abstract: 'Most of the existing natural language processing systems for legal te
   terms of performance.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: 'Compares four strategies for extending an English unfair-clause detector for Terms of Service to other languages; rebuilding annotated corpora per language is often unnecessary.'
 
 tags:
 - multilingualism
@@ -78,7 +78,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: 'The four tested strategies for extending the unfair clause detector to a new language, exemplified for German. Figure 1 of the paper, CC BY 4.0.'
   focal_point: ''
   preview_only: false
 
@@ -96,4 +96,5 @@ categories:
   - Journal
 aliases:
   - /publication_highlights/10-1007-s-10506-024-09398-7/
+topics: [legal]
 ---

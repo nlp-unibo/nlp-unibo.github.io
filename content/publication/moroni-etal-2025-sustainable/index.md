@@ -83,4 +83,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/moroni-etal-2025-sustainable/
+topics: [llms]
 ---

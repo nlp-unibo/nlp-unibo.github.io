@@ -91,4 +91,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/fazzinga-2022200113/
+topics: [privacy, dialogue]
 ---

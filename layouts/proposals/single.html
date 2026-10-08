@@ -19,8 +19,11 @@
     </div>
   </header>
 
+  {{/* From 1200px the section menu is a sticky column beside the body; narrower, it is the bar of publication pages. */}}
+  <div class="lt-proj-layout">
   {{ with $sections }}
-  <nav class="lt-proj-nav" aria-label="Sections">
+  <nav class="lt-proj-nav lt-proj-side" aria-label="Sections">
+    <p class="lt-proj-side-label">On this page</p>
     {{ range . }}<a href="#{{ index . 1 }}">{{ index . 2 | plainify | htmlUnescape }}</a>{{ end }}
   </nav>
   {{ end }}
@@ -31,6 +34,7 @@
     {{ with .GetTerms "tags" }}
     <ul class="lt-tags lt-proj-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
     {{ end }}
+  </div>
   </div>
 </article>
 {{- end -}}

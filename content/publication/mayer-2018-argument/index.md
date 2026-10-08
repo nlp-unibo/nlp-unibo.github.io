@@ -74,4 +74,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/mayer-2018-argument/
+topics: [argument-mining, biomedical]
 ---

@@ -76,4 +76,5 @@ categories:
   - Conference
 aliases:
   - /publication_preprints/mancini-2026-leveragingwhisperembeddingsaudiobased/
+topics: [information-retrieval]
 ---

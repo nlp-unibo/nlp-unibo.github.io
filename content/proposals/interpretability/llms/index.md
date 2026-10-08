@@ -19,10 +19,38 @@ aliases:
 Selective rationalization is the process of learning by providing highlights as explanations. Highlights, called rationales, are a subset of the input text meant to be interpretable by a user and to describe faithfully the inference process of a classification model.
 A popular architecture for selective rationalization is the Select-then-Predict Pipeline (SPP): a generator selects the rationale, and a predictor classifies it.
 
+{{< pipeline caption="The Select-then-Predict Pipeline, as defined above: the predictor sees only the rationale, so the rationale explains the label." >}}
+- title: Input text
+  text: The text to classify.
+  icon: file-alt
+- title: Generator
+  text: Selects the rationale.
+  icon: highlighter
+- title: Predictor
+  text: Classifies the rationale only.
+  icon: tag
+- title: Label
+  text: Explained by the rationale.
+  icon: check
+{{< /pipeline >}}
+
 ## Objective
 
 Large language models (LLMs) are ubiquitous in NLP.
 The aim is to evaluate their capabilities in performing selective rationalization via prompting, and to compare them with traditional SPP models.
+
+{{< pipeline caption="The setting this proposal evaluates, illustrated from its description: one prompted LLM selects the rationale and predicts the label." >}}
+- title: Input text and prompt
+  text: The prompt asks for a rationale and a label.
+  icon: file-alt
+- title: LLM
+  text: Selects the rationale and predicts.
+  icon: robot
+  highlight: true
+- title: Rationale and label
+  text: Compared with traditional SPP models.
+  icon: balance-scale
+{{< /pipeline >}}
 
 ## References
 

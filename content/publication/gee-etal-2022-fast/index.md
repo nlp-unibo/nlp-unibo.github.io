@@ -87,4 +87,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/gee-etal-2022-fast/
+topics: [model-compression, industry]
 ---

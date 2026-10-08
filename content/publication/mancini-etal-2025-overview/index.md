@@ -95,4 +95,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/mancini-etal-2025-overview/
+topics: [argument-mining, multimodal, benchmark]
 ---

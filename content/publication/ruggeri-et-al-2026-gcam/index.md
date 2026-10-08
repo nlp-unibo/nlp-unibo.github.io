@@ -76,9 +76,6 @@ image:
 #   E.g. `projects: ['internal-project']` links to `content/project/internal-project/index.md`.
 #   Otherwise, set `projects: []`.
 projects: []
-links:
-- name: arXiv preprint
-  url: https://arxiv.org/abs/2406.14099
 categories:
   - Highlight
   - Journal

@@ -91,4 +91,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/donati-etal-2025-large/
+topics: [llms]
 ---

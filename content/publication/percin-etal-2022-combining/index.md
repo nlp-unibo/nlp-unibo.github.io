@@ -90,4 +90,5 @@ categories:
   - Workshop
 aliases:
   - /publication_conferences/percin-etal-2022-combining/
+topics: [legal]
 ---

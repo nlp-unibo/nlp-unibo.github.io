@@ -91,4 +91,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/antici-et-al-2024-subjectivity/
+topics: [benchmark]
 ---

@@ -23,6 +23,23 @@ Spoken arguments also carry speech information, such as prosody, the rhythm and 
 
 Use speech information to enhance the set of features that can be used to detect arguments.
 
+{{< pipeline caption="Illustrative flow built from the proposal's description: speech information joins the text features used to detect arguments." >}}
+- title: Spoken argument
+  text: Recorded speech with its transcript.
+  icon: microphone-alt
+- title: Features
+  icon: wave-square
+  highlight: true
+  branches:
+    - title: Text
+      text: the words of the transcript
+    - title: Speech
+      text: prosody, with MFCC or end-to-end models
+- title: Argument detection
+  text: Finds premises and claims.
+  icon: project-diagram
+{{< /pipeline >}}
+
 ## Directions
 
 Speech can be represented with ad hoc feature extraction methods, such as Mel-frequency cepstral coefficients (MFCC), or with end-to-end architectures.

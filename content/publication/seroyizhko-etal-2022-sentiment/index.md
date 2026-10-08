@@ -100,4 +100,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/seroyizhko-etal-2022-sentiment/
+topics: [benchmark]
 ---

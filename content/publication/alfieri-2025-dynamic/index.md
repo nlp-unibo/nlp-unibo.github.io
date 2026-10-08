@@ -77,4 +77,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/alfieri-2025-dynamic/
+topics: [argument-mining, legal]
 ---

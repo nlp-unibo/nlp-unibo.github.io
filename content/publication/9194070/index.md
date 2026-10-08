@@ -30,10 +30,10 @@ publication_short: ''
 
 doi: 10.1109/TNNLS.2020.3019893
 
-abstract: ''
+abstract: 'Attention is an increasingly popular mechanism used in a wide range of neural architectures. The mechanism itself has been realized in a variety of formats. However, because of the fast-paced advances in this domain, a systematic overview of attention is still missing. In this article, we define a unified model for attention architectures in natural language processing, with a focus on those designed to work with vector representations of the textual data. We propose a taxonomy of attention models according to four dimensions: the representation of the input, the compatibility function, the distribution function, and the multiplicity of the input and/or output. We present the examples of how prior information can be exploited in attention models and discuss ongoing research efforts and open challenges in the area, providing the first extensive categorization of the vast body of literature in this exciting domain.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: 'Proposes a unified model of attention in natural language processing and a taxonomy along four dimensions: input representation, compatibility function, distribution function, and multiplicity.'
 
 tags:
 - task analysis
@@ -69,7 +69,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: 'Figure 4 of the paper (general attention model: keys, values and query combined into attention weights and a context vector), CC BY 4.0.'
   focal_point: ''
   preview_only: false
 

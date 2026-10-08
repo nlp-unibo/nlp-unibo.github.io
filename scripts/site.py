@@ -54,6 +54,7 @@ CONTENT_TYPES = {
     "conference": ("publication", "publication-conference"),
     "workshop": ("publication", "publication-workshop"),
     "preprint": ("publication", "publication-preprint"),
+    "proposal": ("proposals", "proposal"),
 }
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "user_groups"),
@@ -688,9 +689,16 @@ def new_content(content_type: str, slug: str) -> None:
     if content_type not in CONTENT_TYPES:
         available = ", ".join(CONTENT_TYPES)
         raise SystemExit(f"Unknown content type {content_type!r}. Choose one of: {available}")
-    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     section, kind = CONTENT_TYPES[content_type]
+    # A proposal lives inside its topic folder, so its slug is TOPIC/NAME.
+    if content_type == "proposal":
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*", slug):
+            raise SystemExit("A proposal slug is TOPIC/NAME, such as legal/new-idea.")
+        topic = slug.split("/")[0]
+        if not (ROOT / "content" / section / topic / "_index.md").exists():
+            raise SystemExit(f"Topic folder content/{section}/{topic}/ does not exist.")
+    elif not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     env, hugo, _ = environment()
     relative_path = f"{section}/{slug}"
     run([str(hugo), "new", "content", "--kind", kind, relative_path], env=env)

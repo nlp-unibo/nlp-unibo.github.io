@@ -77,4 +77,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/mancini-etal-2022-multimodal/
+topics: [argument-mining, multimodal]
 ---

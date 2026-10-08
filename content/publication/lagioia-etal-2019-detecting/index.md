@@ -80,4 +80,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lagioia-etal-2019-detecting/
+topics: [legal, interpretability]
 ---

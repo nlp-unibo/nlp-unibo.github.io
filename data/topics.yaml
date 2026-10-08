@@ -69,3 +69,23 @@ llm-reasoning:
   label: LLM reasoning
   background: '#9d174d'
   text: '#ffffff'
+biomedical:
+  label: Biomedical
+  background: '#f2c94c'
+  text: '#3a2c00'
+dialogue:
+  label: Dialogue
+  background: '#a78bfa'
+  text: '#1e1b4b'
+knowledge-extraction:
+  label: Knowledge extraction
+  background: '#ff8a65'
+  text: '#3b1205'
+model-compression:
+  label: Model compression
+  background: '#4d7c0f'
+  text: '#ffffff'
+fact-checking:
+  label: Fact-checking
+  background: '#14b8a6'
+  text: '#003060'

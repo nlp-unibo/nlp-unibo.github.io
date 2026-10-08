@@ -84,4 +84,5 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/alam-etal-2025-overview/
+topics: [fact-checking, information-retrieval, benchmark]
 ---

@@ -17,15 +17,16 @@ contacts: [paolo-torroni, andrea-galassi, federico-ruggeri]
 # a section in the step: proposals, projects, or contact (the email form). `inspiration: student-work` adds a last,
 # unnumbered step with the work done with students.
 # `form` sets the email: `subject` may name fields in braces, such as {proposal}; each field has a `key`, a `label`,
-# a `type` (text, textarea, or select), `options` (a list for a select, or `proposals`, which lists the research proposals
+# a `type` (text, textarea, or select), an optional `when` that shows the field only when another field has a value, such
+# as {funding: I need funding from the lab}, `options` (a list for a select, or `proposals`, which lists the research proposals
 # in a select and lets "Choose this proposal" fill a text field), and `required`. Every form also asks for the sender's name.
 paths:
   - key: thesis
     label: Master thesis
-    summary: "A research thesis for the Master's degree in Artificial Intelligence, on one of our proposals."
+    summary: "A research thesis on one of our proposals, for master students of the University of Bologna."
     icon: graduation-cap
     title: Master thesis
-    who: "Students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence)."
+    who: "Master students of the University of Bologna. Most come from the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence), but other degrees are welcome."
     what: "A master thesis is a research activity on one of our research proposals, supervised by the lab members that the proposal names."
     steps:
       - title: Choose a proposal
@@ -50,6 +51,8 @@ paths:
     who: "Students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence)."
     what: "A project work is a 3 CFU activity. You can choose one of our research proposals or propose a topic of your own."
     steps:
+      - title: Read the course pages
+        text: "The [course page](https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/530679) and the [Virtuale page](https://virtuale.unibo.it/course/view.php?id=81838) describe the project work and how it is assessed."
       - title: Choose a topic
         text: "Select **Choose this proposal** on one of our research proposals, or write a topic of your own in the next step."
         show: proposals
@@ -68,13 +71,13 @@ paths:
     icon: plane
     title: Visiting student or researcher
     who: "Master and PhD students enrolled at another institution, and researchers affiliated with another institution."
-    what: "A student visit typically lasts between three and six months, and its funding is expected from the home institution. Funding for a researcher visit is expected from the applicant."
+    what: "A student visit typically lasts between three and six months."
     steps:
       - title: Find a research topic
         text: "Our research proposals show the topics we currently work on."
         show: proposals
       - title: Write to us
-        text: "Agree with us on the visit and its research topic. Researchers attach a curriculum vitae, a research statement, and a proposal for the research activity during the visit."
+        text: "Agree with us on the visit and its research topic. Tell us how the visit is funded: by your home institution, or by the lab, and in that case how much funding you need. Researchers attach a curriculum vitae, a research statement, and a proposal for the research activity during the visit."
         show: contact
       - title: Complete the formalities
         text: "Students complete the required formalities with the administrations of their home institution and of the University of Bologna."
@@ -84,19 +87,21 @@ paths:
         - {key: role, label: I am applying as, type: select, options: [Visiting student, Visiting researcher], required: true}
         - {key: institution, label: Home institution, type: text, required: true}
         - {key: topic, label: Research topic of the visit, type: textarea, required: true}
+        - {key: funding, label: Funding, type: select, options: [Funded by my home institution, I need funding from the lab], required: true}
+        - {key: amount, label: Funding needed from the lab, type: text, required: true, when: {funding: I need funding from the lab}}
   - key: programme
-    label: Master or PhD place
+    label: Master or PhD
     summary: "Admission to a master or PhD programme of the University of Bologna, to work with the lab."
     icon: university
     title: Master or PhD programme
     who: "Students who intend to enroll in a master or PhD programme at the University of Bologna and to work with the lab."
     what: "Admission follows the official procedures of the University of Bologna."
     steps:
-      - title: Write to us
-        text: "Discuss your research interests with us before applying."
-        show: contact
       - title: Apply
         text: "Follow the [admission page of the Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence/admission) or the [application page of the PhD in Computer Science and Engineering](https://phd.unibo.it/cse/en/apply)."
+      - title: Write to us
+        text: "Tell us which programme you apply to and which research interests you would like to pursue with the lab."
+        show: contact
     inspiration: student-work
     form:
       subject: "[Prospective student] {programme}"

@@ -87,10 +87,24 @@
     select(hashed() || tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || ("ltEmpty" in figure.dataset ? null : tabs[0]));
   });
 
+  // Section menus of project pages: the link of the section under the sticky header carries aria-current.
+  document.querySelectorAll(".lt-proj-nav").forEach((nav) => {
+    const links = [...nav.querySelectorAll('a[href^="#"]:not(.lt-path-side-back)')];
+    const targets = links.map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))));
+    if (!links.length || targets.includes(null)) return;
+    const mark = () => {
+      let current = 0;
+      targets.forEach((target, index) => { if (target.getBoundingClientRect().top < 150) current = index; });
+      links.forEach((link, index) => link.setAttribute("aria-current", String(index === current)));
+    };
+    addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true });
+    mark();
+  });
+
   // Work with us paths. Picking a path writes its anchor in the URL and moves the shared sections below the paths (each a
-  // band with `data-lt-section`) into the open path's steps (`data-lt-slot`); their bands stay hidden. A slot with
-  // `data-lt-open` opens its section and lets the step title replace the section heading. Filter buttons show the items
-  // of one tag. A path's form becomes an email: its subject fills {field} names from the form, and its body greets the
+  // band with `data-lt-section`) into the open path's steps (`data-lt-slot`); their bands stay hidden. Every moved
+  // section opens, and a slot with `data-lt-open` lets the step title replace the section heading. Filter buttons show
+  // the items of one tag. A path's form becomes an email: its subject fills {field} names from the form, and its body greets the
   // recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
   // proposal field. Changing path closes an open proposal and resets every filter to All. A link to `#<path>-contact`,
   // such as the Apply buttons of a proposal page, opens the path at its email step; `?proposal=<title>` fills the
@@ -104,11 +118,12 @@
     const show = (tab) => {
       open = tab && document.getElementById(tab.getAttribute("aria-controls"));
       document.querySelectorAll("[data-lt-fields]").forEach((fields) => fields.dispatchEvent(new CustomEvent("lt-reset")));
+      document.querySelectorAll("[data-lt-search]").forEach((search) => { search.value = ""; });
       document.querySelectorAll('[data-lt-filter=""]').forEach((all) => all.click());
       if (open) open.querySelectorAll("[data-lt-slot]").forEach((slot) => {
         const details = document.getElementById(slot.dataset.ltSlot);
         if (!details) return;
-        details.open = "ltOpen" in slot.dataset;
+        details.open = true;
         details.classList.toggle("is-step", "ltOpen" in slot.dataset);
         slot.append(details);
       });
@@ -118,28 +133,33 @@
     paths.addEventListener("lt-select", (event) => {
       show(event.detail);
       // A `#<path>-contact` hash stays, so the theme's own scroll to the hash on load lands on the email step.
-      if (event.detail && location.hash !== `#${open.id}-contact`) history.replaceState(null, "", `#${open.id}`);
+      if (event.detail && !location.hash.startsWith(`#${open.id}-`)) history.replaceState(null, "", `#${open.id}`);
     });
     show(paths.querySelector('[role="tab"][aria-selected="true"]'));
     // A click on a path card scrolls to its panel; arrow keys only move between cards.
     paths.querySelectorAll('[role="tab"]').forEach((tab) => tab.addEventListener("click", () => {
       open.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     }));
-    const contact = location.hash.match(/^#(.+)-contact$/);
-    const target = contact && document.getElementById(`${contact[1]}-tab`);
-    if (target) {
-      target.click();
+    // A hash naming a place inside a path, such as #thesis-contact or #thesis-step-1, opens that path if needed and
+    // scrolls to the place. On page load, `?proposal=<title>` fills the proposal field and the email step is focused.
+    const openFromHash = (loaded) => {
+      const place = location.hash.match(/^#([a-z0-9-]+?)-(contact|about|inspiration|step-\d+)$/);
+      const target = place && document.getElementById(`${place[1]}-tab`);
+      if (!target) return;
+      if (target.getAttribute("aria-selected") !== "true") target.click();
       const field = open.querySelector("[data-lt-proposals]");
       const proposal = new URLSearchParams(location.search).get("proposal");
-      if (field && proposal) {
+      if (loaded && field && proposal) {
         field.value = proposal;
         field.dispatchEvent(new Event("input", { bubbles: true }));
       }
-      const step = document.getElementById(`${contact[1]}-contact`);
+      const step = document.getElementById(location.hash.slice(1));
       step.scrollIntoView({ block: "start" });
       const empty = [...step.querySelectorAll("input, select, textarea")].find((input) => !input.value);
-      if (empty) addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
-    }
+      if (loaded && empty && place[2] === "contact") addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
+    };
+    openFromHash(true);
+    addEventListener("hashchange", () => openFromHash(false));
     picks.forEach((pick) => pick.addEventListener("click", () => {
       const field = open && open.querySelector("[data-lt-proposals]");
       if (!field) return;
@@ -150,17 +170,56 @@
     }));
   });
 
-  document.querySelectorAll("[data-lt-filter-group]").forEach((group) => {
-    const scope = group.parentElement;
-    group.classList.add("is-enhanced");
-    const buttons = [...group.querySelectorAll("[data-lt-filter]")];
-    buttons.forEach((button) => button.addEventListener("click", () => {
-      const tag = button.dataset.ltFilter;
-      buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
-      scope.querySelectorAll("[data-lt-tag]").forEach((item) => { item.hidden = Boolean(tag) && item.dataset.ltTag !== tag; });
-      // A year with no item left hides its heading.
-      scope.querySelectorAll(".lt-work-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+  // Filters: the filter groups and the optional search box of one scope (`data-lt-filter-scope`, or the parent of the
+  // group) combine. A group compares its pressed value with each item's `data-lt-tag`, or with the data attribute that
+  // `data-lt-filter-key` names, which may hold several space-separated values; the search matches the item's text.
+  // A year with no item left hides its heading, and `data-lt-count` reports how many items are shown. A button whose
+  // label ends with a count, such as "Speech (6)", counts the items it would show under the other filters and the
+  // search, and disappears when it would show none, unless it is pressed.
+  new Set([...document.querySelectorAll("[data-lt-filter-group]")].map((group) => group.closest("[data-lt-filter-scope]") || group.parentElement)).forEach((scope) => {
+    const groups = [...scope.querySelectorAll("[data-lt-filter-group]")];
+    const search = scope.querySelector("[data-lt-search]");
+    const count = scope.querySelector("[data-lt-count]");
+    const counted = groups.flatMap((group) => [...group.querySelectorAll("[data-lt-filter]")].filter((button) => {
+      const match = button.textContent.match(/^(.*?)\s*\((\d+)\)$/s);
+      if (match) button.dataset.ltLabel = match[1].trim();
+      return Boolean(match);
     }));
+    const apply = () => {
+      const active = groups.map((group) => ({ group, key: group.dataset.ltFilterKey || "ltTag", value: group.querySelector('[aria-pressed="true"]').dataset.ltFilter }));
+      const query = search ? search.value.trim().toLowerCase() : "";
+      const items = [...scope.querySelectorAll("[data-lt-tag]")];
+      const fits = (item, key, value) => !value || (item.dataset[key] || "").split(" ").includes(value);
+      const passes = (item, skip) => active.every((filter) => filter.group === skip || fits(item, filter.key, filter.value))
+        && (!query || item.textContent.toLowerCase().includes(query));
+      items.forEach((item) => { item.hidden = !passes(item, null); });
+      counted.forEach((button) => {
+        const group = button.closest("[data-lt-filter-group]");
+        const key = group.dataset.ltFilterKey || "ltTag";
+        const n = items.filter((item) => passes(item, group) && fits(item, key, button.dataset.ltFilter)).length;
+        const label = button.lastChild;
+        label.textContent = `${button.dataset.ltLabel} (${n})`;
+        button.hidden = n === 0 && button.getAttribute("aria-pressed") !== "true";
+      });
+      scope.querySelectorAll(".lt-work-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+      if (count) {
+        const shown = items.filter((item) => !item.hidden).length;
+        count.textContent = shown ? `${shown} of ${items.length} shown` : "Nothing matches. Try another topic or search.";
+      }
+    };
+    groups.forEach((group) => {
+      group.classList.add("is-enhanced");
+      const buttons = [...group.querySelectorAll("[data-lt-filter]")];
+      buttons.forEach((button) => button.addEventListener("click", () => {
+        buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)));
+        apply();
+      }));
+    });
+    if (search) {
+      search.hidden = false;
+      search.addEventListener("input", apply);
+    }
+    apply();
   });
 
   // Recipients: a proposal named in the form's proposal field replaces the form's own recipients with its contacts.
@@ -176,14 +235,18 @@
     };
     const output = form.querySelector(".lt-mail-subject");
     const names = form.parentElement.querySelector(".lt-mail-names");
-    const direct = form.parentElement.querySelector(".lt-mail-direct");
-    // The plain email link keeps its subject and template but follows the recipients of the chosen proposal.
+    // The plain email link is only for readers without JavaScript; the form replaces it.
+    form.parentElement.querySelector(".lt-mail-direct").hidden = true;
+    // A field with `data-lt-when` shows only while the field it names has the given value; hidden, it is disabled, so it
+    // is neither required nor written in the email.
+    const conditional = [...form.querySelectorAll("[data-lt-when]")];
     const update = () => {
       output.textContent = subject();
       names.textContent = recipients().names.join(", ");
-      const { to, names: people } = recipients();
-      const body = `${greet(people)}\n\n${direct.dataset.ltTemplate}\n\nBest regards,\n`;
-      direct.href = `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+      conditional.forEach((label) => {
+        label.hidden = value(label.dataset.ltWhen) !== label.dataset.ltWhenValue;
+        label.querySelectorAll("input, select, textarea").forEach((field) => { field.disabled = label.hidden; });
+      });
     };
     form.hidden = false;
     form.addEventListener("input", update);
@@ -192,7 +255,7 @@
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       const lines = [...form.elements]
-        .filter((field) => field.dataset.ltLabel && field.value.trim())
+        .filter((field) => field.dataset.ltLabel && !field.disabled && field.value.trim())
         .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
       const { to, names: people } = recipients();
       const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;

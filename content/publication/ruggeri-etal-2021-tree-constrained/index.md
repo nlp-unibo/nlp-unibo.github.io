@@ -78,4 +78,5 @@ categories:
   - Preprint
 aliases:
   - /publication_preprints/ruggeri-etal-2021-tree-constrained/
+topics: [argument-mining]
 ---

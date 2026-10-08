@@ -89,4 +89,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/grundler-etal-2024-amelia/
+topics: [argument-mining, legal, benchmark]
 ---
