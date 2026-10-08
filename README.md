@@ -544,9 +544,9 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/_shortcodes/` | Components for publication pages, such as `svg`, `stages`, and `pipeline` |
-| `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero, research map, news, and preprints |
+| `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero with the lab logo, research map, news, and preprints |
 | `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, publication cards, and contact people (`contacts.html`, `people-row.html`) |
-| `layouts/publication/single.html` | Publication page in the style of a research project page |
+| `layouts/publication/single.html` | Publication page in the style of a research project page, with a side section menu from 1200px |
 | `layouts/publication/section.html` | Publications page: highlights carousel, then every publication with search, type, and topic filters |
 | `layouts/news/list.html` | News page: kind filter, year links, every news item and publication on a timeline grouped by year, and a Back to top button |
 | `layouts/_partials/lt/news-data.html` | Preview data shared by the News page and the homepage: kind, date, venue, summary, and links |

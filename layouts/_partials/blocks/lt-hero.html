@@ -1,7 +1,9 @@
-{{/* Homepage hero: eyebrow, title, short lead, and action buttons. */}}
+{{/* Homepage hero: the lab logo (assets/media/logo.svg, inline so it stays sharp and themeable), eyebrow, title, */}}
+{{/* short lead, and action buttons. */}}
 {{ $block := .wcBlock }}
 <div class="lt-hero">
   <div class="lt-hero-copy">
+    {{ with resources.Get "media/logo.svg" }}<div class="lt-hero-logo" aria-hidden="true">{{ .Content | safeHTML }}</div>{{ end }}
     {{ with $block.content.eyebrow }}<p class="lt-eyebrow">{{ . | markdownify }}</p>{{ end }}
     {{ with $block.content.title }}<h1 class="lt-hero-title">{{ . | markdownify }}</h1>{{ end }}
     {{ with $block.content.text }}<div class="lt-hero-lead">{{ . | markdownify }}</div>{{ end }}

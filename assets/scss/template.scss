@@ -775,6 +775,17 @@ img.lt-cover {
   text-align: center;
 }
 
+// The logo above the eyebrow. The eyebrow names the lab, so the logo is decorative for screen readers. In dark mode
+// the navy bubble takes the lighter brand blue, which stands out from the dark hero.
+.lt-hero-logo {
+  width: clamp(4rem, 9vw, 6rem);
+  margin: 0 auto 1.25rem;
+
+  svg { display: block; width: 100%; height: auto; }
+}
+
+.dark .lt-hero-logo svg > path:first-child { fill: $lt-blue; }
+
 .lt-hero-title {
   margin: 0 0 1.1rem;
   font-size: clamp(2.4rem, 6.4vw, 4.6rem);
@@ -1436,6 +1447,9 @@ img.lt-cover {
     margin: 1.5rem 0;
     font-size: 0.92rem;
     border-collapse: collapse;
+
+    // On phones a wide table scrolls sideways inside its own box instead of widening the page.
+    @media (max-width: 575.98px) { position: relative; display: block; overflow-x: auto; }
   }
 
   th,
@@ -1565,6 +1579,8 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .lt-viz-scroll {
+  // Positioned, so absolutely positioned screen-reader labels inside stay within the scroll box.
+  position: relative;
   overflow-x: auto;
 }
 
@@ -4005,6 +4021,71 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 .lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; color: $lt-muted; }
 
+// Before a path is chosen, the picker fills the first screen: a centered title and larger cards on a band up to 1400px
+// wide. Once a path is chosen, the cards shrink to a row of compact tabs (icon and label; the summary stays for screen
+// readers), and the tabs not chosen are greyed until pointed at or focused.
+.lt-paths.is-enhanced:not(:has([role="tab"][aria-selected="true"])) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 12rem);
+
+  .lt-paths-title { margin-bottom: 2rem; font-size: clamp(1.8rem, 3.5vw, 2.6rem); text-align: center; }
+
+  .lt-path-picker { gap: 1.25rem; }
+
+  // Three cards per row from 768px, then all five in one row; wider than the 1180px section, the picker spans the
+  // width of the navigation bar, up to 1400px.
+  @media (min-width: 768px) {
+    .lt-path-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1200px) {
+    .lt-path-picker {
+      width: unquote("min(1400px, calc(100vw - 108px))");
+      margin-left: 50%;
+      transform: translateX(-50%);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 576px) {
+    [role="tab"] { min-height: 20rem; padding: 1.6rem 1.4rem; }
+
+    [role="tab"] i { width: 4rem; height: 4rem; border-radius: 14px; font-size: 1.8rem; }
+
+    .lt-path-pick-label { font-size: 1.35rem; }
+
+    .lt-path-pick-text { font-size: 1.02rem; }
+  }
+}
+
+.lt-paths:has([role="tab"][aria-selected="true"]) .lt-path-picker {
+  grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 150px)"), 1fr));
+  gap: 0.6rem;
+
+  [role="tab"] {
+    flex-direction: row;
+    align-items: center;
+    min-height: 0;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    transition: opacity 0.2s;
+
+    i { flex: none; width: 2.2rem; height: 2.2rem; margin: 0; border-radius: 8px; font-size: 1rem; }
+
+    &[aria-selected="false"] { opacity: 0.55; }
+
+    &:hover, &:focus-visible { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) { transition: none; }
+  }
+
+  .lt-path-pick-label { font-size: 0.98rem; }
+
+  .lt-path-pick-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
 // Leaves room for the sticky navigation bar when a click scrolls to the panel.
 .lt-path, .lt-step, .lt-proposals .lt-field-cell { scroll-margin-top: 5.5rem; }
 
@@ -4579,8 +4660,9 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // Research proposal page (layouts/proposals/single.html): the contacts sit under the summary, centered like the authors.
 .lt-proj-people { display: flex; justify-content: center; margin: 1rem 0 0; }
 
-// Side section menu (layouts/proposals/single.html): from 1200px the menu leaves the sticky bar and becomes a sticky
-// column left of the body, on a rule like the Work with us steps; the current section is marked by the script.
+// Side section menu (layouts/proposals/single.html, layouts/publication/single.html): from 1200px the menu leaves the
+// sticky bar and becomes a sticky column left of the body, on a rule like the Work with us steps; the current section
+// is marked by the script.
 .lt-proj-side-label { display: none; }
 
 @media (min-width: 1200px) {

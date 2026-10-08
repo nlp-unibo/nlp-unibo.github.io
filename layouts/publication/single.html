@@ -41,11 +41,19 @@
     {{ with .Params.image.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
   </figure>
 
-  <nav class="lt-proj-nav" aria-label="Sections">
-    {{ if not $body }}{{ with .Params.abstract }}<a href="#abstract">Abstract</a>{{ end }}{{ end }}
-    {{ range $sections }}<a href="#{{ index . 1 }}">{{ index . 2 | plainify | htmlUnescape }}</a>{{ end }}
-    {{ with $bib }}<a href="#cite">Cite</a>{{ end }}
+  {{/* From 1200px the section menu is a sticky column beside the body, as on proposal pages; narrower, it is a bar. */}}
+  <div class="lt-proj-layout">
+  {{ $menu := slice }}
+  {{ if and (not $body) .Params.abstract }}{{ $menu = $menu | append (dict "id" "abstract" "name" "Abstract") }}{{ end }}
+  {{ range $sections }}{{ $menu = $menu | append (dict "id" (index . 1) "name" (index . 2 | plainify | htmlUnescape)) }}{{ end }}
+  {{ with $bib }}{{ $menu = $menu | append (dict "id" "cite" "name" "Cite") }}{{ end }}
+  {{/* A menu with one entry adds nothing, so it needs at least two sections. */}}
+  {{ if gt (len $menu) 1 }}
+  <nav class="lt-proj-nav lt-proj-side" aria-label="Sections">
+    <p class="lt-proj-side-label">On this page</p>
+    {{ range $menu }}<a href="#{{ .id }}">{{ .name }}</a>{{ end }}
   </nav>
+  {{ end }}
 
   <div class="lt-proj-body article-style">
     {{ if $body }}
@@ -73,6 +81,7 @@
     {{ with .GetTerms "tags" }}
     <ul class="lt-tags lt-proj-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
     {{ end }}
+  </div>
   </div>
 
 </article>
