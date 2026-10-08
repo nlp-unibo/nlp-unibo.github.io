@@ -908,6 +908,16 @@ img.lt-cover {
   }
 }
 
+// A scripted page hides the scrollbar from the first paint, before the deferred script hides it with `is-enhanced`
+// (the `lt-js` class comes from hooks/head-start).
+.lt-js .lt-carousel-track {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 // With the script, the track moves only through ltlab.js: swipes, wheel gestures, arrow keys, and controls.
 .is-enhanced .lt-carousel-track {
   overflow-x: hidden;
@@ -3617,6 +3627,14 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
     scale: none;
     filter: none;
   }
+}
+
+// Before the deferred script runs, a scripted page already fades every slide but the first, as the script will,
+// so the neighbours do not show at full size for the first frames (the `lt-js` class comes from hooks/head-start).
+.lt-js .lt-carousel.is-centered:not(.is-enhanced) .lt-carousel-track > :not(:first-child) {
+  opacity: 0.94;
+  scale: 0.95;
+  filter: grayscale(1);
 }
 
 .lt-carousel.is-jumping .lt-carousel-track > * {

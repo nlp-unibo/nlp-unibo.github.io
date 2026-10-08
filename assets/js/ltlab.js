@@ -1213,7 +1213,9 @@
     }
 
     carousel.ltGo = go;
-    carousel.classList.add("is-enhanced");
+    // The setup runs with transitions off, so the neighbours take their faded state at once instead of fading in.
+    carousel.classList.add("is-jumping", "is-enhanced");
+    requestAnimationFrame(() => requestAnimationFrame(() => carousel.classList.remove("is-jumping")));
     carousel.querySelector(".lt-carousel-nav").hidden = false;
     if (centered) track.scrollLeft = offset(slides[0]);
     // Only a width change re-centers the track; mobile browsers also resize when their toolbars hide.
