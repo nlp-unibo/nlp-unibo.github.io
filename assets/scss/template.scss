@@ -126,8 +126,9 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 600;
 }
 
-// Hero backdrop: a soft brand gradient with a faint dot grid
-#section-hero {
+// Hero backdrop: a soft brand gradient with a faint dot grid, also behind the opening band of section pages
+#section-hero,
+.lt-band.lt-page-intro {
   background:
     radial-gradient(circle at 1px 1px, rgba($lt-blue, 0.12) 1px, transparent 0) 0 0 / 22px 22px,
     radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.22), transparent 55%),
@@ -135,7 +136,8 @@ h1, h2, h3, h4, h5, h6,
     #fff;
 }
 
-.dark #section-hero {
+.dark #section-hero,
+.dark .lt-band.lt-page-intro {
   background:
     radial-gradient(circle at 1px 1px, rgba($lt-sky, 0.10) 1px, transparent 0) 0 0 / 22px 22px,
     radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.14), transparent 55%),
@@ -204,18 +206,6 @@ h1, h2, h3, h4, h5, h6,
 .lt-kind-bachelor-thesis { background: #7b4fa0; }
 
 .dark .lt-kind-journal { background: #2a5a8a; }
-
-// Unibo seal for links to a member's University of Bologna page (`icon_pack: custom`, `icon: unibo`)
-.network-icon .custom-unibo {
-  display: inline-block;
-  width: 1.15em;
-  height: 1.15em;
-  vertical-align: -0.2em;
-  // The seal is a mask, so it takes the text color of the other social icons.
-  background-color: currentColor;
-  -webkit-mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
-  mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
-}
 
 // Year headings inserted by assets/js/ltlab.js in long citation lists
 .lt-year {
@@ -4839,6 +4829,10 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
 .lt-tool-row .lt-meta { margin: 0 0 0.8rem; }
 
+.lt-pill-open { background: rgba(#25734a, 0.14); color: #1d5e3c; }
+
+.dark .lt-pill-open { background: rgba(#45ad64, 0.16); color: #7fd19a; }
+
 .lt-tool-row .lt-topics { margin: 0 0 1rem; }
 
 .lt-tool-install {
@@ -4848,3 +4842,101 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .dark .lt-tool-install code { color: #f1f5fa; background: rgba(255, 255, 255, 0.08); }
+
+// People page (layouts/people/single.html): member cards that open the profile page, and compact former members.
+.lt-person-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
+  gap: 1.25rem;
+}
+
+.lt-person-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img, .lt-people-initials { flex: none; width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+
+  .lt-meta { margin: 0.35rem 0 0; }
+}
+
+.lt-person-org { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-muted; }
+
+.lt-person-bio { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+
+.lt-person .lt-research-label { margin: 0.2rem 0 -0.3rem; }
+
+.lt-person .lt-topics { margin-top: 0; }
+
+// Social links sit above the card link, so each opens its own target.
+.lt-person-social {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin: auto 0 0;
+  padding: 0.3rem 0 0;
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    color: $lt-blue;
+
+    &:hover { background: rgba($lt-sky, 0.16); }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+  }
+}
+
+.lt-former {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
+  gap: 1.2rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li { display: flex; align-items: flex-start; gap: 0.9rem; }
+
+  img, .lt-people-initials { flex: none; width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+
+  p { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.5; color: $lt-muted; }
+}
+
+.lt-former-name { font-weight: 700; color: $lt-navy; }
+
+.dark {
+  .lt-person-org, .lt-former p { color: $lt-dark-muted; }
+  .lt-person-bio { color: #c9d6e3; }
+  .lt-person-social a { color: $lt-sky; }
+  .lt-person-social a:focus-visible { outline-color: $lt-sky; }
+  .lt-person-head .lt-people-initials, .lt-former .lt-people-initials { color: $lt-sky; }
+  .lt-former-name { color: #f1f5fa; }
+}
+
+// Opening band of section pages (layouts/_partials/lt/page-intro.html): the page intro as a centered lead.
+.lt-page-intro { padding: 4.5rem 0 4rem; }
+
+.lt-page-intro-inner { max-width: 60rem; margin: 0 auto; padding: 0 16px; text-align: center; }
+
+.lt-page-intro-text {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: $lt-navy;
+}
+
+.dark .lt-page-intro-text { color: #f1f5fa; }

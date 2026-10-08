@@ -1,0 +1,8 @@
+{{/* Opening band of a section page: the homepage hero backdrop across the page width, with the page `intro` as a */}}
+{{/* centered lead. The title stays as a screen-reader heading, since the menu already names the page. Input: the page. */}}
+<div class="lt-band lt-page-intro">
+  <header class="lt-page-intro-inner">
+    <h1 class="sr-only">{{ .Title }}</h1>
+    {{ with .Params.intro }}<p class="lt-page-intro-text">{{ . | markdownify }}</p>{{ end }}
+  </header>
+</div>

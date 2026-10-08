@@ -23,8 +23,8 @@ interests:
   - Transfer Learning
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/a.galassi/en'
   - icon: envelope
     icon_pack: fas

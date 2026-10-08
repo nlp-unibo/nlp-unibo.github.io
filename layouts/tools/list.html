@@ -1,15 +1,11 @@
-{{/* Tools page: the title, then one band per tool, newest first. Each band shows the tool's `schema` (an SVG file */}}
-{{/* in the tool folder, drawn with the `lt-s-*` classes) with its `caption` on the left, and on the right the name, */}}
-{{/* the `kind` pill, the summary, the topic tags, the `package` install command, and link chips: the website in */}}
-{{/* `external_link`, the web demo in `demo`, the source code in `code`, and the publication named by `publication`. */}}
+{{/* Tools page: the page intro, then one band per tool, newest first. Each band shows the tool's `schema` (an SVG */}}
+{{/* file in the tool folder, drawn with the `lt-s-*` classes) with its `caption` on the left, and on the right the */}}
+{{/* name, the `kind` pill, an open-source pill with the code `license`, the summary, the topic tags, the `package` */}}
+{{/* install command, and link chips: the website in `external_link`, the web demo in `demo`, the source code in */}}
+{{/* `code`, and the publication named by `publication`. */}}
 {{- define "main" -}}
 <article class="lt-proj">
-  <div class="lt-band">
-    <header class="lt-proj-header">
-      <h1 class="lt-proj-title">{{ .Title }}</h1>
-      {{ with .Params.intro }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
-    </header>
-  </div>
+  {{ partial "lt/page-intro.html" . }}
   {{ range .RegularPages.ByDate.Reverse }}
   {{ $page := . }}
   <section class="lt-band" aria-labelledby="tool-{{ .File.ContentBaseName }}">
@@ -22,7 +18,7 @@
       {{ end }}
       <div class="lt-research-summary">
         <h2 class="lt-research-title" id="tool-{{ .File.ContentBaseName }}">{{ .Title }}</h2>
-        {{ with .Params.kind }}<p class="lt-meta"><span class="lt-pill">{{ . }}</span></p>{{ end }}
+        {{ if or .Params.kind .Params.license }}<p class="lt-meta">{{ with .Params.kind }}<span class="lt-pill">{{ . }}</span>{{ end }}{{ with .Params.license }}<span class="lt-pill lt-pill-open"><i class="fab fa-osi" aria-hidden="true"></i> Open source · {{ . }}</span>{{ end }}</p>{{ end }}
         {{ with .Params.summary }}<p class="lt-research-text">{{ . | markdownify }}</p>{{ end }}
         {{ partial "lt/topic-tags.html" .Params.topics }}
         {{ with .Params.package }}<p class="lt-tool-install"><code>pip install {{ . }}</code></p>{{ end }}

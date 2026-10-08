@@ -20,8 +20,8 @@ interests:
   - Argument Mining
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/giulia.grundler2/en'
   - icon: envelope
     icon_pack: fas

@@ -10,5 +10,7 @@ caption: "Any configuration can bind to any component, because parameters and co
 
 external_link: https://nlp-unibo.github.io/cinnamon/
 code: https://github.com/nlp-unibo/cinnamon
+# The license of the code repository; it marks the tool as open source.
+license: MIT
 package: cinnamon-core
 ---

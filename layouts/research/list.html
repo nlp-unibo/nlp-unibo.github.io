@@ -6,12 +6,7 @@
 {{- define "main" -}}
 {{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
 <article class="lt-proj">
-  <div class="lt-band">
-    <header class="lt-proj-header">
-      <h1 class="lt-proj-title">{{ .Title }}</h1>
-      {{ with .Params.intro }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
-    </header>
-  </div>
+  {{ partial "lt/page-intro.html" . }}
   {{ range .RegularPages.ByWeight }}
   {{ $page := . }}
   <section class="lt-band" aria-labelledby="area-{{ .File.ContentBaseName }}">

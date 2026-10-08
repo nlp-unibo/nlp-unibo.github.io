@@ -1,6 +1,7 @@
 ---
 title: Projects
 date: 2026-02-27
+intro: We work on international and national research projects that bring language technologies to law, industry, fairness, and sustainability.
 
 # The `categories` value of each project is `International project` or `National project`.
 aliases:

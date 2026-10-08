@@ -1,24 +1,9 @@
 ---
 title: People
 date: 2022-10-24
+intro: The lab brings together researchers in natural language processing at the University of Bologna and the associate fellows who work with us.
 
-type: landing
-
-sections:
-  - block: people
-    content:
-      title: Meet the Team
-      # Choose which groups/teams of users to display.
-      #   Edit `user_groups` in each user's profile to add them to one or more of these groups.
-      user_groups:
-          - Members
-          - Associate Fellows
-          - Former Members
-      # Each profile sets `weight`; lower values appear first within a group.
-      sort_by: Weight
-      sort_ascending: true
-    design:
-      show_interests: false
-      show_role: true
-      show_social: true
+# The page is drawn by layouts/people/single.html. Each person is a folder in content/authors: `user_groups` sets the
+# group (Members, Associate Fellows, or Former Members), and `weight` the order inside it, lowest first.
+type: people
 ---

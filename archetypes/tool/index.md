@@ -19,6 +19,8 @@ external_link: "https://example.org/"
 # demo: "https://example.org/demo"
 # code: "https://github.com/nlp-unibo/<repository>"
 # publication: <folder>
+# Optional license of the public code repository, shown as an open-source pill.
+# license: MIT
 # Optional PyPI name, shown as a `pip install` command.
 # package: <name>
 ---

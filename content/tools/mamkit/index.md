@@ -10,6 +10,8 @@ caption: "How MAMKit combines its components, drawn from the MAMKit paper and do
 
 external_link: https://nlp.unibo.it/mamkit/
 code: https://github.com/nlp-unibo/mamkit
+# The license of the code repository; it marks the tool as open source.
+license: CC0-1.0
 package: mamkit
 publication: mancini-etal-2024-mamkit
 ---

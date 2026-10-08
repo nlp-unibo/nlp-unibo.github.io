@@ -12,11 +12,8 @@
   {{ $info = merge $info (dict .File.ContentBaseName (dict "acronym" $acronym "name" (replaceRE `\s*\([^()]+\)\s*$` "" .Title) "scope" $scope)) }}
 {{ end }}
 <article class="lt-proj">
+  {{ partial "lt/page-intro.html" . }}
   <div class="lt-band">
-    <header class="lt-proj-header">
-      <h1 class="lt-proj-title">{{ .Title }}</h1>
-      {{ with .Params.intro }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
-    </header>
     {{ with $projects }}
     {{ $first := (index (last 1 .) 0).Date.Year }}{{ $lastYear := (index . 0).Date.Year }}
     <figure class="lt-pubs-section lt-timeline">

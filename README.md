@@ -235,11 +235,13 @@ The folder contains `_index.md`, with an underscore, and a photo named `avatar.j
    The folder name must match it: validation rejects `maria-rossi` for a profile titled `Mario Rossi`.
 3. Set `first_name`, `last_name`, `bio`, `interests`, `email`, and the `social` links.
    Leave out `role`, which only the head and the deputy of the lab set.
-   For a member with a University of Bologna page, add a first social link with `icon: unibo` and `icon_pack: custom`, which shows the university seal.
+   For a member with a University of Bologna page, add a first social link with `icon: university` and `icon_pack: fas`.
    For a personal website, use `icon: globe` and `icon_pack: fas`.
 4. Set `user_groups` to one of `Members`, `Associate Fellows`, or `Former Members`, with this exact spelling.
    The group selects the section of the People page.
    Set `weight` to order the people within a group, where lower values appear first.
+   The People page shows `bio` on the card, and up to three "Works on" topics computed from the member's publications.
+   To choose them instead, set `works_on` to at most three keys from `data/topics.yaml`.
 5. Keep `highlight_name: true`, which shows the member in bold in author lists.
 6. Replace the default `avatar.png` with a square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
    Delete the default file when the photo is a JPEG, because the page shows only one avatar.
@@ -311,6 +313,11 @@ Copy the `_index.md` of an existing topic and replace its title, summary, and de
    It sets the scope label, the color on the timeline, and the scope filter.
 
 Projects have no page of their own, so the file needs no body text.
+
+### Edit a page introduction
+
+The Research, Projects, Tools, and People pages open with one sentence instead of their title.
+Edit it in the `intro` field of `content/research/_index.md`, `content/projects/_index.md`, `content/tools/_index.md`, or `content/people/index.md`, in at most 25 words.
 
 ### Edit the Work with us page
 
@@ -397,6 +404,7 @@ Each tool is one band with a schematic on the left and its description on the ri
 5. Set the links. Each one becomes a chip, and each is optional except `external_link`:
    `external_link` for the website, `demo` for a web demo, `code` for the repository, and `publication` for the folder name of the paper under `content/publication/`.
    Set `package` to the PyPI name to show its `pip install` command.
+   Set `license` to the license of the code repository, such as `MIT`, only when the code is public; it shows an open-source pill.
 6. List one or more `topics`, using the keys defined in `data/topics.yaml`. They appear as colored tags.
 
 ### Edit the homepage or the menu
@@ -551,7 +559,6 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
 | `layouts/_partials/views/card.html` | Theme card view plus topic tags |
 | `layouts/_partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
-| `static/media/icons/unibo-seal.svg` | University of Bologna seal for the `unibo` social icon |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
 | `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest`, other `layouts/_partials/` files | Theme templates with current Hugo calls in place of deprecated ones |
 | `archetypes/` | Templates used by `site.py new` |
@@ -653,6 +660,4 @@ The direct import lets the site exclude `layouts/_markup/sitemap.xml` from blox-
 
 The repository and the website are licensed under CC BY-NC-ND 4.0, as stated in the site footer and in `LICENSE`.
 Code derived from the Hugo Blox template keeps its MIT License, and the Inter font keeps the SIL Open Font License.
-The University of Bologna seal in `static/media/icons/unibo-seal.svg` is derived from the public-domain seal on Wikimedia Commons, cut out of a solid disc so that it matches the weight of the other icons.
-The seal remains a university insignia, so the site uses it only to link to university pages.
 The footer license is configured under `footer.copyright.license` in `config/_default/params.yaml`, so change both places together.
