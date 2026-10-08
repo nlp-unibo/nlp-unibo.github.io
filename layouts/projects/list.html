@@ -1,0 +1,78 @@
+{{/* Projects page: the title with an optional `intro`, a timeline of start years, newest first, then every project */}}
+{{/* as a card, with a scope filter and a topic filter (assets/js/ltlab.js). The acronym in brackets at the end of a */}}
+{{/* title becomes the card headline, and the rest of the title its subtitle. Cards link only to the project website */}}
+{{/* in `external_link`. Without JavaScript every card is shown and the filters are hidden. */}}
+{{- define "main" -}}
+{{ $projects := sort .RegularPages "Date" "desc" }}
+{{ $scopes := slice (dict "key" "International project" "label" "International" "icon" "fas fa-globe-europe") (dict "key" "National project" "label" "National" "icon" "fas fa-flag") }}
+{{ $info := dict }}
+{{ range $projects }}
+  {{ $acronym := replaceRE `^.*\(([^()]+)\)\s*$` "$1" .Title }}
+  {{ $scope := index (where $scopes "key" "in" (.Params.categories | default slice)) 0 | default (index $scopes 0) }}
+  {{ $info = merge $info (dict .File.ContentBaseName (dict "acronym" $acronym "name" (replaceRE `\s*\([^()]+\)\s*$` "" .Title) "scope" $scope)) }}
+{{ end }}
+<article class="lt-proj">
+  <div class="lt-band">
+    <header class="lt-proj-header">
+      <h1 class="lt-proj-title">{{ .Title }}</h1>
+      {{ with .Params.intro }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
+    </header>
+    {{ with $projects }}
+    {{ $first := (index (last 1 .) 0).Date.Year }}{{ $lastYear := (index . 0).Date.Year }}
+    <figure class="lt-pubs-section lt-timeline">
+      <ol class="lt-timeline-years">
+        {{ range seq $lastYear $first }}{{ $year := . }}
+        <li>
+          <span class="lt-timeline-year">{{ $year }}</span>
+          <ul>
+            {{ range $projects }}{{ if eq .Date.Year $year }}{{ $p := index $info .File.ContentBaseName }}
+            <li><a class="lt-timeline-item is-{{ urlize $p.scope.key }}" href="#project-{{ .File.ContentBaseName }}"><i class="{{ $p.scope.icon }}" aria-hidden="true"></i> {{ $p.acronym }}<span class="sr-only">, {{ $p.scope.label }}</span></a></li>
+            {{ end }}{{ end }}
+          </ul>
+        </li>
+        {{ end }}
+      </ol>
+      <figcaption>
+        Start year of each project.
+        {{ range $scopes }}<span class="lt-timeline-key is-{{ urlize .key }}"><i class="{{ .icon }}" aria-hidden="true"></i> {{ .label }}</span>{{ end }}
+      </figcaption>
+    </figure>
+    {{ end }}
+  </div>
+
+  <div class="lt-band">
+    <section class="lt-pubs-section" aria-labelledby="all-title" data-lt-filter-scope>
+      <h2 class="lt-paths-title" id="all-title">All projects</h2>
+      <div class="lt-filter" role="group" aria-label="Show projects by scope" data-lt-filter-group>
+        <button type="button" aria-pressed="true" data-lt-filter="">All projects</button>
+        {{ range $scopes }}{{ $n := len (where $projects "Params.categories" "intersect" (slice .key)) }}{{ if $n }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .key }}">{{ .label }} ({{ $n }})</button>{{ end }}{{ end }}
+      </div>
+      {{/* Topic buttons: every topic used by a project, most frequent first. */}}
+      {{ $counts := dict }}{{ range $projects }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+      {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
+      <div class="lt-filter lt-filter-topics" role="group" aria-label="Show projects by topic" data-lt-filter-group data-lt-filter-key="ltTopics">
+        <button type="button" aria-pressed="true" data-lt-filter="">All topics</button>
+        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}"><span class="lt-filter-swatch" style="{{ printf "background:%s" .background | safeCSS }}" aria-hidden="true"></span>{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
+      </div>
+      <p class="lt-work-count" aria-live="polite" data-lt-count></p>
+      <div class="lt-project-grid">
+        {{ range $projects }}{{ $p := index $info .File.ContentBaseName }}
+        <article class="lt-card lt-project" id="project-{{ .File.ContentBaseName }}" data-lt-tag="{{ urlize $p.scope.key }}" data-lt-topics="{{ delimit (.Params.topics | default slice) " " }}">
+          <div class="lt-card-body">
+            <div class="lt-meta"><span class="lt-pill lt-pill-{{ urlize $p.scope.key }}"><i class="{{ $p.scope.icon }}" aria-hidden="true"></i> {{ $p.scope.label }}</span><span>Started <time datetime="{{ .Date.Year }}">{{ .Date.Year }}</time></span></div>
+            <div>
+              <h3 class="lt-card-title">{{ $p.acronym }}</h3>
+              {{ if ne $p.name .Title }}<p class="lt-project-name">{{ $p.name }}</p>{{ end }}
+            </div>
+            {{ with .Params.summary }}<p class="lt-project-text">{{ . | plainify }}</p>{{ end }}
+            {{ partial "lt/topic-tags.html" .Params.topics }}
+            {{ with .Params.external_link }}<ul class="lt-chips"><li><a class="lt-chip" href="{{ . }}" target="_blank" rel="noopener"><i class="fas fa-external-link-alt" aria-hidden="true"></i> Website<span class="sr-only"> of {{ $p.acronym }}</span></a></li></ul>{{ end }}
+          </div>
+        </article>
+        {{ end }}
+      </div>
+      <a class="lt-pubs-top" href="#all-title"><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to the filters</a>
+    </section>
+  </div>
+</article>
+{{- end -}}

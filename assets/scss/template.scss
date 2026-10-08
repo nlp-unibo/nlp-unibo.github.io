@@ -4692,3 +4692,114 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-pub-row-venue { color: $lt-dark-muted; }
   .lt-pub-list, .lt-pub-row { border-color: $lt-dark-border; }
 }
+
+// Projects page (layouts/projects/list.html): a timeline of start years, then scope and topic filters over a grid of
+// project cards. International projects are blue with a globe, national ones orange with a flag, in the timeline,
+// its key, and the card pills.
+.lt-timeline {
+  margin-block: 0 0.5rem;
+
+  figcaption {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: $lt-muted;
+  }
+}
+
+// One row per year, newest first, with the year on a vertical axis and the projects that started then beside it.
+.lt-timeline-years {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    min-height: 1.4rem;
+    margin: 0;
+    padding: 0 0 0.7rem 1rem;
+    border-left: 2px solid $lt-border;
+    list-style: none;
+  }
+}
+
+.lt-timeline-year {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.6rem;
+  color: $lt-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-timeline-item,
+.lt-timeline-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lt-timeline-item {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  text-decoration: none !important;
+
+  &:hover { text-decoration: underline !important; }
+
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+}
+
+.lt-timeline-item.is-international-project,
+.lt-pill-international-project { background: rgba($lt-blue, 0.12); color: $lt-blue !important; }
+
+.lt-timeline-item.is-national-project,
+.lt-pill-national-project { background: rgba($lt-orange, 0.16); color: #9a5600 !important; }
+
+.lt-timeline-key.is-international-project { color: $lt-blue; }
+
+.lt-timeline-key.is-national-project { color: #9a5600; }
+
+.lt-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 420px)"), 1fr));
+  gap: 1.25rem;
+}
+
+// A card the filter hides leaves no gap in the grid.
+.lt-project[hidden] { display: none; }
+
+.lt-project {
+  scroll-margin-top: 5rem;
+
+  .lt-topics { margin-top: 0; }
+
+  .lt-chips { margin-top: auto; }
+}
+
+.lt-project-name { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.4; color: $lt-muted; }
+
+.lt-project-text { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+
+.dark {
+  .lt-timeline figcaption, .lt-timeline-year, .lt-project-name { color: $lt-dark-muted; }
+  .lt-timeline-years ul { border-color: $lt-dark-border; }
+  .lt-project-text { color: #c9d6e3; }
+  .lt-timeline-item.is-international-project, .lt-pill-international-project { background: rgba($lt-sky, 0.14); color: $lt-sky !important; }
+  .lt-timeline-item.is-national-project, .lt-pill-national-project { background: rgba($lt-orange, 0.18); color: #f5c46b !important; }
+  .lt-timeline-key.is-international-project { color: $lt-sky; }
+  .lt-timeline-key.is-national-project { color: #f5c46b; }
+}

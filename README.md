@@ -301,12 +301,14 @@ Copy the `_index.md` of an existing topic and replace its title, summary, and de
    Copy an existing project, or run `uv run python scripts/site.py new national-project amica`.
    Use `international-project` for an international project.
 2. Set `title`, `date` as the project start, `summary`, and `external_link` as the project website.
-   The Projects page shows only the summary, and the card opens `external_link` directly.
-   The date orders the list and is not displayed.
+   End the title with the acronym in brackets, as in `Argument Mining In Covid-19 Articles (AMICA)`.
+   The card shows the acronym as its headline and the rest of the title below it.
+   The card shows the start year and the summary, and its Website chip opens `external_link`.
+   The date orders the cards and places the project on the timeline at the top of the page.
 3. List one or more `topics`, using the keys defined in `data/topics.yaml`.
-   Topics classify the project and do not appear on the card.
+   Topics appear as colored tags on the card and feed the topic filter.
 4. Keep `categories` as `International project` or `National project`.
-   It selects the list on the Projects page.
+   It sets the scope label, the color on the timeline, and the scope filter.
 
 Projects have no page of their own, so the file needs no body text.
 
