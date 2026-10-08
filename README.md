@@ -266,7 +266,7 @@ Keep the folder, because their publications still link to it.
 
 Research proposals are grouped by topic under `content/proposals/`.
 Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
-The Work with us page lists every proposal automatically as a card, with a filter by topic.
+The Work with us page lists every proposal automatically as a card, with a filter by topic; on phones the cards form one row that scrolls sideways.
 Opening a card shows the `brief`, the contacts, the first three tags, **Choose this proposal**, and a **Full proposal** link when the proposal has a body.
 A reader who chooses a proposal writes to its contacts.
 

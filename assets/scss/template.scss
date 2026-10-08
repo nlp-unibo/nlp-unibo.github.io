@@ -4222,6 +4222,21 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // proposal is open.
 .lt-proposal-browser:has(.has-open) > .lt-filter { display: none; }
 
+// On phones the closed list is one row that scrolls sideways inside its own box, so the next step stays close;
+// an opened proposal returns to the stacked layout.
+@media (max-width: 575.98px) {
+  .lt-proposals:not(.has-open) {
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    padding-bottom: 0.6rem;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+
+    > .lt-field-cell { flex: 0 0 85%; scroll-snap-align: start; }
+  }
+}
+
 .lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; color: $lt-blue; }
 
 .lt-fields-grid.has-open .lt-proposal-more { display: none; }
