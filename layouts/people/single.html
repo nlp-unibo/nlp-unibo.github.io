@@ -1,12 +1,10 @@
 {{/* People page: the title, then one band per group of `user_groups` in content/authors, ordered by `weight`. */}}
 {{/* Members and associate fellows are cards that open the profile page: photo, name, lab role, affiliation for */}}
-{{/* associate fellows, the `bio` sentence, up to three "Works on" topics, and the social links. The topics are the */}}
-{{/* most frequent `topics` of the person's publications, from data/topics.yaml, except `prototype`, which marks a */}}
-{{/* kind of work rather than a topic; `works_on` in a profile replaces them. Former members are compact rows. */}}
+{{/* associate fellows, the `bio` sentence, up to three "Works on" topics (lt/person-topics.html), and the social */}}
+{{/* links. Former members are compact rows. */}}
 {{- define "main" -}}
 {{ $people := where site.Pages "Section" "authors" }}
 {{ $groups := slice (dict "key" "Members" "title" "Members") (dict "key" "Associate Fellows" "title" "Associate fellows" "affiliation" true) (dict "key" "Former Members" "title" "Former members" "compact" true) }}
-{{ $labels := dict "university" "University page" "envelope" "Email" "google-scholar" "Google Scholar" "github" "GitHub" "linkedin" "LinkedIn" "twitter" "Twitter" "globe" "Website" }}
 <article class="lt-proj">
   {{ partial "lt/page-intro.html" . }}
   {{ range $groups }}
@@ -33,9 +31,7 @@
       <div class="lt-person-grid">
         {{ range . }}
         {{ $avatar := (.Resources.ByType "image").GetMatch "*avatar*" }}
-        {{ $counts := dict }}{{ range where .Pages "Section" "publication" }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
-        {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
-        {{ $topics := slice }}{{ with .Params.works_on }}{{ $topics = . }}{{ else }}{{ range first 3 (sort (where $used "key" "ne" "prototype") "n" "desc") }}{{ $topics = $topics | append .key }}{{ end }}{{ end }}
+        {{ $topics := partial "lt/person-topics.html" . }}
         <article class="lt-card lt-link-card lt-person">
           <div class="lt-card-body">
             <div class="lt-person-head">
@@ -48,15 +44,7 @@
             </div>
             {{ with .Params.bio }}<p class="lt-person-bio">{{ . | markdownify }}</p>{{ end }}
             {{ with $topics }}<p class="lt-research-label">Works on</p>{{ partial "lt/topic-tags.html" . }}{{ end }}
-            {{ with .Params.social }}
-            <ul class="lt-person-social">
-              {{ range . }}
-              {{ $pack := .icon_pack | default "fas" }}
-              {{ $prefix := cond (in (slice "fab" "fas" "far") $pack) "fa" $pack }}
-              <li><a href="{{ .link }}"{{ if hasPrefix .link "http" }} target="_blank" rel="noopener"{{ end }} aria-label="{{ index $labels .icon | default (.icon | humanize) }}" title="{{ index $labels .icon | default (.icon | humanize) }}"><i class="{{ $pack }} {{ $prefix }}-{{ .icon }}" aria-hidden="true"></i></a></li>
-              {{ end }}
-            </ul>
-            {{ end }}
+            {{ partial "lt/person-social.html" . }}
           </div>
         </article>
         {{ end }}

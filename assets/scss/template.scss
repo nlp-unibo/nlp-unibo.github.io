@@ -4940,3 +4940,67 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .dark .lt-page-intro-text { color: #f1f5fa; }
+
+// Profile page (layouts/authors/list.html): photo and details on the intro backdrop, the biography below them,
+// then the publications with filters, then news, events, and theses.
+.lt-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (max-width: 575.98px) { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+
+  .lt-meta { margin: 0.4rem 0 0.9rem; font-size: 0.95rem; }
+
+  .lt-research-label { margin: 0 0 0.3rem; }
+
+  .lt-topics { margin: 0 0 0.6rem; }
+}
+
+.lt-profile-photo { flex: none; width: 10rem; height: 10rem; border-radius: 50%; object-fit: cover; }
+
+.lt-profile-name { margin: 0; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 720; letter-spacing: -0.02em; text-align: left !important; }
+
+.lt-profile-bio {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  padding: 0 16px;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: $lt-ink;
+
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-activity {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+
+  li {
+    display: grid;
+    grid-template-columns: 3.5rem 9rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.4rem 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid $lt-border;
+
+    @media (max-width: 575.98px) { grid-template-columns: auto minmax(0, 1fr); a { grid-column: 1 / -1; } }
+  }
+
+  time { font-size: 0.85rem; color: $lt-muted; font-variant-numeric: tabular-nums; }
+
+  .lt-kind { justify-self: start; margin: 0; }
+
+  a { font-weight: 600; }
+}
+
+.dark {
+  .lt-profile-bio { color: #c9d6e3; }
+  .lt-activity, .lt-activity li { border-color: $lt-dark-border; }
+  .lt-activity time { color: $lt-dark-muted; }
+}

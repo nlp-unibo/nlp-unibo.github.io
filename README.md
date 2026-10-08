@@ -556,7 +556,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `layouts/publication/section.html` | Publications page: highlights carousel, then every publication with search, type, and topic filters |
 | `layouts/proposals/single.html` | Research proposal page in the style of a publication page |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar logo and the favicon generated from it |
-| `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
+| `layouts/authors/list.html` | Profile page: header band with photo, links, topics, and biography; news, events, and theses; publications with filters |
 | `layouts/_partials/views/card.html` | Theme card view plus topic tags |
 | `layouts/_partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
