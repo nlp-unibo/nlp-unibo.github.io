@@ -16,7 +16,6 @@ Part 5 is a reference for maintainers.
 - [Part 2. Recipes](#part-2-recipes)
   - [Add a publication](#add-a-publication)
   - [Add a news item](#add-a-news-item)
-  - [Add an event](#add-an-event)
   - [Add or update a team member](#add-or-update-a-team-member)
   - [Add a thesis](#add-a-thesis)
   - [Add a research proposal](#add-a-research-proposal)
@@ -176,12 +175,17 @@ Leave `featured: false` unchanged, because the Highlight category replaces it.
 
 ### Add a news item
 
+A news item has no page of its own.
+Its preview on the News page and on the homepage shows the title, an optional venue, the summary, and the links of its text.
+The title, the summary, and the links must therefore be enough on their own.
+
 1. Create `content/news/<slug>/index.md`, for example `content/news/acl-2026/index.md`.
    Copy an existing news item, or run `uv run python scripts/site.py new news acl-2026`.
 2. Set `title`, `date`, and `summary`.
-   The summary is the one sentence shown on the homepage and in the news list.
-3. Write the text below the front matter.
-4. Optionally upload `featured.jpg` or `featured.png` to the same folder as the listing image, and PDFs to link from the text.
+   The summary is at most two sentences.
+3. Optionally set `venue`, which appears in italics under the title, such as the journal of a call for papers.
+4. Below the front matter, write a list of links. Each link becomes a button on the preview.
+   Upload PDFs, such as a programme, to the same folder and link them by file name.
 
 ```markdown
 ---
@@ -193,37 +197,27 @@ tags:
 summary: "Our paper on argument mining has been accepted at ACL 2026."
 ---
 
-Our paper has been accepted at ACL 2026.
-
-## Useful links
-
 - [Conference website](https://2026.aclweb.org/)
 - [Programme](programme.pdf)
 ```
 
-The homepage shows the six most recent news items automatically.
-The three newest appear as text cards, and the others appear as rows.
-A preview does not link to the news page.
-The title, the summary, and the links must therefore be enough on their own.
-
-Every link in the text appears as a button on the preview, so a reader can open a program or a paper directly.
-For a paper, use the paper title as the news title and write the venue in the summary.
+The News page lists every item on a timeline grouped by year, with a filter by kind.
+Every publication also appears there as a Paper or Preprint item on its publication date, with its venue and links, so a new publication needs no news item.
+The homepage news shows papers but not preprints, which have their own homepage block.
+A published paper does not show its arXiv link, since the venue version replaces it.
+Write a news item for an acceptance instead, dated on the day of the acceptance.
+The homepage shows the six most recent items: the three newest as text cards, and the others as rows.
+For an acceptance, use the paper title as the news title and write the venue in the summary.
+A website with more content, such as a shared task, lives in its own section, such as `content/mm-argfallacy/2025/`, and the news item links to it.
 List `topics` from `data/topics.yaml`, preferably the topics of the research areas.
-Topics classify the item and do not appear on the preview.
+Topics appear as colored tags on the News page, but not on the homepage preview.
 
 The tags set the label on the preview.
-The tag `paper` gives **Paper**, `special issue` gives **Call for papers**, `workshop` gives **Workshop**, and `event` gives **Event**.
+The tag `paper` gives **Paper**, `special issue` gives **Call for papers**, `shared task` gives **Shared task**, `workshop` gives **Workshop**, and `event` gives **Event**.
 Any other news item gets the label **News**.
 
 A news item with a future date stays hidden until that date.
 The site rebuilds every day at 04:00 UTC, so the item appears on the morning of its date.
-
-### Add an event
-
-1. Create `content/events/<slug>/index.md`, for example `content/events/2026clef/index.md`.
-   Copy an existing event, or run `uv run python scripts/site.py new event 2026clef`.
-2. Set `title`, `date`, `summary`, and `tags`.
-3. Describe the event in the body, and link its website and any PDF placed in the same folder.
 
 ### Add or update a team member
 
@@ -414,7 +408,7 @@ The texts of the hero and the section headings are front matter values in that f
 The blocks named `lt-*` are templates in `layouts/_partials/blocks/`.
 A hero button that points to an unpublished page, such as a draft, is hidden.
 The top menu is defined in `config/_default/menus.yaml`, where lower `weight` values appear first.
-An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`, as News and Events do under **News & Events**.
+An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`.
 
 The full menu fits on one line from 1280px, and narrower screens use the collapsed menu.
 After adding a menu entry, check the menu at 1280px, and shorten a label or move it into a dropdown if the line wraps.
@@ -533,7 +527,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `content/_index.md` | Homepage blocks |
 | `content/authors/` | Member profiles and avatars |
 | `content/publication/` | All publications; `categories` selects their list |
-| `content/news/`, `content/events/` | News items and events |
+| `content/news/` | News items, including the workshops and shared tasks we organize |
 | `content/projects/` | All projects; `categories` selects International or National |
 | `content/theses/` | Master's and bachelor's theses; `categories` selects the list |
 | `content/proposals/` | Research proposals, one folder per topic |
@@ -554,9 +548,11 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, publication cards, and contact people (`contacts.html`, `people-row.html`) |
 | `layouts/publication/single.html` | Publication page in the style of a research project page |
 | `layouts/publication/section.html` | Publications page: highlights carousel, then every publication with search, type, and topic filters |
+| `layouts/news/list.html` | News page: kind filter, year links, every news item and publication on a timeline grouped by year, and a Back to top button |
+| `layouts/_partials/lt/news-data.html` | Preview data shared by the News page and the homepage: kind, date, venue, summary, and links |
 | `layouts/proposals/single.html` | Research proposal page in the style of a publication page |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar logo and the favicon generated from it |
-| `layouts/authors/list.html` | Profile page: header band with photo, links, topics, and biography; news, events, and theses; publications with filters |
+| `layouts/authors/list.html` | Profile page: header band with photo, links, topics, and biography; news and theses; publications with filters |
 | `layouts/_partials/views/card.html` | Theme card view plus topic tags |
 | `layouts/_partials/views/citation.html` | Theme citation view plus the award line and year data for headings |
 | `layouts/redirect/single.html` | Layout for pages with `type: redirect` |
@@ -564,7 +560,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `archetypes/` | Templates used by `site.py new` |
 | `scripts/site.py` | Setup, preview, validation, and build commands |
 | `scripts/test_site.py` | Self-checks for the validator, run by the pull-request workflow |
-| `content/mm-argfallacy/` | Redirect from a shared-task short link to its event page |
+| `content/mm-argfallacy/` | Website of the MM-ArgFallacy shared task |
 | `.github/workflows/` | Pull-request validation (`validate.yml`) and deployment (`hugo.yml`) |
 | `.github/pull_request_template.md` | Pull-request checklist |
 
@@ -600,7 +596,7 @@ When moving a published page, keep its old path under `aliases`, so that externa
 | `uv run python scripts/site.py clean` | Remove build output and caches, and keep the downloaded tools |
 | `uv run python scripts/test_site.py` | Run the self-checks of the validator's link parser and front-matter loader |
 
-The `new` command accepts `news`, `event`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
+The `new` command accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
 A proposal slug names its topic folder, as in `new proposal legal/new-idea`.
 
 The Hugo version comes from `.github/workflows/hugo.yml`, so local and GitHub builds always use the same version.

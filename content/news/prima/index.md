@@ -9,16 +9,6 @@ summary: "The PRIMA final conference presented methods and tools for the automat
 topics: [legal, privacy, interpretability]
 ---
 
-## Project info
-
-PRIMA (PRivacy Infringements Machine-Advice) studies the law and practice of privacy policies, develops methods and techniques for their automated analysis, and implements a prototype to assess their lawfulness.
-It deploys legal analytics—a mix of data science, artificial intelligence, machine learning, natural language processing and statistics—to detect and assess privacy policies’ infringements.
-
-## Useful Links
-
-+ [Project Page](https://site.unibo.it/prima/en/project)
-+ [Workshop Program](program.pdf)
-+ [Federico Ruggeri's Speech](explainability-via-highlights.pdf)
-
-
-
+- [Project Page](https://site.unibo.it/prima/en/project)
+- [Workshop Program](program.pdf)
+- [Federico Ruggeri's Speech](explainability-via-highlights.pdf)

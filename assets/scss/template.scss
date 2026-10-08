@@ -4816,6 +4816,158 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-timeline-key.is-national-project { color: #f5c46b; }
 }
 
+// News page (layouts/news/list.html): a kind filter and year links over a vertical timeline grouped by year. Each item
+// is a dot on the line in its kind color, and its kind pill names the kind, so color is never the only cue.
+.lt-pill-task { background: rgba(#0b6e70, 0.12); color: #0b6e70; }
+.lt-pill-preprint { background: rgba(#1baf7a, 0.14); color: #137a55; }
+.lt-pill-news { background: rgba($lt-muted, 0.14); color: $lt-ink; }
+
+.lt-news-page .lt-filter button i { margin-right: 0.35rem; }
+
+// Back to top button of the News page: fixed at the bottom right, icon only on phones, with the label kept for screen
+// readers. The script hides it while the filters are in sight.
+.lt-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1020;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff !important;
+  background: $lt-blue;
+  box-shadow: 0 4px 14px rgba($lt-navy, 0.3);
+  text-decoration: none !important;
+  transition: opacity 0.2s, visibility 0.2s;
+
+  &:hover { background: $lt-navy; }
+
+  &:focus-visible { outline: 2px solid $lt-orange; outline-offset: 2px; }
+
+  &.is-hidden { opacity: 0; visibility: hidden; }
+
+  @media (max-width: 575.98px) {
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.75rem;
+
+    span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+
+.dark .lt-to-top { color: $lt-navy !important; background: $lt-sky; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); }
+
+.dark .lt-to-top:hover { background: #f1f5fa; }
+
+.lt-news-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  margin: -0.4rem 0 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  a { color: $lt-muted; }
+
+  a:hover { color: $lt-blue; }
+}
+
+.lt-news-year {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $lt-border;
+  scroll-margin-top: 5rem;
+
+  &:first-of-type { border-top: 0; }
+
+  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.lt-news-year-title {
+  position: sticky;
+  top: 5rem;
+  align-self: start;
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: $lt-muted;
+  font-variant-numeric: tabular-nums;
+
+  @media (max-width: 575.98px) { position: static; margin-bottom: 0.8rem; font-size: 1.6rem; }
+}
+
+.lt-news-line {
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid $lt-border;
+  list-style: none;
+}
+
+.lt-news-item {
+  --lt-dot: #{$lt-muted};
+  position: relative;
+  padding: 0.2rem 0 1.4rem;
+  scroll-margin-top: 5rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0.45rem;
+    left: calc(-1.5rem - 7px);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--lt-dot);
+    box-shadow: 0 0 0 3px #fff;
+  }
+
+  &.is-paper { --lt-dot: #{$lt-blue}; }
+  &.is-call { --lt-dot: #7b4fa0; }
+  &.is-event { --lt-dot: #{$lt-orange}; }
+  &.is-task { --lt-dot: #0b6e70; }
+  &.is-preprint { --lt-dot: #1baf7a; }
+
+  .lt-meta { margin-bottom: 0.35rem; }
+
+  .lt-topics, .lt-chips { margin-top: 0.5rem; }
+}
+
+.lt-news-item-title { margin: 0; font-size: 1.1rem; line-height: 1.35; color: $lt-navy; }
+
+// Venue under a news title, on the News page and the homepage: a publication venue or the `venue` of a news item.
+.lt-news-venue { display: block; margin: 0.2rem 0 0; font-size: 0.88rem; font-style: italic; line-height: 1.4; color: $lt-muted; }
+
+.lt-news-item-text { margin: 0.35rem 0 0; font-size: 0.95rem; line-height: 1.55; color: $lt-ink; }
+
+.dark {
+  .lt-pill-task { background: rgba(#4fb3b5, 0.16); color: #7fd3d4; }
+  .lt-pill-preprint { background: rgba(#199e70, 0.18); color: #6fd8ad; }
+  .lt-pill-news { background: rgba($lt-dark-muted, 0.16); color: #dbe7f3; }
+  .lt-news-years a, .lt-news-year-title { color: $lt-dark-muted; }
+  .lt-news-years a:hover { color: $lt-sky; }
+  .lt-news-year, .lt-news-line { border-color: $lt-dark-border; }
+  .lt-news-item { --lt-dot: #{$lt-dark-muted}; }
+  .lt-news-item::before { box-shadow: 0 0 0 3px $lt-dark-card; }
+  .lt-news-item.is-paper { --lt-dot: #{$lt-sky}; }
+  .lt-news-item.is-call { --lt-dot: #b98ad8; }
+  .lt-news-item.is-task { --lt-dot: #4fb3b5; }
+  .lt-news-item.is-preprint { --lt-dot: #199e70; }
+  .lt-news-item-title { color: #f1f5fa; }
+  .lt-news-venue { color: $lt-dark-muted; }
+  .lt-news-item-text { color: #c9d6e3; }
+}
+
 // Tools page (layouts/tools/list.html): one research-style band per tool, with a single schema in place of the mosaic.
 .lt-tool-figure {
   @media (max-width: 767.98px) { order: 1; }

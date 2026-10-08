@@ -1,6 +1,6 @@
 {{/* Profile page of a person in content/authors: a header band with the photo, name, lab role, affiliation, "Works */}}
 {{/* on" topics (lt/person-topics.html), social links, and the biography from the page body; then the person's */}}
-{{/* news, events, and theses, newest first; then their publications with filters (lt/pub-browser.html). An author */}}
+{{/* news and theses, newest first; then their publications with filters (lt/pub-browser.html). An author */}}
 {{/* without a profile folder gets the name and the lists only. */}}
 {{- define "main" -}}
 {{ $pubs := (where .Pages "Section" "publication").ByDate.Reverse }}
@@ -24,16 +24,17 @@
   {{ with $other }}
   <div class="lt-band">
     <section class="lt-pubs-section" aria-labelledby="activity-title">
-      <h2 class="lt-paths-title" id="activity-title">News, events, and theses</h2>
+      <h2 class="lt-paths-title" id="activity-title">News and theses</h2>
       <ul class="lt-activity">
         {{ range . }}
         {{/* Theses show their list category, other sections their own name. */}}
-        {{ $kind := index (dict "events" "Event" "news" "News") .Section | default (.Section | humanize) }}
+        {{ $kind := .Section | humanize }}
         {{ range .Params.categories }}{{ if ne . "Highlight" }}{{ $kind = . }}{{ end }}{{ end }}
         <li>
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006" }}</time>
           <span class="lt-kind lt-kind-{{ $kind | urlize }}">{{ $kind }}</span>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{/* News items have no page: their link opens the item on the News page. */}}
+          <a href="{{ if eq .Section "news" }}{{ printf "/news/#news-%s" (.File.ContentBaseName | urlize) | relURL }}{{ else }}{{ .RelPermalink }}{{ end }}">{{ .Title }}</a>
         </li>
         {{ end }}
       </ul>

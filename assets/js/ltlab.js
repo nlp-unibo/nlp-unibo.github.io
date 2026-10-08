@@ -170,12 +170,22 @@
     }));
   });
 
+  // Back to top: a fixed button hidden while the element its `data-lt-to-top` selector names is in sight, such as the
+  // filters at the top of the News page. Without the script or IntersectionObserver the button is always shown.
+  document.querySelectorAll("[data-lt-to-top]").forEach((button) => {
+    const anchor = document.querySelector(button.dataset.ltToTop);
+    if (!anchor || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(([entry]) => {
+      button.classList.toggle("is-hidden", entry.isIntersecting || entry.boundingClientRect.top > 0);
+    }).observe(anchor);
+  });
+
   // Filters: the filter groups and the optional search box of one scope (`data-lt-filter-scope`, or the parent of the
   // group) combine. A group compares its pressed value with each item's `data-lt-tag`, or with the data attribute that
   // `data-lt-filter-key` names, which may hold several space-separated values; the search matches the item's text.
-  // A year with no item left hides its heading, and `data-lt-count` reports how many items are shown. A button whose
-  // label ends with a count, such as "Speech (6)", counts the items it would show under the other filters and the
-  // search, and disappears when it would show none, unless it is pressed.
+  // A year with no item left hides its heading and its jump link, and `data-lt-count` reports how many items are shown.
+  // A button whose label ends with a count, such as "Speech (6)", counts the items it would show under the other
+  // filters and the search, and disappears when it would show none, unless it is pressed.
   new Set([...document.querySelectorAll("[data-lt-filter-group]")].map((group) => group.closest("[data-lt-filter-scope]") || group.parentElement)).forEach((scope) => {
     const groups = [...scope.querySelectorAll("[data-lt-filter-group]")];
     const search = scope.querySelector("[data-lt-search]");
@@ -201,7 +211,8 @@
         label.textContent = `${button.dataset.ltLabel} (${n})`;
         button.hidden = n === 0 && button.getAttribute("aria-pressed") !== "true";
       });
-      scope.querySelectorAll(".lt-work-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+      scope.querySelectorAll(".lt-work-year, .lt-news-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+      scope.querySelectorAll(".lt-news-years a").forEach((link) => { link.hidden = document.querySelector(link.hash).hidden; });
       if (count) {
         const shown = items.filter((item) => !item.hidden).length;
         count.textContent = shown ? `${shown} of ${items.length} shown` : "Nothing matches. Try another topic or search.";

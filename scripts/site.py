@@ -41,7 +41,6 @@ BUILD = ROOT / ".build"
 GO_VERSION = "1.27.1"
 CONTENT_TYPES = {
     "news": ("news", "news"),
-    "event": ("events", "event"),
     "person": ("authors", "person"),
     "national-project": ("projects", "project-national"),
     "international-project": ("projects", "project-international"),
@@ -59,7 +58,6 @@ CONTENT_TYPES = {
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "user_groups"),
     "news": ("title", "date", "summary"),
-    "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
     "tools": ("title", "date", "summary", "external_link", "topics"),

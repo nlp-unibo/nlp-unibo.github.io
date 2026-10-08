@@ -1,12 +1,13 @@
 {{/* Links from a page body, for card previews. Returns a slice of dicts with name, url, and a Font Awesome icon class. */}}
-{{/* Relative links resolve against the page, so attachments such as program.pdf keep working from the homepage. */}}
+{{/* Relative links to attachments such as program.pdf resolve to the published resource, which exists even when the */}}
+{{/* page itself is not rendered, as for news items; other relative links resolve against the page. */}}
 {{- $links := slice -}}
 {{- $seen := slice -}}
 {{- range findRESubmatch `<a href="([^"]+)"[^>]*>(.*?)</a>` .Content -}}
   {{- $url := index . 1 | htmlUnescape -}}
   {{- $name := index . 2 | plainify | htmlUnescape -}}
   {{- if not (or (hasPrefix $url "http") (hasPrefix $url "/") (hasPrefix $url "mailto:") (hasPrefix $url "#")) -}}
-    {{- $url = path.Join $.RelPermalink $url -}}
+    {{- with $.Resources.Get $url }}{{ $url = .RelPermalink }}{{ else }}{{ $url = path.Join $.RelPermalink $url }}{{ end -}}
   {{- end -}}
   {{- if and $name (not (hasPrefix $url "#")) (not (in $seen $url)) -}}
     {{- $icon := "fas fa-link" -}}
