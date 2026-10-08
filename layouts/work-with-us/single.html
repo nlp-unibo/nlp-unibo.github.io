@@ -1,38 +1,32 @@
-{{/* Work with us page: the title and `intro`, then one tab per `path` under "What are you looking for?". A path opens a card */}}
-{{/* with who can apply, what it is, the steps, and an email form, and opens the sections it lists in `show` below it. */}}
-{{/* assets/js/ltlab.js starts with no path open (or the one in the URL hash), fills the email from the form, and filters */}}
-{{/* the sections; without JavaScript every card and section is visible, and each card offers a plain email link. */}}
+{{/* Work with us page: the title (for screen readers only), then one card per `path` under "What are you looking for?". A card opens its panel: */}}
+{{/* who can apply and what it is, then the numbered `steps`. A step may hold a section (`show`): the research proposals, */}}
+{{/* the recent projects, or the email form; `inspiration` adds an unnumbered last step with the work done with students. */}}
+{{/* assets/js/ltlab.js starts with no path open (or the one in the URL hash), moves the shared sections into the open */}}
+{{/* path's steps, and fills the email from the form; without JavaScript the path cards are hidden, every panel and */}}
+{{/* the open research proposals are visible, the work done with students stays collapsed, and each form step offers */}}
+{{/* a plain email link. */}}
 {{- define "main" -}}
 {{ $page := . }}
 {{ $proposals := slice }}{{ with site.GetPage "/proposals" }}{{ range .Sections }}{{ $topic := .Title }}{{ range .RegularPages }}{{ $proposals = $proposals | append (dict "page" . "topic" $topic) }}{{ end }}{{ end }}{{ end }}
 <article class="lt-proj lt-work">
   <div class="lt-band">
-    <header class="lt-proj-header">
-      <h1 class="lt-proj-title">{{ .Title }}</h1>
-      {{ with .Params.intro }}<div class="lt-proj-tagline">{{ . | markdownify }}</div>{{ end }}
-    </header>
-  </div>
-
-  <div class="lt-band">
     <section class="lt-arg-views lt-paths" data-lt-empty aria-label="Ways to work with us">
-      <div class="lt-arg-tabgroups" role="tablist" aria-label="What are you looking for?">
-        <div class="lt-arg-tabgroup" role="presentation">
-          <span class="lt-arg-tabgroup-label" aria-hidden="true">What are you looking for?</span>
-          <div class="lt-arg-tabrow" role="presentation">
-            {{ range .Params.paths }}
-            <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1"><i class="fas fa-{{ .icon }}" aria-hidden="true"></i> {{ .label }}</button>
-            {{ end }}
-          </div>
-        </div>
+      <h1 class="sr-only">{{ .Title }}</h1>
+      <h2 class="lt-paths-title" id="paths-label">What are you looking for?</h2>
+      <div class="lt-path-picker" role="tablist" aria-labelledby="paths-label">
+        {{ range .Params.paths }}
+        <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1">
+          <i class="fas fa-{{ .icon }}" aria-hidden="true"></i>
+          <span class="lt-path-pick-label">{{ .label }}</span>
+          <span class="lt-path-pick-text">{{ .summary }}</span>
+        </button>
+        {{ end }}
       </div>
 
       {{ range .Params.paths }}
       {{ $path := . }}
-      {{/* Recipients: the path's `contacts`, or the page's, looked up in content/authors. */}}
-      {{ $people := slice }}
-      {{ range $path.contacts | default $page.Params.contacts }}
-        {{ $key := . }}{{ with site.GetPage (printf "/authors/%s" $key) }}{{ $author := . }}{{ with $author.Params.email }}{{ $people = $people | append (dict "name" $author.Title "email" .) }}{{ else }}{{ errorf "author %q has no email" $key }}{{ end }}{{ else }}{{ errorf "contact %q is not in content/authors" $key }}{{ end }}
-      {{ end }}
+      {{/* Recipients: the path's `contacts`, or the page's. A chosen proposal replaces them with its own contacts. */}}
+      {{ $people := partial "lt/contacts.html" ($path.contacts | default $page.Params.contacts) }}
       {{ $names := slice }}{{ $emails := slice }}{{ range $people }}{{ $names = $names | append .name }}{{ $emails = $emails | append .email }}{{ end }}
       {{ $greeting := printf "Dear %s," (delimit $names ", " (cond (eq (len $names) 2) " and " ", and ")) }}
       {{/* The plain email: the subject with each {field} written as <Field>, and a body that lists every field to fill. */}}
@@ -40,7 +34,7 @@
       {{ range $path.form.fields }}{{ $subject = replace $subject (printf "{%s}" .key) (printf "<%s>" .label) }}{{ $lines = $lines | append (printf "%s: " .label) }}{{ end }}
       {{ $body := printf "%s\n\n%s\n\nBest regards,\n" $greeting (delimit $lines "\n") }}
       {{ $mailto := printf "mailto:%s?subject=%s&body=%s" (delimit $emails ",") (replace (urlquery $subject) "+" "%20") (replace (urlquery $body) "+" "%20") }}
-      <div class="lt-path" role="tabpanel" id="{{ .key }}" aria-labelledby="{{ .key }}-tab" tabindex="0" data-lt-show="{{ delimit (.show | default slice) " " }}">
+      <div class="lt-path" role="tabpanel" id="{{ .key }}" aria-labelledby="{{ .key }}-tab" tabindex="0">
         <div class="lt-path-card">
           <div class="lt-path-logo" aria-hidden="true"><i class="fas fa-{{ .icon }}"></i></div>
           <div class="lt-path-info">
@@ -48,65 +42,97 @@
             <dl class="lt-path-facts">
               <dt>Who can apply</dt><dd>{{ .who | markdownify }}</dd>
               <dt>What it is</dt><dd>{{ .what | markdownify }}</dd>
-              <dt>How it works</dt><dd><ol>{{ range .steps }}<li>{{ . | markdownify }}</li>{{ end }}</ol>{{ with .note }}<p>{{ . | markdownify }}</p>{{ end }}</dd>
             </dl>
-            {{ if in .show "projects" }}
-            <p class="lt-path-label">Recent projects</p>
+          </div>
+        </div>
+        <ol class="lt-steps">
+          {{ range .steps }}
+          <li class="lt-step{{ if eq .show "contact" }} is-contact{{ end }}"{{ if eq .show "contact" }} id="{{ $path.key }}-contact"{{ end }}>
+            <h3 class="lt-step-title">{{ .title }}</h3>
+            <p class="lt-step-text">{{ .text | markdownify }}</p>
+            {{ if eq .show "contact" }}
+            <div class="lt-path-contact">
+              <p class="lt-mail-to"><span>To</span> <output class="lt-mail-names">{{ delimit $names ", " }}</output></p>
+              <form class="lt-mail-form" hidden data-lt-to="{{ delimit $emails "," }}" data-lt-names="{{ delimit $names "|" }}" data-lt-subject="{{ $path.form.subject }}">
+                <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
+                <label>Your name<input name="name" type="text" required autocomplete="name"></label>
+                {{ range $path.form.fields }}
+                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
+                  {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
+                  {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
+                    <option value="">Choose…</option>
+                    {{- if eq .options "proposals" }}{{ range $proposals }}<option>{{ .page.Title }}</option>{{ end }}<option>Another topic</option>
+                    {{- else }}{{ range .options }}<option>{{ . }}</option>{{ end }}{{ end }}
+                  </select>
+                  {{- else }}<input name="{{ .key }}" type="text" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>{{ end }}
+                </label>
+                {{ end }}
+                <button type="submit" class="lt-btn lt-btn-primary">Write the email <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
+              </form>
+              <a class="lt-mail-direct" href="{{ $mailto | safeURL }}" data-lt-template="{{ delimit $lines "\n" }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
+            </div>
+            {{ else if eq .show "projects" }}
             <ul class="lt-path-projects">
               {{ range first 3 (where site.RegularPages "Section" "projects").ByDate.Reverse }}
               <li><a href="{{ .Params.external_link }}" target="_blank" rel="noopener"><b>{{ replaceRE `^.*\(([^()]+)\)\s*$` "$1" .Title }}</b> <span>{{ .Title }}</span></a></li>
               {{ end }}
             </ul>
+            {{ else if .show }}
+            <div data-lt-slot="{{ .show }}" data-lt-open></div>
             {{ end }}
-          </div>
-          <div class="lt-path-contact">
-            <p class="lt-path-label">Contact us</p>
-            <p class="lt-mail-to"><span>To</span> {{ delimit $names ", " }}</p>
-            <form class="lt-mail-form" hidden data-lt-to="{{ delimit $emails "," }}" data-lt-subject="{{ $path.form.subject }}" data-lt-greeting="{{ $greeting }}">
-              <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
-              <label>Your name<input name="name" type="text" required autocomplete="name"></label>
-              {{ range $path.form.fields }}
-              <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
-                {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
-                {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
-                  <option value="">Choose…</option>
-                  {{- if eq .options "proposals" }}{{ range $proposals }}<option>{{ .page.Title }}</option>{{ end }}<option>Another topic</option>
-                  {{- else }}{{ range .options }}<option>{{ . }}</option>{{ end }}{{ end }}
-                </select>
-                {{- else }}<input name="{{ .key }}" type="text" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}>{{ end }}
-              </label>
-              {{ end }}
-              <button type="submit" class="lt-btn lt-btn-primary">Write the email <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
-              <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
-            </form>
-            <a class="lt-mail-direct" href="{{ $mailto | safeURL }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
-          </div>
-        </div>
+          </li>
+          {{ end }}
+          {{ with .inspiration }}
+          <li class="lt-step is-extra">
+            <h3 class="lt-step-title">For inspiration</h3>
+            <div data-lt-slot="{{ . }}"></div>
+          </li>
+          {{ end }}
+        </ol>
       </div>
       {{ end }}
     </section>
   </div>
 
+  {{/* Research proposals: compact cards with a topic filter. Opening a card hides the others and shows its panel beside */}}
+  {{/* it (the research-area pattern, `data-lt-fields`): the brief, the contacts, the tags, "Choose this proposal", which */}}
+  {{/* fills the open path's proposal field and sends the email to the proposal's contacts, and the proposal page. */}}
   {{ with $proposals }}
   <div class="lt-band" data-lt-section="proposals">
-    <details class="lt-expand" id="proposals">
+    <details class="lt-expand" id="proposals" open>
       <summary><span class="lt-expand-title">Research proposals</span> <span class="lt-expand-count">{{ len . }} proposals</span></summary>
-      <div class="lt-filter" role="group" aria-label="Show proposals by topic" data-lt-filter-group>
-        <button type="button" aria-pressed="true" data-lt-filter="">All</button>
-        {{ range (site.GetPage "/proposals").Sections }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .Title }}">{{ .Title }}</button>{{ end }}
-      </div>
-      <div class="lt-proposals">
-        {{ range . }}
-        <article class="lt-card lt-proposal" data-lt-tag="{{ urlize .topic }}">
-          <div class="lt-card-body">
-            <div class="lt-meta"><span class="lt-pill">{{ .topic }}</span></div>
-            <h3 class="lt-card-title">{{ .page.Title }}</h3>
-            {{ with .page.Params.summary }}<p class="lt-card-text">{{ . }}</p>{{ end }}
-            <details class="lt-proposal-more"><summary>Description and supervisors</summary>{{ .page.Content }}</details>
-            <button type="button" class="lt-chip lt-proposal-pick" data-lt-proposal="{{ .page.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
+      <div class="lt-proposal-browser" data-lt-fields>
+        <div class="lt-filter" role="group" aria-label="Show proposals by topic" data-lt-filter-group>
+          <button type="button" aria-pressed="true" data-lt-filter="">All</button>
+          {{ range (site.GetPage "/proposals").Sections }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .Title }}">{{ .Title }}</button>{{ end }}
+        </div>
+        <div class="lt-fields-grid lt-proposals">
+          {{ range . }}
+          {{ $p := .page }}{{ $id := printf "proposal-%s" (path.Base $p.File.Dir | urlize) }}{{ $id = printf "%s-%s" $id (urlize .topic) }}
+          {{ $contacts := partial "lt/contacts.html" $p.Params.contacts }}
+          {{ $cnames := slice }}{{ $cemails := slice }}{{ range $contacts }}{{ $cnames = $cnames | append .name }}{{ $cemails = $cemails | append .email }}{{ end }}
+          <div class="lt-field-cell lt-proposal" data-lt-tag="{{ urlize .topic }}" data-lt-proposal-title="{{ $p.Title }}" data-lt-proposal-to="{{ delimit $cemails "," }}" data-lt-proposal-names="{{ delimit $cnames "|" }}">
+            <button type="button" class="lt-field" id="{{ $id }}" aria-expanded="false" aria-controls="{{ $id }}-panel">
+              <span class="lt-pill">{{ .topic }}</span>
+              <span class="lt-field-title">{{ $p.Title }}</span>
+              <span class="lt-field-question">{{ $p.Params.summary }}</span>
+              <span class="lt-proposal-more">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+            </button>
+            <div class="lt-field-panel" id="{{ $id }}-panel" role="region" aria-labelledby="{{ $id }}">
+              <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All proposals</button>
+              <p>{{ $p.Params.brief | markdownify }}</p>
+              <p class="lt-path-label">Contacts</p>
+              {{ partial "lt/people-row.html" $contacts }}
+              {{ with $p.Params.tags }}<ul class="lt-tags">{{ range first 3 . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+              <div class="lt-proposal-actions">
+                <button type="button" class="lt-btn lt-btn-primary lt-proposal-pick" data-lt-proposal="{{ $p.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
+                {{ if $p.Content }}<a class="lt-proposal-page" href="{{ $p.RelPermalink }}">Full proposal <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{{ end }}
+              </div>
+            </div>
           </div>
-        </article>
-        {{ end }}
+          {{ end }}
+        </div>
       </div>
     </details>
   </div>

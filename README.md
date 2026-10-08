@@ -217,63 +217,16 @@ The site rebuilds every day at 04:00 UTC, so the item appears on the morning of 
 
 1. Create `content/events/<slug>/index.md`, for example `content/events/2026clef/index.md`.
    Copy an existing event, or run `uv run python scripts/site.py new event 2026clef`.
-2. Set `title`, `date`, `summary`, and `tags`.
-3. Describe the event in the body, and link its website and any PDF placed in the same folder.
-
-### Add or update a team member
-
-Each member has a folder in `content/authors/` named after the full name in lowercase with hyphens, for example `content/authors/maria-rossi/`.
-The folder contains `_index.md`, with an underscore, and a photo named `avatar.jpg` or `avatar.png`.
-
-1. Copy the folder of an existing member, or run `uv run python scripts/site.py new person maria-rossi`.
-2. Set `title` to the full name exactly as it appears in publications, for example `Maria Rossi`.
-   The folder name must match it: validation rejects `maria-rossi` for a profile titled `Mario Rossi`.
-3. Set `first_name`, `last_name`, `bio`, `interests`, `email`, and the `social` links.
-   Leave out `role`, which only the head and the deputy of the lab set.
-   For a member with a University of Bologna page, add a first social link with `icon: unibo` and `icon_pack: custom`, which shows the university seal.
-   For a personal website, use `icon: globe` and `icon_pack: fas`.
-4. Set `user_groups` to one of `Members`, `Associate Fellows`, or `Former Members`, with this exact spelling.
-   The group selects the section of the People page.
-   Set `weight` to order the people within a group, where lower values appear first.
-5. Keep `highlight_name: true`, which shows the member in bold in author lists.
-6. Replace the default `avatar.png` with a square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
-   Delete the default file when the photo is a JPEG, because the page shows only one avatar.
-
-When a member leaves the lab, set their `user_groups` to `Former Members`.
-Former members may omit `email`.
-Without a photo, keep the default person avatar from `archetypes/person/avatar.png`.
-Validation requires exactly one of the three groups.
-Keep the folder, because their publications still link to it.
-
-### Add a thesis
-
-1. Create `content/theses/<year><name>/index.md`, for example `content/theses/2026mariarossi/index.md`.
-   Copy an existing thesis, or run `uv run python scripts/site.py new masters-thesis 2026mariarossi`.
-   Use `bachelors-thesis` for a bachelor's thesis.
-2. Set `title`, `authors` with the student's name, and `date` as the graduation date.
-3. Keep `categories` as `Master thesis` or `Bachelor thesis`.
-   It sets the tag of the thesis under "Work done with students" on the Work with us page.
-4. Set `url_pdf` to the thesis record, for example its AMS Laurea page, when it exists.
-
-### Add a research proposal
-
-Research proposals are grouped by topic under `content/proposals/`.
-Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
-The Work with us page lists every proposal automatically, with a filter by topic, and offers its title in the master thesis form.
-
-```text
-content/proposals/legal/
-├── _index.md          the topic: title, summary, description
-├── am/index.md        one proposal
-└── unfairclauses/index.md
-```
-
-1. Copy an existing proposal folder inside the right topic, for example `content/proposals/legal/am/`, and give it a new name.
-2. Set `title`, `date`, `summary`, and `tags`.
-   Validation requires `title`, `date`, and `summary`.
+2. Set `title`, `date`, `summary`, `brief`, `contacts`, and `tags`.
+   The `summary` is one sentence for the card, and the `brief` is two to four sentences for the opened card.
+   Each contact is a folder name in `content/authors/`, or, for a person outside the lab, a `name` and an `email`, for example `{name: Maria Rossi, email: maria.rossi@example.org}`.
+   Use plain words for `tags`, such as `large language models`, not abbreviations.
+   Validation requires `title`, `date`, `summary`, `brief`, and `contacts`.
    A topic `_index.md` needs `title` and `summary`.
-3. Write the body with a **Description**, a **Contact** line, and optional **References**.
-   Write each contact as an email link, for example `[Maria Rossi](mailto:maria.rossi@unibo.it)`.
+3. Optionally, write the body: the proposal page, in the style of a publication page.
+   Use `##` sections such as `Context`, `Objective`, `Directions`, and `References`; each section appears in the page menu.
+   Set `math: true` when the body uses LaTeX.
+   Without a body, the proposal page shows the `brief`, and the Work with us page shows no **Full proposal** link.
 
 To add a new topic, create a folder such as `content/proposals/new-topic/` with an `_index.md`.
 Copy the `_index.md` of an existing topic and replace its title, summary, and description.
@@ -295,12 +248,16 @@ Projects have no page of their own, so the file needs no body text.
 
 ### Edit the Work with us page
 
-`content/work-with-us/index.md` holds the page as data: an `intro`, the `contacts` who receive every message, and one entry in `paths` per tab under "What are you looking for?".
+`content/work-with-us/index.md` holds the page as data: the `contacts` who receive every message, and one entry in `paths` per card under "What are you looking for?".
 Contacts are folder names in `content/authors/`, whose `email` field is used; a path may set its own `contacts`.
-Each path has a `key` (its anchor, such as `/work-with-us/#thesis`), a tab `label`, an `icon`, a `title`, and Markdown `who`, `what`, `steps`, and an optional `note`.
-Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill; `show` lists the sections the path opens below its card: `proposals`, `student-work`, or `projects`.
+Each path has a `key` (its anchor, such as `/work-with-us/#thesis`), a card `label` and `summary` of at most two sentences, an `icon`, a `title`, and Markdown `who` and `what`.
+Its `steps` appear as a numbered list after the path card.
+Each step has a `title`, Markdown `text`, and an optional `show`, which places a section in the step: `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), or `contact` (the email form).
+`inspiration: student-work` adds a last, unnumbered step with the work done with students.
+Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill.
+A field with `options: proposals` lists the research proposals in a select, or, as a text field, receives the title chosen with **Choose this proposal**.
 The form opens the visitor's email app with recipients, subject, and body filled in; nothing passes through the site.
-Without JavaScript every path is visible, and each offers a plain email link with the same subject and an empty template.
+Without JavaScript the path cards are hidden, every path and the research proposals are visible, the work done with students stays collapsed, and each path offers a plain email link with the same subject and an empty template.
 
 ### Add a research area
 
@@ -510,8 +467,9 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/_shortcodes/` | Components for publication pages, such as `svg`, `stages`, and `pipeline` |
 | `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero, research map, news, and preprints |
-| `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, and publication cards |
+| `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, publication cards, and contact people (`contacts.html`, `people-row.html`) |
 | `layouts/publication/single.html` | Publication page in the style of a research project page |
+| `layouts/proposals/single.html` | Research proposal page in the style of a publication page |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar logo and the favicon generated from it |
 | `layouts/authors/list.html` | Theme profile page plus a kind badge on each Latest entry |
 | `layouts/_partials/views/card.html` | Theme card view plus topic tags |

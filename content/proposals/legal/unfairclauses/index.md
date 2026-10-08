@@ -1,18 +1,27 @@
 ---
-title: Transformers and LLMs for the detection and classification of unfair clauses
+title: Transformers and LLMs for the Detection and Classification of Unfair Clauses
 date: 2026-03-02
-
-tags: ["legal", "transformers", "LLMs", "unfair clauses"]
-
-summary: "Apply LLMs for the automatic detection of unfair clauses in Terms of Services and Privacy Policies documents."
-
+summary: Detect and classify unfair clauses in Terms of Service and Privacy Policies.
+brief: For several years, the lab has developed tools that detect unfair clauses in English Terms of Service and Privacy Policies, in the CLAUDETTE and PRIMA projects. This proposal applies new methods, currently large language models, and is open to alternative techniques.
+contacts:
+- andrea-galassi
+- marco-lippi
+tags:
+- legal analytics
+- unfair clauses
+- transformers
+- large language models
 aliases:
-  - /proposals_legal/unfairclauses/
+- /proposals_legal/unfairclauses/
 ---
 
-**Description:**  
-For several years, we have been working on tools for the automatic detection of unfair clauses in Terms of Services and Privacy Policies documents in the English language (see CLAUDETTE and PRIMA [Projects page](/projects)).
-We have already conducted several studies on this topic, and we are interested in applying new effective methods and techniques. 
-Right now, we are focused on LLMs, but we are also interested in alternative techniques.
+## Context
 
-**Contact:** [Andrea Galassi](mailto:a.galassi@unibo.it), [Marco Lippi](mailto:marco.lippi@unifi.it)
+For several years, the lab has worked on tools for the automatic detection of unfair clauses in Terms of Service and Privacy Policies written in English.
+This work belongs to the CLAUDETTE and PRIMA projects, listed on the [Projects](/projects/) page.
+The lab has already conducted several studies on this topic.
+
+## Objective
+
+Apply new effective methods and techniques to the detection and classification of unfair clauses.
+The current focus is on large language models (LLMs), and alternative techniques are also of interest.

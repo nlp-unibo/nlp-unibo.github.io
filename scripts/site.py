@@ -64,7 +64,7 @@ REQUIRED_FIELDS = {
     "tools": ("title", "date", "summary", "external_link", "topics"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
-    "proposals": ("title", "date", "summary"),
+    "proposals": ("title", "date", "summary", "brief", "contacts"),
 }
 # Proposals nest one folder per topic, whose _index.md needs these fields, around the proposal bundles.
 TOPIC_FIELDS = ("title", "summary")

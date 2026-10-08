@@ -1,0 +1,12 @@
+{{/* A row of people from lt/contacts.html: avatar or initials, then the name, linked to the profile page or, for a */}}
+{{/* person outside the lab, to their email. */}}
+<ul class="lt-people">
+  {{ range . }}
+  <li>
+    <a href="{{ with .url }}{{ . }}{{ else }}mailto:{{ .email }}{{ end }}">
+      {{ with .avatar }}<img src="{{ . }}" width="40" height="40" alt="" loading="lazy">{{ else }}<span class="lt-people-initials" aria-hidden="true">{{ .initials }}</span>{{ end }}
+      <span>{{ .name }}</span>
+    </a>
+  </li>
+  {{ end }}
+</ul>

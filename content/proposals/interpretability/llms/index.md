@@ -1,22 +1,30 @@
 ---
 title: Rationalization via LLMs
 date: 2026-03-02
-
-tags: ["interpretability", "LLMs", "prompting", "selective rationalization"]
-
-summary: "Evaluate LLM capabilities in performing selective rationalization via prompting"
-
+summary: Evaluate whether large language models can perform selective rationalization through prompting.
+brief: Selective rationalization explains a prediction with highlights of the input text. This proposal evaluates how well large language models perform it through prompting, compared with traditional Select-then-Predict Pipeline models.
+contacts:
+- federico-ruggeri
+tags:
+- interpretability
+- selective rationalization
+- large language models
+- prompting
 aliases:
-  - /proposals_interpretability/llms/
+- /proposals_interpretability/llms/
 ---
 
-**Description:**\
-LLMs are ubiquitous in NLP. Our aim is to evaluate LLM capabilities in performing selective rationalization via prompting. 
-How do they compare w.r.t. traditional SPP models?
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+Selective rationalization is the process of learning by providing highlights as explanations. Highlights, called rationales, are a subset of the input text meant to be interpretable by a user and to describe faithfully the inference process of a classification model.
+A popular architecture for selective rationalization is the Select-then-Predict Pipeline (SPP): a generator selects the rationale, and a predictor classifies it.
 
-**References:**
+## Objective
+
+Large language models (LLMs) are ubiquitous in NLP.
+The aim is to evaluate their capabilities in performing selective rationalization via prompting, and to compare them with traditional SPP models.
+
+## References
 
 **Towards Faithful Explanations: Boosting Rationalization with Shortcuts Discovery**\
 Linan Yue, Qi Liu, Yichao Du, Li Wang, Weibo Gao, Yanqing An.\

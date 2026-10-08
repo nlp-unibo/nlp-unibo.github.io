@@ -87,26 +87,59 @@
     select(hashed() || tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || ("ltEmpty" in figure.dataset ? null : tabs[0]));
   });
 
-  // Work with us paths. Picking a path writes its anchor in the URL and shows only the sections below the cards that the
-  // path lists in `data-lt-show`; with no path picked, the sections stay hidden. Filter buttons show the items of one tag.
-  // A path's form becomes an email: its subject fills {field} names from the form, and its body greets the recipients
-  // and lists every filled field. "Choose this proposal" copies a proposal title into the open path's proposal field.
+  // Work with us paths. Picking a path writes its anchor in the URL and moves the shared sections below the paths (each a
+  // band with `data-lt-section`) into the open path's steps (`data-lt-slot`); their bands stay hidden. A slot with
+  // `data-lt-open` opens its section and lets the step title replace the section heading. Filter buttons show the items
+  // of one tag. A path's form becomes an email: its subject fills {field} names from the form, and its body greets the
+  // recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
+  // proposal field. Changing path closes an open proposal and resets every filter to All. A link to `#<path>-contact`,
+  // such as the Apply buttons of a proposal page, opens the path at its email step; `?proposal=<title>` fills the
+  // proposal field.
   document.querySelectorAll(".lt-paths").forEach((paths) => {
     const sections = [...document.querySelectorAll("[data-lt-section]")];
     const picks = [...document.querySelectorAll(".lt-proposal-pick")];
+    sections.forEach((section) => { section.hidden = true; });
+    paths.classList.add("is-enhanced");
     let open = null;
     const show = (tab) => {
       open = tab && document.getElementById(tab.getAttribute("aria-controls"));
-      const wanted = open ? open.dataset.ltShow.split(" ") : [];
-      sections.forEach((section) => { section.hidden = !wanted.includes(section.dataset.ltSection); });
+      document.querySelectorAll("[data-lt-fields]").forEach((fields) => fields.dispatchEvent(new CustomEvent("lt-reset")));
+      document.querySelectorAll('[data-lt-filter=""]').forEach((all) => all.click());
+      if (open) open.querySelectorAll("[data-lt-slot]").forEach((slot) => {
+        const details = document.getElementById(slot.dataset.ltSlot);
+        if (!details) return;
+        details.open = "ltOpen" in slot.dataset;
+        details.classList.toggle("is-step", "ltOpen" in slot.dataset);
+        slot.append(details);
+      });
       const field = open && open.querySelector("[data-lt-proposals]");
       picks.forEach((pick) => { pick.hidden = !field; });
     };
     paths.addEventListener("lt-select", (event) => {
       show(event.detail);
-      if (event.detail) history.replaceState(null, "", `#${open.id}`);
+      // A `#<path>-contact` hash stays, so the theme's own scroll to the hash on load lands on the email step.
+      if (event.detail && location.hash !== `#${open.id}-contact`) history.replaceState(null, "", `#${open.id}`);
     });
     show(paths.querySelector('[role="tab"][aria-selected="true"]'));
+    // A click on a path card scrolls to its panel; arrow keys only move between cards.
+    paths.querySelectorAll('[role="tab"]').forEach((tab) => tab.addEventListener("click", () => {
+      open.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    }));
+    const contact = location.hash.match(/^#(.+)-contact$/);
+    const target = contact && document.getElementById(`${contact[1]}-tab`);
+    if (target) {
+      target.click();
+      const field = open.querySelector("[data-lt-proposals]");
+      const proposal = new URLSearchParams(location.search).get("proposal");
+      if (field && proposal) {
+        field.value = proposal;
+        field.dispatchEvent(new Event("input", { bubbles: true }));
+      }
+      const step = document.getElementById(`${contact[1]}-contact`);
+      step.scrollIntoView({ block: "start" });
+      const empty = [...step.querySelectorAll("input, select, textarea")].find((input) => !input.value);
+      if (empty) addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
+    }
     picks.forEach((pick) => pick.addEventListener("click", () => {
       const field = open && open.querySelector("[data-lt-proposals]");
       if (!field) return;
@@ -130,11 +163,28 @@
     }));
   });
 
+  // Recipients: a proposal named in the form's proposal field replaces the form's own recipients with its contacts.
+  const greet = (names) => `Dear ${names.length > 2 ? `${names.slice(0, -1).join(", ")}, and ${names.at(-1)}` : names.join(" and ")},`;
   document.querySelectorAll(".lt-mail-form").forEach((form) => {
     const value = (key) => (form.elements[key] ? form.elements[key].value.trim() : "");
     const subject = () => form.dataset.ltSubject.replace(/\{(\w+)\}/g, (_, key) => value(key) || `<${form.elements[key] ? form.elements[key].dataset.ltLabel : key}>`);
+    const recipients = () => {
+      const field = form.querySelector("[data-lt-proposals]");
+      const proposal = field && [...document.querySelectorAll("[data-lt-proposal-title]")].find((item) => item.dataset.ltProposalTitle === field.value.trim());
+      const source = proposal ? { to: proposal.dataset.ltProposalTo, names: proposal.dataset.ltProposalNames } : { to: form.dataset.ltTo, names: form.dataset.ltNames };
+      return { to: source.to, names: source.names.split("|") };
+    };
     const output = form.querySelector(".lt-mail-subject");
-    const update = () => { output.textContent = subject(); };
+    const names = form.parentElement.querySelector(".lt-mail-names");
+    const direct = form.parentElement.querySelector(".lt-mail-direct");
+    // The plain email link keeps its subject and template but follows the recipients of the chosen proposal.
+    const update = () => {
+      output.textContent = subject();
+      names.textContent = recipients().names.join(", ");
+      const { to, names: people } = recipients();
+      const body = `${greet(people)}\n\n${direct.dataset.ltTemplate}\n\nBest regards,\n`;
+      direct.href = `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+    };
     form.hidden = false;
     form.addEventListener("input", update);
     form.addEventListener("change", update);
@@ -144,8 +194,9 @@
       const lines = [...form.elements]
         .filter((field) => field.dataset.ltLabel && field.value.trim())
         .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
-      const body = `${form.dataset.ltGreeting}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
-      location.href = `mailto:${form.dataset.ltTo}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+      const { to, names: people } = recipients();
+      const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
+      location.href = `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
     });
   });
 
@@ -842,7 +893,8 @@
     const blocks = [...fields.querySelectorAll(".lt-field")];
     const panel = (block) => document.getElementById(block.getAttribute("aria-controls"));
     let open = null;
-    const show = (block) => {
+    // `quiet` closes without moving focus, for a reset from outside (the Work with us paths).
+    const show = (block, quiet) => {
       const previous = open;
       open = block;
       grid.classList.toggle("has-open", Boolean(block));
@@ -851,8 +903,11 @@
         other.parentElement.classList.toggle("is-open", other === block);
         panel(other).hidden = other !== block;
       });
-      if (!block && previous) previous.focus();
+      if (!block && previous && !quiet) previous.focus();
+      // The grid shrinks to the open block, which may now sit above the window.
+      if (block && block.parentElement.getBoundingClientRect().top < 0) block.parentElement.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
     };
+    fields.addEventListener("lt-reset", () => show(null, true));
     blocks.forEach((block) => block.addEventListener("click", () => show(open === block ? null : block)));
     fields.querySelectorAll(".lt-field-back").forEach((back) => {
       back.hidden = false;

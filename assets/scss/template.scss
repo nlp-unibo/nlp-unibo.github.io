@@ -3906,25 +3906,70 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-research-more i { transition: none; }
 }
 
-// Work with us page (layouts/work-with-us/single.html): path tabs, a path card with its email form, and expandable
-// sections for research proposals and work done with students. Filter buttons take the look of the tabs.
-.lt-paths .lt-arg-tabgroup { flex-direction: column; align-items: flex-start; }
+// Work with us page (layouts/work-with-us/single.html): path cards, a path card with its numbered steps (one of them the
+// email form), and the expandable research proposals and work done with students that the script moves into the steps.
+// Filter buttons take the look of the tabs.
+.lt-paths-title { margin: 0 0 1.2rem; font-size: 1.8rem; font-weight: 700; color: $lt-navy; }
 
-.lt-paths [role="tab"] i { margin-right: 0.3rem; color: $lt-blue; }
+.lt-path-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 200px)"), 1fr));
+  gap: 1rem;
 
-.lt-paths [role="tab"][aria-selected="true"] i { color: inherit; }
+  [role="tab"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 15rem;
+    padding: 1.5rem 1.3rem;
+    border: 1px solid $lt-border;
+    border-radius: 16px;
+    text-align: left;
+    color: $lt-ink;
+    background: #fff;
+
+    @media (max-width: 575.98px) { min-height: 0; padding: 1.2rem; }
+
+    &:hover { border-color: $lt-blue; }
+
+    &[aria-selected="true"] { border-color: $lt-blue; box-shadow: inset 0 0 0 1px $lt-blue; background: rgba($lt-sky, 0.12); }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.2rem;
+      height: 3.2rem;
+      margin-bottom: 0.3rem;
+      border-radius: 12px;
+      font-size: 1.4rem;
+      color: $lt-blue;
+      background: rgba($lt-sky, 0.16);
+    }
+  }
+}
+
+// The path cards only switch panels with the script; without it every panel is shown, so the cards are hidden.
+.lt-paths:not(.is-enhanced) .lt-path-picker { display: none; }
+
+.lt-path-pick-label { font-size: 1.2rem; font-weight: 700; line-height: 1.3; color: $lt-navy; }
+
+.lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; color: $lt-muted; }
+
+// Leaves room for the sticky navigation bar when a click scrolls to the panel.
+.lt-path, .lt-step, .lt-proposals .lt-field-cell { scroll-margin-top: 5.5rem; }
 
 .lt-path-card {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(0, 22rem);
+  grid-template-columns: auto minmax(0, 1fr);
   gap: 1.5rem 2rem;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
   padding: 1.6rem;
   border: 1px solid $lt-border;
   border-radius: 14px;
   background: #fff;
-
-  @media (max-width: 991.98px) { grid-template-columns: auto minmax(0, 1fr); }
 
   @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); padding: 1.2rem; }
 }
@@ -3973,12 +4018,68 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   span { font-size: 0.85rem; color: $lt-muted; }
 }
 
-// The contact column: recipients, the live subject, the fields, and the email link that works without JavaScript.
-.lt-path-contact {
-  padding-left: 2rem;
-  border-left: 3px solid $lt-orange;
+// Steps: numbered circles on one vertical line. The contact step holds the email form in its own box; the extra step,
+// marked with a plus, holds a closed section for inspiration.
+.lt-steps {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: lt-step;
+}
 
-  @media (max-width: 991.98px) { grid-column: 1 / -1; padding: 1.2rem 0 0; border-left: 0; border-top: 3px solid $lt-orange; }
+.lt-step {
+  position: relative;
+  padding: 0 0 2.2rem 3.4rem;
+  counter-increment: lt-step;
+
+  &::before {
+    content: counter(lt-step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    font-weight: 700;
+    color: #fff;
+    background: $lt-blue;
+  }
+
+  &::after { content: ""; position: absolute; top: 2.6rem; bottom: 0.4rem; left: calc(1.1rem - 1px); width: 2px; background: $lt-border; }
+
+  &:last-child { padding-bottom: 0; }
+
+  &:last-child::after { display: none; }
+
+  &.is-extra { counter-increment: none; }
+
+  &.is-extra::before { content: "+"; border: 2px dashed $lt-border; color: $lt-blue; background: transparent; }
+
+  .lt-expand { max-width: none; padding: 0; }
+
+  .lt-expand-title { font-size: 1.15rem; }
+
+  @media (max-width: 575.98px) { padding-left: 2.8rem; }
+}
+
+.lt-step-title { margin: 0.3rem 0 0.4rem; font-size: 1.25rem; color: $lt-navy; }
+
+.lt-step-text { max-width: 48rem; margin: 0 0 1rem; color: $lt-ink; }
+
+// In a numbered step the step title replaces the section heading.
+.lt-expand.is-step > summary { display: none; }
+
+// The contact box: recipients, the live subject, the fields, and the email link that works without JavaScript.
+.lt-path-contact {
+  max-width: 40rem;
+  padding: 1.2rem;
+  border: 1px solid $lt-border;
+  border-top: 3px solid $lt-orange;
+  border-radius: 14px;
+  background: #fff;
 }
 
 .lt-mail-to {
@@ -4082,24 +4183,45 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 // The filter works only with the script, so without it the buttons are not shown.
 .lt-filter:not(.is-enhanced) { display: none; }
 
-.lt-proposals {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
-  gap: 1rem;
+// Research proposals reuse the research-area blocks (`.lt-fields-grid`, `.lt-field`); the filter is hidden while a
+// proposal is open.
+.lt-proposal-browser:has(.has-open) > .lt-filter { display: none; }
+
+.lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; color: $lt-blue; }
+
+.lt-fields-grid.has-open .lt-proposal-more { display: none; }
+
+.lt-proposal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin-top: 1rem;
 }
 
-.lt-proposal .lt-card-text { -webkit-line-clamp: unset; }
+.lt-proposal-page { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; }
 
-.lt-proposal-more {
-  font-size: 0.88rem;
-  color: $lt-ink;
+.lt-field-panel .lt-tags { margin: 0.8rem 0 0; }
 
-  summary { cursor: pointer; font-weight: 600; color: $lt-blue; }
+// People: avatar, or initials for a person outside the lab, then the name.
+.lt-people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 
-  p { margin: 0.5rem 0 0; }
+  a { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; color: $lt-navy; text-decoration: none; }
+
+  a:hover span { text-decoration: underline; }
+
+  img, .lt-people-initials { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; }
+
+  img { object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
 }
-
-.lt-proposal-pick { align-self: flex-start; margin-top: auto; cursor: pointer; }
 
 .lt-work-year {
   h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; color: $lt-muted; }
@@ -4133,15 +4255,31 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 }
 
 .dark {
-  .lt-paths [role="tab"] i { color: $lt-sky; }
-  .lt-paths [role="tab"][aria-selected="true"] i { color: inherit; }
-  .lt-path-card { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-path-picker [role="tab"] { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
+  .lt-path-picker [role="tab"]:hover, .lt-path-picker [role="tab"][aria-selected="true"] { border-color: $lt-sky; }
+  .lt-path-picker [role="tab"][aria-selected="true"] { box-shadow: inset 0 0 0 1px $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-picker i { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-pick-label, .lt-step-title, .lt-paths-title { color: #f1f5fa; }
+  .lt-path-pick-text { color: $lt-dark-muted; }
+  .lt-path-card, .lt-path-contact { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-path-contact { border-top-color: $lt-orange; }
+  .lt-step::before { color: $lt-navy; background: $lt-sky; }
+  .lt-step::after, .lt-step.is-extra::before { border-color: $lt-dark-border; background: $lt-dark-border; }
+  .lt-step.is-extra::before { color: $lt-sky; background: transparent; }
+  .lt-step-text { color: #c9d6e3; }
+  .lt-expand p { border-left: 0; }
+  .lt-proposal-more { color: $lt-sky; }
+  .lt-people a { color: #f1f5fa; }
+  .lt-people .lt-people-initials { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
-  .lt-path-facts dd, .lt-mail-to, .lt-proposal-more { color: #c9d6e3; }
+  .lt-path-facts dd, .lt-mail-to { color: #c9d6e3; }
   .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a { color: #f1f5fa; }
   .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); }
-  .lt-expand > summary::after, .lt-proposal-more summary { color: $lt-sky; }
+  // The native option list draws its own popup: a dark color scheme and an opaque option background keep it readable.
+  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { color-scheme: dark; }
+  .lt-mail-form option { color: #f1f5fa; background: $lt-dark-card; }
+  .lt-expand > summary::after { color: $lt-sky; }
   .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
   .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }
   .lt-filter button[aria-pressed="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
@@ -4336,3 +4474,6 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   border-left-color: var(--lt-role);
   background: transparent;
 }
+
+// Research proposal page (layouts/proposals/single.html): the contacts sit under the summary, centered like the authors.
+.lt-proj-people { display: flex; justify-content: center; margin: 1rem 0 0; }
