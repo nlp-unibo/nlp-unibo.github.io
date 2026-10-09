@@ -60,6 +60,8 @@
     // the panel it hides with an `lt-hide` event, which stops a view still playing.
     // A tablist with `data-lt-empty` starts with no tab selected, so all its panels are hidden until the reader picks one;
     // a URL hash naming a panel selects that panel's tab. Every selection is announced to the tablist with `lt-select`.
+    // In a tablist with `data-lt-morph`, a click animates the change as a view transition (tabs carry their own
+    // `view-transition-name`), then announces `lt-chosen` once the new layout has settled.
     const select = (tab, chosen) => {
       tabs.forEach((other) => {
         const selected = other === tab;
@@ -72,8 +74,13 @@
       if (chosen) document.getElementById(tab.getAttribute("aria-controls")).dispatchEvent(new CustomEvent("lt-show"));
       figure.dispatchEvent(new CustomEvent("lt-select", { detail: tab }));
     };
+    const morph = "ltMorph" in figure.dataset && document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches;
     tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => select(tab, true));
+      tab.addEventListener("click", () => {
+        const chosen = () => figure.dispatchEvent(new CustomEvent("lt-chosen", { detail: tab }));
+        if (!morph) return select(tab, true), chosen();
+        document.startViewTransition(() => select(tab, true)).finished.then(chosen);
+      });
       tab.addEventListener("keydown", (event) => {
         const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
         if (!step) return;
@@ -136,10 +143,13 @@
       if (event.detail && !location.hash.startsWith(`#${open.id}-`)) history.replaceState(null, "", `#${open.id}`);
     });
     show(paths.querySelector('[role="tab"][aria-selected="true"]'));
-    // A click on a path card scrolls to its panel; arrow keys only move between cards.
-    paths.querySelectorAll('[role="tab"]').forEach((tab) => tab.addEventListener("click", () => {
+    // A click on a path card scrolls to its panel once the cards have settled, but only when the panel starts in the
+    // lower part of the window: a panel already in view stays put, so the page does not jump after the animation.
+    // Arrow keys only move between cards.
+    paths.addEventListener("lt-chosen", () => {
+      if (open.getBoundingClientRect().top < innerHeight * 0.6) return;
       open.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
-    }));
+    });
     // A hash naming a place inside a path, such as #thesis-contact or #thesis-step-1, opens that path if needed and
     // scrolls to the place. On page load, `?proposal=<title>` fills the proposal field and the email step is focused.
     const openFromHash = (loaded) => {
@@ -170,13 +180,14 @@
     }));
   });
 
-  // Back to top: a fixed button hidden while the element its `data-lt-to-top` selector names is in sight, such as the
-  // filters at the top of the News page. Without the script or IntersectionObserver the button is always shown.
+  // Back to top: a fixed button shown only once the element its `data-lt-to-top` selector names has scrolled out of
+  // sight above, such as the filters at the top of the News page. The stylesheet hides it from the first paint when
+  // the script runs (`.lt-js`); without the script or IntersectionObserver the button is always shown.
   document.querySelectorAll("[data-lt-to-top]").forEach((button) => {
     const anchor = document.querySelector(button.dataset.ltToTop);
-    if (!anchor || !("IntersectionObserver" in window)) return;
+    if (!anchor || !("IntersectionObserver" in window)) return button.classList.add("is-shown");
     new IntersectionObserver(([entry]) => {
-      button.classList.toggle("is-hidden", entry.isIntersecting || entry.boundingClientRect.top > 0);
+      button.classList.toggle("is-shown", !entry.isIntersecting && entry.boundingClientRect.top <= 0);
     }).observe(anchor);
   });
 
@@ -1011,11 +1022,17 @@
       cards.forEach((card) => card.classList.toggle("is-selected", card.dataset.ltTopic === key));
       if (carousel && carousel.ltHold) carousel.ltHold("topic", Boolean(key));
     };
-    const close = () => {
+    // The open box folds its height and fades out before it is hidden, so the page below never jumps.
+    const close = (then) => {
       const box = boxes.find((other) => other.dataset.ltTopic === open);
-      if (!box || reduce) return show(null);
+      const done = () => { show(null); if (then) then(); };
+      if (!box || reduce || !box.animate) return done();
       box.classList.add("is-leaving");
-      setTimeout(() => { if (box.classList.contains("is-leaving")) show(null); }, 300);
+      const fold = box.animate([
+        { height: `${box.offsetHeight}px`, opacity: 1 },
+        { height: "0px", opacity: 0, paddingTop: "0px", paddingBottom: "0px", marginTop: "0px" },
+      ], { duration: 350, easing: "ease" });
+      fold.onfinish = () => { if (box.classList.contains("is-leaving")) done(); };
     };
     focus.querySelectorAll("a[data-lt-topic]").forEach((link) => {
       link.addEventListener("click", (event) => {
@@ -1034,17 +1051,26 @@
     });
     focus.querySelectorAll(".lt-topic-close").forEach((button) => {
       button.hidden = false;
-      // The page scrolls back first and the box closes once the scroll ends, so that the shorter page
+      // The page scrolls back first and the box folds once the scroll ends, so that the shorter page
       // cannot cut the scroll short.
       button.addEventListener("click", () => {
         const card = cards.find((other) => other.dataset.ltTopic === open);
         history.replaceState(null, "", location.pathname);
+        // The sections follow the scroll as usual, then keep their focus values from the moment the box folds
+        // until the reader scrolls again, so no section resizes because the page got shorter.
         let done = false;
         const end = () => {
           if (done) return;
           done = true;
-          show(null);
-          if (card) card.querySelector("a[data-lt-topic]").focus({ preventScroll: true });
+          document.body.setAttribute("data-lt-focus-hold", "");
+          close(() => {
+            if (card) card.querySelector("a[data-lt-topic]").focus({ preventScroll: true });
+            const release = () => {
+              ["wheel", "touchstart", "keydown", "pointerdown"].forEach((type) => removeEventListener(type, release));
+              document.body.removeAttribute("data-lt-focus-hold");
+            };
+            ["wheel", "touchstart", "keydown", "pointerdown"].forEach((type) => addEventListener(type, release, { passive: true }));
+          });
         };
         addEventListener("scrollend", end, { once: true });
         setTimeout(end, reduce ? 0 : 1000);
@@ -1086,7 +1112,7 @@
     });
   }
 
-  // Carousels (homepage preprints, research focus topics): dots and arrows scroll the track to a slide;
+  // Carousels (homepage papers, research focus topics): dots and arrows scroll the track to a slide;
   // the track scrolls by itself without the script. `is-centered` centers the active slide, `data-lt-loop`
   // wraps from the last slide to the first, and `data-lt-autoplay` advances every N milliseconds.
   // There is no autoplay under reduced motion.
@@ -1250,8 +1276,11 @@
   if (sections.length > 1) {
     document.body.classList.add("lt-section-focus");
     let queued = false;
+    // While the body has `data-lt-focus-hold`, every section keeps its focus value: a topic box that folds away
+    // shortens the page, which would move the focus line and resize sections the reader did not scroll.
     const refocus = () => {
       queued = false;
+      if (document.body.hasAttribute("data-lt-focus-hold")) return;
       const h = innerHeight;
       const left = document.documentElement.scrollHeight - h - scrollY;
       // The line never sits above the first section, which may start below the navigation bar.

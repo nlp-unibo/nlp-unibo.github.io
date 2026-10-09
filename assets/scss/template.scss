@@ -647,7 +647,8 @@ $lt-dark-card: #112236;
   background: rgba(255, 255, 255, 0.04);
 }
 
-// A clickable card is a raised white surface, so it reads as a link before any hover.
+// A clickable card is a raised white surface, so it reads as a link before any hover. It lifts on hover and on
+// keyboard focus only, so a focus that a script returns after a click does not move it.
 .lt-link-card {
   border: 1px solid $lt-border;
   background: #fff;
@@ -657,7 +658,7 @@ $lt-dark-card: #112236;
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover,
-  &:focus-within {
+  &:has(:focus-visible) {
     border-color: rgba($lt-blue, 0.45);
     transform: translateY(-3px);
     box-shadow: 0 18px 36px -24px rgba($lt-navy, 0.5);
@@ -674,7 +675,7 @@ $lt-dark-card: #112236;
   box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.8);
 
   &:hover,
-  &:focus-within {
+  &:has(:focus-visible) {
     border-color: rgba($lt-sky, 0.5);
   }
 }
@@ -892,7 +893,7 @@ img.lt-cover {
   .lt-area-topics li { color: $lt-sky; background: rgba($lt-sky, 0.12); }
 }
 
-// Preprint carousel (layouts/_partials/blocks/lt-preprints.html)
+// Paper carousel (layouts/_partials/blocks/lt-papers.html)
 // The track is a scroll-snap row, so it works without JavaScript; the script adds `is-enhanced` and shows the controls.
 .lt-carousel-track {
   position: relative;
@@ -943,6 +944,49 @@ img.lt-cover {
     grid-template-columns: minmax(0, 1fr);
     min-height: 0;
   }
+}
+
+// Carousel cards carry a soft shadow and a faint sky edge so they stand out from the band; the centered card glows a
+// little more. The track pads its top and bottom (and takes the space back) so its overflow does not clip the shadow.
+.lt-carousel-track {
+  padding-block: 1.5rem;
+  margin-block: -1.5rem;
+
+  > .lt-card {
+    border-color: rgba($lt-blue, 0.22);
+    box-shadow: 0 1px 2px rgba($lt-navy, 0.08), 0 18px 40px -20px rgba($lt-navy, 0.55);
+  }
+
+  > .lt-card.is-active { box-shadow: 0 0 0 1px rgba($lt-blue, 0.18), 0 22px 48px -20px rgba($lt-navy, 0.6); }
+}
+
+.dark .lt-carousel-track {
+  > .lt-card {
+    border-color: rgba($lt-sky, 0.22);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9), 0 0 28px -10px rgba($lt-sky, 0.2);
+  }
+
+  > .lt-card.is-active,
+  > .lt-card:hover {
+    border-color: rgba($lt-sky, 0.45);
+    box-shadow: 0 0 0 1px rgba($lt-sky, 0.12), 0 22px 48px -18px rgba(0, 0, 0, 0.95), 0 0 40px -8px rgba($lt-sky, 0.3);
+  }
+}
+
+// Depth: with the script, the cards beside the current one turn slightly away from the reader, like pages seen from
+// the side, and turn flat as they reach the current place.
+.lt-carousel.is-enhanced .lt-carousel-track {
+  perspective: 1100px;
+
+  > * { transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease, rotate 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+
+  > .is-active { position: relative; z-index: 1; }
+
+  > .is-active ~ * { rotate: y -24deg; }
+
+  > :has(~ .is-active) { rotate: y 24deg; }
+
+  @media (prefers-reduced-motion: reduce) { > * { transition: none; } }
 }
 
 // In a centered carousel a slide is narrower, so both neighbours peek in.
@@ -3626,7 +3670,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   opacity: 0.94;
   scale: 0.95;
   filter: grayscale(1);
-  transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease;
+  transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease, rotate 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 
   &.is-active {
     opacity: 1;
@@ -3707,10 +3751,11 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   margin-top: 1.5rem;
 }
 
-// The script fades a box out before hiding it when the carousel moves to another topic.
+// A box fades in when it opens; the script folds it and fades it out before hiding it.
 .lt-topic-box {
   padding: 1.6rem;
-  transition: opacity 0.3s ease;
+  overflow: hidden;
+  animation: lt-topic-in 0.4s ease;
   border: 1px solid $lt-border;
   border-radius: 16px;
 
@@ -3722,7 +3767,11 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   &:focus { outline: none; }
 
-  &.is-leaving { opacity: 0; }
+  &.is-leaving { animation: none; }
+}
+
+@keyframes lt-topic-in {
+  from { opacity: 0; transform: translateY(0.75rem); }
 }
 
 .lt-topic-close {
@@ -3831,7 +3880,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   .lt-field { transition: none; }
   .lt-field-cell.is-open .lt-field-panel { animation: none; }
   .lt-carousel.is-centered.is-enhanced .lt-carousel-track > * { transition: none; }
-  .lt-topic-box { transition: none; }
+  .lt-topic-box { animation: none; }
 }
 
 // Research area page bands: each section spans the page width, and bands alternate the two homepage
@@ -4085,6 +4134,21 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   .lt-path-pick-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
+
+// Choosing a path runs a view transition (assets/js/ltlab.js): each card glides from the large grid to its compact tab,
+// and the page around it cross-fades, more slowly than the browser default.
+// The large card's snapshot fades out quickly so its summary does not ghost over the compact tab.
+.lt-paths-title { view-transition-name: lt-paths-title; view-transition-class: lt-path-card; }
+
+.lt-path-picker [role="tab"] { view-transition-class: lt-path-card; }
+
+::view-transition-group(*) { animation-duration: 0.45s; animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; }
+
+::view-transition-old(*.lt-path-card) { animation-duration: 0.12s; }
+
+::view-transition-new(*.lt-path-card) { animation-duration: 0.3s; }
 
 // Leaves room for the sticky navigation bar when a click scrolls to the panel.
 .lt-path, .lt-step, .lt-proposals .lt-field-cell { scroll-margin-top: 5.5rem; }
@@ -4907,7 +4971,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 .lt-news-page .lt-filter button i { margin-right: 0.35rem; }
 
 // Back to top button of the News page: fixed at the bottom right, icon only on phones, with the label kept for screen
-// readers. The script hides it while the filters are in sight.
+// readers. With the script it starts hidden and shows once the filters have scrolled away.
 .lt-to-top {
   position: fixed;
   right: 1.25rem;
@@ -4930,7 +4994,7 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
 
   &:focus-visible { outline: 2px solid $lt-orange; outline-offset: 2px; }
 
-  &.is-hidden { opacity: 0; visibility: hidden; }
+  .lt-js &:not(.is-shown) { opacity: 0; visibility: hidden; }
 
   @media (max-width: 575.98px) {
     right: 1rem;

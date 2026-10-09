@@ -6,7 +6,7 @@ tags:
   - speech
   - research
 
-summary: The development of automatic tools for handling and digesting speech data, often in conjunction with other modalities like text.
+summary: The automatic analysis of speech, often together with other modalities such as text.
 
 # Font Awesome icon shown on the homepage research card
 icon: microphone-alt
@@ -19,14 +19,15 @@ cover_pattern: wave
 # Definition: a short answer to "What is speech processing?" under the title. Markdown, one idea per sentence.
 definition: |
   Speech processing is the automatic analysis of spoken language from its audio signal, often together with a transcript of the words.
-  The voice carries information that the words alone do not, such as emotion, and this information can help tasks like argument mining ([Lippi and Torroni, 2016](/publication/lippi-torroni-2016/)).
+  The voice carries information that the words alone do not, such as tone and emphasis.
+  This information can help tasks such as argument mining ([Lippi and Torroni, 2016](/publication/lippi-torroni-2016/)).
   We study what the audio adds to the text, how to explain the decisions of audio models, and how speech data are collected and documented.
 
 # Core concepts: one block per concept, with a short text and a small schema (an SVG file in this folder, drawn with the `lt-s-*` classes).
 overview:
   - icon: wave-square
     title: Audio features
-    text: "A model does not use raw sound directly. It first turns the audio signal into features, such as Mel-frequency cepstral coefficients (MFCCs), which describe the spectrum of the signal. Other models use embeddings learned by a neural network such as Wav2vec."
+    text: "Audio models typically represent the audio signal with features before classification. Spectral features, such as Mel-frequency cepstral coefficients (MFCCs), describe how the energy of the signal is distributed over frequencies. Pretrained neural networks such as Wav2vec instead learn embeddings directly from the raw waveform."
     schema: schema-features.svg
   - icon: closed-captioning
     title: Transcripts
@@ -38,7 +39,7 @@ overview:
     schema: schema-modalities.svg
   - icon: search
     title: Explanations
-    text: "Neural audio models are typically black boxes. Post-hoc explanation methods show which parts of the input a model relied on, for example as maps that a person can listen to."
+    text: "Neural audio models are typically black boxes. Post-hoc explanation methods, applied to a model after training, show which parts of the input the model relied on. Some produce a saliency map over the input, and others produce audio that a person can listen to."
     schema: schema-explanations.svg
 
 # What is speech processing?: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
@@ -46,7 +47,8 @@ views_title: What does the audio add?
 concepts: |
   Many tasks on speech start from a transcript, a written version of what was said.
   A transcript keeps the words but loses how they were said, such as tone, rhythm, and emphasis.
-  These paralinguistic cues can relate to the meaning of an argument: for example, a prosody that stresses anger can signal an appeal to emotion ([Mancini et al., 2024](/publication/mancini-etal-2024-multimodal/)).
+  These paralinguistic cues can relate to the meaning of an argument.
+  For example, an angry tone can signal an appeal to emotion ([Mancini et al., 2024](/publication/mancini-etal-2024-multimodal/)).
   The examples below compare models that read the transcript alone with models that also use the audio.
 
 # Views: interactive examples, grouped by research area.
@@ -59,7 +61,7 @@ views:
     type: voices
     group: Argumentation
     label: Claims in debates
-    description: "Claim detection decides whether a sentence states a claim, an opinion or thesis that the speaker asserts. A speech recognizer writes the words without punctuation, so a statement and a question with the same words give the same transcript. The pitch of the voice tells them apart."
+    description: "Claim detection decides whether a sentence states a claim, an opinion or thesis that the speaker asserts. Many speech recognizers write the words without punctuation, so a statement and a question with the same words give the same transcript. The pitch of the voice tells them apart."
     caption: "Illustrative example: the sentences, cue values, and answers are constructed. No recording or model output is shown. The task follows the claim detection setting of [Lippi and Torroni (2016)](/publication/lippi-torroni-2016/), who combine text and audio features of a televised political debate."
     question: Is the sentence a claim?
     readings:
@@ -177,7 +179,7 @@ fields:
   - name: Argumentative sentence detection
     text: "Given a sentence, the task is to say whether it contains an argument."
   - name: Argumentative component classification
-    text: "Given an argumentative sentence, the task is to say whether it contains a claim or a premise, a reason offered for a claim."
+    text: "Given an argumentative sentence, the task is to say whether it contains a claim or a premise. A premise is a reason offered for a claim."
   - name: Argumentative relation classification
     text: "Given a pair of sentences, the task is to say whether the first supports the second, attacks it, or neither."
   - name: Fallacy detection and classification
@@ -201,7 +203,7 @@ fields:
   summary: "Conditions such as depression and Parkinson's disease can change how a person speaks. Models that detect them depend on datasets whose collection must protect the people who speak."
   tasks:
   - name: Depression detection
-    text: "Given recordings of a person, possibly with other signals such as EEG, the task is to predict whether the person has major depressive disorder."
+    text: "Given recordings of a person, possibly with other signals such as electroencephalography (EEG), a recording of brain activity, the task is to predict whether the person has major depressive disorder."
   - name: Parkinson's disease detection
     text: "Given a speech recording, the task is to distinguish people with Parkinson's disease from healthy controls."
   - name: Dataset documentation
@@ -213,7 +215,7 @@ fields:
   summary: "Audio classifiers rarely show why they decide. Explanation methods mark the parts of the input that a decision depends on, and their quality must be measured."
   tasks:
   - name: Post-hoc explanation
-    text: "Given a trained audio classifier and an input, the task is to produce an explanation of the decision. The explanation can be a saliency map over the input or an audio signal that a person can listen to."
+    text: "Given a trained audio classifier and an input, the task is to produce an explanation of the decision. The explanation can be a saliency map, which scores each part of the input, or an audio signal that a person can listen to."
   - name: Faithfulness evaluation
     text: "Given an explanation, the task is to measure whether it reflects what the model actually used for its decision."
 - key: applications
@@ -227,7 +229,7 @@ fields:
   - name: Disruptive situation detection
     text: "Given a recording from a public space, the task is to detect disruptive situations, emotionally charged events such as people fighting or screaming."
   - name: Lyrics matching
-    text: "Given the audio of songs, the task is to find songs with similar lyrical content, working from the audio rather than from written lyrics."
+    text: "Given the audio of a song, the task is to find songs with similar lyrics in a collection, working from the audio rather than from written lyrics."
 
 # Our focus: the lab's topics, each with a summary, a definition paragraph, and items that are done, now, or next.
 # Done items cite lab publications by their folder name in content/publication.
@@ -239,7 +241,7 @@ focus:
   description: "Argument mining extracts arguments and their relations from natural language. In a political debate the arguments are spoken, so a model can use the transcript, the audio, or both. A claim is the conclusion of an argument, and a fallacy is a deceptive, misleading, or generally invalid argument. We ask whether audio features improve the detection of claims and the classification of fallacies."
   items:
   - status: done
-    text: Claim detection from the audio of a political debate.
+    text: Claim detection from the text and audio of a political debate.
     detail: "We build a corpus from the UK leaders' debate of 2 April 2015, with 386 audio samples of three candidates labelled as containing a claim or not. Adding audio features (MFCCs) to text features improves the F1 score by around 5% for every candidate, except one when the text comes from a speech recognizer."
     cite:
     - lippi-torroni-2016
@@ -259,7 +261,7 @@ focus:
 - key: modalities
   title: Text and audio together
   icon: layer-group
-  summary: "We compare models that read, listen, or do both, and we release tools that make these comparisons fair."
+  summary: "We compare models that read, listen, or do both, and we release tools that make these comparisons reproducible."
   description: "A multimodal model combines several modalities, for example by joining an encoding of the text and an encoding of the audio before a classifier. Comparing text-only, audio-only, and text-audio settings shows what each modality adds. We ask how to encode the audio and how to fuse it with the text."
   items:
   - status: done
@@ -274,7 +276,7 @@ focus:
     - mancini-etal-2024-mamkit
   - status: next
     text: Attention-based fusion of text and audio.
-    detail: "Combining the two modalities is not trivial, since some models end up relying on one modality only. We plan fusion methods based on attention."
+    detail: "Combining the two modalities is not trivial, since some models end up relying on one modality only. We plan to study fusion methods based on attention."
 - key: health
   title: Speech and health
   icon: heartbeat
@@ -298,11 +300,11 @@ focus:
   title: Explaining audio models
   icon: search
   summary: "We study how to explain the decisions of audio classifiers in a form that people can check, including by listening."
-  description: "Neural networks are typically black boxes, so their decision mechanisms remain opaque. Post-hoc explanation methods produce an explanation after training, such as a saliency map that marks the parts of the input a model relied on. An explanation is faithful when it reflects what the model actually used. We ask how to make explanations faithful and useful for people, including domain experts."
+  description: "Neural networks are typically black boxes, whose decision mechanisms are opaque. Post-hoc explanation methods explain a model after training, such as a saliency map that marks the parts of the input a model relied on. An explanation is faithful when it reflects what the model actually used. We ask how to make explanations faithful and useful for people, including domain experts."
   items:
   - status: done
     text: "LMAC-TD: explanations that can be heard."
-    detail: "LMAC-TD trains a decoder that produces explanations directly as audio, building on Listenable Maps for Audio Classifiers (L-MAC). In a user study with 19 participants, its explanations receive higher mean opinion scores than those of the baselines, while their faithfulness stays better than or comparable to that of L-MAC."
+    detail: "LMAC-TD trains a decoder that produces explanations directly as audio waveforms, building on Listenable Maps for Audio Classifiers (L-MAC). In a user study with 19 participants, its explanations receive higher mean opinion scores, the average quality ratings of listeners, than those of the baselines. Their faithfulness is better than or comparable to that of L-MAC."
     cite:
     - "10890448"
   - status: done
@@ -312,7 +314,7 @@ focus:
     - mancini-2025-investigating
   - status: now
     text: Discrete audio tokens to analyse audio inputs.
-    detail: "Audio tokens are the result of a discretization of the audio signal into units. We study them as interpretable features to better analyse audio inputs."
+    detail: "Discrete audio tokens represent the audio signal as a sequence of units from a finite vocabulary, for instance by quantizing the embeddings of a pretrained model. We study them as interpretable features to better analyse audio inputs."
 - key: applications
   title: Speech in applications
   icon: bus

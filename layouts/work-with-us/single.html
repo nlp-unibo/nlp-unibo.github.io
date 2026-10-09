@@ -10,12 +10,12 @@
 {{ $proposals := slice }}{{ with site.GetPage "/proposals" }}{{ range .Sections }}{{ $topic := .Title }}{{ range .RegularPages }}{{ $proposals = $proposals | append (dict "page" . "topic" $topic) }}{{ end }}{{ end }}{{ end }}
 <article class="lt-proj lt-work">
   <div class="lt-band">
-    <section class="lt-arg-views lt-paths" data-lt-empty aria-label="Ways to work with us">
+    <section class="lt-arg-views lt-paths" data-lt-empty data-lt-morph aria-label="Ways to work with us">
       <h1 class="sr-only">{{ .Title }}</h1>
       <h2 class="lt-paths-title" id="paths-label">What are you looking for?</h2>
       <div class="lt-path-picker" role="tablist" aria-labelledby="paths-label">
         {{ range .Params.paths }}
-        <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1">
+        <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1" style="view-transition-name: lt-path-{{ .key }}">
           <i class="fas fa-{{ .icon }}" aria-hidden="true"></i>
           <span class="lt-path-pick-label">{{ .label }}</span>
           <span class="lt-path-pick-text">{{ .summary }}</span>

@@ -6,7 +6,7 @@ tags:
   - argument mining
   - research
   
-summary: The automatic identification and extraction of arguments from text and speech. Arguments include claims, premises, argumentation schemes, and the relations between them.
+summary: The automatic identification and extraction of arguments from text and speech. It covers argument components, such as claims and premises, the relations between them, and the argumentation schemes that arguments follow.
 
 # Font Awesome icon shown on the homepage research card
 icon: network-wired
@@ -30,15 +30,15 @@ overview:
     schema: schema-arguments.svg
   - icon: project-diagram
     title: Relations
-    text: "Components and arguments support or attack each other. Linking them across a document gives an argument graph, whose nodes are components and whose edges are relations."
+    text: "Relations, typically support and attack, connect argument components. Linking the components of a document through these relations gives an argument graph, whose nodes are components and whose edges are relations."
     schema: schema-relations.svg
   - icon: balance-scale
     title: Evaluation
-    text: "An argument takes a stance on a topic, for or against it. Its quality is scored along dimensions such as clarity, relevance, and persuasiveness. Both properties are subjective, so annotators often disagree."
+    text: "An argument takes a stance on a topic, for or against it. Its quality is scored along dimensions such as clarity, relevance, and persuasiveness. Quality judgements are subjective, so annotators often disagree on them."
     schema: schema-evaluation.svg
   - icon: lightbulb
     title: Reasoning
-    text: "Arguments typically leave steps unstated, such as the warrant that links premises to a claim. Reasoning tasks recover these steps, name the pattern an argument follows, and recognize fallacies."
+    text: "Arguments often leave steps unstated, such as the warrant that links premises to a claim. Reasoning tasks recover these steps, identify the argumentation scheme of an argument, and recognize fallacies. An argumentation scheme is the reasoning pattern an argument follows, and a fallacy is a flaw in reasoning."
     schema: schema-reasoning.svg
 
 # What is an argument?: background for the views below, shown as their section introduction. Markdown, one idea per sentence.
@@ -55,11 +55,10 @@ concepts: |
   The Toulmin model calls premises grounds and adds two more components.
   The warrant is the general rule that links the grounds to the claim, and the text can leave it unstated.
   The rebuttal states when the claim does not hold.
-  The original model of [Toulmin (1958)](https://doi.org/10.1017/CBO9780511840005) has two more components.
-  The backing supports the warrant, and the qualifier states how strongly the claim holds.
+  The original model of [Toulmin (1958)](https://doi.org/10.1017/CBO9780511840005) adds the backing, a support for the warrant, and the qualifier, the degree of certainty of the claim.
 
   Each domain also names these components in its own way.
-  In debates, evidence takes the place of premises and supports a claim on a given topic.
+  In debate support, evidence takes the place of premises and supports a claim on a given topic.
   In clinical trial abstracts, evidence is an observed outcome of a study, and a claim is what the authors infer from it.
   In court decisions, the claim is called the conclusion, and premises are either factual or legal.
   The examples below show one argument for each model and each domain.
@@ -115,7 +114,7 @@ views:
   - key: debate
     group: Domains
     label: Debates
-    description: "In debates, a system finds claims on a given topic and the evidence for them. Claims on opposite sides attack each other."
+    description: "In debate support, a system finds claims on a given topic and the evidence for them, for instance in Wikipedia articles. Claims on opposite sides attack each other."
     caption: "Example from the IBM debate corpus, shortened from Figure 1 of [Lippi and Torroni (2016)](/publication/10-1145-2850417/)."
     roles:
       - {key: claim, label: Claim}
@@ -155,7 +154,7 @@ views:
   - key: legal
     group: Domains
     label: Court decisions
-    description: "Court decisions distinguish factual premises from legal ones, and they use relations specific to legal reasoning. A support from failure holds a conclusion because the opposing party failed to prove its point."
+    description: "Annotations of court decisions distinguish factual premises from legal premises and use relations specific to legal reasoning. A support from failure supports a conclusion because the opposing party failed to prove its point."
     caption: "Paragraphs 80 to 82 of Case C-431/14 P of the Court of Justice of the European Union, shortened, as annotated by [Santin et al. (2023)](/publication/10-1145-3594536-3595174/)."
     roles:
       - {key: conclusion, label: Conclusion}
@@ -179,7 +178,7 @@ fields:
     title: Argument extraction
     icon: search
     question: Where are the arguments in a text, and what are their parts?
-    summary: The first step separates argumentative text from the rest, cuts each argument into its components, and groups arguments by the aspects they address.
+    summary: Extraction tasks separate argumentative text from the rest, segment it into argument components, and group arguments by the aspects they address.
     tasks:
       - name: Argumentative text detection
         text: Given a sentence or a passage, the task is to decide whether it contains an argument.
@@ -188,22 +187,22 @@ fields:
       - name: Claim and evidence retrieval
         text: Given a topic and a set of documents, the task is to retrieve the claims on the topic and the evidence for each claim.
       - name: Aspect mining
-        text: Given an argument, the task is to identify the aspects it addresses, so that arguments on the same aspect can be grouped.
+        text: Given an argument, the task is to identify the aspects it addresses, such as the cost or the safety of nuclear energy. Arguments on the same aspect can then be grouped.
   - key: relations
     title: Argument relations
     icon: project-diagram
     question: How do claims and premises relate to each other?
-    summary: Components form an argument only when they are linked. These links define a graph over the whole discussion.
+    summary: Component identification finds claims and premises, while relation identification decides how they connect, for instance through support or attack. These relations define an argument graph over the whole document.
     tasks:
       - name: Relation identification
-        text: Given two components or two arguments, the task is to decide whether one supports or attacks the other.
+        text: Given two argument components, the task is to decide whether one supports or attacks the other, or whether they are unrelated.
       - name: Argument structure prediction
         text: Given a document, the task is to predict its argument graph, where components are nodes and relations are edges.
   - key: evaluation
     title: Argument evaluation
     icon: balance-scale
     question: Which side does an argument take, and how good is it?
-    summary: Evaluation tasks assign properties to arguments, such as their position on a topic or their quality.
+    summary: Evaluation tasks assign properties to arguments, such as their stance on a topic or their quality.
     tasks:
       - name: Stance classification
         text: Given a topic and an argument, the task is to decide whether the argument is for or against the topic.
@@ -213,7 +212,7 @@ fields:
     title: Argument reasoning
     icon: lightbulb
     question: What does an argument leave unsaid, and does its reasoning hold?
-    summary: Arguments typically leave some steps unstated. These tasks recover the missing steps and assess the inference.
+    summary: Arguments often leave some steps unstated. These tasks recover the missing steps and assess the inference.
     tasks:
       - name: Implicit argument reconstruction
         text: Given an argument with missing steps, the task is to generate the unstated premise or the warrant, the general rule that links premise and claim. This typically requires commonsense or expert knowledge.
@@ -225,7 +224,7 @@ fields:
     title: Argument generation and retrieval
     icon: pen-fancy
     question: Can a system write, condense, or retrieve arguments?
-    summary: Generation tasks produce new text from arguments, while retrieval tasks find arguments in large collections.
+    summary: Generation tasks write or condense arguments, while retrieval tasks find arguments in large collections.
     tasks:
       - name: Argument summarization
         text: Given many arguments on a topic, the task is to produce a short summary or a small set of key points.
@@ -237,12 +236,12 @@ fields:
     title: Argument mining and LLMs
     icon: robot
     question: What do large language models change, and what can argumentation give back?
-    summary: Large language models (LLMs) are now the standard approach for most argument mining tasks. Argumentation, in turn, offers a way to check how these models reason.
+    summary: Large language models (LLMs) are now widely applied to argument mining tasks. Argumentation, in turn, offers a way to check how these models reason.
     tasks:
       - name: LLMs for argument mining
-        text: Prompting and fine-tuning allow a single model to address many tasks. Fallacies and diverse perspectives remain challenging.
+        text: Prompting and fine-tuning allow a single model to address many tasks. Fallacy recognition and the modelling of diverse perspectives remain challenging.
       - name: Argumentation for LLMs
-        text: Argumentative prompts, symbolic argumentation, and dedicated benchmarks are used to elicit, verify, and evaluate LLM reasoning.
+        text: Argumentative prompts elicit LLM reasoning, and dedicated benchmarks evaluate it. Computational argumentation, a formal way of modelling arguments and their conflicts, can verify it.
 
 # Our focus: the lab topics, shown as a rotating carousel and, below it, one detail box per topic.
 # `status` is done (Explored), now (Current), or next (Future).
@@ -253,7 +252,7 @@ focus:
     title: Argumentative fallacies
     icon: exclamation-triangle
     summary: "We study how machines can spot and name fallacies, which are flaws or errors in reasoning that can make an argument seem convincing. Spotting them takes careful reasoning, so they are a hard test for language models."
-    description: "A fallacy is a flaw or error in reasoning, such as attacking the speaker instead of the claim (ad hominem) or warning that one small step leads to disaster (slippery slope). Fallacy detection asks whether a passage contains a fallacy, and fallacy classification asks which type it is. In political debates, how something is said can matter as much as what is said. We ask whether models can recognize fallacies from both the words and the voice of a speaker, and what reasoning each type of fallacy requires."
+    description: "A fallacy is a flaw or error in reasoning. Examples are attacking the speaker instead of the claim (ad hominem) and warning that one small step leads to disaster (slippery slope). Fallacy detection asks whether a passage contains a fallacy, and fallacy classification asks which type it is. In political debates, how something is said can matter as much as what is said. We ask whether models can recognize fallacies from both the words and the voice of a speaker, and what reasoning each type of fallacy requires."
     items:
       - status: done
         text: "The first corpus of fallacies in debate audio and text."
@@ -261,7 +260,7 @@ focus:
         cite: [mancini-etal-2024-multimodal]
       - status: done
         text: "A shared task on multimodal fallacy detection."
-        detail: "We organized MM-ArgFallacy2025, a shared task on detecting and classifying six fallacy types in U.S. presidential debates from text, audio, or both. Five teams took part. Text-only systems performed best, audio-only systems improved over previous work, and combining the two gave limited gains, so the task sets baselines for future work."
+        detail: "We organized MM-ArgFallacy2025, a shared task on detecting and classifying six fallacy types in U.S. presidential debates from text, audio, or both. Five teams took part. Text-only systems performed best, audio-only systems improved over previous work, and combining the two gave limited gains. The task sets baselines for future work on multimodal fallacy analysis."
         cite: [mancini-etal-2025-overview]
       - status: next
         text: "Linking each fallacy type to the reasoning it requires."
@@ -269,11 +268,11 @@ focus:
   - key: multimodality
     title: Multimodality
     icon: layer-group
-    summary: "Arguments are often spoken, not written. We study whether the sound of a voice helps a computer find and judge arguments better than the words alone."
+    summary: "Arguments are often spoken, not written. We study whether the sound of a voice helps a computer find and classify arguments better than the words alone."
     description: "Multimodality means using more than one kind of input, here the text of what people say and the audio of how they say it. Audio carries paralinguistic cues, such as tone, pitch, and pauses, that a written transcript loses. We ask whether these cues help with argument mining tasks, and for which tasks they help."
     items:
       - status: done
-        text: "Claim detection from the audio of political debates."
+        text: "Claim detection from the text and audio of political debates."
         detail: "A claim is the statement an argument tries to support. We build a classifier that combines features from text and speech to detect claims in political debates, using an original dataset built from the 2015 UK political elections debate. We then release MM-USElecDeb60to16, the largest multimodal argument mining corpus to date, with 26,791 sentences from U.S. presidential debates aligned with their audio. Across three corpora, embedding-based audio encodings work better than feature-based ones."
         cite: [lippi-torroni-2016, mancini-etal-2022-multimodal]
       - status: done
@@ -299,11 +298,11 @@ focus:
     items:
       - status: done
         text: "Dialogue systems that reason with arguments."
-        detail: "We propose a dialogue system architecture that uses computational argumentation, a formal way of modeling arguments and their conflicts, to reason and give consistent, explainable answers. A later version also manages user data according to data minimization, purpose limitation, and integrity, and gives motivations for its responses. We illustrate both systems with a COVID-19 vaccine information case study and evaluate the privacy-preserving version empirically."
+        detail: "We propose a dialogue system architecture that uses computational argumentation, a formal way of modeling arguments and their conflicts, to reason and give consistent, explainable answers. A later version manages user data according to the principles of data minimization, purpose limitation, and integrity. It also motivates its responses to users. We illustrate both systems with a COVID-19 vaccine information case study and evaluate the privacy-preserving version empirically."
         cite: [10-1007-978-3-030-89391-0-27, fazzinga-2022200113]
       - status: done
         text: "A dataset of argumentative dialogues on scientific papers."
-        detail: "We introduce ArgSciChat, a dataset of 41 dialogues between scientists on 20 NLP papers, with both exploratory and argumentative questions and answers. A pre-trained dialogue agent performs poorly on it. This result shows the need for dialogue agents that can reason and argue about their answers."
+        detail: "We introduce ArgSciChat, a dataset of 41 dialogues between scientists on 20 NLP papers, with both exploratory and argumentative questions and answers. A pre-trained dialogue agent performs poorly on it. This result motivates dialogue agents that can reason and argue about their answers."
         cite: [ruggeri-etal-2023-dataset]
       - status: next
         text: "From argumentative dialogue benchmarks to tools people use."
@@ -312,7 +311,7 @@ focus:
     title: Interpretability
     icon: eye
     summary: "We build models that show why they make a decision. This helps people check a prediction and learn which parts of a text make an argument."
-    description: "A model is interpretable when people can understand why it gives a certain output. One common form is an explanation, which is a piece of evidence that justifies a prediction, such as a sentence of background knowledge or a highlighted span of the input text. We ask how models for argument analysis can explain their own decisions without losing accuracy. We also ask what these explanations tell us about the data."
+    description: "A model is interpretable when people can understand why it gives a certain output. One common form is an explanation, a piece of evidence that justifies a prediction. An explanation can be a sentence of background knowledge or a highlight, a span of the input text. We ask how models for argument analysis can explain their own decisions without losing accuracy. We also ask what these explanations tell us about the data."
     items:
       - status: done
         text: "Models that explain their output with natural language knowledge."
@@ -320,7 +319,7 @@ focus:
         cite: [ruggeri-etal-2024-combining]
       - status: done
         text: "Highlights that justify a prediction, learned end to end."
-        detail: "In selective rationalization, one module picks highlights from the text and a second module predicts a label from those highlights alone. Training the two modules together often fails because one module dominates the other, a problem called interlocking. We present GenSPP, which trains the two modules separately with a genetic search and avoids interlocking without extra training heuristics."
+        detail: "In selective rationalization, one module picks highlights from the text and a second module predicts a label from those highlights alone. Training the two modules together often fails because one module dominates the other, a problem called interlocking. We present GenSPP, which avoids interlocking by training the two modules disjointly with genetic-based search. It requires no additional heuristics, sampling, or regularization."
         cite: [ruggeri-signorelli-2025-interlocking]
       - status: now
         text: "Finding the textual patterns behind each argument component."

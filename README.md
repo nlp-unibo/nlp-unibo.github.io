@@ -117,7 +117,7 @@ content/publication/rossi-etal-2026-example/
 | `categories` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`, which sets its type in the filter of the Publications page. Add `Highlight` as a second value to also show the paper in the Highlights carousel |
 | `abstract` | The abstract, shown in full on the publication page |
 | `summary` | One sentence shown under the title of the publication page and on publication cards |
-| `card_summary` | Optional sentence of at most 15 words that replaces the summary on the homepage preprint card |
+| `card_summary` | Optional sentence of at most 15 words that replaces the summary on the homepage paper card |
 | `doi` | The DOI without `https://doi.org/`, for example `10.18653/v1/2024.argmining-1.7` |
 | `url_pdf`, `url_code`, `url_dataset` | Optional links that appear as buttons |
 | `award` | Optional award name, for example `Best Paper Award`. It appears with a trophy under the title in every publication list |
@@ -203,7 +203,7 @@ summary: "Our paper on argument mining has been accepted at ACL 2026."
 
 The News page lists every item on a timeline grouped by year, with a filter by kind.
 Every publication also appears there as a Paper or Preprint item on its publication date, with its venue and links, so a new publication needs no news item.
-The homepage news shows papers but not preprints, which have their own homepage block.
+The homepage news shows news items only, since papers and preprints have their own Latest papers block.
 A published paper does not show its arXiv link, since the venue version replaces it.
 Write a news item for an acceptance instead, dated on the day of the acceptance.
 The homepage shows the six most recent items: the three newest as text cards, and the others as rows.
@@ -403,7 +403,7 @@ Each tool is one band with a schematic on the left and its description on the ri
 
 ### Edit the homepage or the menu
 
-The homepage is defined in `content/_index.md` as a list of blocks: the hero, the research map, the latest news, and the latest preprints.
+The homepage is defined in `content/_index.md` as a list of blocks: the hero, the research map, the latest news, and the latest papers.
 The texts of the hero and the section headings are front matter values in that file.
 The blocks named `lt-*` are templates in `layouts/_partials/blocks/`.
 A hero button that points to an unpublished page, such as a draft, is hidden.
@@ -544,7 +544,7 @@ A change is not visible when the deployment is still running; wait a few minutes
 | `assets/js/ltlab.js` | Scroll effects and publication year headings, loaded by `layouts/_partials/hooks/body-end/ltlab.html` |
 | `assets/media/` | Shared images, including the homepage logo |
 | `layouts/_shortcodes/` | Components for publication pages, such as `svg`, `stages`, and `pipeline` |
-| `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero with the lab logo, research map, news, and preprints |
+| `layouts/_partials/blocks/lt-*.html` | Homepage blocks: hero with the lab logo, research map, news, and papers |
 | `layouts/_partials/lt/` | Pieces shared by those blocks: generated cover art, link extraction, news labels, publication cards, and contact people (`contacts.html`, `people-row.html`) |
 | `layouts/publication/single.html` | Publication page in the style of a research project page, with a side section menu from 1200px |
 | `layouts/publication/section.html` | Publications page: highlights carousel, then every publication with search, type, and topic filters |

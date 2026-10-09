@@ -1,0 +1,22 @@
+{{/* Latest papers, preprints and published papers alike, as a carousel of wide cards. `content.category` */}}
+{{/* optionally keeps one category only (for example "Preprint"). */}}
+{{/* The track scrolls without JavaScript; assets/js/ltlab.js reveals the dots and arrows. */}}
+{{ $block := .wcBlock }}
+{{ $pubs := where site.RegularPages "Section" "publication" }}
+{{ with $block.content.category }}{{ $pubs = where $pubs ".Params.categories" "intersect" (slice .) }}{{ end }}
+{{ $pubs = first ($block.content.count | default 3) $pubs.ByDate.Reverse }}
+{{ partial "lt/section-head.html" $block }}
+<div class="lt-carousel" data-lt-carousel>
+  <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Latest papers">
+    {{ range $pubs }}{{ partial "lt/pub-card.html" (dict "page" . "kind" true) }}{{ end }}
+  </div>
+  <div class="lt-carousel-nav" hidden>
+    <div class="lt-carousel-dots">
+      {{ range $i, $pub := $pubs }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $pub.Title }}"></button>{{ end }}
+    </div>
+    <div class="lt-carousel-arrows">
+      <button type="button" data-lt-step="-1" aria-label="Previous paper"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+      <button type="button" data-lt-step="1" aria-label="Next paper"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+    </div>
+  </div>
+</div>

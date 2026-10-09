@@ -1,11 +1,8 @@
 {{/* Latest news: the newest items as text cards, the next ones as compact rows. */}}
-{{/* Items are news items and publications, as on the News page (lt/news-data.html), except preprints, which the */}}
-{{/* Latest preprints block lists. News items have no page, so previews are self-contained: title, venue, summary, */}}
-{{/* and link chips. */}}
+{{/* Items are news items only: publications have their own Latest papers block (lt-papers.html). News items have */}}
+{{/* no page, so previews are self-contained: title, venue, summary, and link chips (lt/news-data.html). */}}
 {{ $block := .wcBlock }}
-{{ $pubs := where site.RegularPages "Section" "publication" }}
-{{ $pubs = complement (where $pubs "Params.categories" "intersect" (slice "Preprint")) $pubs }}
-{{ $items := first ($block.content.count | default 6) ((where site.RegularPages "Section" "news") | union $pubs).ByDate.Reverse }}
+{{ $items := first ($block.content.count | default 6) (where site.RegularPages "Section" "news").ByDate.Reverse }}
 {{ $featured := $block.content.featured | default 3 }}
 {{ partial "lt/section-head.html" $block }}
 <div class="lt-news-grid">

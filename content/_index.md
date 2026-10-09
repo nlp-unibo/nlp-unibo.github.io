@@ -25,10 +25,10 @@ sections:
       more:
         text: All news
         url: /news/
-  - block: lt-preprints
-    id: preprints
+  - block: lt-papers
+    id: papers
     content:
-      title: Latest preprints
+      title: Latest papers
       count: 3
       more:
         text: All publications
