@@ -46,7 +46,7 @@ Never show a number or a term before the text has given its context. The page li
 Base every statement on the paper, and leave details to the paper itself.
 Keep the five sections below, so that every page has the same structure; each `##` heading also appears in the section menu.
 
-Visual components (see the README for their YAML):
+Visual components (see docs/developers.md, section 5, for their YAML):
   {{</* figure src="method.png" caption="..." */>}}  a figure from the paper, saved in this folder
   {{</* gap */>}} ... {{</* /gap */>}}                comparison with related work
   {{</* pipeline */>}} ... {{</* /pipeline */>}}      method diagram

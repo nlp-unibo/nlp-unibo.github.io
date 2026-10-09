@@ -1,4 +1,5 @@
-// Scroll effects and publication year headers; every effect is optional progressive enhancement.
+// Site behaviours of the Language Technologies Lab theme, catalogued in docs/developers.md (section 4).
+// Every effect is optional progressive enhancement: the pages work without this script.
 (() => {
   const navbar = document.getElementById("navbar-main");
   if (navbar) {
@@ -56,6 +57,7 @@
   // Argument views render every panel, so without the script all views stay visible.
   document.querySelectorAll(".lt-stages, .lt-arg-views").forEach((figure) => {
     const tabs = [...figure.querySelectorAll('[role="tab"]')];
+    figure.classList.add("is-tabbed");
     // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation, and
     // the panel it hides with an `lt-hide` event, which stops a view still playing.
     // A tablist with `data-lt-empty` starts with no tab selected, so all its panels are hidden until the reader picks one;
@@ -76,8 +78,10 @@
     };
     const morph = "ltMorph" in figure.dataset && document.startViewTransition && !matchMedia("(prefers-reduced-motion: reduce)").matches;
     tabs.forEach((tab, index) => {
-      tab.addEventListener("click", () => {
+      // A click from a script, such as a link to a place inside a path, selects at once, so the caller can rely on it.
+      tab.addEventListener("click", (event) => {
         const chosen = () => figure.dispatchEvent(new CustomEvent("lt-chosen", { detail: tab }));
+        if (!event.isTrusted) return select(tab, true);
         if (!morph) return select(tab, true), chosen();
         document.startViewTransition(() => select(tab, true)).finished.then(chosen);
       });
@@ -1074,7 +1078,7 @@
         };
         addEventListener("scrollend", end, { once: true });
         setTimeout(end, reduce ? 0 : 1000);
-        carousel.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        (carousel || focus).scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
       });
     });
     if (carousel) {
@@ -1176,7 +1180,7 @@
       if (current !== before) carousel.dispatchEvent(new CustomEvent("lt-slide", { detail: current }));
       dots.forEach((dot, i) => dot.setAttribute("aria-current", String(i === current)));
       items.forEach((other) => other.classList.toggle("is-active", other === item));
-      if (!loop) {
+      if (!loop && previous && next) {
         previous.disabled = current === 0;
         next.disabled = current === slides.length - 1;
       }
@@ -1193,8 +1197,8 @@
       settle = setTimeout(settled, 150);
     };
     dots.forEach((dot, i) => dot.addEventListener("click", () => go(i)));
-    previous.addEventListener("click", () => go(current - 1));
-    next.addEventListener("click", () => go(current + 1));
+    if (previous) previous.addEventListener("click", () => go(current - 1));
+    if (next) next.addEventListener("click", () => go(current + 1));
     track.addEventListener("scroll", () => { update(); wait(); }, { passive: true });
     // With the script the track does not scroll freely, so a vertical page scroll can never shift it.
     // A horizontal swipe, a horizontal wheel or trackpad gesture, or an arrow key moves one slide.
@@ -1253,7 +1257,8 @@
     // The setup runs with transitions off, so the neighbours take their faded state at once instead of fading in.
     carousel.classList.add("is-jumping", "is-enhanced");
     requestAnimationFrame(() => requestAnimationFrame(() => carousel.classList.remove("is-jumping")));
-    carousel.querySelector(".lt-carousel-nav").hidden = false;
+    const nav = carousel.querySelector(".lt-carousel-nav");
+    if (nav) nav.hidden = false;
     if (centered) track.scrollLeft = offset(slides[0]);
     // Only a width change re-centers the track; mobile browsers also resize when their toolbars hide.
     let width = track.clientWidth;
@@ -1272,8 +1277,9 @@
   // bottom of the window over the last 40% of the page, so the last section takes the focus at the bottom.
   // Without the script, or under reduced motion, every section stays fully visible.
   if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  // Only the homepage (`.home-section`) and research area pages (`.lt-focus`) use it; other pages keep still bands.
   const sections = [...document.querySelectorAll(".home-section, .lt-band")];
-  if (sections.length > 1) {
+  if (sections.length > 1 && document.querySelector(".home-section, .lt-focus")) {
     document.body.classList.add("lt-section-focus");
     let queued = false;
     // While the body has `data-lt-focus-hold`, every section keeps its focus value: a topic box that folds away

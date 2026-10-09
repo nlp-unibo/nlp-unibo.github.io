@@ -2119,6 +2119,20 @@ $lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
   border-radius: 14px;
 }
 
+// Without the script every stage is shown below the other, each under its name, and the tabs are hidden. With the
+// script (`lt-js`), only the first stage shows until the tabs take over (`is-tabbed`), and the names give way to tabs.
+html:not(.lt-js) .lt-stages-tabs { display: none; }
+
+.lt-js .lt-stages:not(.is-tabbed) .lt-stages-panel ~ .lt-stages-panel { display: none; }
+
+.lt-stages-name { margin: 0 0 0.5rem; font-weight: 700; }
+
+.lt-js .lt-stages-name { display: none; }
+
+.lt-stages-panel + .lt-stages-panel { margin-top: 1rem; }
+
+.lt-js .lt-stages-panel + .lt-stages-panel { margin-top: 0; }
+
 .lt-stages-tabs {
   display: flex;
   flex-wrap: wrap;
