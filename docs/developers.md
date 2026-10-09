@@ -873,7 +873,7 @@ git push -u origin news/acl-2026
 ```
 
 GitHub prints a link to open the pull request.
-Continue from the pull request steps in [editors.md](editors.md#4-publish-your-change).
+Continue from the pull request steps in [editors.md](editors.md#5-publish-your-change).
 
 ### Create content from the command line
 

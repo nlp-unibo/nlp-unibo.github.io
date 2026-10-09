@@ -24,8 +24,16 @@ To change the design or the code of the site, read [the developers' guide](devel
   - [Edit the menu](#edit-the-menu)
   - [Edit a page introduction](#edit-a-page-introduction)
   - [Edit the Work with us page](#edit-the-work-with-us-page)
-- [4. Publish your change](#4-publish-your-change)
-- [5. Publication blog pages](#5-publication-blog-pages)
+- [4. Change existing content](#4-change-existing-content)
+  - [Find and edit a file](#find-and-edit-a-file)
+  - [Remove a paper from the Highlights carousel, or add one](#remove-a-paper-from-the-highlights-carousel-or-add-one)
+  - [Change the text of a page](#change-the-text-of-a-page)
+  - [Replace an image](#replace-an-image)
+  - [Reorder items](#reorder-items)
+  - [Hide or remove a page](#hide-or-remove-a-page)
+  - [Add a schema to a page](#add-a-schema-to-a-page)
+- [5. Publish your change](#5-publish-your-change)
+- [6. Publication blog pages](#6-publication-blog-pages)
 
 ## 1. Five ideas that explain the site
 
@@ -137,7 +145,7 @@ Every recipe follows the same pattern.
 2. Change the placeholder folder name in the file name box into your slug.
 3. Replace every `TODO` text.
    The check fails while a `TODO` text is left, so you cannot publish an unfinished page by mistake.
-4. Select **Commit changes** and open a pull request, as described in [4. Publish your change](#4-publish-your-change).
+4. Select **Commit changes** and open a pull request, as described in [4. Publish your change](#5-publish-your-change).
 5. Upload images or PDFs into the same folder of your branch, as described in [Add images and files](#add-images-and-files).
 
 The fastest alternative is to copy an existing page of the same kind and edit it.
@@ -235,7 +243,7 @@ Common mistakes:
 
 The body of the file can stay empty.
 The page then shows the abstract.
-Some publications also have a long body page; see [5. Publication blog pages](#5-publication-blog-pages).
+Some publications also have a long body page; see [5. Publication blog pages](#6-publication-blog-pages).
 
 ### Add a news item
 
@@ -622,7 +630,128 @@ Ask the maintainer to review every change, because the page sends emails to the 
 - Without JavaScript the path cards are hidden, and every path and the research proposals are visible.
   The work done with students then stays collapsed, and each path offers a plain email link with the same subject and an empty template.
 
-## 4. Publish your change
+## 4. Change existing content
+
+Every change to an existing page follows the same steps.
+Find the file, edit it on the GitHub website, and publish the change as in [Publish your change](#5-publish-your-change).
+
+### Find and edit a file
+
+1. Open the page on the site and note its address, for example `/publication/rossi-etal-2026-example/`.
+2. Find the matching file with the table below.
+3. On GitHub, open the file and select the pencil icon (**Edit this file**).
+4. Change the text, then select **Commit changes** and choose **Create a new branch for this commit and start a pull request**.
+
+| Page on the site | File to edit |
+| --- | --- |
+| Homepage blocks and their titles | `content/_index.md` |
+| A publication, `/publication/<slug>/` | `content/publication/<slug>/index.md` |
+| A news item on the News page | `content/news/<slug>/index.md` |
+| A person, `/author/<name>/` | `content/authors/<name>/_index.md` |
+| A research area, `/research/<slug>/` | `content/research/<slug>/index.md` |
+| A research proposal, `/proposals/<topic>/<slug>/` | `content/proposals/<topic>/<slug>/index.md` |
+| A project or a tool | `content/projects/<slug>/index.md` or `content/tools/<slug>/index.md` |
+| The introduction of a list page, such as Publications or Tools | `_index.md` in the folder of that section |
+| The Work with us page | `content/work-with-us/index.md` |
+| The menu | `config/_default/menus.yaml` |
+
+A file has two parts.
+The front matter, between the two `---` lines, holds named fields such as `title` and `summary`.
+The body, after the second `---`, holds the text of the page.
+Research area pages and the Work with us page keep almost all their text in front matter fields, so edit the field that holds the sentence you want to change.
+Use the search box of GitHub (press `/` in the repository) to find a sentence when you are not sure which file holds it.
+
+### Remove a paper from the Highlights carousel, or add one
+
+The Highlights carousel of the Publications page shows every publication whose `categories` list includes `Highlight`.
+
+1. Open `content/publication/<slug>/index.md`.
+2. In `categories`, delete the line `  - Highlight`, and keep the type line (`Journal`, `Conference`, `Workshop`, or `Preprint`).
+3. Commit to a new branch and open a pull request.
+
+To add a paper to the carousel, add the line `  - Highlight` under its type.
+A highlighted paper needs a `featured.png` image and a `summary`, because its carousel card shows them.
+
+```yaml
+categories:
+  - Conference
+  - Highlight
+```
+
+### Change the text of a page
+
+- **A sentence in a field:** edit the value after the field name.
+  Keep the quotes when the value has them, and keep the indentation of the line.
+- **A paragraph in a field that starts with `|`:** the text continues on the indented lines below.
+  Edit those lines and keep their indentation.
+- **The body of a page:** edit the text after the second `---` line as normal text.
+  Markdown formatting applies: `**bold**`, `*italic*`, and `[link text](https://...)`.
+- **A date:** use the form `YYYY-MM-DD`.
+  On publications and news, the date also moves the item on the News timeline.
+
+### Replace an image
+
+Upload the new image into the same folder with the same file name, for example `featured.png`.
+GitHub replaces the old file in your branch.
+Keep the image size close to the old one, so the page layout does not change.
+
+### Reorder items
+
+People and research areas are ordered by `weight`: a lower number comes first.
+Items inside a list field, such as the concept blocks of a research area, keep their order in the file.
+Publications, news items, projects, and tools are ordered by `date`, newest first.
+Change these fields to reorder items.
+
+### Hide or remove a page
+
+- **Hide a page for a while:** add the line `draft: true` to its front matter.
+  The page disappears from the site but stays in the repository.
+  Delete the line to show the page again.
+- **Remove a page for good:** delete its whole folder.
+  On GitHub, open each file of the folder and select **Delete file** from the `...` menu, all in the same branch.
+  The check fails when another page still points to the removed one.
+  For example, a research area may cite a deleted publication in `cite`, or a tool may name it in `publication`.
+  Remove those references in the same pull request.
+- **A person who leaves the lab:** do not delete the profile, because their publications link to it.
+  Change `user_groups` to `Former Members`.
+
+### Add a schema to a page
+
+A schema is a small drawing, such as the claim and premise graphs on the Argument Mining page.
+Schemas are SVG files: text files that describe shapes, which the site colors to match its style.
+
+**Change the words of an existing schema.**
+Open the SVG file in the page folder, for example `content/research/am/schema-relations.svg`.
+Each `<text ...>Claim</text>` line holds one label: change the word between `>` and `<`.
+Also update the `aria-label` on the first line, which describes the drawing for screen readers.
+Keep labels short, because a longer word may overflow its box.
+
+**Add a new schema to a research area.**
+
+1. Copy an existing schema of the same page, which already uses the right style classes.
+   Open it, select **Raw**, copy the text, and create a new file in the same folder, such as `schema-new.svg`.
+2. Change the labels as above.
+   Moving or adding boxes means changing the `x`, `y`, `width`, and `height` numbers; ask the maintainer when the drawing needs a new shape.
+3. Point a concept block to the file by its name, in the `overview` list of the research area:
+
+   ```yaml
+   overview:
+     - icon: project-diagram
+       title: Relations
+       text: "One short paragraph about the concept."
+       schema: schema-new.svg
+   ```
+
+Each `overview` block shows under "Core concepts" on the research area page, and its schema also joins the mosaic of that area on the Research page.
+A tool takes one schema in its `schema` field.
+A publication blog page shows a schema with `{{< svg src="schema-new.svg" caption="What it shows." >}}` in its body.
+
+Draw only with the style classes that the existing schemas use, such as `lt-s-node`, `lt-s-txt`, `lt-s-arrow`, `lt-s-support`, and `lt-s-attack`.
+Never set colors in the file: the classes give the site colors.
+The full list of classes is in the developers' guide, section 5, under [`svg`](developers.md#svg).
+The build fails with `overview schema "..." not found` when a block names a file that is not in the folder.
+
+## 5. Publish your change
 
 ### Open a pull request
 
@@ -722,7 +851,7 @@ Some problems produce no message:
 
 When you cannot fix a failure, write a comment on the pull request and ask the maintainer.
 
-## 5. Publication blog pages
+## 6. Publication blog pages
 
 A publication can have a long body: a page that tells the story of the paper, like the project pages that research groups publish.
 31 of the 77 publications have one today, such as `content/publication/ruggeri-et-al-2026-gcam/`.
