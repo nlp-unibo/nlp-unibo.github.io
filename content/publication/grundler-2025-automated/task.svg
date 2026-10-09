@@ -1,0 +1,41 @@
+<svg viewBox="0 0 640 470" role="img" aria-labelledby="jif-task-title" xmlns="http://www.w3.org/2000/svg">
+  <title id="jif-task-title">A CJEU preliminary ruling is a sequence of numbered paragraphs. Only the part between the heading Consideration of the question referred and the heading Costs is considered. Each paragraph in that part is labelled as a Judicial Interpretative Formula (JIF) when it contains at least one of four kinds of statement, and as not a JIF otherwise.</title>
+  <text class="lt-s-sub" x="20" y="24">A CJEU PRELIMINARY RULING, PARAGRAPH BY PARAGRAPH</text>
+
+  <rect class="lt-s-off" x="20" y="36" width="600" height="34" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="320" y="58">Earlier paragraphs: not considered</text>
+
+  <text class="lt-s-mono" x="20" y="96">“Consideration of the question referred”</text>
+
+  <rect class="lt-s-tok" x="20" y="108" width="460" height="40" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="250" y="133">Interprets a rule, part of a rule, or a general principle</text>
+  <rect class="lt-s-on" x="496" y="113" width="124" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-ontxt" x="558" y="133">JIF</text>
+
+  <rect class="lt-s-tok" x="20" y="156" width="460" height="40" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="250" y="181">States consequences of interpreting or applying a rule</text>
+  <rect class="lt-s-on" x="496" y="161" width="124" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-ontxt" x="558" y="181">JIF</text>
+
+  <rect class="lt-s-tok" x="20" y="204" width="460" height="40" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="250" y="229">Contains none of the four kinds of statement</text>
+  <rect class="lt-s-label" x="496" y="209" width="124" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-ontxt" x="558" y="229">not JIF</text>
+
+  <rect class="lt-s-tok" x="20" y="252" width="460" height="40" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="250" y="277">Subsumes a fact within a rule</text>
+  <rect class="lt-s-on" x="496" y="257" width="124" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-ontxt" x="558" y="277">JIF</text>
+
+  <rect class="lt-s-tok" x="20" y="300" width="460" height="40" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="250" y="325">Qualifies a fact as a concept contained in a rule</text>
+  <rect class="lt-s-on" x="496" y="305" width="124" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-ontxt" x="558" y="325">JIF</text>
+
+  <text class="lt-s-mono" x="20" y="370">“Costs”</text>
+
+  <rect class="lt-s-off" x="20" y="382" width="600" height="34" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="320" y="404">Later paragraphs: not considered</text>
+
+  <text class="lt-s-sub" x="20" y="452">ONE DECISION PER PARAGRAPH: JIF OR NOT JIF</text>
+</svg>

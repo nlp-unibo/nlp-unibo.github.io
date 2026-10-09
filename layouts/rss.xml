@@ -27,11 +27,13 @@
     </image>
     {{end -}}
     {{ range $pages }}
+    {{/* A news item has no page, so its link opens the item on the News page. */}}
+    {{ $link := .Permalink }}{{ if eq .Section "news" }}{{ $link = printf "/news/#news-%s" (.File.ContentBaseName | urlize) | absURL }}{{ end }}
     <item>
       <title>{{ .Title }}</title>
-      <link>{{ .Permalink }}</link>
+      <link>{{ $link }}</link>
       <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" | safeHTML }}</pubDate>
-      <guid>{{ .Permalink }}</guid>
+      <guid>{{ $link }}</guid>
       <description>{{ .Content | html }}</description>
     </item>
     {{ end }}

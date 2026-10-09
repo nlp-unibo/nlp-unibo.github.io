@@ -1,5 +1,5 @@
-# Topics shown as colored tags under each project and tool card.
-# A project or tool lists keys from this file in its `topics` front matter field.
+# Topics shown as colored tags on publication pages and research map panels.
+# A page lists keys from this file in its `topics` field.
 # Change a label or a color here to update every card that uses it.
 legal:
   label: Legal
@@ -37,6 +37,8 @@ sustainability:
   label: Sustainability
   background: '#9bc53d'
   text: '#1f3a10'
+# `prototype` marks a publication or thesis that presents a system built to demonstrate its method, which may no
+# longer be available. A system that readers can use today goes on the Tools page instead, without this topic.
 prototype:
   label: Prototype
   background: '#2b2f36'
@@ -57,3 +59,35 @@ benchmark:
   label: Benchmark
   background: '#3f51b5'
   text: '#ffffff'
+speech:
+  label: Speech
+  background: '#0f766e'
+  text: '#ffffff'
+interpretability:
+  label: Interpretability
+  background: '#003060'
+  text: '#ffffff'
+llm-reasoning:
+  label: LLM reasoning
+  background: '#9d174d'
+  text: '#ffffff'
+biomedical:
+  label: Biomedical
+  background: '#f2c94c'
+  text: '#3a2c00'
+dialogue:
+  label: Dialogue
+  background: '#a78bfa'
+  text: '#1e1b4b'
+knowledge-extraction:
+  label: Knowledge extraction
+  background: '#ff8a65'
+  text: '#3b1205'
+model-compression:
+  label: Model compression
+  background: '#4d7c0f'
+  text: '#ffffff'
+fact-checking:
+  label: Fact-checking
+  background: '#14b8a6'
+  text: '#003060'

@@ -1,8 +1,0 @@
-{{/* Renders one card per child section of the given section, such as each proposal topic under "proposals". */}}
-{{- with site.GetPage (.Get 0) -}}
-  {{- range $index, $section := .Sections -}}
-    {{- partial "functions/render_view" (dict "page" $.Page "item" $section "view" "card" "index" $index) -}}
-  {{- end -}}
-{{- else -}}
-  {{- errorf "section-cards: section %q not found in %s" (.Get 0) .Page.File.Path -}}
-{{- end -}}

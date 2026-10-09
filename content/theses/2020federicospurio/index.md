@@ -30,4 +30,5 @@ categories:
   - Bachelor thesis
 aliases:
   - /students_bscs/2020federicospurio/
+topics: [argument-mining, dialogue, prototype]
 ---

@@ -12,7 +12,10 @@ publication: "Preprint"
 publication_short: ""
 doi: ""
 abstract: "TODO: Add abstract."
+# One sentence shown under the title of the publication page and on publication cards
 summary: ""
+# Optional shorter summary of at most 15 words for the homepage preprint card
+card_summary: ""
 tags: []
 featured: false
 url_pdf: ""
@@ -30,6 +33,48 @@ image:
 projects: []
 categories:
   - Preprint
+# Optional affiliations shown under the authors
+affiliations: []
+# Research topics as keys of data/topics.yaml, shown as colored tags
+topics: []
 ---
 
-<!-- Add optional supplementary text here. -->
+<!--
+The body is the project page of the paper, shown after the abstract.
+It guides a reader outside the field from the research setting, to the motivation, to the method, to the results.
+Never show a number or a term before the text has given its context. The page links to no other publication.
+Base every statement on the paper, and leave details to the paper itself.
+Keep the five sections below, so that every page has the same structure; each `##` heading also appears in the section menu.
+
+Visual components (see docs/developers.md, section 5, for their YAML):
+  {{</* figure src="method.png" caption="..." */>}}  a figure from the paper, saved in this folder
+  {{</* gap */>}} ... {{</* /gap */>}}                comparison with related work
+  {{</* pipeline */>}} ... {{</* /pipeline */>}}      method diagram
+  {{</* stages */>}} ... {{</* /stages */>}}          interactive diagram of what is trained, optimized, or frozen at each stage
+  {{</* numbers */>}} ... {{</* /numbers */>}}        headline numbers, only in Results
+  {{</* bars */>}} ... {{</* /bars */>}}              interactive results chart
+  {{</* annotate */>}} ... {{</* /annotate */>}}      interactive annotated text example
+  {{</* takeaways */>}} ... {{</* /takeaways */>}}    numbered takeaway cards
+Save the representative figure as `featured.png`: it becomes the teaser and the preview on every card.
+To publish only the abstract for now, delete everything below this comment.
+-->
+
+## Research setting
+
+TODO: Introduce the task and the field for a newcomer, with a schema or a real example from the paper.
+
+## Motivation
+
+TODO: State the gap in related work with a gap table, then the objective of the paper in one blockquote.
+
+## Approach
+
+TODO: Explain the method around one figure from the paper or a pipeline diagram.
+
+## Results
+
+TODO: Say what was measured, show the headline numbers, then the main results as a chart, a table, or a paper figure.
+
+## Takeaways
+
+TODO: List three takeaways with the takeaways component.

@@ -102,4 +102,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/brambilla-etal-2022-argument-covid/
+topics: [argument-mining, biomedical]
 ---

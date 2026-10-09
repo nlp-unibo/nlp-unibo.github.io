@@ -1,0 +1,34 @@
+{{/* Publications page: the highlights as a looping carousel, then every publication by year with filters */}}
+{{/* (lt/pub-browser.html). */}}
+{{- define "main" -}}
+{{ $pubs := (where site.RegularPages "Section" "publication").ByDate.Reverse }}
+{{ $highlights := where $pubs "Params.categories" "intersect" (slice "Highlight") }}
+<article class="lt-pubs">
+  <div class="lt-band">
+    <section class="lt-pubs-section lt-pubs-wide" aria-labelledby="highlights-title">
+      <h1 class="sr-only">{{ .Title }}</h1>
+      {{ with $highlights }}
+      <h2 class="lt-paths-title" id="highlights-title">Highlights</h2>
+      <div class="lt-carousel is-centered lt-highlights" data-lt-carousel data-lt-loop data-lt-autoplay="8000">
+        <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Highlighted publications">
+          {{ range . }}{{ partial "lt/pub-card.html" (dict "page" . "year" true) }}{{ end }}
+        </div>
+        <div class="lt-carousel-nav" hidden>
+          <div class="lt-carousel-dots">
+            {{ range $i, $pub := . }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $pub.Title }}"></button>{{ end }}
+          </div>
+          <div class="lt-carousel-arrows">
+            <button type="button" data-lt-step="-1" aria-label="Previous highlight"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+            <button type="button" data-lt-step="1" aria-label="Next highlight"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </section>
+  </div>
+
+  <div class="lt-band">
+    {{ partial "lt/pub-browser.html" (dict "pubs" $pubs "id" "all-title" "title" "All publications") }}
+  </div>
+</article>
+{{- end -}}

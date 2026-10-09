@@ -1,0 +1,12 @@
+{{/* Social links of a profile as labelled icon buttons. Input: the profile page. */}}
+{{ $labels := dict "university" "University page" "envelope" "Email" "google-scholar" "Google Scholar" "github" "GitHub" "linkedin" "LinkedIn" "twitter" "Twitter" "globe" "Website" }}
+{{ with .Params.social }}
+<ul class="lt-person-social">
+  {{ range . }}
+  {{ $pack := .icon_pack | default "fas" }}
+  {{ $prefix := cond (in (slice "fab" "fas" "far") $pack) "fa" $pack }}
+  {{ $label := index $labels .icon | default (.icon | humanize) }}
+  <li><a href="{{ .link }}"{{ if hasPrefix .link "http" }} target="_blank" rel="noopener"{{ end }} aria-label="{{ $label }}" title="{{ $label }}"><i class="{{ $pack }} {{ $prefix }}-{{ .icon }}" aria-hidden="true"></i></a></li>
+  {{ end }}
+</ul>
+{{ end }}

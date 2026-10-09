@@ -72,4 +72,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-2015-context/
+topics: [argument-mining]
 ---

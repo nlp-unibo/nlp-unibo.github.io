@@ -1,22 +1,32 @@
 ---
 title: Hate Speech Detection with Argumentative Reasoning
 date: 2026-03-02
-
-tags: ["LLMs", "argument mining", "hate speech", "reasoning"]
-
-summary: "Apply argumentative reasoning to hate speech to make implicit content explicit"
-
+summary: Use argumentative reasoning to make the implicit content of hate speech explicit.
+brief: Hate speech often relies on implicit content and subtle reasoning. This proposal applies argumentative reasoning to make that content explicit, toward hate speech detection systems that are more interpretable and more user-friendly.
+contacts:
+- federico-ruggeri
+- name: Arianna Muti
+  email: arianna.muti@unibocconi.it
+tags:
+- hate speech
+- argument mining
+- reasoning
+- large language models
 aliases:
-  - /proposals_am/hatespeech/
+- /proposals_am/hatespeech/
 ---
 
-**Description:**\
-Hate speech often relies on implicit content and subtle reasoning nuances. 
-Our idea is to apply argumentative reasoning to hate speech to make implicit content explicit in order to define more interpretable and user-friendly hate speech detection systems.
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it), [Arianna Muti](mailto:arianna.muti@unibocconi.it)
+Hate speech often relies on implicit content and subtle reasoning nuances.
+Argument mining is the problem of automatically detecting and extracting arguments from text. An argument usually combines a premise, a fact, that supports a subjective conclusion, a claim.
 
-**References:**
+## Objective
+
+Apply argumentative reasoning to hate speech, to make its implicit content explicit.
+The resulting hate speech detection systems should be more interpretable and more user-friendly.
+
+## References
 
 **Language is Scary when Over-Analyzed: Unpacking Implied Misogynistic Reasoning with Argumentation Theory-Driven Prompts**\
 Arianna Muti, Federico Ruggeri, Khalid Al-Khatib, Alberto Barrón-Cedeño, Tommaso Caselli\

@@ -1,0 +1,24 @@
+{{/* Display data of a publication, shared by its card and its page. Input: the publication page. */}}
+{{- $kinds := slice "Journal" "Conference" "Workshop" "Preprint" -}}
+{{- $kind := index (intersect $kinds (.Params.categories | default slice) | default (slice "Publication")) 0 -}}
+{{- $venue := .Params.publication_short | default .Params.publication | default "" | markdownify | plainify | htmlUnescape -}}
+{{- $links := slice -}}
+{{- $arxiv := "" -}}
+{{- range .Params.links -}}
+  {{- with findRESubmatch `arxiv\.org/(?:abs|pdf)/([0-9]{4}\.[0-9]{4,5})` .url 1 }}{{ $arxiv = index (index . 0) 1 }}{{ end -}}
+{{- end -}}
+{{- with .Params.url_pdf }}{{ $links = $links | append (dict "name" "Paper" "url" (. | relURL) "icon" "fas fa-file-pdf") }}{{ end -}}
+{{- with .Params.doi }}{{ $links = $links | append (dict "name" "DOI" "url" (printf "https://doi.org/%s" .) "icon" "ai ai-doi") }}{{ end -}}
+{{- with .Params.url_code }}{{ $links = $links | append (dict "name" "Code" "url" . "icon" "fab fa-github") }}{{ end -}}
+{{- with $arxiv }}{{ $links = $links | append (dict "name" "arXiv" "url" (printf "https://arxiv.org/abs/%s" .) "icon" "ai ai-arxiv") }}{{ end -}}
+{{- with .Params.url_dataset }}{{ $links = $links | append (dict "name" "Dataset" "url" . "icon" "fas fa-database") }}{{ end -}}
+{{- with .Params.url_project }}{{ $links = $links | append (dict "name" "Demo" "url" . "icon" "fas fa-play-circle") }}{{ end -}}
+{{- with .Params.url_video }}{{ $links = $links | append (dict "name" "Video" "url" . "icon" "fab fa-youtube") }}{{ end -}}
+{{- with .Params.url_slides }}{{ $links = $links | append (dict "name" "Slides" "url" (. | relURL) "icon" "fas fa-chalkboard") }}{{ end -}}
+{{- with .Params.url_poster }}{{ $links = $links | append (dict "name" "Poster" "url" (. | relURL) "icon" "fas fa-image") }}{{ end -}}
+{{- range .Params.links -}}
+  {{- if not (and $arxiv (strings.Contains .url "arxiv.org")) }}{{ $links = $links | append (dict "name" (cond (eq .name "URL") "Paper" .name) "url" .url "icon" "fas fa-link") }}{{ end -}}
+{{- end -}}
+{{- $tldr := .Params.card_summary | default .Params.summary | default "" -}}
+{{- if and (not $tldr) .Params.abstract }}{{ $tldr = .Params.abstract | plainify | truncate 170 }}{{ end -}}
+{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr -}}

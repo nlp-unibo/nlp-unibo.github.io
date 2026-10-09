@@ -82,4 +82,5 @@ categories:
   - Journal
 aliases:
   - /publication_journals/10-3389-fdata-2019-00052/
+topics: [argument-mining]
 ---

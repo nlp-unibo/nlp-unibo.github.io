@@ -1,0 +1,25 @@
+{{/* Links from a page body, for card previews. Returns a slice of dicts with name, url, and a Font Awesome icon class. */}}
+{{/* Relative links to attachments such as program.pdf resolve to the published resource, which exists even when the */}}
+{{/* page itself is not rendered, as for news items; other relative links resolve against the page. */}}
+{{- $links := slice -}}
+{{- $seen := slice -}}
+{{- range findRESubmatch `<a href="([^"]+)"[^>]*>(.*?)</a>` .Content -}}
+  {{- $url := index . 1 | htmlUnescape -}}
+  {{- $name := index . 2 | plainify | htmlUnescape -}}
+  {{- if not (or (hasPrefix $url "http") (hasPrefix $url "/") (hasPrefix $url "mailto:") (hasPrefix $url "#")) -}}
+    {{- with $.Resources.Get $url }}{{ $url = .RelPermalink }}{{ else }}{{ $url = path.Join $.RelPermalink $url }}{{ end -}}
+  {{- end -}}
+  {{- if and $name (not (hasPrefix $url "#")) (not (in $seen $url)) -}}
+    {{- $icon := "fas fa-link" -}}
+    {{- if hasPrefix $url "mailto:" }}{{ $icon = "fas fa-envelope" }}
+    {{- else if strings.Contains $url "arxiv.org" }}{{ $icon = "ai ai-arxiv" }}
+    {{- else if strings.Contains $url "doi.org" }}{{ $icon = "ai ai-doi" }}
+    {{- else if strings.Contains $url "github.com" }}{{ $icon = "fab fa-github" }}
+    {{- else if hasSuffix (lower $url) ".pdf" }}{{ $icon = "fas fa-file-pdf" }}
+    {{- else if hasPrefix $url "/" }}{{ $icon = "fas fa-arrow-right" }}
+    {{- end -}}
+    {{- $links = $links | append (dict "name" $name "url" $url "icon" $icon) -}}
+    {{- $seen = $seen | append $url -}}
+  {{- end -}}
+{{- end -}}
+{{- return $links -}}

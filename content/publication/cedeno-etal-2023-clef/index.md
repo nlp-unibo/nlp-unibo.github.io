@@ -92,4 +92,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/cedeno-etal-2023-clef/
+topics: [fact-checking, benchmark]
 ---

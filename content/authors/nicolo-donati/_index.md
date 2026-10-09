@@ -21,8 +21,8 @@ interests:
   - Text Generation
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/n.donati/en'
   - icon: envelope
     icon_pack: fas

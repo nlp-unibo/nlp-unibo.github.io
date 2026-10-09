@@ -85,25 +85,19 @@ h1, h2, h3, h4, h5, h6,
   padding: 70px 0;
 }
 
-// Cards use a thin border and a subtle hover state instead of shadows
+// List cards (layouts/_partials/views/card.html) use the clickable surface of .lt-link-card.
+// Their title link covers the card, so other links in the card sit above it.
 .card-simple {
-  border: 1px solid $lt-border;
-  border-radius: 10px;
-  box-shadow: none;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  position: relative;
+  border-radius: 16px;
 
-  &:hover {
-    border-color: $lt-blue;
-    transform: translateY(-2px);
+  a:not(.lt-stretch) {
+    position: relative;
+    z-index: 2;
   }
-}
 
-.dark .card-simple {
-  border-color: rgba(255, 255, 255, 0.12);
-  background: transparent;
-
-  &:hover {
-    border-color: $lt-sky;
+  &:hover .img-hover-zoom img {
+    transform: scale(1.06);
   }
 }
 
@@ -132,58 +126,9 @@ h1, h2, h3, h4, h5, h6,
   font-weight: 600;
 }
 
-// Hero: compact and brand-colored; the CTA reads as the primary action
-.wg-hero {
-  .hero-title {
-    font-size: clamp(2.2rem, 5vw, 3.4rem);
-    font-weight: 700;
-    line-height: 1.1;
-  }
-
-  .hero-lead {
-    color: #33475b;
-  }
-}
-
-.dark .wg-hero .hero-lead {
-  color: #c9d6e3;
-}
-
-.cta-group {
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-left: 0;
-  margin-right: 0;
-
-  @include media-breakpoint-up(md) {
-    justify-content: flex-start;
-  }
-}
-
-.cta-group .btn {
-  background: $lt-orange;
-  border-color: $lt-orange;
-  color: $lt-navy !important;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none !important;
-  padding: 0.6rem 1.3rem;
-  border-radius: 8px;
-
-  &:hover {
-    background: lighten($lt-orange, 6%);
-    border-color: lighten($lt-orange, 6%);
-  }
-}
-
-// The logo has a white background, so it sits in a rounded tile above the hero backdrop
-.wg-hero img {
-  border-radius: 16px;
-  box-shadow: 0 18px 40px -24px rgba($lt-navy, 0.45);
-}
-
-// Hero backdrop: a soft brand gradient with a faint dot grid
-#section-hero {
+// Hero backdrop: a soft brand gradient with a faint dot grid, also behind the opening band of section pages
+#section-hero,
+.lt-band.lt-page-intro {
   background:
     radial-gradient(circle at 1px 1px, rgba($lt-blue, 0.12) 1px, transparent 0) 0 0 / 22px 22px,
     radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.22), transparent 55%),
@@ -191,140 +136,13 @@ h1, h2, h3, h4, h5, h6,
     #fff;
 }
 
-.dark #section-hero {
+.dark #section-hero,
+.dark .lt-band.lt-page-intro {
   background:
     radial-gradient(circle at 1px 1px, rgba($lt-sky, 0.10) 1px, transparent 0) 0 0 / 22px 22px,
     radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.14), transparent 55%),
     radial-gradient(ellipse at 10% 90%, rgba($lt-orange, 0.08), transparent 50%),
     #0d1a2a;
-}
-
-// Homepage figures, computed by the site-stats shortcode
-.lt-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 1rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-
-  a {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 1.1rem 0.5rem;
-    border: 1px solid $lt-border;
-    border-radius: 12px;
-    text-decoration: none !important;
-    transition: border-color 0.15s ease;
-
-    &:hover {
-      border-color: $lt-blue;
-    }
-  }
-}
-
-.lt-stats-value {
-  font-size: 2.2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: $lt-navy;
-  font-variant-numeric: tabular-nums;
-}
-
-.lt-stats-label {
-  margin-top: 0.3rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: $lt-muted;
-}
-
-.dark {
-  .lt-stats a {
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  .lt-stats-value {
-    color: #f1f5fa;
-  }
-
-  .lt-stats-label {
-    color: #9fb2c6;
-  }
-}
-
-// Research tiles, rendered by the section-tiles shortcode
-.lt-tiles {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.25rem;
-}
-
-.lt-tile {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1.5rem;
-  border: 1px solid $lt-border;
-  border-radius: 12px;
-  color: inherit !important;
-  text-decoration: none !important;
-  transition: border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
-
-  &:hover {
-    border-color: $lt-blue;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 24px -14px rgba($lt-navy, 0.45);
-  }
-}
-
-.lt-tile-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 10px;
-  background: rgba($lt-sky, 0.18);
-  color: $lt-blue;
-  font-size: 1.15rem;
-}
-
-.lt-tile-title {
-  font-size: 1.15rem;
-  font-weight: 650;
-  color: $lt-navy;
-}
-
-.lt-tile-summary {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: $lt-muted;
-}
-
-.dark {
-  .lt-tile {
-    border-color: rgba(255, 255, 255, 0.12);
-
-    &:hover {
-      border-color: $lt-sky;
-    }
-  }
-
-  .lt-tile-icon {
-    background: rgba($lt-sky, 0.14);
-    color: $lt-sky;
-  }
-
-  .lt-tile-title {
-    color: #f1f5fa;
-  }
-
-  .lt-tile-summary {
-    color: #9fb2c6;
-  }
 }
 
 // Award line under a citation, set through the `award` front matter field
@@ -389,18 +207,6 @@ h1, h2, h3, h4, h5, h6,
 
 .dark .lt-kind-journal { background: #2a5a8a; }
 
-// Unibo seal for links to a member's University of Bologna page (`icon_pack: custom`, `icon: unibo`)
-.network-icon .custom-unibo {
-  display: inline-block;
-  width: 1.15em;
-  height: 1.15em;
-  vertical-align: -0.2em;
-  // The seal is a mask, so it takes the text color of the other social icons.
-  background-color: currentColor;
-  -webkit-mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
-  mask: url("/media/icons/unibo-seal.svg") center / contain no-repeat;
-}
-
 // Year headings inserted by assets/js/ltlab.js in long citation lists
 .lt-year {
   margin: 1.8rem 0 0.4rem;
@@ -448,10 +254,29 @@ h1, h2, h3, h4, h5, h6,
   translate: none;
 }
 
+// Section focus, added by assets/js/ltlab.js only when motion is allowed: `--lt-f` runs from 0 to 1 as a section
+// nears the focus line. In focus, a section is at full size and color; away from it, it shrinks to 96% and turns grey.
+// Opacity stays at 0.94 or more, the lowest value that keeps the muted text at a 4.5:1 contrast, so every section
+// stays readable. A short transition smooths the steps between scroll events.
+.lt-section-focus {
+  .home-section > .container,
+  .lt-band > * {
+    opacity: calc(0.94 + 0.06 * var(--lt-f, 1));
+    scale: calc(0.96 + 0.04 * var(--lt-f, 1));
+    filter: unquote("grayscale(calc(1 - var(--lt-f, 1)))");
+    transform-origin: 50% 0;
+    transition: opacity 0.3s ease, scale 0.3s ease, filter 0.3s ease;
+  }
+}
+
 @media print {
-  .lt-reveal {
+  .lt-reveal,
+  .lt-section-focus .home-section > .container,
+  .lt-section-focus .lt-band > * {
     opacity: 1;
     translate: none;
+    scale: none;
+    filter: none;
   }
 }
 
@@ -463,7 +288,7 @@ h1, h2, h3, h4, h5, h6,
   }
 
   .card-simple,
-  .lt-tile {
+  .lt-link-card {
     transition: none;
   }
 }
@@ -556,4 +381,4938 @@ h1, h2, h3, h4, h5, h6,
   #navbar-main .main-menu-item .nav-item .nav-link {
     padding: 5px 15px !important;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Homepage blocks (layouts/_partials/blocks/lt-*.html) and publication pages
+// ---------------------------------------------------------------------------
+
+$lt-ink: #33475b;
+$lt-dark-border: rgba(255, 255, 255, 0.12);
+$lt-dark-muted: #9fb2c6;
+$lt-dark-card: #112236;
+
+// Navbar brand: logo mark plus the site title
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  img {
+    height: 34px;
+    width: auto;
+  }
+}
+
+.lt-brand-text {
+  font-size: 1.05rem;
+  color: $lt-navy;
+}
+
+.dark .lt-brand-text {
+  color: #f1f5fa;
+}
+
+// The navy logo gets a thin sky outline so it stands out on the dark navbar
+.dark .navbar-brand img {
+  filter: drop-shadow(0 0 0.6px $lt-sky) drop-shadow(0 0 0.6px $lt-sky);
+}
+
+// Shared pieces
+.lt-eyebrow {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: $lt-blue;
+}
+
+.dark .lt-eyebrow {
+  color: $lt-sky;
+}
+
+.lt-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.lt-section-title {
+  margin: 0;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+}
+
+.lt-section-subtitle {
+  max-width: 40rem;
+  margin: 0.5rem 0 0;
+  color: $lt-muted;
+}
+
+.dark .lt-section-subtitle {
+  color: $lt-dark-muted;
+}
+
+.lt-see-all {
+  flex-shrink: 0;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.lt-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.3rem;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+}
+
+.lt-btn-primary {
+  background: $lt-navy;
+  color: #fff !important;
+
+  &:hover {
+    background: $lt-blue;
+  }
+}
+
+.lt-btn-ghost {
+  border-color: $lt-border;
+  color: $lt-navy !important;
+  background: rgba(255, 255, 255, 0.7);
+
+  &:hover {
+    border-color: $lt-blue;
+  }
+}
+
+.dark {
+  .lt-btn-primary {
+    background: $lt-sky;
+    color: $lt-navy !important;
+  }
+
+  .lt-btn-ghost {
+    border-color: $lt-dark-border;
+    background: transparent;
+    color: #f1f5fa !important;
+  }
+}
+
+.lt-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+  color: $lt-muted;
+}
+
+.dark .lt-meta {
+  color: $lt-dark-muted;
+}
+
+.lt-pill {
+  display: inline-block;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  text-transform: uppercase;
+}
+
+.lt-pill { background: rgba($lt-blue, 0.1); color: $lt-blue; }
+.lt-pill-paper { background: rgba($lt-blue, 0.12); color: $lt-blue; }
+.lt-pill-call { background: rgba(#7b4fa0, 0.12); color: #6a3f8f; }
+.lt-pill-event { background: rgba($lt-orange, 0.16); color: #9a5600; }
+
+.dark {
+  .lt-pill { background: rgba($lt-sky, 0.14); color: $lt-sky; }
+  .lt-pill-call { background: rgba(#b98ad8, 0.16); color: #d2b2e8; }
+  .lt-pill-event { background: rgba($lt-orange, 0.18); color: #f5c46b; }
+}
+
+.lt-chips,
+.lt-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lt-chip {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid $lt-border;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: $lt-navy !important;
+  background: #fff;
+  text-decoration: none !important;
+  transition: border-color 0.15s ease, color 0.15s ease;
+
+  i {
+    color: $lt-blue;
+  }
+
+  &:hover {
+    border-color: $lt-blue;
+  }
+}
+
+.dark .lt-chip {
+  border-color: $lt-dark-border;
+  background: transparent;
+  color: #dbe7f3 !important;
+
+  i {
+    color: $lt-sky;
+  }
+}
+
+.lt-tags li,
+.lt-tags a {
+  padding: 0.1rem 0.55rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: $lt-ink;
+  background: #eef2f7;
+  text-decoration: none !important;
+}
+
+.lt-tags a {
+  transition: background-color 0.15s ease, color 0.15s ease;
+
+  &:hover {
+    color: #fff;
+    background: $lt-blue;
+  }
+}
+
+.dark .lt-tags a:hover {
+  color: $lt-navy;
+  background: $lt-sky;
+}
+
+.lt-tags li:has(a) {
+  padding: 0;
+  background: none;
+}
+
+.dark .lt-tags li,
+.dark .lt-tags a {
+  color: #dbe7f3;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+// A link that makes its whole card clickable; chips stay clickable above it
+.lt-stretch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+// Cards
+// A static card is a flat tinted panel: no border, no shadow, no hover state.
+.lt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba($lt-blue, 0.05);
+}
+
+.dark .lt-card {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+// A clickable card is a raised white surface, so it reads as a link before any hover. It lifts on hover and on
+// keyboard focus only, so a focus that a script returns after a click does not move it.
+.lt-link-card {
+  border: 1px solid $lt-border;
+  background: #fff;
+  color: inherit !important;
+  text-decoration: none !important;
+  box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover,
+  &:has(:focus-visible) {
+    border-color: rgba($lt-blue, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 18px 36px -24px rgba($lt-navy, 0.5);
+  }
+
+  &:hover .lt-cover-art {
+    transform: scale(1.06);
+  }
+}
+
+.dark .lt-link-card {
+  border-color: $lt-dark-border;
+  background: $lt-dark-card;
+  box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.8);
+
+  &:hover,
+  &:has(:focus-visible) {
+    border-color: rgba($lt-sky, 0.5);
+  }
+}
+
+.lt-area-head {
+  position: relative;
+  aspect-ratio: 2 / 1;
+  overflow: hidden;
+}
+
+.lt-cover {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+img.lt-cover {
+  object-fit: cover;
+  background: #fff;
+}
+
+.lt-cover-art {
+  transform-origin: center;
+  transition: transform 0.6s ease;
+  animation: lt-drift 14s ease-in-out infinite alternate;
+}
+
+@keyframes lt-drift {
+  from { translate: 0 0; }
+  to { translate: -10px 4px; }
+}
+
+.lt-area-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  color: $lt-blue;
+  background: rgba($lt-sky, 0.16);
+}
+
+.dark .lt-area-icon {
+  color: $lt-sky;
+  background: rgba($lt-sky, 0.12);
+}
+
+.lt-card-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 1.2rem 1.3rem 1.3rem;
+}
+
+.lt-card-title {
+  margin: 0;
+  font-size: 1.12rem;
+  line-height: 1.35;
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+
+.lt-card-text {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: $lt-muted;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.dark .lt-card-text {
+  color: $lt-dark-muted;
+}
+
+.lt-card-body .lt-chips {
+  margin-top: auto;
+  padding-top: 0.4rem;
+}
+
+// Hero
+#section-hero {
+  padding: 56px 0 64px;
+}
+
+.lt-hero {
+  max-width: 52rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+// The logo above the eyebrow. The eyebrow names the lab, so the logo is decorative for screen readers. In dark mode
+// the navy bubble takes the lighter brand blue, which stands out from the dark hero.
+.lt-hero-logo {
+  width: clamp(4rem, 9vw, 6rem);
+  margin: 0 auto 1.25rem;
+
+  svg { display: block; width: 100%; height: auto; }
+}
+
+.dark .lt-hero-logo svg > path:first-child { fill: $lt-blue; }
+
+.lt-hero-title {
+  margin: 0 0 1.1rem;
+  font-size: clamp(2.4rem, 6.4vw, 4.6rem);
+  font-weight: 750;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+
+  em {
+    font-style: normal;
+    color: $lt-blue;
+  }
+}
+
+.dark .lt-hero-title em {
+  color: $lt-sky;
+}
+
+.lt-hero-lead {
+  max-width: 42rem;
+  margin: 0 auto;
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  line-height: 1.6;
+  color: $lt-ink;
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.dark .lt-hero-lead {
+  color: #c9d6e3;
+}
+
+.lt-hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
+
+// Research map
+.lt-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.lt-area {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.lt-area-head {
+  aspect-ratio: 3 / 1;
+}
+
+.lt-area-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.3rem;
+}
+
+.lt-area-title {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.lt-area-tagline {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: $lt-ink;
+}
+
+.lt-area-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.18rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: $lt-blue;
+    background: rgba($lt-sky, 0.16);
+  }
+}
+
+.dark {
+  .lt-area-tagline { color: #c9d6e3; }
+  .lt-area-topics li { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+}
+
+// Paper carousel (layouts/_partials/blocks/lt-papers.html)
+// The track is a scroll-snap row, so it works without JavaScript; the script adds `is-enhanced` and shows the controls.
+.lt-carousel-track {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+
+  &:focus-visible {
+    outline: 2px solid $lt-blue;
+    outline-offset: 4px;
+  }
+}
+
+// A scripted page hides the scrollbar from the first paint, before the deferred script hides it with `is-enhanced`
+// (the `lt-js` class comes from hooks/head-start).
+.lt-js .lt-carousel-track {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// With the script, the track moves only through ltlab.js: swipes, wheel gestures, arrow keys, and controls.
+.is-enhanced .lt-carousel-track {
+  overflow-x: hidden;
+  scroll-snap-type: none;
+  touch-action: pan-y;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.lt-slide {
+  display: grid;
+  flex: 0 0 88%;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  min-height: 22rem;
+  scroll-snap-align: start;
+
+  @media (max-width: 767.98px) {
+    flex-basis: 92%;
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+}
+
+// Carousel cards carry a soft shadow and a faint sky edge so they stand out from the band; the centered card glows a
+// little more. The track pads its top and bottom (and takes the space back) so its overflow does not clip the shadow.
+.lt-carousel-track {
+  padding-block: 1.5rem;
+  margin-block: -1.5rem;
+
+  > .lt-card {
+    border-color: rgba($lt-blue, 0.22);
+    box-shadow: 0 1px 2px rgba($lt-navy, 0.08), 0 18px 40px -20px rgba($lt-navy, 0.55);
+  }
+
+  > .lt-card.is-active { box-shadow: 0 0 0 1px rgba($lt-blue, 0.18), 0 22px 48px -20px rgba($lt-navy, 0.6); }
+}
+
+.dark .lt-carousel-track {
+  > .lt-card {
+    border-color: rgba($lt-sky, 0.22);
+    box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9), 0 0 28px -10px rgba($lt-sky, 0.2);
+  }
+
+  > .lt-card.is-active,
+  > .lt-card:hover {
+    border-color: rgba($lt-sky, 0.45);
+    box-shadow: 0 0 0 1px rgba($lt-sky, 0.12), 0 22px 48px -18px rgba(0, 0, 0, 0.95), 0 0 40px -8px rgba($lt-sky, 0.3);
+  }
+}
+
+// Depth: with the script, the cards beside the current one turn slightly away from the reader, like pages seen from
+// the side, and turn flat as they reach the current place.
+.lt-carousel.is-enhanced .lt-carousel-track {
+  perspective: 1100px;
+
+  > * { transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease, rotate 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease; }
+
+  > .is-active { position: relative; z-index: 1; }
+
+  > .is-active ~ * { rotate: y -24deg; }
+
+  > :has(~ .is-active) { rotate: y 24deg; }
+
+  @media (prefers-reduced-motion: reduce) { > * { transition: none; } }
+}
+
+// In a centered carousel a slide is narrower, so both neighbours peek in.
+.lt-carousel.is-centered .lt-slide {
+  flex-basis: 78%;
+  scroll-snap-align: center;
+
+  @media (max-width: 767.98px) { flex-basis: 90%; }
+}
+
+// Publications highlights: wide, low slides, with the figure and compact text side by side in equal halves.
+.lt-carousel.lt-highlights {
+  .lt-slide {
+    flex-basis: 92%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    min-height: 18rem;
+
+    @media (max-width: 767.98px) { flex-basis: 92%; grid-template-columns: minmax(0, 1fr); min-height: 0; }
+  }
+
+  .lt-slide-media { @media (max-width: 767.98px) { aspect-ratio: 16 / 10; } }
+
+  .lt-slide-body { gap: 0.5rem; padding: 1.4rem 1.6rem; }
+
+  .lt-slide-title { font-size: 1.1rem; }
+
+  .lt-meta, .lt-slide-authors { font-size: 0.8rem; }
+
+  .lt-slide-text { font-size: 0.88rem; line-height: 1.5; }
+
+  .lt-award { font-size: 0.8rem; }
+}
+
+.lt-nowrap { white-space: nowrap; }
+
+.lt-slide-media {
+  position: relative;
+  overflow: hidden;
+
+  .lt-cover {
+    position: absolute;
+    inset: 0;
+  }
+
+  // A paper figure is shown whole on white, never cropped.
+  img.lt-cover {
+    padding: 1rem;
+    object-fit: contain;
+  }
+
+  @media (max-width: 767.98px) {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+.lt-slide-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2rem 2.2rem;
+
+  @media (max-width: 767.98px) {
+    padding: 1.3rem;
+  }
+}
+
+.lt-slide-title {
+  margin: 0;
+  font-size: 1.35rem;
+  line-height: 1.3;
+
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+
+.lt-slide-authors {
+  margin: 0;
+  font-size: 0.88rem;
+  color: $lt-ink;
+}
+
+.lt-slide-text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: $lt-ink;
+}
+
+
+.lt-carousel-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.2rem;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.lt-carousel-dots {
+  display: flex;
+
+  // Each dot keeps a 24px target around its small visible mark.
+  button {
+    display: grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    padding: 0;
+    border: 0;
+    background: none;
+
+    &::before {
+      content: "";
+      width: 0.55rem;
+      height: 0.55rem;
+      border-radius: 999px;
+      background: rgba($lt-blue, 0.3);
+      transition: width 0.2s ease, background 0.2s ease;
+    }
+
+    &[aria-current="true"]::before {
+      width: 1.4rem;
+      background: $lt-blue;
+    }
+  }
+}
+
+// Autoplay: the current dot becomes a longer bar that fills over the delay; the fill holds with the rotation.
+.lt-carousel.is-autoplay .lt-carousel-dots button {
+  &[aria-current="true"] { width: 3.2rem; }
+
+  &[aria-current="true"]::before {
+    width: 2.6rem;
+    background: linear-gradient($lt-blue, $lt-blue) no-repeat left / 0% 100%, rgba($lt-blue, 0.3);
+    animation: lt-dot-fill var(--lt-autoplay) linear forwards;
+  }
+}
+
+.lt-carousel.is-autoplay.is-holding .lt-carousel-dots button[aria-current="true"]::before {
+  animation-play-state: paused;
+}
+
+@keyframes lt-dot-fill {
+  to { background-size: 100% 100%, auto; }
+}
+
+.lt-carousel-arrows {
+  display: flex;
+  gap: 0.5rem;
+
+  button {
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid $lt-border;
+    border-radius: 50%;
+    color: $lt-navy;
+    background: #fff;
+
+    &:hover:not(:disabled) {
+      border-color: $lt-blue;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+    }
+  }
+}
+
+.dark {
+  .lt-slide-text, .lt-slide-authors { color: #c9d6e3; }
+  .lt-carousel-dots button::before { background: rgba($lt-sky, 0.3); }
+  .lt-carousel-dots button[aria-current="true"]::before { background: $lt-sky; }
+  .lt-carousel.is-autoplay .lt-carousel-dots button[aria-current="true"]::before {
+    background: linear-gradient($lt-sky, $lt-sky) no-repeat left / 0% 100%, rgba($lt-sky, 0.3);
+  }
+  .lt-carousel-arrows button { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-carousel-arrows button:hover:not(:disabled) { border-color: $lt-sky; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-carousel-dots button::before { transition: none; }
+}
+
+// News
+.lt-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+
+.lt-news-list {
+  margin: 1.5rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+}
+
+.lt-news-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 7.5rem 9.5rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid $lt-border;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: rgba($lt-blue, 0.04);
+  }
+
+  time {
+    font-size: 0.85rem;
+    color: $lt-muted;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .lt-pill {
+    justify-self: start;
+  }
+
+  @media (max-width: 767.98px) {
+    grid-template-columns: auto 1fr;
+    gap: 0.4rem 0.75rem;
+
+    .lt-news-row-main {
+      grid-column: 1 / -1;
+    }
+  }
+}
+
+.lt-news-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.lt-news-row-title {
+  font-weight: 600;
+  line-height: 1.4;
+  color: $lt-navy !important;
+  text-decoration: none !important;
+}
+
+.dark {
+  .lt-news-list, .lt-news-row { border-color: $lt-dark-border; }
+  .lt-news-row time { color: $lt-dark-muted; }
+  .lt-news-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+}
+
+.lt-news-row-title { color: #f1f5fa !important; }
+}
+
+
+// Publication page in the style of a research project page (layouts/publication/single.html)
+.lt-proj-header {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3.5rem 16px 2rem;
+  text-align: center;
+}
+
+.lt-proj-venue {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+  margin: 0 0 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $lt-muted;
+}
+
+.lt-proj-title {
+  margin: 0;
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
+  font-weight: 720;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  text-align: center !important;
+}
+
+.lt-proj-tagline {
+  max-width: 680px;
+  margin: 1rem auto 0;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: $lt-ink;
+}
+
+.lt-proj-authors {
+  margin: 1.4rem 0 0;
+  font-size: 1.05rem;
+
+  a {
+    color: $lt-blue !important;
+  }
+}
+
+.lt-proj-topics .lt-topics {
+  justify-content: center;
+  margin-top: 0.9rem;
+}
+
+.lt-proj-affiliations {
+  margin: 0.3rem 0 0;
+  font-size: 0.92rem;
+  color: $lt-muted;
+}
+
+.lt-proj-header .lt-award {
+  margin-top: 0.8rem;
+}
+
+.lt-proj-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.6rem;
+}
+
+.lt-proj-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff !important;
+  background: #1f2933;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, transform 0.15s ease;
+
+  &:hover {
+    background: $lt-navy;
+    transform: translateY(-1px);
+  }
+}
+
+.lt-proj-button-light {
+  color: $lt-navy !important;
+  background: #eef2f7;
+
+  &:hover {
+    background: #e1e8f0;
+  }
+}
+
+.lt-proj-numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 220px));
+  justify-content: center;
+  gap: 0.75rem;
+  max-width: 1000px;
+  margin: 0.5rem auto 2rem;
+  padding: 0 16px;
+  list-style: none;
+
+  li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.9rem 1rem;
+    border: 1px solid $lt-border;
+    border-radius: 14px;
+  }
+}
+
+.lt-proj-number {
+  font-size: 1.7rem;
+  font-weight: 750;
+  line-height: 1.1;
+  color: $lt-navy;
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-proj-number-label {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  text-align: center;
+  color: $lt-muted;
+}
+
+.lt-proj-teaser {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  > svg,
+  img,
+  video {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+  }
+
+  video {
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  img {
+    max-height: 560px;
+    object-fit: contain;
+    background: #fff;
+  }
+
+  // The generated cover is only a placeholder, so it stays a low banner
+  > svg {
+    aspect-ratio: 3 / 1;
+  }
+
+  figcaption {
+    max-width: 760px;
+    margin: 0.8rem auto 0;
+    font-size: 0.92rem;
+    text-align: center;
+    color: $lt-muted;
+  }
+}
+
+.lt-proj-nav {
+  position: sticky;
+  top: 70px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.5rem;
+  margin-top: 2.5rem;
+  padding: 0.75rem 16px;
+  border-top: 1px solid $lt-border;
+  border-bottom: 1px solid $lt-border;
+  background: rgba(255, 255, 255, 0.9);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+
+  a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: $lt-muted !important;
+    text-decoration: none !important;
+
+    &:hover {
+      color: $lt-navy !important;
+    }
+  }
+}
+
+.lt-proj-body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1rem 16px 4rem;
+  font-size: 1.06rem;
+  line-height: 1.7;
+
+  h2 {
+    margin: 3.2rem 0 1rem;
+    font-size: 1.75rem;
+    text-align: center;
+    scroll-margin-top: 130px;
+  }
+
+  h3 {
+    margin: 2rem 0 0.6rem;
+    font-size: 1.2rem;
+  }
+
+  figure {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  figure img {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  figcaption {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+    color: $lt-muted;
+  }
+
+  table {
+    width: 100%;
+    margin: 1.5rem 0;
+    font-size: 0.92rem;
+    border-collapse: collapse;
+
+    // On phones a wide table scrolls sideways inside its own box instead of widening the page.
+    @media (max-width: 575.98px) { position: relative; display: block; overflow-x: auto; }
+  }
+
+  th,
+  td {
+    padding: 0.5rem 0.6rem;
+    border-bottom: 1px solid $lt-border;
+  }
+
+  thead th {
+    border-bottom: 2px solid $lt-navy;
+  }
+
+  blockquote {
+    margin: 2rem auto;
+    padding: 1rem 1.4rem;
+    border-left: 4px solid $lt-orange;
+    border-radius: 0 12px 12px 0;
+    font-size: 1.15rem;
+    color: $lt-navy;
+    background: rgba($lt-orange, 0.07);
+
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  section {
+    scroll-margin-top: 130px;
+  }
+}
+
+.lt-proj-abstract-only p {
+  text-align: justify;
+  hyphens: auto;
+}
+
+.lt-proj-tags {
+  justify-content: center;
+  margin-top: 2.5rem;
+}
+
+.lt-post-related {
+  padding: 3.5rem 0 4.5rem;
+  background: rgb(246, 248, 251);
+
+  .lt-section-title {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.lt-pub-empty {
+  color: $lt-muted;
+  text-align: center;
+}
+
+.lt-bib {
+  position: relative;
+  text-align: left;
+
+  pre {
+    margin: 0;
+    padding: 1.1rem 1.2rem;
+    border-radius: 12px;
+    font-size: 0.8rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    background: #f4f6f9;
+  }
+
+  code {
+    white-space: inherit;
+  }
+}
+
+.lt-bib-copy {
+  position: absolute;
+  z-index: 1;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid $lt-border;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: $lt-navy;
+  background: #fff;
+  cursor: pointer;
+}
+
+.dark {
+  .lt-proj-venue, .lt-proj-affiliations, .lt-proj-number-label, .lt-proj-teaser figcaption, .lt-proj-body figcaption, .lt-pub-empty { color: $lt-dark-muted; }
+  .lt-proj-tagline { color: #c9d6e3; }
+  .lt-proj-authors a { color: $lt-sky !important; }
+  .lt-proj-button { background: #f1f5fa; color: $lt-navy !important; }
+  .lt-proj-button:hover { background: $lt-sky; }
+  .lt-proj-button-light { background: rgba(255, 255, 255, 0.08); color: #f1f5fa !important; }
+  .lt-proj-numbers li { border-color: $lt-dark-border; }
+  .lt-proj-number { color: #f1f5fa; }
+  .lt-proj-nav { border-color: $lt-dark-border; background: rgba(13, 26, 42, 0.9); }
+  .lt-proj-nav a { color: $lt-dark-muted !important; }
+  .lt-proj-nav a:hover { color: #f1f5fa !important; }
+  .lt-proj-body th, .lt-proj-body td { border-color: $lt-dark-border; }
+  .lt-proj-body thead th { border-bottom-color: $lt-sky; }
+  .lt-proj-body blockquote { color: #f1f5fa; background: rgba($lt-orange, 0.1); }
+  .lt-post-related { background: #112236; }
+  .lt-bib pre { background: rgba(255, 255, 255, 0.05); }
+  .lt-bib-copy { border-color: $lt-dark-border; background: $lt-dark-card; color: #f1f5fa; }
+}
+
+// Visual components for publication pages (layouts/_shortcodes: pipeline, gap, bars, takeaways, annotate)
+// Annotation colors are the validated categorical slots 1-4; labels are always visible, so no color stands alone.
+$lt-cat-light: #2a78d6, #eb6834, #1baf7a, #eda100;
+$lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
+
+.lt-viz {
+  margin: 2rem 0;
+  padding: 0;
+  text-align: left !important;
+
+  figcaption,
+  .lt-viz-note {
+    margin-top: 0.7rem;
+    font-size: 0.9rem;
+    text-align: center;
+    color: $lt-muted;
+  }
+}
+
+.lt-viz-scroll {
+  // Positioned, so absolutely positioned screen-reader labels inside stay within the scroll box.
+  position: relative;
+  overflow-x: auto;
+}
+
+.lt-ours {
+  display: inline-block;
+  margin-left: 0.3rem;
+  padding: 0 0.45rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  text-transform: uppercase;
+  vertical-align: 0.15em;
+  color: $lt-navy;
+  background: rgba($lt-orange, 0.25);
+}
+
+// Pipeline: steps keep a readable width and the row scrolls on narrow screens
+.lt-pipeline {
+  overflow-x: auto;
+  padding-bottom: 0.3rem;
+}
+
+.lt-pipeline ol {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: 767.98px) {
+    grid-auto-flow: row;
+    gap: 1.8rem;
+  }
+}
+
+.lt-pipeline-step {
+  position: relative;
+  min-width: 6.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.9rem 0.8rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+  background: #fff;
+  font-size: 0.85rem;
+  overflow-wrap: break-word;
+  line-height: 1.5;
+  text-align: left;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    border-color: $lt-blue;
+    transform: translateY(-2px);
+  }
+
+  strong {
+    font-size: 0.95rem;
+    line-height: 1.3;
+    color: $lt-navy;
+  }
+
+  span:last-child {
+    color: $lt-muted;
+  }
+
+  &.is-highlight {
+    border-color: $lt-orange;
+    box-shadow: 0 0 0 3px rgba($lt-orange, 0.15);
+  }
+
+  // Animated connector to the next step
+  &:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -1.45rem;
+    width: 1.3rem;
+    height: 2px;
+    background: repeating-linear-gradient(90deg, $lt-blue 0 6px, transparent 6px 10px);
+    background-size: 20px 2px;
+    animation: lt-flow 1s linear infinite;
+
+    @media (max-width: 767.98px) {
+      top: auto;
+      right: auto;
+      bottom: -1.5rem;
+      left: 1.6rem;
+      width: 2px;
+      height: 1.2rem;
+      background: repeating-linear-gradient(180deg, $lt-blue 0 6px, transparent 6px 10px);
+    }
+  }
+}
+
+@keyframes lt-flow {
+  to { background-position: 20px 0; }
+}
+
+.lt-pipeline-branches {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: 0.35rem 0.55rem;
+    border-left: 3px solid $lt-sky;
+    border-radius: 0 8px 8px 0;
+    font-size: 0.82rem;
+    line-height: 1.4;
+    color: $lt-muted;
+    background: rgba($lt-sky, 0.1);
+  }
+
+  b {
+    color: $lt-navy;
+  }
+
+  p {
+    display: inline;
+    margin: 0;
+  }
+}
+
+.dark .lt-pipeline-branches b {
+  color: #f1f5fa;
+}
+
+.lt-pipeline-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.3rem;
+  border-radius: 9px;
+  font-weight: 700;
+  color: $lt-blue;
+  background: rgba($lt-sky, 0.18);
+}
+
+// Gap table
+.lt-gap table {
+  width: 100%;
+  margin: 0 !important;
+  font-size: 0.92rem;
+  border-collapse: collapse;
+
+  th,
+  td {
+    padding: 0.6rem 0.7rem;
+    text-align: center;
+    border-bottom: 1px solid $lt-border;
+  }
+
+  tbody th {
+    font-weight: 600;
+    text-align: left;
+  }
+
+  thead th {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    color: $lt-muted;
+    border-bottom: 2px solid $lt-navy;
+  }
+
+  tr.is-ours {
+    background: rgba($lt-orange, 0.08);
+
+    th {
+      color: $lt-navy;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.lt-yes { color: #1a7f4b; font-size: 1.1rem; }
+.lt-no { color: #c0392b; opacity: 0.75; font-size: 1.1rem; }
+.lt-partial { color: #b26b00; font-size: 1.1rem; }
+
+// Bars
+.lt-bars {
+  padding: 1.3rem 1.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+
+  .lt-viz-title {
+    margin: 0 0 1rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-align: left;
+    color: $lt-navy;
+
+    span {
+      font-weight: 500;
+      color: $lt-muted;
+    }
+  }
+
+  ul {
+    display: grid;
+    gap: 0.55rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.lt-bar {
+  display: grid;
+  grid-template-columns: minmax(8rem, 13rem) minmax(0, 1fr) 6.5rem;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.88rem;
+  outline: none;
+
+  @media (max-width: 575.98px) {
+    grid-template-columns: 1fr 3.6rem;
+
+    .lt-bar-track {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.lt-bar-label {
+  line-height: 1.3;
+}
+
+.lt-bar-track {
+  position: relative;
+  height: 0.9rem;
+  border-radius: 4px;
+  background: rgba($lt-blue, 0.07);
+}
+
+.lt-bar-fill {
+  display: block;
+  width: var(--w);
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  background: rgba($lt-blue, 0.55);
+  transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.15s ease;
+}
+
+// Standard deviation whisker centered on the end of the bar
+.lt-bar-err {
+  position: absolute;
+  top: 50%;
+  left: var(--l);
+  width: var(--ew);
+  height: 0;
+  border-top: 1.5px solid $lt-navy;
+  transition: opacity 0.4s ease 0.8s;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: -5px;
+    width: 1.5px;
+    height: 8px;
+    background: $lt-navy;
+  }
+
+  &::before { left: 0; }
+  &::after { right: 0; }
+}
+
+.lt-bars.is-waiting .lt-bar-err {
+  opacity: 0;
+}
+
+.dark .lt-bar-err {
+  border-top-color: #f1f5fa;
+
+  &::before,
+  &::after {
+    background: #f1f5fa;
+  }
+}
+
+.lt-bar-value small {
+  font-weight: 500;
+  color: $lt-muted;
+}
+
+.lt-bars.is-waiting .lt-bar-fill {
+  width: 0;
+}
+
+.lt-bar.is-ours {
+  font-weight: 700;
+
+  .lt-bar-fill {
+    background: $lt-orange;
+  }
+}
+
+.lt-bar:hover .lt-bar-fill,
+.lt-bar:focus .lt-bar-fill {
+  background: $lt-navy;
+}
+
+.lt-bar.is-ours:hover .lt-bar-fill,
+.lt-bar.is-ours:focus .lt-bar-fill {
+  background: darken($lt-orange, 8%);
+}
+
+.lt-bar-value {
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-viz-table {
+  margin-top: 0.9rem;
+  font-size: 0.85rem;
+
+  summary {
+    color: $lt-blue;
+    cursor: pointer;
+  }
+
+  table {
+    margin: 0.6rem 0 0 !important;
+  }
+}
+
+// Takeaways
+.lt-takeaways {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: lt-takeaway;
+
+  li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding: 1.2rem 1.2rem 1.2rem 1.3rem;
+    border-radius: 14px;
+    font-size: 0.93rem;
+    line-height: 1.55;
+    background: rgba($lt-blue, 0.05);
+    counter-increment: lt-takeaway;
+
+    &::before {
+      content: counter(lt-takeaway, decimal-leading-zero);
+      font-size: 0.8rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: $lt-orange;
+    }
+  }
+
+  strong {
+    font-size: 1.02rem;
+    line-height: 1.35;
+    color: $lt-navy;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+// Annotated text
+.lt-annotate {
+  padding: 1.3rem 1.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+}
+
+.lt-annotate-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.lt-annotate-key {
+  padding: 0.2rem 0.7rem;
+  border: 1.5px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: transparent;
+  cursor: pointer;
+
+  &[aria-pressed="true"] {
+    color: #fff !important;
+    background: currentColor;
+
+    // The label text stays readable on the filled pill
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.4);
+  }
+}
+
+.lt-annotate-text {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 2.4;
+  text-align: left;
+
+  mark {
+    position: relative;
+    padding: 0.15rem 0.2rem;
+    border-bottom: 2px solid currentColor;
+    border-radius: 4px;
+    color: inherit;
+    transition: opacity 0.2s ease;
+
+    &.is-dim {
+      opacity: 0.25;
+    }
+  }
+}
+
+.lt-annotate-tag {
+  margin-left: 0.3rem;
+  padding: 0 0.35rem;
+  border-radius: 4px;
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 0.2em;
+  color: #fff;
+}
+
+@for $i from 1 through 4 {
+  $c: nth($lt-cat-light, $i);
+  .lt-annotate-key.lt-c#{$i} { color: darken($c, 12%); }
+  .lt-annotate-text mark.lt-c#{$i} { background: rgba($c, 0.14); border-bottom-color: $c; }
+  .lt-annotate-text mark.lt-c#{$i} .lt-annotate-tag { background: darken($c, 12%); }
+
+  .dark {
+    $d: nth($lt-cat-dark, $i);
+    .lt-annotate-key.lt-c#{$i} { color: lighten($d, 12%); }
+    .lt-annotate-text mark.lt-c#{$i} { background: rgba($d, 0.22); border-bottom-color: $d; }
+    .lt-annotate-text mark.lt-c#{$i} .lt-annotate-tag { background: $d; }
+  }
+}
+
+.dark {
+  .lt-viz figcaption, .lt-viz-note, .lt-bars .lt-viz-title span, .lt-pipeline-step span:last-child { color: $lt-dark-muted; }
+  .lt-pipeline-step, .lt-bars, .lt-annotate { border-color: $lt-dark-border; background: transparent; }
+  .lt-pipeline-step.is-highlight { border-color: $lt-orange; }
+  .lt-pipeline-index { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-pipeline-step strong, .lt-takeaways strong, .lt-bars .lt-viz-title, .lt-gap tr.is-ours th { color: #f1f5fa; }
+  .lt-gap th, .lt-gap td { border-bottom-color: $lt-dark-border; }
+  .lt-gap thead th { color: $lt-dark-muted; border-bottom-color: $lt-sky; }
+  .lt-bar-track { background: rgba(255, 255, 255, 0.06); }
+  .lt-bar-fill { background: rgba($lt-sky, 0.55); }
+  .lt-bar:hover .lt-bar-fill { background: $lt-sky; }
+  .lt-takeaways li { background: rgba($lt-sky, 0.07); }
+  .lt-ours { color: #f5c46b; background: rgba($lt-orange, 0.2); }
+  .lt-yes { color: #4fc08d; }
+  .lt-partial { color: #f5c46b; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-pipeline-step::after { animation: none; }
+  .lt-bar-fill { transition: none; }
+}
+
+// Stage diagram
+.lt-stages {
+  padding: 1.3rem 1.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+}
+
+// Without the script every stage is shown below the other, each under its name, and the tabs are hidden. With the
+// script (`lt-js`), only the first stage shows until the tabs take over (`is-tabbed`), and the names give way to tabs.
+html:not(.lt-js) .lt-stages-tabs { display: none; }
+
+.lt-js .lt-stages:not(.is-tabbed) .lt-stages-panel ~ .lt-stages-panel { display: none; }
+
+.lt-stages-name { margin: 0 0 0.5rem; font-weight: 700; }
+
+.lt-js .lt-stages-name { display: none; }
+
+.lt-stages-panel + .lt-stages-panel { margin-top: 1rem; }
+
+.lt-js .lt-stages-panel + .lt-stages-panel { margin-top: 0; }
+
+.lt-stages-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+
+  button {
+    padding: 0.35rem 0.85rem;
+    border: 1px solid $lt-border;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $lt-muted;
+    background: transparent;
+    cursor: pointer;
+
+    &[aria-selected="true"] {
+      border-color: $lt-navy;
+      color: #fff;
+      background: $lt-navy;
+    }
+  }
+}
+
+.lt-stages-flow {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 1.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (max-width: 767.98px) {
+    grid-auto-flow: row;
+    gap: 1.2rem;
+  }
+
+  li {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.9rem 0.5rem;
+    border: 1.5px dashed $lt-border;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    text-align: center;
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+
+    i {
+      font-size: 1.15rem;
+    }
+
+    span {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    &:not(:last-child)::after {
+      content: "\2192";
+      position: absolute;
+      top: 50%;
+      right: -1.25rem;
+      translate: 0 -50%;
+      font-weight: 700;
+      color: $lt-muted;
+
+      @media (max-width: 767.98px) {
+        content: "\2193";
+        top: auto;
+        right: auto;
+        bottom: -1.2rem;
+        left: 50%;
+        translate: -50% 0;
+      }
+    }
+  }
+
+  .is-evolved { border: 1.5px solid $lt-orange; background: rgba($lt-orange, 0.1); color: #8a4d00; }
+  .is-trained { border: 1.5px solid $lt-blue; background: rgba($lt-sky, 0.15); color: $lt-blue; }
+  .is-frozen { border: 1.5px solid #8aa4bf; background: repeating-linear-gradient(135deg, rgba(#8aa4bf, 0.12) 0 6px, transparent 6px 12px); color: #4f6780; }
+  .is-data { border: 1.5px solid $lt-border; background: #f4f6f9; color: $lt-ink; }
+
+  strong {
+    color: inherit;
+  }
+}
+
+.lt-stages-text {
+  margin: 1.1rem 0 0;
+  font-size: 0.95rem;
+}
+
+.lt-stages-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+
+  .is-evolved { color: #8a4d00; }
+  .is-trained { color: $lt-blue; }
+  .is-frozen { color: #4f6780; }
+  .is-data { color: $lt-muted; }
+}
+
+.dark {
+  .lt-stages { border-color: $lt-dark-border; }
+  .lt-stages-tabs button { border-color: $lt-dark-border; color: $lt-dark-muted; }
+  .lt-stages-tabs button[aria-selected="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
+  .lt-stages-flow li { border-color: $lt-dark-border; }
+  .lt-stages-flow .is-evolved, .lt-stages-legend .is-evolved { color: #f5c46b; }
+  .lt-stages-flow .is-evolved { border-color: $lt-orange; }
+  .lt-stages-flow .is-trained, .lt-stages-legend .is-trained { color: $lt-sky; }
+  .lt-stages-flow .is-trained { border-color: $lt-sky; }
+  .lt-stages-flow .is-frozen, .lt-stages-legend .is-frozen { color: #a9bdd2; }
+  .lt-stages-flow .is-data { background: rgba(255, 255, 255, 0.05); color: #dbe7f3; }
+}
+
+// Inline SVG figures drawn for publication pages (layouts/_shortcodes/svg.html)
+.lt-svg svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+}
+
+.lt-svg {
+  .lt-s-txt { font-size: 15px; text-anchor: middle; fill: $lt-navy; }
+  .lt-s-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 16px; }
+  .lt-s-strong { font-weight: 700; }
+  .lt-s-small { font-size: 12.5px; fill: $lt-muted; }
+  .lt-s-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; fill: $lt-muted; }
+  .lt-s-tok { fill: #f4f6f9; stroke: $lt-border; }
+  .lt-s-on { fill: rgba($lt-orange, 0.25); stroke: $lt-orange; stroke-width: 1.5; }
+  .lt-s-ontxt { font-weight: 700; }
+  .lt-s-off { fill: none; stroke: $lt-border; stroke-dasharray: 3 3; }
+  .lt-s-box { stroke-width: 1.5; }
+  .lt-s-sel { fill: rgba($lt-orange, 0.1); stroke: $lt-orange; }
+  .lt-s-pred { fill: rgba($lt-sky, 0.15); stroke: $lt-blue; }
+  .lt-s-label { fill: $lt-navy; }
+  .lt-s-labeltxt { fill: #fff; }
+  .lt-s-arrow { fill: none; stroke: $lt-muted; stroke-width: 1.8; }
+  .lt-s-head { fill: $lt-muted; }
+  // Role boxes and relation edges take the colors of the argument views; their text stays neutral for contrast.
+  .lt-s-node { fill: color-mix(in srgb, var(--lt-role) 12%, transparent); stroke: var(--lt-role); stroke-width: 1.5; }
+  .lt-s-implicit { stroke-dasharray: 4 3; }
+}
+
+.dark .lt-svg {
+  .lt-s-txt { fill: #f1f5fa; }
+  .lt-s-small, .lt-s-sub { fill: $lt-dark-muted; }
+  .lt-s-tok { fill: rgba(255, 255, 255, 0.05); stroke: $lt-dark-border; }
+  .lt-s-off { stroke: $lt-dark-border; }
+  .lt-s-pred { stroke: $lt-sky; }
+  .lt-s-label { fill: $lt-sky; }
+  .lt-s-labeltxt { fill: $lt-navy; }
+  .lt-s-arrow { stroke: $lt-dark-muted; }
+  .lt-s-head { fill: $lt-dark-muted; }
+}
+
+// Relation colors come after the dark rules above, so they hold in both modes (the tokens switch themselves).
+.lt-svg {
+  .lt-s-arrow.lt-s-support { stroke: var(--lt-support); }
+  .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
+  .lt-s-head.lt-s-support { fill: var(--lt-support); }
+  .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
+}
+
+
+.lt-news-row:hover {
+  background: none;
+}
+
+// Phones: headings stack above their "see all" links
+@media (max-width: 575.98px) {
+  .lt-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-cover-art {
+    animation: none;
+  }
+}
+
+// Research area pages (layouts/research/single.html)
+// Sections share the reading width of the page body; status is carried by a text label and an icon, never by color alone.
+.lt-overview-section,
+.lt-arg-views,
+.lt-fields,
+.lt-focus {
+  max-width: 1180px;
+  margin: 2.5rem auto;
+  padding: 0 16px;
+
+  > h2 {
+    margin: 0 0 1.2rem;
+    font-size: 1.6rem;
+  }
+}
+
+// Definition: the short answer to "What is ...?" under the title, at the reading width of the page body.
+.lt-definition {
+  width: calc(100% - 32px);
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.1rem 1.4rem;
+  border-left: 4px solid $lt-blue;
+  border-radius: 0 14px 14px 0;
+  background: rgba($lt-blue, 0.05);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: $lt-ink;
+
+  p { margin: 0 0 0.6rem; }
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-definition-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
+
+  i { margin-right: 0.3rem; color: $lt-blue; }
+}
+
+// Core concepts: two columns of blocks, one on phones; each block ends with a small schema.
+.lt-overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.lt-overview-block {
+  display: flex;
+  flex-direction: column;
+  padding: 1.1rem 1.3rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+  background: #fff;
+
+  h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin: 0 0 0.6rem;
+    font-size: 1.1rem;
+    color: $lt-navy;
+  }
+
+  p {
+    margin: 0;
+    line-height: 1.65;
+    color: $lt-ink;
+
+    @media (min-width: 992px) { font-size: 0.95rem; line-height: 1.6; }
+  }
+}
+
+.lt-overview-schema {
+  width: 100%;
+  max-width: 280px;
+  margin: auto auto 0;
+  padding-top: 1rem;
+}
+
+.dark {
+  .lt-definition { border-color: $lt-sky; background: rgba($lt-sky, 0.06); color: #c9d6e3; }
+  .lt-definition-label { color: $lt-dark-muted; }
+  .lt-definition-label i { color: $lt-sky; }
+  .lt-overview-block { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-overview-block h3 { color: #f1f5fa; }
+  .lt-overview-block p { color: #c9d6e3; }
+}
+
+// Core concepts: the short background text above the views, at the reading width of the page body.
+.lt-concepts {
+  max-width: 48rem;
+  margin-bottom: 1.6rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: $lt-ink;
+
+  p { margin: 0 0 0.8rem; }
+}
+
+.dark .lt-concepts { color: #c9d6e3; }
+
+// Argument views: tabs by argument model and domain, then the marked text and the argument graph.
+// Roles take categorical colors in fixed order (validated for color vision deficiency in both modes),
+// and every colored mark also carries its role as text.
+.lt-arg-views,
+.lt-overview,
+.lt-research-mosaic,
+.lt-tool-figure {
+  --lt-role-1: #1f6fb2;
+  --lt-role-2: #c26a00;
+  --lt-role-3: #0f8a7a;
+  --lt-role-4: #9a4fb5;
+}
+
+.dark .lt-arg-views,
+.dark .lt-overview,
+.dark .lt-research-mosaic,
+.dark .lt-tool-figure {
+  --lt-role-1: #3f8fd6;
+  --lt-role-2: #c97a14;
+  --lt-role-3: #13917d;
+  --lt-role-4: #a866c8;
+}
+
+.lt-role-1 { --lt-role: var(--lt-role-1); }
+.lt-role-2 { --lt-role: var(--lt-role-2); }
+.lt-role-3 { --lt-role: var(--lt-role-3); }
+.lt-role-4 { --lt-role: var(--lt-role-4); }
+
+.lt-arg-tabgroups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 2rem;
+  margin-bottom: 1rem;
+}
+
+.lt-arg-tabgroup {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+
+  .lt-arg-tabrow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  [role="tab"] {
+    padding: 0.35rem 0.9rem;
+    border: 1px solid $lt-border;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: $lt-navy;
+    background: #fff;
+
+    &[aria-selected="true"] {
+      border-color: $lt-blue;
+      color: #fff;
+      background: $lt-blue;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $lt-blue;
+      outline-offset: 2px;
+    }
+  }
+}
+
+.lt-arg-tabgroup-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.lt-arg-description {
+  max-width: 48rem;
+  margin: 0 0 1rem;
+  color: $lt-ink;
+}
+
+.lt-arg-view + .lt-arg-view {
+  margin-top: 2rem;
+}
+
+.lt-arg-example {
+  margin: 0;
+
+  figcaption {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: $lt-muted;
+  }
+}
+
+// Several texts of one view sit side by side, each under a small label, and stack on phones.
+.lt-arg-texts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem 2rem;
+}
+
+.lt-arg-textlabel {
+  margin: 0 0 0.3rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.dark .lt-arg-textlabel { color: $lt-dark-muted; }
+
+// The text comes first and the graph below it, both at full width. On wide screens the text sits beside the graph
+// and stays below the navigation bar while the reader scrolls the taller graph. While a view plays, the text takes
+// the full width until Show graph, then narrows to make room for the graph.
+.lt-arg-panels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+
+  & + .lt-arg-controls { margin-top: 1rem; }
+}
+
+@media (min-width: 992px) {
+  // The graph column takes the width of its graph (--lt-cols columns of boxes, see .lt-arg-graph), between 16rem and
+  // half the row, and the text the rest.
+  .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, unquote("min(max(16rem, calc(var(--lt-cols) * 10rem + (var(--lt-cols) - 1) * 3.2rem + 2.6rem)), 50%)"));
+    align-items: start;
+    transition: grid-template-columns 0.7s ease, column-gap 0.7s ease;
+  }
+
+  // The hidden graph panel takes no room; while its column opens, it clips a graph already laid out at its final width
+  // (assets/js/ltlab.js), so the row has its final height from the start.
+  .lt-arg-view.is-animating:not(.is-graph) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+
+  .lt-arg-view.is-animating .lt-arg-graph-panel {
+    overflow: hidden;
+
+    .lt-arg-step { white-space: nowrap; }
+  }
+
+  .lt-arg-text-panel {
+    position: sticky;
+    top: 5.5rem;
+  }
+}
+
+.lt-arg-panel {
+  padding: 1.3rem;
+  border-radius: 16px;
+  background: rgba($lt-blue, 0.05);
+}
+
+.lt-arg-step {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: $lt-muted;
+
+  span {
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 50%;
+    color: #fff;
+    background: $lt-blue;
+    letter-spacing: 0;
+  }
+}
+
+.lt-arg-text {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.9;
+  color: $lt-ink;
+}
+
+// A marked component: its role as a small tag, then the text with a colored underline.
+.lt-arg-span {
+  text-decoration: underline 2px var(--lt-role);
+  text-underline-offset: 0.3em;
+  color: $lt-navy;
+}
+
+.lt-arg-tag {
+  margin-right: 0.3rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  vertical-align: 0.1em;
+  color: $lt-ink;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+}
+
+.lt-arg-span .lt-arg-tag {
+  display: inline-block;
+  text-decoration: none;
+}
+
+// A component the text leaves unstated follows the text in a dashed box of its role color.
+.lt-arg-unstated { margin-top: 0.9rem; }
+
+.lt-arg-span.is-implicit {
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border: 1.5px dashed var(--lt-role);
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+// The graph: rows of nodes over an SVG layer where the script draws the edges.
+// All nodes share one width, set by the longest row (`--lt-cols`), so nodes line up in columns
+// and a shorter row sits centered under the longer one. Each node takes the height of its content.
+.lt-arg-graph {
+  --lt-gap: 3.2rem;
+  position: relative;
+  display: grid;
+  gap: 3.4rem;
+  max-width: calc(var(--lt-cols) * 10rem + (var(--lt-cols) - 1) * var(--lt-gap));
+  margin-inline: auto;
+}
+
+// The edge layer sits above the nodes so that labels stay readable; edges end at node borders.
+.lt-arg-edges-svg {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+// A box takes the height of its own content, so an ID box stays small beside a box with text.
+.lt-arg-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--lt-gap);
+}
+
+.lt-arg-node {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 calc((100% - (var(--lt-cols) - 1) * var(--lt-gap)) / var(--lt-cols));
+  // A long word wraps instead of widening the box past its column.
+  min-width: 0;
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid $lt-border;
+  border-left: 4px solid var(--lt-role);
+  border-radius: 8px;
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: $lt-navy;
+  background: #fff;
+
+  .lt-arg-tag {
+    display: block;
+    margin-bottom: 0.2rem;
+  }
+
+  &.is-implicit {
+    border-style: dashed;
+    border-left-style: dashed;
+    color: $lt-ink;
+    background: transparent;
+  }
+}
+
+// A component ID, such as P1: small inside a text tag, large in its graph box.
+.lt-arg-id sub {
+  bottom: 0;
+  font-size: 0.75em;
+  vertical-align: -0.15em;
+}
+
+.lt-arg-node {
+  text-align: center;
+}
+
+.lt-arg-node .lt-arg-id {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.lt-arg-node-text {
+  display: block;
+  text-align: left;
+}
+
+.lt-arg-scheme {
+  display: inline-block;
+  margin-bottom: 0.25rem;
+  padding: 0 0.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  color: $lt-ink;
+}
+
+// Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red; the pair
+// passes the color vision deficiency check in light mode and stays in the 6 to 8 floor band in dark mode,
+// which is legal only because every edge also has a text label.
+.lt-arg-views,
+.lt-overview,
+.lt-research-mosaic,
+.lt-tool-figure {
+  --lt-support: #17663a;
+  --lt-attack: #e8584e;
+}
+
+.dark .lt-arg-views,
+.dark .lt-overview,
+.dark .lt-research-mosaic,
+.dark .lt-tool-figure {
+  --lt-support: #45ad64;
+  --lt-attack: #d8443a;
+}
+
+.lt-arg-edge {
+  fill: none;
+  stroke: $lt-ink;
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+
+  &.is-support { stroke: var(--lt-support); }
+  &.is-attack { stroke: var(--lt-attack); }
+}
+
+.lt-arg-edge-head {
+  fill: $lt-ink;
+
+  &.is-support { fill: var(--lt-support); }
+  &.is-attack { fill: var(--lt-attack); }
+}
+
+.lt-arg-edge-label {
+  font-size: 11px;
+  font-weight: 700;
+  fill: $lt-ink;
+  paint-order: stroke;
+  stroke: #f3f6f9;
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+
+// Without the script, edges are a plain list; once drawn they stay available to screen readers only.
+.lt-arg-edges {
+  margin: 0;
+  padding-left: 1.1rem;
+  font-size: 0.82rem;
+  color: $lt-ink;
+}
+
+.is-drawn .lt-arg-edges {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Narrow screens: a graph too wide for its panel scrolls inside it.
+.lt-arg-graph-scroll {
+  overflow-x: auto;
+}
+
+@media (max-width: 575.98px) {
+  .lt-arg-graph { --lt-gap: 1.4rem; }
+  .lt-arg-node { font-size: 0.78rem; padding: 0.45rem 0.55rem; }
+}
+
+.dark {
+  .lt-arg-tabgroup [role="tab"] { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-arg-tabgroup [role="tab"][aria-selected="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
+  .lt-arg-tabgroup-label, .lt-arg-example figcaption { color: $lt-dark-muted; }
+  .lt-arg-description, .lt-arg-text, .lt-arg-tag, .lt-arg-scheme, .lt-arg-edges { color: #c9d6e3; }
+  .lt-arg-span, .lt-arg-node { color: #f1f5fa; }
+  .lt-arg-panel { background: rgba(255, 255, 255, 0.04); }
+  .lt-arg-node { border-color: $lt-dark-border; border-left-color: var(--lt-role); background: $lt-dark-card; }
+  .lt-arg-node.is-implicit { background: transparent; }
+  .lt-arg-scheme { border-color: $lt-dark-border; }
+  .lt-arg-edge.is-link { stroke: #c9d6e3; }
+  .lt-arg-edge-head.is-link { fill: #c9d6e3; }
+  .lt-arg-edge-label { fill: #c9d6e3; stroke: #15243a; }
+}
+
+// Detect views: a document whose annotated clauses are highlighted in the color of their fairness level.
+// Potentially unfair clauses take a dashed orange underline and clearly unfair ones a solid red one, and every
+// clause also names its category and level as text. Clearly fair clauses take the teal role color.
+.lt-detect {
+  --lt-level-1: var(--lt-role-3);
+  --lt-level-2: var(--lt-role-2);
+  --lt-level-3: var(--lt-attack);
+}
+
+.lt-detect .is-level-1 { --lt-level: var(--lt-level-1); --lt-line: solid; }
+.lt-detect .is-level-2 { --lt-level: var(--lt-level-2); --lt-line: dashed; }
+.lt-detect .is-level-3 { --lt-level: var(--lt-level-3); --lt-line: solid; }
+
+.lt-detect-doc {
+  max-width: 50rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid $lt-border;
+  border-radius: 10px;
+  background: #fff;
+  color: $lt-ink;
+  line-height: 1.85;
+
+  h4 {
+    margin: 0 0 0.3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $lt-navy;
+  }
+
+  p { margin: 0; }
+
+  p + h4, p + p { margin-top: 1rem; }
+}
+
+.lt-detect-s {
+  scroll-margin: 6rem 0 2rem;
+  transition: background-color 0.4s ease;
+}
+
+// Only the clause text is highlighted, so a tag that wraps on a narrow screen carries no background.
+.lt-detect-mark {
+  padding: 0.1em 0;
+  border-radius: 3px;
+  transition: background-color 0.4s ease, border-color 0.4s ease;
+  border-bottom: 2px var(--lt-line) var(--lt-level);
+  color: $lt-navy;
+  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+// The category and level of a clause, before its text; the tag wraps on narrow screens.
+.lt-detect-tag,
+.lt-detect-count {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-ink;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-level);
+  }
+}
+
+.lt-detect-tag {
+  display: inline-block;
+  max-width: 100%;
+  margin-right: 0.35rem;
+  line-height: 1.4;
+  vertical-align: 0.1em;
+}
+
+// The summary and the buttons share one row below the caption, and stack on narrow screens.
+.lt-detect-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem 1rem;
+  margin-top: 1rem;
+}
+
+.lt-detect-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin: 0;
+  font-size: 0.9rem;
+  color: $lt-ink;
+}
+
+.lt-detect-count {
+  padding: 0.2rem 0.6rem;
+  border: 1px var(--lt-line) var(--lt-level);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
+}
+
+// While the script plays a view, the clauses stay plain until the scan reaches them, and the summary appears at the end.
+.lt-detect.is-ready {
+  .lt-detect-clause:not(.is-hit) .lt-detect-mark {
+    border-bottom-color: transparent;
+    color: inherit;
+    background: transparent;
+  }
+
+  .lt-detect-clause:not(.is-hit) .lt-detect-tag { display: none; }
+
+  .lt-detect-s.is-current { background: rgba($lt-sky, 0.3); }
+
+  .lt-detect-clause.is-hit .lt-detect-tag { animation: lt-detect-in 0.5s ease; }
+
+  &:not(.is-detected) .lt-detect-summary { visibility: hidden; }
+}
+
+// Voices views: the answers panel holds the task question and a table of model answers, right in green and wrong in
+// red (the validated support and attack pair), each with an icon and a word.
+.lt-speech-question {
+  margin: 1rem 0 0.6rem;
+  font-weight: 600;
+  color: $lt-navy;
+}
+
+.lt-speech-answers {
+  width: 100%;
+  font-size: 0.88rem;
+
+  th, td { padding: 0.4rem 0.5rem; border: 0; text-align: left; background: transparent; }
+
+  // The theme stripes table rows in dark mode; answer rows stay unstriped.
+  tr, tr > * { background: transparent !important; }
+
+  thead th {
+    border-bottom: 1px solid $lt-border;
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $lt-ink;
+  }
+
+  tbody th { font-weight: 600; color: $lt-navy; }
+}
+
+.lt-speech-answer {
+  display: inline-block;
+  padding: 0.1rem 0.55rem;
+  border: 1px solid var(--lt-answer);
+  border-radius: 999px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: $lt-navy;
+  background: color-mix(in srgb, var(--lt-answer) 12%, transparent);
+
+  i { color: var(--lt-answer); }
+
+  &.is-right { --lt-answer: var(--lt-support); }
+  &.is-wrong { --lt-answer: var(--lt-attack); }
+}
+
+
+
+
+// While the script plays a voices view, the answers panel takes no room until Classify, and the answers follow row by
+// row (assets/js/ltlab.js).
+.lt-speech.is-ready {
+  &:not(.is-listening) .lt-speech-panel { display: none; }
+
+  .lt-speech-panel { overflow: hidden; }
+
+  .lt-speech-row:not(.is-shown) { visibility: hidden; }
+
+  .lt-speech-row.is-shown > * { animation: lt-detect-in 0.5s ease; }
+}
+
+// Voices views: each reading is a cue strip, one grid whose columns follow the duration of each word and pause, so the
+// pitch line, the loudness bars, and the words stay aligned; the strip scrolls inside its box on narrow screens. Each row
+// carries its name as text.
+.lt-voice-scroll { overflow-x: auto; margin: 0.3rem 0 0.2rem; }
+
+.lt-voice-cues {
+  --lt-voice-label: 4.6rem;
+  display: grid;
+  grid-template-columns: var(--lt-voice-timed);
+  align-items: end;
+  gap: 0.25rem 2px;
+}
+
+// Phones: a narrower name column and smaller words, so a short sentence fits without scrolling.
+@media (max-width: 575.98px) {
+  .lt-voice-cues { --lt-voice-label: 4rem; }
+  .lt-voice-row { font-size: 0.58rem; }
+  .lt-voice-word { padding: 0 0.05rem; font-size: 0.85rem; }
+}
+
+.lt-voice-row {
+  align-self: center;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.lt-voice-pitch {
+  height: 3rem;
+
+  svg { display: block; width: 100%; height: 100%; overflow: visible; }
+
+  line { stroke: var(--lt-role-1); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+}
+
+.lt-voice-loud {
+  display: flex;
+  align-items: flex-end;
+  height: 2rem;
+
+  i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 2px 2px 0 0;
+    background: color-mix(in srgb, #{$lt-ink} 35%, transparent);
+    transform-origin: bottom;
+  }
+}
+
+.lt-voice-word {
+  padding: 0 0.15rem;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  text-align: center;
+  color: $lt-navy;
+}
+
+.lt-voice-pause {
+  padding: 0 0.2rem;
+  border-top: 1px dashed currentColor;
+  font-size: 0.66rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-align: center;
+  color: $lt-muted;
+}
+
+.lt-voice-reading + .lt-voice-reading { margin-top: 0.8rem; }
+
+.lt-voice-summary { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-ink; }
+
+.lt-voice-hears { display: block; font-size: 0.75rem; font-weight: 400; color: $lt-muted; }
+
+// Until Listen, the strip is plain text: tight columns, no cue rows, and no pause cells. Listen takes the readings in
+// order, from the start --t of each: it spreads the words on the time grid, opens the cue rows, and draws the cues
+// word by word. While the script writes the view, a reading appears once its text starts (assets/js/ltlab.js).
+.lt-voices.is-ready {
+  .lt-voice-cues { transition: grid-template-columns 0.6s ease var(--t), row-gap 0.6s ease var(--t); }
+
+  .lt-voice-cuename, .lt-voice-loud { transition: height 0.6s ease var(--t), max-height 0.6s ease var(--t), opacity 0.4s ease var(--t); }
+
+  .lt-voice-pitch { transition: height 0.6s ease var(--t), opacity 0.4s ease calc(var(--t) + 0.6s + var(--j) * 120ms); }
+
+  .lt-voice-loud i { transition: opacity 0.4s ease, transform 0.4s ease; transition-delay: calc(var(--t) + 0.6s + var(--j) * 120ms); }
+
+  .lt-voice-cuename { max-height: 2rem; overflow: hidden; }
+
+  .lt-voice-pause { max-width: 100%; overflow: hidden; transition: max-width 0.6s ease var(--t), opacity 0.6s ease var(--t); }
+
+  &:not(.is-marked) {
+    .lt-voice-cues { grid-template-columns: var(--lt-voice-tight); row-gap: 0; }
+
+    .lt-voice-cuename { max-height: 0; opacity: 0; }
+
+    .lt-voice-pitch, .lt-voice-loud { height: 0; }
+
+    .lt-voice-pitch { opacity: 0; }
+
+    .lt-voice-loud i { opacity: 0; transform: scaleY(0); }
+
+    .lt-voice-pause { max-width: 0; padding: 0; border-top-color: transparent; opacity: 0; }
+  }
+}
+
+.dark {
+  .lt-voice-row, .lt-voice-pause, .lt-voice-hears { color: $lt-dark-muted; }
+  .lt-voice-loud i { background: color-mix(in srgb, #c9d6e3 30%, transparent); }
+  .lt-voice-word { color: #f1f5fa; }
+  .lt-voice-summary { color: #c9d6e3; }
+}
+
+@media (min-width: 992px) {
+  .lt-speech.is-ready:not(.is-listening) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+}
+
+.dark {
+  .lt-speech-question { color: #f1f5fa; }
+  .lt-speech-answers thead th { color: #c9d6e3; }
+  .lt-speech-answers thead th { border-bottom-color: $lt-dark-border; }
+  .lt-speech-answers tbody th, .lt-speech-answer { color: #f1f5fa; }
+}
+
+@keyframes lt-detect-in {
+  from { opacity: 0; transform: translateY(4px); }
+}
+
+.dark {
+  .lt-detect-doc { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
+  .lt-detect-doc h4, .lt-detect-mark { color: #f1f5fa; }
+  .lt-detect-tag, .lt-detect-count, .lt-detect-summary { color: #c9d6e3; }
+  .lt-detect-mark, .lt-detect-count { background: color-mix(in srgb, var(--lt-level) 22%, transparent); }
+}
+
+// Rules views: the marks of a clause take the role colors (category blue, specification purple, subcategory teal),
+// with a dashed line when the mark is open and a solid one when it is closed; every mark also names its role and type.
+// Levels take the validated support and attack pair: green for sufficiently and red for insufficiently informative.
+.lt-rules .is-level-1 { --lt-level: var(--lt-support); --lt-line: solid; }
+.lt-rules .is-level-2 { --lt-level: var(--lt-attack); --lt-line: solid; }
+
+.lt-rule-span {
+  text-decoration: underline 2px var(--lt-role);
+  text-underline-offset: 0.3em;
+  color: $lt-navy;
+  transition: text-decoration-color 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
+
+  &.is-open { text-decoration-style: dashed; }
+}
+
+// A specification holds subcategories, so it takes a tinted box with a bottom border instead of an underline.
+.lt-rule-span.lt-role-4 {
+  padding: 0.1em 0.15em 0.3em;
+  border-bottom: 2px solid var(--lt-role);
+  border-radius: 4px;
+  text-decoration: none;
+  background: color-mix(in srgb, var(--lt-role) 9%, transparent);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+
+  &.is-open { border-bottom-style: dashed; }
+}
+
+.lt-rule-tag,
+.lt-rule-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-ink;
+}
+
+.lt-rule-tag {
+  display: inline-block;
+  margin-right: 0.3rem;
+  line-height: 1.4;
+  vertical-align: 0.1em;
+  text-decoration: none;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+}
+
+// Clauses carry IDs (C1, C2, ...), repeated in the matrix row of each clause and in the rules it matches.
+.lt-rule-num {
+  display: inline-grid;
+  grid-auto-flow: column;
+  place-items: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  margin-right: 0.35rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  vertical-align: 0.1em;
+  color: #fff;
+  background: $lt-navy;
+}
+
+.lt-rule-clause { border-radius: 4px; transition: background-color 0.4s ease; }
+
+.lt-rule-label {
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-level);
+  }
+}
+
+.lt-rule-label {
+  display: inline-block;
+  margin-left: 0.4rem;
+  padding: 0.05rem 0.5rem;
+  border: 1px solid var(--lt-level);
+  border-radius: 999px;
+  line-height: 1.5;
+  vertical-align: 0.1em;
+  background: color-mix(in srgb, var(--lt-level) 12%, transparent);
+}
+
+// The rule ID chip in a matrix row or rule row: L1 or L2 and the rule number, in the level color.
+.lt-rule-label sub,
+.lt-rule-num sub { bottom: 0; font-size: 0.8em; vertical-align: -0.1em; }
+
+// The text keeps only the marks; the legend names their colors and lines, and the hierarchy names each mark.
+.lt-rules .lt-detect-doc .lt-rule-tag { display: none; }
+
+.lt-rules-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 1rem;
+  margin: 0.8rem 0 0;
+
+  span {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: $lt-ink;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 0.55rem;
+      height: 0.55rem;
+      margin-right: 0.3rem;
+      border-radius: 2px;
+      background: var(--lt-role);
+    }
+  }
+
+  .is-line::before {
+    width: 1.2rem;
+    height: 0;
+    border-radius: 0;
+    vertical-align: 0.2em;
+    background: none;
+    border-bottom: 2px solid $lt-ink;
+  }
+
+  .is-line.is-open::before { border-bottom-style: dashed; }
+}
+
+// Clause matrix: one row per clause with the type of its category, specification, and subcategories, then the rules
+// in the same columns. A type is written and drawn as the line of its marks in the text: dashed when open, solid
+// when closed; "none" and "any" stay muted. Subcategories also count their open and closed members.
+.lt-matrix-scroll { overflow-x: auto; }
+
+.lt-matrix {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 0.35rem;
+  font-size: 0.85rem;
+
+  // The theme stripes and borders tables; the matrix sets its own backgrounds and lines in both modes.
+  th, td { padding: 0.35rem 0.45rem; border: 0; text-align: left; vertical-align: middle; background: transparent; }
+
+  thead th {
+    border-bottom: 1px solid $lt-border;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    color: $lt-ink;
+  }
+
+  thead th[class*="lt-role-"]::before {
+    content: "";
+    display: inline-block;
+    width: 0.55rem;
+    height: 0.55rem;
+    margin-right: 0.25rem;
+    border-radius: 2px;
+    background: var(--lt-role);
+  }
+
+  tbody th { width: 1%; white-space: nowrap; }
+
+  .lt-rule-num, .lt-rule-label { margin: 0; white-space: nowrap; }
+
+  .lt-matrix-level { margin-left: 0.35rem; }
+
+  // Phones: column headers keep only their role color, which the legend under the text names, and a rule ID
+  // stacks under its clause ID.
+  @media (max-width: 575.98px) {
+    th, td { padding: 0.3rem; }
+
+    .lt-matrix-head {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    tbody th .lt-matrix-level { display: block; width: max-content; margin: 0.25rem 0 0; }
+  }
+}
+
+.lt-matrix .lt-matrix-row > *,
+.lt-matrix .lt-matrix-rule > * { background: #fff; transition: background-color 0.3s ease; }
+
+.lt-matrix-row > :first-child,
+.lt-matrix-rule > :first-child { border-radius: 8px 0 0 8px; box-shadow: inset 4px 0 0 var(--lt-level); }
+
+.lt-matrix-row > :last-child,
+.lt-matrix-rule > :last-child { border-radius: 0 8px 8px 0; }
+
+.lt-matrix .lt-matrix-row.is-current > *,
+.lt-matrix .lt-matrix-row.is-linked > *,
+.lt-matrix .lt-matrix-rule.is-match > * { background: color-mix(in srgb, #{$lt-sky} 22%, #fff); }
+
+.lt-matrix-sep th {
+  padding-top: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: $lt-muted;
+}
+
+.lt-cell {
+  display: inline-block;
+  padding-bottom: 0.1rem;
+  border-bottom: 2px solid var(--lt-role);
+  font-weight: 600;
+  line-height: 1.3;
+  color: $lt-navy;
+
+  &.is-open { border-bottom-style: dashed; }
+
+  &.is-none, &.is-any { border-bottom-color: transparent; font-weight: 400; color: $lt-muted; }
+}
+
+.lt-cell-count {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  white-space: nowrap;
+  color: $lt-muted;
+}
+
+.dark .lt-cell-count { color: $lt-dark-muted; }
+
+.lt-matrix-levels {
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: $lt-ink;
+
+  > span { display: inline-block; margin-right: 0.8rem; white-space: nowrap; }
+
+  .lt-rule-label { margin: 0 0.3rem 0 0; }
+}
+
+.lt-rule-clause.is-linked { background: rgba($lt-sky, 0.3); }
+
+// While the script plays a view, the marks, the matrix rows, the labels, the rules, and the summary appear only at their step.
+// The matrix panel takes no room until Detect, when the text narrows to make room for it (assets/js/ltlab.js).
+.lt-rules.is-ready {
+  &:not(.is-marked) .lt-rule-clause:not(.is-hit) .lt-rule-span {
+    text-decoration-color: transparent;
+    border-bottom-color: transparent;
+    background-color: transparent;
+  }
+
+  .lt-rule-clause.is-current { background: rgba($lt-sky, 0.3); }
+
+  &:not(.is-detecting) .lt-matrix-panel,
+  &:not(.is-detecting) .lt-rules-legend { display: none; }
+
+  .lt-matrix-panel { overflow: hidden; }
+
+  .lt-matrix-row:not(.is-shown) { visibility: hidden; }
+
+  .lt-matrix-row.is-shown > * { animation: lt-detect-in 0.5s ease backwards; }
+
+  .lt-matrix-row:not(.is-labelled) .lt-matrix-level { visibility: hidden; }
+
+  .lt-matrix-row.is-labelled .lt-matrix-level { animation: lt-detect-in 0.5s ease; }
+
+  &:not(.is-classifying) .lt-matrix-rules { visibility: hidden; }
+
+  &:not(.is-classified) .lt-detect-summary { visibility: hidden; }
+}
+
+@media (min-width: 992px) {
+  .lt-rules.is-ready:not(.is-detecting) .lt-arg-panels {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0rem);
+    column-gap: 0;
+  }
+}
+
+// Once a clause is classified, its ID takes the color of its level in the text and in its row.
+.lt-rules:not(.is-ready) .lt-rule-clause .lt-rule-num,
+.lt-rules:not(.is-ready) .lt-matrix-row .lt-rule-num,
+.lt-rules .is-labelled .lt-rule-num { background: var(--lt-level); }
+
+.dark {
+  .lt-rule-span, .lt-cell { color: #f1f5fa; }
+  .lt-rules-legend span, .lt-matrix thead th, .lt-matrix-levels { color: #c9d6e3; }
+  .lt-rules-legend .is-line::before { border-bottom-color: #c9d6e3; }
+  .lt-rule-tag, .lt-rule-label { color: #c9d6e3; }
+  .lt-cell.is-none, .lt-cell.is-any, .lt-matrix-sep th { color: $lt-dark-muted; }
+  .lt-rule-num { color: $lt-navy; background: $lt-sky; }
+  .lt-matrix thead th { border-bottom-color: $lt-dark-border; }
+  .lt-matrix .lt-matrix-sep th { background: transparent; }
+  .lt-matrix .lt-matrix-row > *, .lt-matrix .lt-matrix-rule > * { background: $lt-dark-card; }
+  .lt-matrix .lt-matrix-row.is-current > *, .lt-matrix .lt-matrix-row.is-linked > *, .lt-matrix .lt-matrix-rule.is-match > * { background: color-mix(in srgb, #{$lt-sky} 18%, #{$lt-dark-card}); }
+}
+
+// Field blocks: a grid of buttons; the open block shows its popup next to it.
+// Without `is-interactive` (no JavaScript), every popup sits below its block.
+.lt-fields-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 991.98px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 575.98px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.lt-field-cell {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.lt-field {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid $lt-border;
+  border-radius: 16px;
+  color: inherit;
+  text-align: left;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
+  transition: border-color 0.2s ease, transform 0.2s ease;
+
+  &:hover,
+  &[aria-expanded="true"] {
+    border-color: $lt-blue;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid $lt-blue;
+    outline-offset: 3px;
+  }
+}
+
+.lt-field-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $lt-navy;
+}
+
+.lt-field-question {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: $lt-ink;
+}
+
+.lt-field-panel {
+  margin-top: 0.6rem;
+  padding: 1.1rem 1.2rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  background: rgba($lt-blue, 0.06);
+
+  > p {
+    margin: 0 0 0.8rem;
+    color: $lt-ink;
+  }
+}
+
+.lt-field-tasks {
+  display: grid;
+  gap: 0.7rem;
+  margin: 0;
+
+  dt {
+    font-weight: 700;
+    color: $lt-navy;
+  }
+
+  dd {
+    margin: 0.1rem 0 0;
+    line-height: 1.5;
+    color: $lt-ink;
+  }
+}
+
+// With JavaScript, opening a block hides the others: the block grows in the first column
+// and its panel fills the rest of the row. A back button returns to the grid.
+.lt-field-back {
+  margin-bottom: 0.8rem;
+  padding: 0;
+  border: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $lt-blue;
+  background: none;
+
+  &:hover { text-decoration: underline; }
+}
+
+.lt-fields-grid.has-open {
+  grid-template-columns: minmax(0, 1fr);
+
+  > .lt-field-cell:not(.is-open) { display: none; }
+}
+
+.lt-field-cell.is-open {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 1.25rem;
+
+  .lt-field {
+    padding: 1.8rem;
+    gap: 0.8rem;
+  }
+
+  .lt-field-title { font-size: 1.5rem; }
+
+  .lt-field-question { font-size: 1.05rem; }
+
+  .lt-area-icon {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.3rem;
+  }
+
+  .lt-field-panel {
+    margin: 0;
+    padding: 1.6rem 1.8rem;
+    font-size: 0.95rem;
+    animation: lt-panel-in 0.25s ease-out;
+  }
+
+  .lt-field-tasks {
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 1rem 1.6rem;
+  }
+
+  @media (max-width: 767.98px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@keyframes lt-panel-in {
+  from { opacity: 0; translate: 12px 0; }
+  to { opacity: 1; translate: none; }
+}
+
+.dark {
+  .lt-field { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-field:hover, .lt-field[aria-expanded="true"] { border-color: $lt-sky; }
+  .lt-field-title, .lt-field-tasks dt { color: #f1f5fa; }
+  .lt-field-question, .lt-field-panel > p, .lt-field-tasks dd { color: #c9d6e3; }
+  .lt-field-panel { background: rgba(255, 255, 255, 0.05); }
+  .lt-field-back { color: $lt-sky; }
+}
+
+// Status labels: Explored (blue check), Current (orange dot), Future (grey arrow).
+.lt-status {
+  margin: 0 0 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+
+  i { font-size: 0.65rem; }
+
+  .is-done > &, &.is-done { color: $lt-blue; }
+  .is-now > &, &.is-now { color: #9a5600; }
+  .is-next > &, &.is-next { color: $lt-muted; }
+}
+
+.dark {
+  .is-done > .lt-status, .lt-status.is-done { color: $lt-sky; }
+  .is-now > .lt-status, .lt-status.is-now { color: #f5c46b; }
+  .is-next > .lt-status, .lt-status.is-next { color: $lt-dark-muted; }
+}
+
+// Focus cards in the carousel; a selected card keeps a blue border.
+// A centered carousel shows one slide at a time; its neighbours peek in, faded, on both sides.
+// The script marks the centered slide with `is-active`; without it every slide stays fully visible.
+// Spacers before the first slide and after the last one let both end slides reach the center:
+// each spacer plus the track gap is half of the space beside a centered slide (78% wide, 90% on phones).
+.lt-carousel.is-centered .lt-carousel-track {
+  &::before, &::after {
+    content: "";
+    flex: 0 0 calc(11% - 1.25rem);
+  }
+
+  @media (max-width: 767.98px) {
+    &::before, &::after { flex-basis: 0; }
+  }
+}
+
+// Neighbours are greyed and smaller; opacity stays at 0.94 to keep their text at a 4.5:1 contrast.
+.lt-carousel.is-centered.is-enhanced .lt-carousel-track > * {
+  opacity: 0.94;
+  scale: 0.95;
+  filter: grayscale(1);
+  transition: opacity 0.4s ease, scale 0.4s ease, filter 0.4s ease, rotate 0.5s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+  &.is-active {
+    opacity: 1;
+    scale: none;
+    filter: none;
+  }
+}
+
+// Before the deferred script runs, a scripted page already fades every slide but the first, as the script will,
+// so the neighbours do not show at full size for the first frames (the `lt-js` class comes from hooks/head-start).
+.lt-js .lt-carousel.is-centered:not(.is-enhanced) .lt-carousel-track > :not(:first-child) {
+  opacity: 0.94;
+  scale: 0.95;
+  filter: grayscale(1);
+}
+
+.lt-carousel.is-jumping .lt-carousel-track > * {
+  transition: none !important;
+}
+
+.lt-focus-card {
+  flex: 0 0 78%;
+  scroll-snap-align: center;
+  padding: 1.6rem 1.8rem;
+  gap: 0.9rem;
+
+  @media (max-width: 767.98px) {
+    flex-basis: 90%;
+    padding: 1.3rem;
+  }
+
+  &.is-selected { border-color: $lt-blue; }
+
+  .lt-area-title { margin: 0; font-size: 1.35rem; }
+
+  .lt-area-title a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+}
+
+.lt-focus-summary {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: $lt-ink;
+}
+
+.lt-focus-lanes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: 0.8rem 1.6rem;
+
+  ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    color: $lt-ink;
+  }
+}
+
+.lt-focus-more {
+  margin-top: auto;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: $lt-blue;
+}
+
+.dark {
+  .lt-focus-card.is-selected { border-color: $lt-sky; }
+  .lt-focus-summary, .lt-focus-lanes ul { color: #c9d6e3; }
+  .lt-focus-more { color: $lt-sky; }
+}
+
+// Topic detail boxes: the description, then each objective with its publications on the right.
+.lt-topics-detail {
+  margin-top: 1.5rem;
+}
+
+// A box fades in when it opens; the script folds it and fades it out before hiding it.
+.lt-topic-box {
+  padding: 1.6rem;
+  overflow: hidden;
+  animation: lt-topic-in 0.4s ease;
+  border: 1px solid $lt-border;
+  border-radius: 16px;
+
+  & + & { margin-top: 1.25rem; }
+
+  > .lt-area-title { margin: 0 0 0.8rem; font-size: 1.4rem; }
+
+  > .lt-status { margin-top: 1.4rem; }
+
+  &:focus { outline: none; }
+
+  &.is-leaving { animation: none; }
+}
+
+@keyframes lt-topic-in {
+  from { opacity: 0; transform: translateY(0.75rem); }
+}
+
+.lt-topic-close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.4rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: $lt-navy;
+  background: #fff;
+
+  &:hover { border-color: $lt-blue; }
+
+  &[hidden] { display: none; }
+}
+
+.lt-topic-description {
+  max-width: 48rem;
+  color: $lt-ink;
+
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-topic-items {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lt-topic-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem 2rem;
+  padding: 0.9rem 1rem;
+  border-left: 3px solid $lt-border;
+  border-radius: 0 10px 10px 0;
+  background: rgba($lt-blue, 0.04);
+
+  &.is-done { border-left-color: $lt-blue; }
+  &.is-now { border-left-color: $lt-orange; }
+  &.is-next { border-left-style: dashed; border-left-color: $lt-muted; }
+
+  &:has(.lt-topic-pubs) {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+
+    @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); }
+  }
+}
+
+.lt-topic-text p {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: $lt-ink;
+}
+
+.lt-topic-text .lt-topic-item-title {
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: $lt-navy;
+}
+
+.lt-topic-pubs {
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  span {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.78rem;
+    color: $lt-muted;
+  }
+}
+
+.dark {
+  .lt-topic-box { border-color: $lt-dark-border; }
+  .lt-topic-close { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-topic-close:hover { border-color: $lt-sky; }
+  .lt-topic-description, .lt-topic-text p { color: #c9d6e3; }
+  .lt-topic-text .lt-topic-item-title { color: #f1f5fa; }
+  .lt-topic-item { background: rgba(255, 255, 255, 0.04); border-left-color: $lt-dark-border; }
+  .lt-topic-item.is-done { border-left-color: $lt-sky; }
+  .lt-topic-item.is-next { border-left-color: $lt-dark-muted; }
+  .lt-topic-pubs span { color: $lt-dark-muted; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-field { transition: none; }
+  .lt-field-cell.is-open .lt-field-panel { animation: none; }
+  .lt-carousel.is-centered.is-enhanced .lt-carousel-track > * { transition: none; }
+  .lt-topic-box { animation: none; }
+}
+
+// Research area page bands: each section spans the page width, and bands alternate the two homepage
+// section colors (`home_section_odd` and `home_section_even` in data/themes/ltlab.toml), with a hairline between them.
+.lt-band {
+  padding: 3rem 0;
+  background: #fff;
+
+  & + & { border-top: 1px solid $lt-border; }
+
+  &:nth-of-type(even) { background: rgb(246, 248, 251); }
+
+  > .lt-overview-section, > .lt-arg-views, > .lt-fields, > .lt-focus { margin-block: 0; }
+
+  // The introduction band stacks several sections: each one after the first keeps a gap above it.
+  > * + .lt-overview-section, > * + .lt-arg-views { margin-top: 3rem; }
+
+  > .lt-proj-body { padding-bottom: 0; }
+}
+
+.dark .lt-band {
+  background: #0d1a2a;
+
+  & + .lt-band { border-top-color: rgba(255, 255, 255, 0.1); }
+
+  &:nth-of-type(even) { background: $lt-dark-card; }
+}
+
+// Research section page (layouts/research/list.html): one band per area, with a mosaic of its concept schemas on the
+// left, an accent rule, and a summary on the right. The title link covers the band; on phones the band stacks, summary
+// first, and the rule becomes a short bar above the summary, as under page titles.
+.lt-research-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 2.5rem;
+  align-items: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (max-width: 767.98px) { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+}
+
+.lt-research-mosaic {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+
+  @media (max-width: 767.98px) { order: 1; }
+}
+
+.lt-research-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.9rem;
+  border: 1px solid $lt-border;
+  border-radius: 12px;
+  background: #fff;
+
+  .lt-svg { width: 100%; max-width: 220px; margin: auto; }
+
+  figcaption {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    color: $lt-muted;
+  }
+}
+
+.lt-research-summary {
+  padding-left: 2.5rem;
+  border-left: 3px solid $lt-orange;
+
+  @media (max-width: 767.98px) {
+    padding-left: 0;
+    border-left: 0;
+
+    &::before { content: ""; display: block; width: 3rem; height: 3px; margin-bottom: 1.2rem; border-radius: 2px; background: $lt-orange; }
+  }
+}
+
+.lt-research-title {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 0.8rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+
+  a { color: $lt-navy; text-decoration: none; }
+
+  a::after { content: ""; position: absolute; inset: 0; }
+
+  a:focus-visible { outline: none; }
+}
+
+.lt-research-row:hover .lt-research-title a { color: $lt-blue; }
+
+.lt-research-row:has(a:focus-visible) { outline: 2px solid $lt-blue; outline-offset: 0.75rem; border-radius: 12px; }
+
+.lt-research-lead { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 600; line-height: 1.45; color: $lt-navy; }
+
+.lt-research-text { margin: 0 0 1.2rem; line-height: 1.6; color: $lt-ink; }
+
+.lt-research-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+.lt-research-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  margin: 1rem 0 1.4rem;
+
+  .lt-status { margin: 0; }
+}
+
+.lt-research-more i { transition: transform 0.2s ease; }
+
+.lt-research-row:hover .lt-research-more i { transform: translateX(3px); }
+
+.dark {
+  .lt-research-tile { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-research-tile figcaption, .lt-research-label { color: $lt-dark-muted; }
+  .lt-research-title a, .lt-research-lead { color: #f1f5fa; }
+  .lt-research-row:hover .lt-research-title a { color: $lt-sky; }
+  .lt-research-row:has(a:focus-visible) { outline-color: $lt-sky; }
+  .lt-research-text { color: #c9d6e3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-research-more i { transition: none; }
+}
+
+// Work with us page (layouts/work-with-us/single.html): path cards, a path card with its numbered steps (one of them the
+// email form), and the expandable research proposals and work done with students that the script moves into the steps.
+// Filter buttons take the look of the tabs.
+.lt-paths-title { margin: 0 0 1.2rem; font-size: 1.8rem; font-weight: 700; color: $lt-navy; }
+
+.lt-path-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 200px)"), 1fr));
+  gap: 1rem;
+
+  [role="tab"] {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    min-height: 15rem;
+    padding: 1.5rem 1.3rem;
+    border: 1px solid $lt-border;
+    border-radius: 16px;
+    text-align: left;
+    color: $lt-ink;
+    background: #fff;
+
+    @media (max-width: 575.98px) { min-height: 0; padding: 1.2rem; }
+
+    &:hover { border-color: $lt-blue; }
+
+    &[aria-selected="true"] { border-color: $lt-blue; box-shadow: inset 0 0 0 1px $lt-blue; background: rgba($lt-sky, 0.12); }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
+
+    i {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3.2rem;
+      height: 3.2rem;
+      margin-bottom: 0.3rem;
+      border-radius: 12px;
+      font-size: 1.4rem;
+      color: $lt-blue;
+      background: rgba($lt-sky, 0.16);
+    }
+  }
+}
+
+// The path cards only switch panels with the script; without it every panel is shown, so the cards are hidden.
+.lt-paths:not(.is-enhanced) .lt-path-picker { display: none; }
+
+.lt-path-pick-label { font-size: 1.2rem; font-weight: 700; line-height: 1.3; color: $lt-navy; }
+
+.lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; color: $lt-muted; }
+
+// Before a path is chosen, the picker fills the first screen: a centered title and larger cards on a band up to 1400px
+// wide. Once a path is chosen, the cards shrink to a row of compact tabs (icon and label; the summary stays for screen
+// readers), and the tabs not chosen are greyed until pointed at or focused.
+.lt-paths.is-enhanced:not(:has([role="tab"][aria-selected="true"])) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 12rem);
+
+  .lt-paths-title { margin-bottom: 2rem; font-size: clamp(1.8rem, 3.5vw, 2.6rem); text-align: center; }
+
+  .lt-path-picker { gap: 1.25rem; }
+
+  // Three cards per row from 768px, then all five in one row; wider than the 1180px section, the picker spans the
+  // width of the navigation bar, up to 1400px.
+  @media (min-width: 768px) {
+    .lt-path-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  @media (min-width: 1200px) {
+    .lt-path-picker {
+      width: unquote("min(1400px, calc(100vw - 108px))");
+      margin-left: 50%;
+      transform: translateX(-50%);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 576px) {
+    [role="tab"] { min-height: 20rem; padding: 1.6rem 1.4rem; }
+
+    [role="tab"] i { width: 4rem; height: 4rem; border-radius: 14px; font-size: 1.8rem; }
+
+    .lt-path-pick-label { font-size: 1.35rem; }
+
+    .lt-path-pick-text { font-size: 1.02rem; }
+  }
+}
+
+.lt-paths:has([role="tab"][aria-selected="true"]) .lt-path-picker {
+  grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 150px)"), 1fr));
+  gap: 0.6rem;
+
+  [role="tab"] {
+    flex-direction: row;
+    align-items: center;
+    min-height: 0;
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    transition: opacity 0.2s;
+
+    i { flex: none; width: 2.2rem; height: 2.2rem; margin: 0; border-radius: 8px; font-size: 1rem; }
+
+    &[aria-selected="false"] { opacity: 0.55; }
+
+    &:hover, &:focus-visible { opacity: 1; }
+
+    @media (prefers-reduced-motion: reduce) { transition: none; }
+  }
+
+  .lt-path-pick-label { font-size: 0.98rem; }
+
+  .lt-path-pick-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+
+// Choosing a path runs a view transition (assets/js/ltlab.js): each card glides from the large grid to its compact tab,
+// and the page around it cross-fades, more slowly than the browser default.
+// The large card's snapshot fades out quickly so its summary does not ghost over the compact tab.
+.lt-paths-title { view-transition-name: lt-paths-title; view-transition-class: lt-path-card; }
+
+.lt-path-picker [role="tab"] { view-transition-class: lt-path-card; }
+
+::view-transition-group(*) { animation-duration: 0.45s; animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; }
+
+::view-transition-old(*.lt-path-card) { animation-duration: 0.12s; }
+
+::view-transition-new(*.lt-path-card) { animation-duration: 0.3s; }
+
+// Leaves room for the sticky navigation bar when a click scrolls to the panel.
+.lt-path, .lt-step, .lt-proposals .lt-field-cell { scroll-margin-top: 5.5rem; }
+
+.lt-path-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.5rem 2rem;
+  margin-top: 1.5rem;
+  padding: 1.6rem;
+  border: 1px solid $lt-border;
+  border-radius: 14px;
+  background: #fff;
+
+  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); padding: 1.2rem; }
+}
+
+.lt-path-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 14px;
+  font-size: 1.6rem;
+  color: $lt-blue;
+  background: rgba($lt-sky, 0.16);
+}
+
+.lt-path-title { margin: 0 0 1rem; font-size: 1.5rem; }
+
+.lt-path-facts {
+  margin: 0;
+
+  dt, .lt-path-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  dd { margin: 0.2rem 0 1rem; line-height: 1.6; color: $lt-ink; }
+
+  dd p, dd ol { margin: 0; }
+
+  dd ol { padding-left: 1.2rem; }
+
+  dd ol + p { margin-top: 0.5rem; }
+}
+
+.lt-path-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+.lt-path-projects {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li + li { margin-top: 0.4rem; }
+
+  a { display: flex; gap: 0.6rem; align-items: baseline; text-decoration: none; }
+
+  b { flex: none; color: $lt-navy; }
+
+  span { font-size: 0.85rem; color: $lt-muted; }
+}
+
+// Steps: numbered circles on one vertical line. The contact step holds the email form in its own box; the extra step,
+// marked with a plus, holds a closed section for inspiration.
+.lt-steps {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: lt-step;
+}
+
+.lt-step {
+  position: relative;
+  padding: 0 0 2.2rem 3.4rem;
+  counter-increment: lt-step;
+
+  &::before {
+    content: counter(lt-step);
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    font-weight: 700;
+    color: #fff;
+    background: $lt-blue;
+  }
+
+  &::after { content: ""; position: absolute; top: 2.6rem; bottom: 0.4rem; left: calc(1.1rem - 1px); width: 2px; background: $lt-border; }
+
+  &:last-child { padding-bottom: 0; }
+
+  &:last-child::after { display: none; }
+
+  &.is-extra { counter-increment: none; }
+
+  &.is-extra::before { content: "+"; border: 2px dashed $lt-border; color: $lt-blue; background: transparent; }
+
+  .lt-expand { max-width: none; padding: 0; }
+
+  .lt-expand-title { font-size: 1.15rem; }
+
+  @media (max-width: 575.98px) { padding-left: 2.8rem; }
+}
+
+.lt-step-title { margin: 0.3rem 0 0.4rem; font-size: 1.25rem; color: $lt-navy; }
+
+.lt-step-text { max-width: 48rem; margin: 0 0 1rem; color: $lt-ink; }
+
+// In a numbered step the step title replaces the section heading.
+.lt-expand.is-step > summary { display: none; }
+
+// The contact box: recipients, the live subject, the fields, and the email link that works without JavaScript.
+.lt-path-contact {
+  max-width: 40rem;
+  padding: 1.2rem;
+  border: 1px solid $lt-border;
+  border-top: 3px solid $lt-orange;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.lt-mail-to {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  align-items: baseline;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: $lt-ink;
+
+  span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  output { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.82rem; overflow-wrap: anywhere; }
+}
+
+.lt-mail-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.8rem;
+
+  label { display: flex; flex-direction: column; gap: 0.25rem; margin: 0; font-size: 0.82rem; font-weight: 600; color: $lt-navy; }
+
+  small { font-weight: 400; color: $lt-muted; }
+
+  input, select, textarea {
+    width: 100%;
+    padding: 0.45rem 0.6rem;
+    border: 1px solid $lt-border;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: $lt-ink;
+    background: #fff;
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+  }
+
+  button { align-self: flex-start; margin-top: 0.3rem; }
+}
+
+.lt-mail-hint { margin: 0; font-size: 0.78rem; color: $lt-muted; }
+
+.lt-mail-direct { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; font-size: 0.88rem; font-weight: 600; }
+
+// Expandable sections: the summary is the section heading with a count and a chevron.
+.lt-expand {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  > summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 1rem;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker { display: none; }
+
+    &::after { content: "\f078"; margin-left: auto; font-family: "Font Awesome 5 Free"; font-weight: 900; color: $lt-blue; transition: transform 0.2s ease; }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 4px; border-radius: 6px; }
+  }
+
+  &[open] > summary::after { transform: rotate(180deg); }
+
+  &[open] > summary { margin-bottom: 1.2rem; }
+}
+
+// The theme draws a rule beside every paragraph inside <details>; expandable sections keep plain paragraphs.
+.lt-expand p { margin-left: 0; padding-left: 0; border-left: 0; }
+
+.lt-expand-title { font-size: 1.6rem; font-weight: 700; color: $lt-navy; }
+
+.lt-expand-count { font-size: 0.9rem; color: $lt-muted; }
+
+.lt-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.2rem;
+
+  button {
+    padding: 0.3rem 0.85rem;
+    border: 1px solid $lt-border;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $lt-navy;
+    background: #fff;
+
+    &[aria-pressed="true"] { border-color: $lt-blue; color: #fff; background: $lt-blue; }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
+  }
+}
+
+// The filter works only with the script, so without it the buttons are not shown.
+.lt-filter:not(.is-enhanced) { display: none; }
+
+// Research proposals reuse the research-area blocks (`.lt-fields-grid`, `.lt-field`); the filter is hidden while a
+// proposal is open.
+.lt-proposal-browser:has(.has-open) > .lt-filter { display: none; }
+
+// On phones the closed list is one row that scrolls sideways inside its own box, so the next step stays close;
+// an opened proposal returns to the stacked layout.
+@media (max-width: 575.98px) {
+  .lt-proposals:not(.has-open) {
+    display: flex;
+    gap: 0.8rem;
+    overflow-x: auto;
+    padding-bottom: 0.6rem;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+
+    > .lt-field-cell { flex: 0 0 85%; scroll-snap-align: start; }
+  }
+}
+
+.lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; color: $lt-blue; }
+
+.lt-fields-grid.has-open .lt-proposal-more { display: none; }
+
+.lt-proposal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.4rem;
+  margin-top: 1rem;
+}
+
+.lt-proposal-page { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; }
+
+.lt-field-panel .lt-tags { margin: 0.8rem 0 0; }
+
+// People: avatar, or initials for a person outside the lab, then the name.
+.lt-people {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  a { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; color: $lt-navy; text-decoration: none; }
+
+  a:hover span { text-decoration: underline; }
+
+  img, .lt-people-initials { flex: none; width: 2.5rem; height: 2.5rem; border-radius: 50%; }
+
+  img { object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+}
+
+// Student work tools: a search box above the kind and topic filters, and a live count of the items shown.
+.lt-work-search {
+  width: 100%;
+  max-width: 28rem;
+  margin-bottom: 0.8rem;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid $lt-border;
+  border-radius: 999px;
+  font: inherit;
+  font-size: 0.9rem;
+  color: $lt-ink;
+  background: #fff;
+
+  &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+}
+
+// On phones the topic filter is one row that scrolls inside its own box.
+.lt-filter-topics {
+  margin-top: -0.6rem;
+
+  @media (max-width: 575.98px) {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.4rem;
+
+    button { flex: none; }
+  }
+}
+
+.lt-filter-swatch { display: inline-block; width: 0.6rem; height: 0.6rem; margin-right: 0.35rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba($lt-muted, 0.5); vertical-align: 0.05em; }
+
+.lt-work-count { margin: -0.4rem 0 1rem; font-size: 0.85rem; color: $lt-muted; }
+
+.lt-work-list .lt-work-topics { grid-column: 2; @media (max-width: 575.98px) { grid-column: 1; } }
+
+.lt-work-topics .lt-topic { font-size: 0.72rem; }
+
+.lt-work-year {
+  h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; color: $lt-muted; }
+
+  &:first-of-type h3 { margin-top: 0; }
+}
+
+.lt-work-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+
+  li {
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 0.2rem 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid $lt-border;
+
+    @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
+  }
+
+  .lt-pill { justify-self: start; align-self: start; margin-top: 0.15rem; }
+
+  a { font-weight: 600; color: $lt-navy; text-decoration: none; }
+
+  a:hover { color: $lt-blue; }
+
+  .lt-work-by { grid-column: 2; font-size: 0.85rem; color: $lt-muted; @media (max-width: 575.98px) { grid-column: 1; } }
+}
+
+.dark {
+  .lt-path-picker [role="tab"] { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
+  .lt-path-picker [role="tab"]:hover, .lt-path-picker [role="tab"][aria-selected="true"] { border-color: $lt-sky; }
+  .lt-path-picker [role="tab"][aria-selected="true"] { box-shadow: inset 0 0 0 1px $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-picker i { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-pick-label, .lt-step-title, .lt-paths-title { color: #f1f5fa; }
+  .lt-path-pick-text { color: $lt-dark-muted; }
+  .lt-path-card, .lt-path-contact { border-color: $lt-dark-border; background: $lt-dark-card; }
+  .lt-path-contact { border-top-color: $lt-orange; }
+  .lt-step::before { color: $lt-navy; background: $lt-sky; }
+  .lt-step::after, .lt-step.is-extra::before { border-color: $lt-dark-border; background: $lt-dark-border; }
+  .lt-step.is-extra::before { color: $lt-sky; background: transparent; }
+  .lt-step-text { color: #c9d6e3; }
+  .lt-expand p { border-left: 0; }
+  .lt-proposal-more { color: $lt-sky; }
+  .lt-people a { color: #f1f5fa; }
+  .lt-work-search { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); color-scheme: dark; }
+  .lt-work-count { color: $lt-dark-muted; }
+  .lt-people .lt-people-initials { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
+  .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
+  .lt-path-facts dd, .lt-mail-to { color: #c9d6e3; }
+  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a { color: #f1f5fa; }
+  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); }
+  // The native option list draws its own popup: a dark color scheme and an opaque option background keep it readable.
+  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { color-scheme: dark; }
+  .lt-mail-form option { color: #f1f5fa; background: $lt-dark-card; }
+  .lt-expand > summary::after { color: $lt-sky; }
+  .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
+  .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }
+  .lt-filter button[aria-pressed="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lt-expand > summary::after { transition: none; }
+}
+
+// A view that returns to its blank state does so at once (assets/js/ltlab.js), without fading its marks out.
+.lt-instant,
+.lt-instant * {
+  transition: none !important;
+  animation: none !important;
+}
+
+// View animation (assets/js/ltlab.js): the hidden states exist only while a view plays.
+// Tags take no space until the text is annotated, so the written text has no gaps; they then open in place.
+.lt-arg-views { position: relative; }
+
+// A tag never runs past its line; it stays on one line only while it opens, and wraps once the view is still.
+.lt-arg-span .lt-arg-tag {
+  max-width: unquote("min(60em, 100%)");
+  overflow: clip;
+}
+
+.lt-arg-view.is-animating {
+  .lt-arg-span { transition: color 0.7s ease, text-decoration-color 0.7s ease, border-color 0.7s ease, background-color 0.5s ease; }
+
+  .lt-arg-span .lt-arg-tag {
+    white-space: nowrap;
+    transition: max-width 0.7s ease, margin-right 0.7s ease, opacity 0.7s ease;
+    transition-delay: inherit;
+  }
+
+  &:not(.is-marked) .lt-arg-span {
+    border-color: transparent;
+    color: inherit;
+    text-decoration-color: transparent;
+  }
+
+  &:not(.is-marked) .lt-arg-span .lt-arg-tag {
+    max-width: 0;
+    margin-right: 0;
+    opacity: 0;
+  }
+
+  .lt-arg-node:not(.is-shown) { visibility: hidden; }
+
+  // Unstated components appear just before their boxes are placed (assets/js/ltlab.js).
+  .lt-arg-unstated:not(.is-shown) { display: none; }
+
+  // Below the text, the argument graph panel appears only with Show graph; beside it, the panel is in place from the start.
+  &:not(.is-graph) .lt-arg-graph-panel { display: none; }
+
+  // The component whose box is on its way to the argument graph.
+  .lt-arg-span.is-sending { background-color: rgba($lt-sky, 0.25); }
+}
+
+// A component and its box, lit together by pointer or focus (assets/js/ltlab.js); the rest of the text dims.
+.lt-arg-text,
+.lt-arg-span { transition: color 0.2s ease, opacity 0.2s ease; }
+
+.lt-arg-view.is-linking {
+  .lt-arg-text { color: rgba($lt-ink, 0.45); }
+  .lt-arg-span:not(.is-linked) { opacity: 0.45; }
+}
+
+.dark .lt-arg-view.is-linking .lt-arg-text { color: rgba(#c9d6e3, 0.45); }
+
+.lt-arg-span.is-linked { background-color: rgba($lt-sky, 0.25); }
+
+.lt-arg-node.is-linked,
+.lt-arg-node:focus-visible {
+  outline: 2px solid var(--lt-role);
+  outline-offset: 2px;
+}
+
+// Annotate, Show graph, and Replay sit below the text and the argument graph. The two steps are numbered and
+// joined by a connector that fills once the text is annotated; a finished step keeps a muted outline.
+.lt-arg-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  .lt-arg-num {
+    display: inline-grid;
+    place-items: center;
+    width: 1.3rem;
+    height: 1.3rem;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    background: rgba(255, 255, 255, 0.25);
+  }
+
+  button:disabled .lt-arg-num { background: rgba($lt-blue, 0.12); }
+
+  button.is-done:disabled {
+    border-color: $lt-blue;
+    color: $lt-blue;
+  }
+
+  .lt-arg-link {
+    position: relative;
+    width: 2.5rem;
+    height: 2px;
+    background: $lt-border;
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: $lt-blue;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.6s ease;
+    }
+  }
+
+  &.is-annotated .lt-arg-link::after { transform: none; }
+
+  &[hidden] { display: none; }
+
+  [hidden] { display: none; }
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.45rem 1rem;
+    border: 1px solid $lt-blue;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #fff;
+    background: $lt-blue;
+
+    &:disabled {
+      border-color: $lt-border;
+      color: $lt-muted;
+      background: transparent;
+    }
+  }
+}
+
+.dark .lt-arg-controls {
+  button {
+    border-color: $lt-sky;
+    color: $lt-navy;
+    background: $lt-sky;
+
+    &:disabled { border-color: $lt-dark-border; color: $lt-dark-muted; background: transparent; }
+    &.is-done:disabled { border-color: $lt-sky; color: $lt-sky; }
+    &:disabled .lt-arg-num { background: rgba($lt-sky, 0.15); }
+  }
+
+  .lt-arg-link { background: $lt-dark-border; }
+  .lt-arg-link::after { background: $lt-sky; }
+}
+
+// A component on its way from the text to the argument graph (assets/js/ltlab.js): a frame in its role color that
+// encloses the marked text, then fills and carries a copy of the box at its final size. The script sets
+// --lt-ring (frame), --lt-fill (background), and --lt-lift (shadow), each from 0 to 1.
+.lt-arg-fly {
+  --lt-fly-bg: #fff;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  overflow: hidden;
+  border-radius: 8px;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--lt-fly-bg) calc(var(--lt-fill, 0) * 100%), transparent);
+  box-shadow:
+    inset 0 0 0 2px color-mix(in srgb, var(--lt-role) calc(var(--lt-ring, 0) * 100%), transparent),
+    0 10px 28px rgba(0, 48, 96, calc(var(--lt-lift, 0) * 0.2));
+  will-change: transform, width, height;
+}
+
+.dark .lt-arg-fly { --lt-fly-bg: #{$lt-dark-card}; }
+
+// The copy of the box draws only its content and its role border; the frame behind it supplies the fill.
+.lt-arg-ghost,
+.dark .lt-arg-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  border-color: transparent;
+  border-left-color: var(--lt-role);
+  background: transparent;
+}
+
+// Research proposal page (layouts/proposals/single.html): the contacts sit under the summary, centered like the authors.
+.lt-proj-people { display: flex; justify-content: center; margin: 1rem 0 0; }
+
+// Side section menu (layouts/proposals/single.html, layouts/publication/single.html): from 1200px the menu leaves the
+// sticky bar and becomes a sticky column left of the body, on a rule like the Work with us steps; the current section
+// is marked by the script.
+.lt-proj-side-label { display: none; }
+
+@media (min-width: 1200px) {
+  .lt-proj-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 860px) minmax(0, 1fr);
+    align-items: start;
+    margin-top: 1.5rem;
+    padding: 0 16px;
+
+    > .lt-proj-body { grid-column: 2; grid-row: 1; }
+  }
+
+  .lt-proj-nav.lt-proj-side {
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: end;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 0;
+    width: calc(100% - 1.5rem);
+    max-width: 13rem;
+    margin: 4.2rem 1.5rem 0 0;
+    padding: 0;
+    border: 0;
+    border-left: 2px solid $lt-border;
+    background: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    top: 100px;
+
+    a { margin-left: -2px; padding: 0.35rem 0 0.35rem 1rem; border-left: 2px solid transparent; }
+
+    a[aria-current="true"] { border-left-color: $lt-blue; color: $lt-navy !important; }
+  }
+
+  .lt-proj-side-label { display: block; margin: 0 0 0.5rem 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+
+  .dark {
+    .lt-proj-nav.lt-proj-side { border-left-color: $lt-dark-border; background: none; }
+    .lt-proj-nav.lt-proj-side a[aria-current="true"] { border-left-color: $lt-sky; color: #f1f5fa !important; }
+    .lt-proj-side-label { color: $lt-dark-muted; }
+  }
+}
+
+// Work with us: from 1200px the open path puts its side menu in a sticky column left of the path card and the steps;
+// narrower, the menu is hidden, since the numbered steps already guide the reader.
+.lt-path-side { display: none !important; }
+
+@media (min-width: 1200px) {
+  .lt-path:not([hidden]) {
+    display: grid;
+    grid-template-columns: 12rem minmax(0, 1fr);
+    column-gap: 2rem;
+
+    > :not(.lt-path-side) { grid-column: 2; }
+  }
+
+  .lt-path-side.lt-proj-nav.lt-proj-side {
+    display: flex !important;
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    align-self: start;
+    width: 100%;
+    max-width: none;
+    margin: 1.5rem 0 0;
+  }
+
+  .lt-path-side-back { margin-bottom: 0.8rem; font-size: 0.82rem !important; }
+}
+
+// Publications page (layouts/publication/section.html): the highlights carousel, then search, type and topic filters,
+// and every publication by year, with a link back to the filters at the end.
+.lt-pubs-section {
+  max-width: 1180px;
+  margin: 2.5rem auto;
+  padding: 0 16px;
+}
+
+// The highlights band uses more of a wide screen than the reading width, so its slides stay low.
+.lt-pubs-section.lt-pubs-wide { max-width: 1400px; }
+
+.lt-pub-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+}
+
+.lt-pub-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid $lt-border;
+
+  p { margin: 0; }
+
+  .lt-chips { margin: 0.2rem 0 0; }
+
+  .lt-award { margin: 0; }
+}
+
+.lt-pub-row-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; color: $lt-navy; text-decoration: none; }
+
+.lt-pub-row-title:hover { color: $lt-blue; text-decoration: underline; }
+
+.lt-pub-row-authors { font-size: 0.9rem; color: $lt-ink; }
+
+.lt-pub-row-venue { font-size: 0.88rem; color: $lt-muted; }
+
+.lt-pub-row-venue span { font-style: italic; }
+
+.lt-pubs-top { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-weight: 600; }
+
+.dark {
+  .lt-pub-row-title { color: #f1f5fa; }
+  .lt-pub-row-title:hover { color: $lt-sky; }
+  .lt-pub-row-authors { color: #c9d6e3; }
+  .lt-pub-row-venue { color: $lt-dark-muted; }
+  .lt-pub-list, .lt-pub-row { border-color: $lt-dark-border; }
+}
+
+// Projects page (layouts/projects/list.html): a timeline of start years, then scope and topic filters over a grid of
+// project cards. International projects are blue with a globe, national ones orange with a flag, in the timeline,
+// its key, and the card pills.
+.lt-timeline {
+  margin-block: 0 0.5rem;
+
+  figcaption {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem 1rem;
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: $lt-muted;
+  }
+}
+
+// One row per year, newest first, with the year on a vertical axis and the projects that started then beside it.
+.lt-timeline-years {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+
+  > li {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+  }
+
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    min-height: 1.4rem;
+    margin: 0;
+    padding: 0 0 0.7rem 1rem;
+    border-left: 2px solid $lt-border;
+    list-style: none;
+  }
+}
+
+.lt-timeline-year {
+  font-size: 0.85rem;
+  font-weight: 700;
+  line-height: 1.6rem;
+  color: $lt-muted;
+  font-variant-numeric: tabular-nums;
+}
+
+.lt-timeline-item,
+.lt-timeline-key {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.lt-timeline-item {
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  text-decoration: none !important;
+
+  &:hover { text-decoration: underline !important; }
+
+  &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+}
+
+.lt-timeline-item.is-international-project,
+.lt-pill-international-project { background: rgba($lt-blue, 0.12); color: $lt-blue !important; }
+
+.lt-timeline-item.is-national-project,
+.lt-pill-national-project { background: rgba($lt-orange, 0.16); color: #9a5600 !important; }
+
+.lt-timeline-key.is-international-project { color: $lt-blue; }
+
+.lt-timeline-key.is-national-project { color: #9a5600; }
+
+.lt-project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 420px)"), 1fr));
+  gap: 1.25rem;
+}
+
+// A card the filter hides leaves no gap in the grid.
+.lt-project[hidden] { display: none; }
+
+.lt-project {
+  scroll-margin-top: 5rem;
+
+  .lt-topics { margin-top: 0; }
+
+  .lt-chips { margin-top: auto; }
+}
+
+.lt-project-name { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.4; color: $lt-muted; }
+
+.lt-project-text { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+
+.dark {
+  .lt-timeline figcaption, .lt-timeline-year, .lt-project-name { color: $lt-dark-muted; }
+  .lt-timeline-years ul { border-color: $lt-dark-border; }
+  .lt-project-text { color: #c9d6e3; }
+  .lt-timeline-item.is-international-project, .lt-pill-international-project { background: rgba($lt-sky, 0.14); color: $lt-sky !important; }
+  .lt-timeline-item.is-national-project, .lt-pill-national-project { background: rgba($lt-orange, 0.18); color: #f5c46b !important; }
+  .lt-timeline-key.is-international-project { color: $lt-sky; }
+  .lt-timeline-key.is-national-project { color: #f5c46b; }
+}
+
+// News page (layouts/news/list.html): a kind filter and year links over a vertical timeline grouped by year. Each item
+// is a dot on the line in its kind color, and its kind pill names the kind, so color is never the only cue.
+.lt-pill-task { background: rgba(#0b6e70, 0.12); color: #0b6e70; }
+.lt-pill-preprint { background: rgba(#1baf7a, 0.14); color: #137a55; }
+.lt-pill-news { background: rgba($lt-muted, 0.14); color: $lt-ink; }
+
+.lt-news-page .lt-filter button i { margin-right: 0.35rem; }
+
+// Back to top button of the News page: fixed at the bottom right, icon only on phones, with the label kept for screen
+// readers. With the script it starts hidden and shows once the filters have scrolled away.
+.lt-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1020;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff !important;
+  background: $lt-blue;
+  box-shadow: 0 4px 14px rgba($lt-navy, 0.3);
+  text-decoration: none !important;
+  transition: opacity 0.2s, visibility 0.2s;
+
+  &:hover { background: $lt-navy; }
+
+  &:focus-visible { outline: 2px solid $lt-orange; outline-offset: 2px; }
+
+  .lt-js &:not(.is-shown) { opacity: 0; visibility: hidden; }
+
+  @media (max-width: 575.98px) {
+    right: 1rem;
+    bottom: 1rem;
+    padding: 0.75rem;
+
+    span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+
+.dark .lt-to-top { color: $lt-navy !important; background: $lt-sky; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); }
+
+.dark .lt-to-top:hover { background: #f1f5fa; }
+
+.lt-news-years {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.9rem;
+  margin: -0.4rem 0 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+
+  a { color: $lt-muted; }
+
+  a:hover { color: $lt-blue; }
+}
+
+.lt-news-year {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid $lt-border;
+  scroll-margin-top: 5rem;
+
+  &:first-of-type { border-top: 0; }
+
+  @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); }
+}
+
+.lt-news-year-title {
+  position: sticky;
+  top: 5rem;
+  align-self: start;
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: $lt-muted;
+  font-variant-numeric: tabular-nums;
+
+  @media (max-width: 575.98px) { position: static; margin-bottom: 0.8rem; font-size: 1.6rem; }
+}
+
+.lt-news-line {
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+  border-left: 2px solid $lt-border;
+  list-style: none;
+}
+
+.lt-news-item {
+  --lt-dot: #{$lt-muted};
+  position: relative;
+  padding: 0.2rem 0 1.4rem;
+  scroll-margin-top: 5rem;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0.45rem;
+    left: calc(-1.5rem - 7px);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--lt-dot);
+    box-shadow: 0 0 0 3px #fff;
+  }
+
+  &.is-paper { --lt-dot: #{$lt-blue}; }
+  &.is-call { --lt-dot: #7b4fa0; }
+  &.is-event { --lt-dot: #{$lt-orange}; }
+  &.is-task { --lt-dot: #0b6e70; }
+  &.is-preprint { --lt-dot: #1baf7a; }
+
+  .lt-meta { margin-bottom: 0.35rem; }
+
+  .lt-topics, .lt-chips { margin-top: 0.5rem; }
+}
+
+.lt-news-item-title { margin: 0; font-size: 1.1rem; line-height: 1.35; color: $lt-navy; }
+
+// Venue under a news title, on the News page and the homepage: a publication venue or the `venue` of a news item.
+.lt-news-venue { display: block; margin: 0.2rem 0 0; font-size: 0.88rem; font-style: italic; line-height: 1.4; color: $lt-muted; }
+
+.lt-news-item-text { margin: 0.35rem 0 0; font-size: 0.95rem; line-height: 1.55; color: $lt-ink; }
+
+.dark {
+  .lt-pill-task { background: rgba(#4fb3b5, 0.16); color: #7fd3d4; }
+  .lt-pill-preprint { background: rgba(#199e70, 0.18); color: #6fd8ad; }
+  .lt-pill-news { background: rgba($lt-dark-muted, 0.16); color: #dbe7f3; }
+  .lt-news-years a, .lt-news-year-title { color: $lt-dark-muted; }
+  .lt-news-years a:hover { color: $lt-sky; }
+  .lt-news-year, .lt-news-line { border-color: $lt-dark-border; }
+  .lt-news-item { --lt-dot: #{$lt-dark-muted}; }
+  .lt-news-item::before { box-shadow: 0 0 0 3px $lt-dark-card; }
+  .lt-news-item.is-paper { --lt-dot: #{$lt-sky}; }
+  .lt-news-item.is-call { --lt-dot: #b98ad8; }
+  .lt-news-item.is-task { --lt-dot: #4fb3b5; }
+  .lt-news-item.is-preprint { --lt-dot: #199e70; }
+  .lt-news-item-title { color: #f1f5fa; }
+  .lt-news-venue { color: $lt-dark-muted; }
+  .lt-news-item-text { color: #c9d6e3; }
+}
+
+// Tools page (layouts/tools/list.html): one research-style band per tool, with a single schema in place of the mosaic.
+.lt-tool-figure {
+  @media (max-width: 767.98px) { order: 1; }
+
+  .lt-svg { max-width: 420px; }
+
+  figcaption { font-size: 0.8rem; font-weight: 400; letter-spacing: 0; text-transform: none; }
+}
+
+.lt-tool-row .lt-research-title { margin-bottom: 0.4rem; }
+
+.lt-tool-row .lt-meta { margin: 0 0 0.8rem; }
+
+.lt-pill-open { background: rgba(#25734a, 0.14); color: #1d5e3c; }
+
+.dark .lt-pill-open { background: rgba(#45ad64, 0.16); color: #7fd19a; }
+
+.lt-tool-row .lt-topics { margin: 0 0 1rem; }
+
+.lt-tool-install {
+  margin: 0 0 1rem;
+
+  code { padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; color: $lt-navy; background: rgba($lt-blue, 0.08); }
+}
+
+.dark .lt-tool-install code { color: #f1f5fa; background: rgba(255, 255, 255, 0.08); }
+
+// People page (layouts/people/single.html): member cards that open the profile page, and compact former members.
+.lt-person-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
+  gap: 1.25rem;
+}
+
+.lt-person-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  img, .lt-people-initials { flex: none; width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+
+  .lt-meta { margin: 0.35rem 0 0; }
+}
+
+.lt-person-org { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-muted; }
+
+.lt-person-bio { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+
+.lt-person .lt-research-label { margin: 0.2rem 0 -0.3rem; }
+
+.lt-person .lt-topics { margin-top: 0; }
+
+// Social links sit above the card link, so each opens its own target.
+.lt-person-social {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  margin: auto 0 0;
+  padding: 0.3rem 0 0;
+  list-style: none;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    color: $lt-blue;
+
+    &:hover { background: rgba($lt-sky, 0.16); }
+
+    &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
+  }
+}
+
+.lt-former {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 320px)"), 1fr));
+  gap: 1.2rem 2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li { display: flex; align-items: flex-start; gap: 0.9rem; }
+
+  img, .lt-people-initials { flex: none; width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
+
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+
+  p { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.5; color: $lt-muted; }
+}
+
+.lt-former-name { font-weight: 700; color: $lt-navy; }
+
+.dark {
+  .lt-person-org, .lt-former p { color: $lt-dark-muted; }
+  .lt-person-bio { color: #c9d6e3; }
+  .lt-person-social a { color: $lt-sky; }
+  .lt-person-social a:focus-visible { outline-color: $lt-sky; }
+  .lt-person-head .lt-people-initials, .lt-former .lt-people-initials { color: $lt-sky; }
+  .lt-former-name { color: #f1f5fa; }
+}
+
+// Opening band of section pages (layouts/_partials/lt/page-intro.html): the page intro as a centered lead.
+.lt-page-intro { padding: 4.5rem 0 4rem; }
+
+.lt-page-intro-inner { max-width: 60rem; margin: 0 auto; padding: 0 16px; text-align: center; }
+
+.lt-page-intro-text {
+  margin: 0;
+  font-size: clamp(1.35rem, 2.6vw, 2rem);
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: $lt-navy;
+}
+
+.dark .lt-page-intro-text { color: #f1f5fa; }
+
+// Profile page (layouts/authors/list.html): photo and details on the intro backdrop, the biography below them,
+// then the publications with filters, then news, events, and theses.
+.lt-profile-head {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 16px;
+
+  @media (max-width: 575.98px) { flex-direction: column; align-items: flex-start; gap: 1.2rem; }
+
+  .lt-meta { margin: 0.4rem 0 0.9rem; font-size: 0.95rem; }
+
+  .lt-research-label { margin: 0 0 0.3rem; }
+
+  .lt-topics { margin: 0 0 0.6rem; }
+}
+
+.lt-profile-photo { flex: none; width: 10rem; height: 10rem; border-radius: 50%; object-fit: cover; }
+
+.lt-profile-name { margin: 0; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 720; letter-spacing: -0.02em; text-align: left !important; }
+
+.lt-profile-bio {
+  max-width: 900px;
+  margin: 2rem auto 0;
+  padding: 0 16px;
+  font-size: 1.02rem;
+  line-height: 1.65;
+  color: $lt-ink;
+
+  p:last-child { margin-bottom: 0; }
+}
+
+.lt-activity {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid $lt-border;
+
+  li {
+    display: grid;
+    grid-template-columns: 3.5rem 9rem minmax(0, 1fr);
+    align-items: baseline;
+    gap: 0.4rem 0.8rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid $lt-border;
+
+    @media (max-width: 575.98px) { grid-template-columns: auto minmax(0, 1fr); a { grid-column: 1 / -1; } }
+  }
+
+  time { font-size: 0.85rem; color: $lt-muted; font-variant-numeric: tabular-nums; }
+
+  .lt-kind { justify-self: start; margin: 0; }
+
+  a { font-weight: 600; }
+}
+
+.dark {
+  .lt-profile-bio { color: #c9d6e3; }
+  .lt-activity, .lt-activity li { border-color: $lt-dark-border; }
+  .lt-activity time { color: $lt-dark-muted; }
 }

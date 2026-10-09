@@ -1,0 +1,12 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="An audio signal is turned into features: spectral coefficients such as MFCCs, or a learned embedding.">
+  <text class="lt-s-sub" x="6" y="14">AUDIO</text>
+  <path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58"/>
+  <path class="lt-s-arrow" d="M88 58 H100 V34 H113 M100 58 V82 H113"/>
+  <polygon class="lt-s-head" points="112,28 112,40 120,34"/>
+  <polygon class="lt-s-head" points="112,76 112,88 120,82"/>
+  <text class="lt-s-sub" x="124" y="14">FEATURES</text>
+  <rect class="lt-s-tok" x="124" y="20" width="110" height="28" rx="6"/>
+  <text class="lt-s-txt" x="179" y="39">MFCCs</text>
+  <rect class="lt-s-tok" x="124" y="68" width="110" height="28" rx="6"/>
+  <text class="lt-s-txt" x="179" y="87">Embedding</text>
+</svg>

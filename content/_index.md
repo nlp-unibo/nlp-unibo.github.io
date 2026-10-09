@@ -4,59 +4,33 @@ title:
 date: 2026-02-26
 type: landing
 
+# Blocks named lt-* live in layouts/_partials/blocks/.
 sections:
-  - block: hero
+  - block: lt-hero
+    id: section-hero
     content:
-      title: Language Technologies (LT) Lab
-      image:
-        filename: ltlab.png
-      text: |
-        We are a research group of the Department of Computer Science and Engineering of the University of Bologna.
-
-        Our **focus** is natural language processing research and application. We contribute to several national and international research projects and offer a variety of NLP learning activities at the international masters degree in Artificial Intelligence and elsewhere.
-
-        {{% cta cta_link="./people/" cta_text="Meet the team →" %}}
-  - block: markdown
-    id: stats
-    content:
-      title:
-      text: '{{< site-stats >}}'
-    design:
-      columns: '1'
-      spacing:
-        padding: ['20px', '0', '20px', '0']
-  - block: markdown
+      eyebrow: Language Technologies Lab · University of Bologna
+      title: Teaching machines to reason with *language*
+      text: We build interpretable models of argumentation that adapt to specialised domains, from legal texts to multimodal data.
+  - block: lt-research
     id: research
     content:
       title: Research
-      text: '{{< section-tiles "research" >}}'
-    design:
-      columns: '1'
-  - block: collection
+  - block: lt-news
+    id: news
     content:
-      title: Latest News
-      subtitle:
-      text:
-      count: 5
-      filters:
-        folders:
-          - news
-      offset: 0
-      order: desc
-      page_type: news
-    design:
-      view: card
-      columns: '1'
-  - block: collection
+      title: News
+      count: 6
+      featured: 3
+      more:
+        text: All news
+        url: /news/
+  - block: lt-papers
+    id: papers
     content:
-      title: Latest Preprints
-      text: ""
-      count: 2
-      filters:
-        folders:
-          - publication
-        category: Preprint
-    design:
-      view: citation
-      columns: '1'
+      title: Latest papers
+      count: 3
+      more:
+        text: All publications
+        url: /publication/
 ---

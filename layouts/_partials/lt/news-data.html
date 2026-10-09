@@ -1,0 +1,22 @@
+{{/* Display data of a news preview, shared by the News page and the homepage. Input: a news page or a publication. */}}
+{{/* A news item has no page, so its preview carries the links of its body. A publication is a Paper or Preprint item: */}}
+{{/* its venue comes from the publication, its first link is Read more to the publication page, a published paper drops */}}
+{{/* its arXiv link, which the venue version makes redundant, and its date shows only the precision it carries */}}
+{{/* (`2025-01-01` is a year, `2025-07-01` a month). */}}
+{{- $date := .Date | time.Format ":date_medium" -}}
+{{- $iso := .Date.Format "2006-01-02" -}}
+{{- $venue := .Params.venue | default "" -}}
+{{- $summary := .Params.summary | default "" | plainify -}}
+{{- $links := slice -}}
+{{- if eq .Section "publication" -}}
+  {{- $meta := partial "lt/pub-meta.html" . -}}
+  {{- $venue = $meta.venue -}}
+  {{- $summary = "" -}}
+  {{- $links = slice (dict "name" "Read more" "url" .RelPermalink "icon" "fas fa-arrow-right") -}}
+  {{- range $meta.links }}{{ if or (eq $meta.kind "Preprint") (not (strings.Contains .url "arxiv.org")) }}{{ $links = $links | append . }}{{ end }}{{ end -}}
+  {{- if eq (.Date.Format "01-02") "01-01" }}{{ $date = .Date.Format "2006" }}{{ $iso = $date }}
+  {{- else if eq .Date.Day 1 }}{{ $date = .Date.Format "Jan 2006" }}{{ $iso = .Date.Format "2006-01" }}{{ end -}}
+{{- else -}}
+  {{- $links = partial "lt/links.html" . -}}
+{{- end -}}
+{{- return dict "kind" (partial "lt/news-kind.html" .) "date" $date "iso" $iso "venue" $venue "summary" $summary "links" $links "id" (printf "news-%s" (.File.ContentBaseName | urlize)) -}}

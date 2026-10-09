@@ -1,10 +1,17 @@
 ---
 title: "MAMKit"
-date: 2024-03-01
+date: 2024-08-08
 topics: [argument-mining, toolkit, multimodal, benchmark]
+kind: Python library
+summary: "MAMKit is an open-source PyTorch toolkit for multimodal argument mining, which analyzes arguments using both text and audio. It gathers datasets, models, and benchmarks behind one interface, so results can be reproduced and compared."
 
-summary: "MAMKit is an open-source, publicly available PyTorch toolkit designed to access and develop datasets, models, and benchmarks for Multimodal Argument Mining (MAM)." 
-
+schema: schema.svg
+caption: "How MAMKit combines its components, drawn from the MAMKit paper and documentation."
 
 external_link: https://nlp.unibo.it/mamkit/
+code: https://github.com/nlp-unibo/mamkit
+# The license of the code repository; it marks the tool as open source.
+license: CC0-1.0
+package: mamkit
+publication: mancini-etal-2024-mamkit
 ---

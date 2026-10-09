@@ -85,4 +85,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/10-1007-978-3-031-56027-9-29/
+topics: [information-retrieval, model-compression, llms]
 ---

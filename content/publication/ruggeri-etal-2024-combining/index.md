@@ -30,12 +30,16 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: Many NLP applications require models to be interpretable. However, many successful neural architectures, including transformers, still lack effective interpretation methods. A possible solution could rely on building explanations from domain knowledge, which is often available as plain, natural language text. We thus propose an extension to transformer models that makes use of external memories to store natural language explanations and use them to explain classification outputs. We conduct an experimental evaluation on two domains, legal text analysis and argument mining, to show that our approach can produce relevant explanations while retaining or even improving classification performance.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A transformer extension that stores natural language explanations in an external memory and uses them to explain its predictions.
+card_summary: A transformer that stores natural language explanations in memory to explain its predictions.
 
-tags: []
+tags:
+- interpretability
+- legal
+- argument mining
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -75,4 +79,5 @@ categories:
   - Preprint
 aliases:
   - /publication_preprints/ruggeri-etal-2024-combining/
+topics: [interpretability, legal, argument-mining]
 ---

@@ -77,4 +77,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/liepina-etal-2022-claudette/
+topics: [legal, prototype]
 ---

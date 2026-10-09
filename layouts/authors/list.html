@@ -1,46 +1,50 @@
-{{/* Theme view (blox-bootstrap v5 authors/list.html) with a kind badge on each Latest entry. */}}
-{{/* Re-sync with the theme file when upgrading Hugo Blox. */}}
+{{/* Profile page of a person in content/authors: a header band with the photo, name, lab role, affiliation, "Works */}}
+{{/* on" topics (lt/person-topics.html), social links, and the biography from the page body; then the person's */}}
+{{/* news and theses, newest first; then their publications with filters (lt/pub-browser.html). An author */}}
+{{/* without a profile folder gets the name and the lists only. */}}
 {{- define "main" -}}
-
-{{/* Author profile page. */}}
-
-{{/* If an account has not been created for this user, just display their name as the title. */}}
-{{ if not .File }}
-<div class="universal-wrapper pt-3">
-  <h1>{{ .Title }}</h1>
-</div>
-{{ end }}
-
-<section id="profile-page" class="pt-5">
-  <div class="container">
-    {{/* Show the About block if an account exists for this user. */}}
-    {{/* TODO: remove dependency on v1 blocks. Either migrate to v2 blocks(?) or directly implement layout here. */}}
-    {{ if .File }}
-      {{ $widget := "blocks/v1/about.html" }}
-      {{ $username := (path.Base .File.Dir) }}{{/* Alternatively, use `index .Params.authors 0` */}}
-      {{ $params := dict "wcPage" $ "wcBlock" . "author" $username }}
-      {{ partial $widget $params }}
-    {{end}}
-
-    {{ $query := where .Pages ".IsPage" true }}
-    {{ $count := len $query }}
-    {{ if $count }}
-    <div class="article-widget content-widget-hr lt-latest">
-      <h3>{{ i18n "user_profile_latest" | default "Latest" }}</h3>
-      <ul>
-        {{ range $query }}
-        {{/* Publications and theses show their list category, other sections their own name. */}}
-        {{ $kind := index (dict "events" "Event" "news" "News") .Section | default (.Section | humanize) }}
+{{ $pubs := (where .Pages "Section" "publication").ByDate.Reverse }}
+{{ $other := (where .Pages "Section" "not in" (slice "publication")).ByDate.Reverse }}
+<article class="lt-proj lt-profile">
+  <div class="lt-band lt-page-intro">
+    <header class="lt-profile-head">
+      {{ with (.Resources.ByType "image").GetMatch "*avatar*" }}{{ $img := .Fill "320x320 Center webp" }}<img class="lt-profile-photo" src="{{ $img.RelPermalink }}" width="160" height="160" alt="">{{ end }}
+      <div>
+        <h1 class="lt-profile-name">{{ .Title }}</h1>
+        {{ if or .Params.role .Params.organizations }}
+        <p class="lt-meta">{{ with .Params.role }}<span class="lt-pill">{{ . }}</span>{{ end }}{{ with .Params.organizations }}<span>{{ (index . 0).name }}</span>{{ end }}</p>
+        {{ end }}
+        {{/* Only lab profiles show topics: for a co-author they would come from their papers with the lab alone. */}}
+        {{ if .File }}{{ with partial "lt/person-topics.html" . }}<p class="lt-research-label">Works on</p>{{ partial "lt/topic-tags.html" . }}{{ end }}{{ end }}
+        {{ partial "lt/person-social.html" . }}
+      </div>
+    </header>
+    {{ with .Content }}<div class="lt-profile-bio">{{ . }}</div>{{ end }}
+  </div>
+  {{ with $other }}
+  <div class="lt-band">
+    <section class="lt-pubs-section" aria-labelledby="activity-title">
+      <h2 class="lt-paths-title" id="activity-title">News and theses</h2>
+      <ul class="lt-activity">
+        {{ range . }}
+        {{/* Theses show their list category, other sections their own name. */}}
+        {{ $kind := .Section | humanize }}
         {{ range .Params.categories }}{{ if ne . "Highlight" }}{{ $kind = . }}{{ end }}{{ end }}
         <li>
+          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006" }}</time>
           <span class="lt-kind lt-kind-{{ $kind | urlize }}">{{ $kind }}</span>
-          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+          {{/* News items have no page: their link opens the item on the News page. */}}
+          <a href="{{ if eq .Section "news" }}{{ printf "/news/#news-%s" (.File.ContentBaseName | urlize) | relURL }}{{ else }}{{ .RelPermalink }}{{ end }}">{{ .Title }}</a>
         </li>
         {{ end }}
       </ul>
-    </div>
-    {{ end }}
+    </section>
   </div>
-</section>
-
+  {{ end }}
+  {{ with $pubs }}
+  <div class="lt-band">
+    {{ partial "lt/pub-browser.html" (dict "pubs" . "id" "publications-title" "title" "Publications") }}
+  </div>
+  {{ end }}
+</article>
 {{- end -}}

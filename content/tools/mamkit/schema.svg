@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 132" role="img" aria-label="A dataset of text and audio feeds a model, which is evaluated on a benchmark task.">
+  <text class="lt-s-sub" x="50" y="12" text-anchor="middle">DATASET</text>
+  <rect class="lt-s-tok" x="6" y="30" width="88" height="30" rx="6"/>
+  <text class="lt-s-txt" x="50" y="50">Text</text>
+  <rect class="lt-s-tok" x="6" y="80" width="88" height="30" rx="6"/>
+  <text class="lt-s-txt" x="50" y="100">Audio</text>
+  <path class="lt-s-arrow" d="M94 45 H114 V70 H128 M94 95 H114 V70"/>
+  <path class="lt-s-head" d="M136 70 L127 65.5 V74.5 Z"/>
+  <text class="lt-s-sub" x="180" y="12" text-anchor="middle">MODEL</text>
+  <rect class="lt-s-pred lt-s-box" x="138" y="53" width="84" height="34" rx="6"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="75">Model</text>
+  <path class="lt-s-arrow" d="M222 70 H246"/>
+  <path class="lt-s-head" d="M254 70 L245 65.5 V74.5 Z"/>
+  <text class="lt-s-sub" x="304" y="12" text-anchor="middle">BENCHMARK</text>
+  <rect class="lt-s-sel lt-s-box" x="256" y="53" width="96" height="34" rx="6"/>
+  <text class="lt-s-txt" x="304" y="75">Task</text>
+</svg>

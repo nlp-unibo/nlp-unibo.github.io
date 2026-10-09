@@ -1,0 +1,12 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="The request of a party leads to a predicted outcome: upheld rather than rejected.">
+  <rect class="lt-s-tok" x="6" y="42" width="100" height="32" rx="6"/>
+  <text class="lt-s-txt" x="56" y="63">Request</text>
+  <path class="lt-s-arrow" d="M106 58 H120 V34 H131 M120 58 V82 H131"/>
+  <polygon class="lt-s-head" points="130,28 130,40 138,34"/>
+  <polygon class="lt-s-head" points="130,76 130,88 138,82"/>
+  <text class="lt-s-sub" x="142" y="14">OUTCOME</text>
+  <rect class="lt-s-label" x="142" y="22" width="92" height="24" rx="12"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="188" y="39">Upheld</text>
+  <rect class="lt-s-tok" x="142" y="70" width="92" height="24" rx="12"/>
+  <text class="lt-s-txt" x="188" y="87">Rejected</text>
+</svg>

@@ -1,0 +1,58 @@
+{{/* People page: the title, then one band per group of `user_groups` in content/authors, ordered by `weight`. */}}
+{{/* Members and associate fellows are cards that open the profile page: photo, name, lab role, affiliation for */}}
+{{/* associate fellows, the `bio` sentence, up to three "Works on" topics (lt/person-topics.html), and the social */}}
+{{/* links. Former members are compact rows. */}}
+{{- define "main" -}}
+{{ $people := where site.Pages "Section" "authors" }}
+{{ $groups := slice (dict "key" "Members" "title" "Members") (dict "key" "Associate Fellows" "title" "Associate fellows" "affiliation" true) (dict "key" "Former Members" "title" "Former members" "compact" true) }}
+<article class="lt-proj">
+  {{ partial "lt/page-intro.html" . }}
+  {{ range $groups }}
+  {{ $group := . }}
+  {{ $members := sort (where $people "Params.user_groups" "intersect" (slice .key)) "Params.weight" }}
+  {{ with $members }}
+  <div class="lt-band">
+    <section class="lt-pubs-section" aria-labelledby="group-{{ urlize $group.key }}">
+      <h2 class="lt-paths-title" id="group-{{ urlize $group.key }}">{{ $group.title }}</h2>
+      {{ if $group.compact }}
+      <ul class="lt-former">
+        {{ range . }}
+        {{ $avatar := (.Resources.ByType "image").GetMatch "*avatar*" }}
+        <li>
+          {{ with $avatar }}{{ $img := .Fill "96x96 Center webp" }}<img src="{{ $img.RelPermalink }}" width="48" height="48" alt="" loading="lazy">{{ else }}<span class="lt-people-initials" aria-hidden="true">{{ substr .Params.first_name 0 1 }}{{ substr .Params.last_name 0 1 }}</span>{{ end }}
+          <div>
+            <a class="lt-former-name" href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{ with .Params.bio }}<p>{{ . | markdownify }}</p>{{ end }}
+          </div>
+        </li>
+        {{ end }}
+      </ul>
+      {{ else }}
+      <div class="lt-person-grid">
+        {{ range . }}
+        {{ $avatar := (.Resources.ByType "image").GetMatch "*avatar*" }}
+        {{ $topics := partial "lt/person-topics.html" . }}
+        <article class="lt-card lt-link-card lt-person">
+          <div class="lt-card-body">
+            <div class="lt-person-head">
+              {{ with $avatar }}{{ $img := .Fill "192x192 Center webp" }}<img src="{{ $img.RelPermalink }}" width="96" height="96" alt="" loading="lazy">{{ else }}<span class="lt-people-initials" aria-hidden="true">{{ substr .Params.first_name 0 1 }}{{ substr .Params.last_name 0 1 }}</span>{{ end }}
+              <div>
+                <h3 class="lt-card-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+                {{ with .Params.role }}<p class="lt-meta"><span class="lt-pill">{{ . }}</span></p>{{ end }}
+                {{ if $group.affiliation }}{{ with .Params.organizations }}<p class="lt-person-org">{{ (index . 0).name }}</p>{{ end }}{{ end }}
+              </div>
+            </div>
+            {{ with .Params.bio }}<p class="lt-person-bio">{{ . | markdownify }}</p>{{ end }}
+            {{ with $topics }}<p class="lt-research-label">Works on</p>{{ partial "lt/topic-tags.html" . }}{{ end }}
+            {{ partial "lt/person-social.html" . }}
+          </div>
+        </article>
+        {{ end }}
+      </div>
+      {{ end }}
+    </section>
+  </div>
+  {{ end }}
+  {{ end }}
+</article>
+{{- end -}}

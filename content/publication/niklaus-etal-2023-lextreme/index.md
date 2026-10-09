@@ -93,4 +93,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/niklaus-etal-2023-lextreme/
+topics: [legal, benchmark]
 ---

@@ -83,4 +83,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/grundler-etal-2022-cjeu-arguments/
+topics: [argument-mining, legal]
 ---

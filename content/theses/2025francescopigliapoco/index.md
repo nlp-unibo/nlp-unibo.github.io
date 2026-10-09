@@ -30,4 +30,5 @@ categories:
   - Master thesis
 aliases:
   - /students_mscs/2025francescopigliapoco/
+topics: [knowledge-extraction, llm-reasoning, llms]
 ---

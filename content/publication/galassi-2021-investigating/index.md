@@ -72,4 +72,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/galassi-2021-investigating/
+topics: [argument-mining]
 ---

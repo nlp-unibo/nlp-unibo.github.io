@@ -74,4 +74,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-torroni-2016/
+topics: [argument-mining, speech, multimodal]
 ---

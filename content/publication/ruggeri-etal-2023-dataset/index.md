@@ -93,4 +93,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/ruggeri-etal-2023-dataset/
+topics: [argument-mining, dialogue, benchmark]
 ---

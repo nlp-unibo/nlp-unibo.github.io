@@ -83,4 +83,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-etal-2022-amica/
+topics: [argument-mining, information-retrieval, prototype]
 ---

@@ -78,4 +78,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/10-1007-978-3-319-28460-6-10/
+topics: [argument-mining]
 ---

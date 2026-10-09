@@ -1,0 +1,441 @@
+{{/* Research area page. It adds detail from top to bottom, so each reader can stop at the depth they need. */}}
+{{/* 1. The introduction, in one band: the body, a `definition`, the `overview` blocks under "Core concepts", and `views` of one argument */}}
+{{/*    under different argument models and domains, with the text beside its argument graph on wide screens, above it on narrow ones. */}}
+{{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
+{{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
+{{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
+{{/* assets/js/ltlab.js opens one area and one detail box at a time; without JavaScript every panel and box is visible. */}}
+{{- define "main" -}}
+{{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
+<article class="lt-proj">
+  {{/* Each section sits in a full-width band; bands alternate their background, as on the homepage. */}}
+  {{/* The header shows the title only: the `tagline` is for the homepage research card. */}}
+  <div class="lt-band">
+  <header class="lt-proj-header">
+    <h1 class="lt-proj-title">{{ .Title }}</h1>
+  </header>
+
+  {{ with .Content }}<div class="lt-proj-body article-style">{{ . }}</div>{{ end }}
+  {{/* `definition`: a short answer to "What is ...?", in Markdown, right under the title. */}}
+  {{ with .Params.definition }}
+  <section class="lt-definition" aria-label="Definition">
+    <p class="lt-definition-label"><i class="fas fa-book-open" aria-hidden="true"></i> Definition</p>
+    {{ . | markdownify }}
+  </section>
+  {{ end }}
+  {{/* `overview`: concept blocks under "Core concepts", each with a short text and a small schema below it. */}}
+  {{/* `schema` names an SVG file in the page folder, drawn with the `lt-s-*` classes so that it follows the theme. */}}
+  {{ with .Params.overview }}
+  <section class="lt-overview-section" aria-labelledby="overview-title">
+    <h2 id="overview-title">Core concepts</h2>
+    <div class="lt-overview">
+      {{ range . }}
+      <section class="lt-overview-block">
+        <h3>{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }} {{ .title }}</h3>
+        <p>{{ .text }}</p>
+        {{ with .schema }}{{ with $.Resources.Get . }}<div class="lt-svg lt-overview-schema">{{ .Content | safeHTML }}</div>{{ else }}{{ errorf "overview schema %q not found in %s" . $.File.Path }}{{ end }}{{ end }}
+      </section>
+      {{ end }}
+    </div>
+  </section>
+  {{ end }}
+
+  {{ with .Params.views }}
+  {{/* Argument views: one tab per argument model or domain, each with the marked text and the argument graph. */}}
+  {{/* assets/js/ltlab.js switches tabs and draws the graph edges; without it every view is visible and edges are listed as text. */}}
+  {{ $relations := dict "support" "supports" "attack" "attacks" "link" "links" }}
+  {{ $groups := slice }}{{ range . }}{{ if not (in $groups .group) }}{{ $groups = $groups | append .group }}{{ end }}{{ end }}
+  {{ $title := $.Params.views_title | default "Core concepts" }}
+  <section class="lt-arg-views" aria-label="{{ if $.Params.concepts }}{{ $title }}{{ else }}Examples{{ end }}">
+    {{/* `concepts` gives the background of the examples below: the notions they rely on, in a few sentences. */}}
+    {{/* `views_title` names the section, "Core concepts" by default. */}}
+    {{ with $.Params.concepts }}
+    <h2>{{ $title }}</h2>
+    <div class="lt-concepts">{{ . | markdownify }}</div>
+    {{ end }}
+    {{/* One tablist for all views; the group names are visual labels that each tab also carries as its description. */}}
+    <div class="lt-arg-tabgroups" role="tablist" aria-label="Examples">
+      {{ range $groups }}{{ $group := . }}
+      <div class="lt-arg-tabgroup" role="presentation">
+        <span class="lt-arg-tabgroup-label" id="views-{{ urlize $group }}" aria-hidden="true">{{ $group }}</span>
+        <div class="lt-arg-tabrow" role="presentation">
+          {{ range $i, $v := $.Params.views }}{{ if eq $v.group $group }}
+          <button type="button" role="tab" id="view-{{ $v.key }}-tab" aria-controls="view-{{ $v.key }}" aria-describedby="views-{{ urlize $group }}" aria-selected="{{ eq $i 0 }}" tabindex="{{ cond (eq $i 0) 0 -1 }}">{{ $v.label }}</button>
+          {{ end }}{{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+    {{ range $i, $v := . }}
+    {{ if eq $v.type "detect" }}
+    {{/* A detect view: a document whose sentences the Detect button scans; annotated clauses show their category and level. */}}
+    {{ $levels := dict "1" "Clearly fair" "2" "Potentially unfair" "3" "Clearly unfair" }}
+    {{ $count := dict }}{{ $total := 0 }}
+    {{ range $v.sections }}{{ range .sentences }}{{ $total = add $total 1 }}{{ with .level }}{{ $k := string . }}{{ $count = merge $count (dict $k (add (index $count $k | default 0) 1)) }}{{ end }}{{ end }}{{ end }}
+    <div class="lt-arg-view lt-detect" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panel">
+          <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
+          <div class="lt-detect-doc">
+            {{ range $v.sections }}
+            <h4>{{ .title }}</h4>
+            <p>
+              {{- range $s, $c := .sentences }}{{ if $s }} {{ end }}<span class="lt-detect-s{{ with $c.level }} lt-detect-clause is-level-{{ . }}{{ end }}" data-lt-sentence>{{ with $c.level }}<span class="lt-detect-tag">{{ $c.category }} · {{ index $levels (string .) }}</span><span class="lt-detect-mark">{{ $c.text }}</span>{{ else }}{{ $c.text }}{{ end }}</span>{{ end -}}
+            </p>
+            {{ end }}
+          </div>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+      {{/* The summary counts the annotated clauses by level, in the same marks as the text; the buttons sit beside it. */}}
+      <div class="lt-detect-foot">
+        {{ $flagged := add (index $count "2" | default 0) (index $count "3" | default 0) }}
+        <p class="lt-detect-summary" aria-live="polite">
+          <span>{{ $flagged }} of {{ $total }} sentences flagged as unfair:</span>
+          {{ range $lv := slice "3" "2" }}{{ with index $count $lv }}<span class="lt-detect-count is-level-{{ $lv }}">{{ . }} {{ lower (index $levels $lv) }}</span>{{ end }}{{ end }}
+        </p>
+        <div class="lt-arg-controls lt-detect-controls" hidden>
+          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+          <button type="button" data-lt-action="detect"><i class="fas fa-search" aria-hidden="true"></i> Detect</button>
+          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+        </div>
+      </div>
+    </div>
+    {{ else if eq $v.type "rules" }}
+    {{/* A rules view: the text beside a clause matrix. Each clause about personal data (C1, C2, ...) is a row with the type of */}}
+    {{/* its category, its specification, and its subcategories; the rules follow in the same columns, so a clause matches */}}
+    {{/* the rule with the same pattern. Detect marks the clauses and fills their rows; Classify lights the matching rules */}}
+    {{/* and adds the rule ID (level and rule number) beside each clause ID. */}}
+    {{ $k := 0 }}{{ $ns := dict }}{{ $count := dict }}{{ $clauses := slice }}
+    {{ range $si, $sec := $v.sections }}{{ range $ci, $c := .sentences }}{{ with $c.level }}{{ $k = add $k 1 }}{{ $ns = merge $ns (dict (printf "%d-%d" $si $ci) $k) }}{{ $clauses = $clauses | append (merge $c (dict "n" $k)) }}{{ $l := string . }}{{ $count = merge $count (dict $l (add (index $count $l | default 0) 1)) }}{{ end }}{{ end }}{{ end }}
+    {{ $roles := dict "category" 1 "specification" 4 "subcategory" 3 }}
+    <div class="lt-arg-view lt-rules" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panels" style="--lt-cols: 3">
+          <div class="lt-arg-panel lt-arg-text-panel">
+            <h3 class="lt-arg-step"><span><i class="fas fa-file-alt" aria-hidden="true"></i></span> {{ $v.document }}</h3>
+            <div class="lt-detect-doc">
+              {{ range $si, $sec := $v.sections }}
+              {{ with .title }}<h4>{{ . }}</h4>{{ end }}
+              <p>
+                {{- range $ci, $c := .sentences }}{{ if $ci }} {{ end }}{{ $n := index $ns (printf "%d-%d" $si $ci) }}
+                {{- if $c.level }}<span class="lt-rule-clause is-level-{{ $c.level }}" data-lt-clause="{{ $n }}" data-lt-rule="{{ $c.level }}-{{ $c.rule }}"><span class="lt-rule-num" aria-label="Clause {{ $n }}">C<sub>{{ $n }}</sub></span>{{ partial "lt/rule-parts.html" $c.parts }}</span>
+                {{- else }}{{ partial "lt/rule-parts.html" $c.parts }}{{ end }}{{ end -}}
+              </p>
+              {{ end }}
+            </div>
+            {{/* The marks in the text carry no tag; the legend names their colors and lines. */}}
+            <p class="lt-rules-legend">
+              <span class="lt-role-1">Category</span><span class="lt-role-4">Specification</span><span class="lt-role-3">Subcategory</span>
+              <span class="is-line is-open">Open</span><span class="is-line">Closed</span>
+            </p>
+          </div>
+          <div class="lt-arg-panel lt-arg-graph-panel lt-matrix-panel">
+            <h3 class="lt-arg-step"><span>2</span> Clauses and rules</h3>
+            <div class="lt-matrix-scroll">
+            <table class="lt-matrix">
+              <thead>
+                <tr><th scope="col"><span class="sr-only">Clause</span></th><th scope="col" class="lt-role-1"><span class="lt-matrix-head">Category</span></th><th scope="col" class="lt-role-4"><span class="lt-matrix-head">Specification</span></th><th scope="col" class="lt-role-3"><span class="lt-matrix-head">Subcategories</span></th></tr>
+              </thead>
+              <tbody>
+                {{ range $clauses }}
+                {{ $spec := where .parts "role" "specification" }}
+                {{ $subs := slice }}{{ range $spec }}{{ range where .parts "role" "subcategory" }}{{ $subs = $subs | append . }}{{ end }}{{ end }}
+                <tr class="lt-matrix-row is-level-{{ .level }}" data-lt-card="{{ .n }}">
+                  <th scope="row"><span class="lt-rule-num">C<sub>{{ .n }}</sub></span><span class="lt-rule-label lt-matrix-level">L{{ .level }} · R{{ .rule }}</span></th>
+                  <td>{{ range first 1 (where .parts "role" "category") }}<span class="lt-cell lt-role-1 is-{{ .type }}">{{ .type }}</span>{{ end }}</td>
+                  <td>{{ with $spec }}{{ range first 1 . }}<span class="lt-cell lt-role-4 is-{{ .type }}">{{ .type }}</span>{{ end }}{{ else }}<span class="lt-cell is-none">none</span>{{ end }}</td>
+                  {{/* Subcategories count as open when any of them is open; a count under the type gives each type. */}}
+                  <td>{{ with $subs }}{{ $open := len (where . "type" "open") }}{{ $type := cond (gt $open 0) "open" "closed" }}<span class="lt-cell lt-role-3 is-{{ $type }}">{{ $type }}</span><span class="lt-cell-count">{{ with $open }}{{ . }} open{{ end }}{{ if and $open (lt $open (len .)) }} · {{ end }}{{ with sub (len .) $open }}{{ . }} closed{{ end }}</span>{{ else }}<span class="lt-cell is-none">none</span>{{ end }}</td>
+                </tr>
+                {{ end }}
+              </tbody>
+              <tbody class="lt-matrix-rules">
+                <tr class="lt-matrix-sep"><th scope="colgroup" colspan="4">Rules</th></tr>
+                {{ range $v.rules }}{{ $rule := . }}
+                <tr class="lt-matrix-rule is-level-{{ .level }}" data-lt-rulecard="{{ .level }}-{{ .n }}">
+                  <th scope="row"><span class="lt-rule-label">L{{ .level }} · R{{ .n }}</span></th>
+                  {{ range $role := slice "category" "specification" "subcategory" }}{{ $val := index $rule $role }}
+                  <td><span class="lt-cell is-{{ $val }}{{ if in (slice "open" "closed") $val }} lt-role-{{ index $roles $role }}{{ end }}">{{ $val }}</span></td>
+                  {{ end }}
+                </tr>
+                {{ end }}
+              </tbody>
+            </table>
+            </div>
+            <p class="lt-matrix-levels">{{ range $lv := slice "1" "2" }}<span><span class="lt-rule-label is-level-{{ $lv }}">L{{ $lv }}</span>{{ lower (index $v.levels $lv) }}</span>{{ end }}</p>
+          </div>
+        </div>
+        <div class="lt-detect-foot">
+          <p class="lt-detect-summary" aria-live="polite">
+            <span>{{ $k }} clauses about personal data:</span>
+            {{ range $lv := slice "1" "2" }}{{ with index $count $lv }}<span class="lt-detect-count lt-rule-count is-level-{{ $lv }}">{{ . }} {{ lower (index $v.levels $lv) }}</span>{{ end }}{{ end }}
+          </p>
+          <div class="lt-arg-controls lt-detect-controls" hidden>
+            <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+            <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Detect</button>
+            <span class="lt-arg-link" aria-hidden="true"></span>
+            <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
+            <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+          </div>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+    </div>
+    {{ else if eq $v.type "voices" }}
+    {{/* A voices view: illustrative readings of short sentences, each drawn as a cue strip that aligns pitch, loudness, */}}
+    {{/* words, and pauses on one time grid (column widths follow `dur` and `pause`, in seconds), beside the answers of */}}
+    {{/* models that read the text, hear the audio, or both. Listen draws the cues; Classify shows the answers. */}}
+    {{/* Listen opens the readings one after the other: reading r starts at --t (seconds), spreads its words for 0.6 s, */}}
+    {{/* then draws its cues 120 ms apart; `data-lt-play` is the end of the last reading, in milliseconds. */}}
+    {{ $starts := slice }}{{ $t := 0.0 }}{{ range $v.readings }}{{ $starts = $starts | append $t }}{{ $t = add $t (add 1.2 (mul (float (len .words)) 0.12)) }}{{ end }}
+    <div class="lt-arg-view lt-speech lt-voices" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0" data-lt-play="{{ int (mul $t 1000) }}">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panels" style="--lt-cols: 2">
+          <div class="lt-arg-panel lt-arg-text-panel">
+            <h3 class="lt-arg-step"><span>1</span> What a listener hears</h3>
+            <div class="lt-detect-doc">
+              {{ range $r, $read := $v.readings }}
+              {{/* Timed columns follow the durations; tight columns (0fr) set the words as plain text until Listen. */}}
+              {{ $cols := slice "var(--lt-voice-label)" }}{{ $tight := slice "var(--lt-voice-label)" }}{{ $time := 0.0 }}
+              {{ range .words }}{{ $cols = $cols | append (printf "minmax(min-content, %gfr)" (float .dur)) }}{{ $tight = $tight | append "minmax(min-content, 0fr)" }}{{ $time = add $time (float .dur) }}{{ with .pause }}{{ $cols = $cols | append (printf "minmax(min-content, %gfr)" (float .)) }}{{ $tight = $tight | append "minmax(min-content, 0fr)" }}{{ $time = add $time (float .) }}{{ end }}{{ end }}
+              <div class="lt-voice-reading" style="--t: {{ index $starts $r }}s">
+                <p class="lt-arg-textlabel">{{ add $r 1 }}. {{ .label }}</p>
+                <div class="lt-voice-scroll">
+                  <div class="lt-voice-cues" style="--lt-voice-timed: {{ delimit $cols " " | safeCSS }}; --lt-voice-tight: {{ delimit $tight " " | safeCSS }}">
+                    <span class="lt-voice-row lt-voice-cuename" aria-hidden="true">Pitch</span>
+                    {{- range $j, $w := .words }}
+                    <span class="lt-voice-pitch" style="--j: {{ $j }}" aria-hidden="true"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><line x1="0" y1="{{ sub 90 (mul (float (index .pitch 0)) 80) }}" x2="100" y2="{{ sub 90 (mul (float (index .pitch 1)) 80) }}"/></svg></span>{{ with .pause }}<span aria-hidden="true"></span>{{ end }}
+                    {{- end }}
+                    <span class="lt-voice-row lt-voice-cuename" aria-hidden="true">Loudness</span>
+                    {{- range $j, $w := .words }}
+                    <span class="lt-voice-loud" style="--j: {{ $j }}" aria-hidden="true"><i style="--h: {{ mul (float .loud) 100 }}%"></i></span>{{ with .pause }}<span aria-hidden="true"></span>{{ end }}
+                    {{- end }}
+                    <span class="lt-voice-row" aria-hidden="true">Words</span>
+                    {{- range .words }}
+                    <span class="lt-voice-word">{{ .w }}</span>{{ with .pause }}<span class="lt-voice-pause">pause<br>{{ . }} s</span>{{ end }}
+                    {{- end }}
+                  </div>
+                </div>
+                <p class="lt-voice-summary">{{ .summary }} Rate: {{ lang.FormatNumber 1 (div (float (len .words)) $time) }} words per second.</p>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+          <div class="lt-arg-panel lt-arg-graph-panel lt-speech-panel">
+            <h3 class="lt-arg-step"><span>2</span> Answers</h3>
+            <div class="lt-speech-body">
+              <p class="lt-speech-question">{{ $v.question }}</p>
+              <table class="lt-speech-answers">
+                <thead><tr><th scope="col">Input</th>{{ range $r, $_ := $v.readings }}<th scope="col">{{ add $r 1 }}</th>{{ end }}</tr></thead>
+                <tbody>
+                  <tr><th scope="row">{{ $v.gold_label | default "Annotators" }}</th>{{ range $v.readings }}<td><b>{{ .gold }}</b></td>{{ end }}</tr>
+                  {{ range $v.models }}
+                  <tr class="lt-speech-row"><th scope="row">{{ .label }}{{ with .hears }}<span class="lt-voice-hears">{{ . }}</span>{{ end }}</th>
+                    {{- range $r, $a := .answers }}{{ $right := eq $a (index $v.readings $r).gold }}<td><span class="lt-speech-answer is-{{ cond $right "right" "wrong" }}"><i class="fas fa-{{ cond $right "check" "times" }}" aria-hidden="true"></i> {{ $a }}<span class="sr-only"> ({{ cond $right "correct" "wrong" }})</span></span></td>{{ end -}}
+                  </tr>
+                  {{ end }}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="lt-detect-foot">
+          <span></span>
+          <div class="lt-arg-controls lt-detect-controls" hidden>
+            <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+            <button type="button" data-lt-action="detect"><span class="lt-arg-num" aria-hidden="true">1</span> Listen</button>
+            <span class="lt-arg-link" aria-hidden="true"></span>
+            <button type="button" data-lt-action="classify"><span class="lt-arg-num" aria-hidden="true">2</span> Classify</button>
+            <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+          </div>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+    </div>
+    {{ else }}
+    {{/* Each role has a short name, `short` or the initials of its label, and each component an ID: the short name and its */}}
+    {{/* number within the role, in text order, such as P1 and P2. The graph shows IDs, so its boxes stay small. */}}
+    {{ $slot := dict }}{{ range $r, $role := $v.roles }}{{ $short := $role.short | default "" }}{{ if not $short }}{{ range split $role.label " " }}{{ $short = print $short (upper (substr . 0 1)) }}{{ end }}{{ end }}{{ $slot = merge $slot (dict $role.key (dict "n" (add $r 1) "label" $role.label "short" $short)) }}{{ end }}
+    {{/* A view has one text in `segments`, or several side by side in `texts` (each with a `label`, a `lang`, and `segments`). */}}
+    {{ $texts := $v.texts | default (slice (dict "segments" $v.segments)) }}
+    {{ $parts := slice }}{{ range $texts }}{{ range .segments }}{{ if .id }}{{ $parts = $parts | append . }}{{ end }}{{ end }}{{ end }}
+    {{ range $v.implicit }}{{ $parts = $parts | append (merge . (dict "implicit" true)) }}{{ end }}
+    {{ $byid := dict }}{{ $count := dict }}{{ range $parts }}{{ $c := add (index $count .role | default 0) 1 }}{{ $count = merge $count (dict .role $c) }}{{ $byid = merge $byid (dict .id (merge . (dict "short" (index $slot .role).short "num" $c))) }}{{ end }}
+    <div class="lt-arg-view" role="tabpanel" id="view-{{ $v.key }}" aria-labelledby="view-{{ $v.key }}-tab" tabindex="0">
+      <p class="lt-arg-description">{{ $v.description }}</p>
+      {{/* The text and the argument graph sit side by side on wide screens, where the text stays in view while the graph builds, and stack on narrow ones. */}}
+      {{ $cols := 1 }}{{ range $v.rows }}{{ if gt (len .) $cols }}{{ $cols = len . }}{{ end }}{{ end }}
+      <figure class="lt-arg-example">
+        <div class="lt-arg-panels" style="--lt-cols: {{ $cols }}">
+          <div class="lt-arg-panel lt-arg-text-panel">
+            <h3 class="lt-arg-step"><span>1</span> The text{{ if gt (len $texts) 1 }}s{{ end }}</h3>
+            <div class="lt-arg-texts">
+            {{ range $texts }}
+            <div class="lt-arg-textbox"{{ with .lang }} lang="{{ . }}"{{ end }}>
+              {{ with .label }}<p class="lt-arg-textlabel">{{ . }}</p>{{ end }}
+              <p class="lt-arg-text">
+                {{- range $s, $seg := .segments }}{{ if and $s (not (findRE `^[,.;:]` $seg.text)) }} {{ end }}{{ if $seg.id }}{{ $r := index $slot $seg.role }}{{ $p := index $byid $seg.id }}<span class="lt-arg-span lt-role-{{ $r.n }}" data-lt-span="{{ $seg.id }}"><span class="lt-arg-tag"><b class="lt-arg-id">{{ $p.short }}<sub>{{ $p.num }}</sub></b> {{ $r.label }}{{ with $seg.tag }} · {{ . }}{{ end }}</span>{{ $seg.text }}</span>{{ else }}{{ $seg.text }}{{ end }}{{ end -}}
+              </p>
+            </div>
+            {{ end }}
+            </div>
+            {{/* Components the text leaves unstated follow it in dashed boxes, so the graph can show IDs only. */}}
+            {{ $unsaid := slice }}{{ range $parts }}{{ if and .implicit (ne .kind "label") }}{{ $unsaid = $unsaid | append . }}{{ end }}{{ end }}
+            {{ with $unsaid }}
+            <p class="lt-arg-text lt-arg-unstated">
+              {{- range $i, $u := . }}{{ if $i }} {{ end }}{{ $r := index $slot $u.role }}{{ $p := index $byid $u.id }}<span class="lt-arg-span is-implicit lt-role-{{ $r.n }}" data-lt-span="{{ $u.id }}"><span class="lt-arg-tag"><b class="lt-arg-id">{{ $p.short }}<sub>{{ $p.num }}</sub></b> {{ $r.label }} (implicit)</span>{{ $u.node | default $u.text }}</span>{{ end -}}
+            </p>
+            {{ end }}
+          </div>
+          <div class="lt-arg-panel lt-arg-graph-panel">
+            {{/* `graph_title` names the graph panel when the view is not an argument, such as a clause alignment. */}}
+            <h3 class="lt-arg-step"><span>2</span> {{ $v.graph_title | default "Argument graph" }}</h3>
+            <div class="lt-arg-graph-scroll">
+            <div class="lt-arg-graph" data-lt-graph>
+              <svg class="lt-arg-edges-svg" aria-hidden="true" focusable="false"></svg>
+              {{ range $v.rows }}
+              <div class="lt-arg-row">
+                {{ range . }}{{ $n := index $byid . }}{{ $r := index $slot $n.role }}
+                {{/* A box shows the ID of its component, and pointing at it or focusing it lights its text; a component unstated */}}
+                {{/* in the text is drawn dashed. One with `kind: label` is an assigned label, a regular box with its own text. */}}
+                {{ $unstated := and $n.implicit (ne $n.kind "label") }}
+                <div class="lt-arg-node lt-role-{{ $r.n }}{{ if $unstated }} is-implicit{{ end }}" data-lt-node="{{ $n.id }}"{{ if ne $n.kind "label" }} tabindex="0"{{ end }}>
+                  <span class="lt-arg-tag">{{ $r.label }}{{ if $unstated }} (implicit){{ end }}</span>
+                  <b class="lt-arg-id">{{ $n.short }}<sub>{{ $n.num }}</sub></b>
+                  {{/* A box omits its tag when an edge into it already carries the same label. */}}
+                  {{ $said := false }}{{ range $v.edges }}{{ if and (eq .to $n.id) (eq .label $n.tag) }}{{ $said = true }}{{ end }}{{ end }}
+                  {{ with $n.tag }}{{ if not $said }}<span class="lt-arg-scheme">{{ . }}</span>{{ end }}{{ end }}
+                  {{ if eq $n.kind "label" }}<span class="lt-arg-node-text">{{ $n.node | default $n.text }}</span>{{ end }}
+                </div>
+                {{ end }}
+              </div>
+              {{ end }}
+              <ul class="lt-arg-edges">
+                {{ range $v.edges }}{{ $from := index $byid .from }}{{ $to := index $byid .to }}
+                <li data-from="{{ .from }}" data-to="{{ .to }}" data-relation="{{ .relation }}" data-label="{{ .label | default (index $relations .relation) }}">{{ (index $slot $from.role).label }} {{ $from.short }}{{ $from.num }} "{{ $from.node | default $from.text }}" {{ .label | default (index $relations .relation) }} {{ (index $slot $to.role).label }} {{ $to.short }}{{ $to.num }} "{{ $to.node | default $to.text }}"</li>
+                {{ end }}
+              </ul>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="lt-arg-controls" hidden>
+          {{/* Skip writes the rest of the text at once. Two steps follow in order: the connector between them fills once the text is annotated. */}}
+          <button type="button" data-lt-action="skip" hidden><i class="fas fa-forward" aria-hidden="true"></i> Skip</button>
+          <button type="button" data-lt-action="annotate"><span class="lt-arg-num" aria-hidden="true">1</span> Annotate</button>
+          <span class="lt-arg-link" aria-hidden="true"></span>
+          <button type="button" data-lt-action="graph"><span class="lt-arg-num" aria-hidden="true">2</span> Show graph</button>
+          <button type="button" data-lt-action="replay" hidden><i class="fas fa-redo" aria-hidden="true"></i> Replay</button>
+        </div>
+        {{ with $v.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+    </div>
+    {{ end }}
+    {{ end }}
+  </section>
+  {{ end }}
+  </div>
+
+  {{ with .Params.fields }}
+  <div class="lt-band">
+  <section class="lt-fields" aria-labelledby="fields-title" data-lt-fields>
+    <h2 id="fields-title">Research areas</h2>
+    <div class="lt-fields-grid">
+      {{ range . }}
+      <div class="lt-field-cell">
+        <button type="button" class="lt-field" id="field-{{ .key }}" aria-expanded="false" aria-controls="field-{{ .key }}-panel">
+          {{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}
+          <span class="lt-field-title">{{ .title }}</span>
+          <span class="lt-field-question">{{ .question }}</span>
+        </button>
+        <div class="lt-field-panel" id="field-{{ .key }}-panel" role="region" aria-labelledby="field-{{ .key }}">
+          <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All research areas</button>
+          <p>{{ .summary }}</p>
+          <dl class="lt-field-tasks">
+            {{ range .tasks }}<div><dt>{{ .name }}</dt><dd>{{ .text }}</dd></div>{{ end }}
+          </dl>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </section>
+  </div>
+  {{ end }}
+
+  {{ with .Params.focus }}
+  {{ $topics := . }}
+  <div class="lt-band">
+  <section class="lt-focus" aria-labelledby="focus-title">
+    <h2 id="focus-title">Our focus</h2>
+    <div class="lt-carousel is-centered" data-lt-carousel data-lt-loop data-lt-autoplay="8000">
+      <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Focus topics">
+        {{ range $topics }}{{ $topic := . }}
+        <article class="lt-card lt-link-card lt-focus-card" data-lt-topic="{{ .key }}">
+          <h3 class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}<a class="lt-stretch" href="#topic-{{ .key }}" data-lt-topic="{{ .key }}">{{ .title }}</a></h3>
+          <p class="lt-focus-summary">{{ .summary }}</p>
+          <div class="lt-focus-lanes">
+            {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
+            {{ with where $topic.items "status" $k }}
+            <div class="lt-focus-lane is-{{ $k }}">
+              <h4 class="lt-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+              <ul>{{ range . }}<li>{{ .text }}</li>{{ end }}</ul>
+            </div>
+            {{ end }}
+            {{ end }}
+          </div>
+          <span class="lt-focus-more">Read more <i class="fas fa-arrow-down" aria-hidden="true"></i></span>
+        </article>
+        {{ end }}
+      </div>
+      <div class="lt-carousel-nav" hidden>
+        <div class="lt-carousel-dots">
+          {{ range $i, $t := $topics }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $t.title }}"></button>{{ end }}
+        </div>
+        <div class="lt-carousel-arrows">
+          <button type="button" data-lt-step="-1" aria-label="Previous topic"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+          <button type="button" data-lt-step="1" aria-label="Next topic"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="lt-topics-detail">
+      {{ range $topics }}{{ $topic := . }}
+      <section class="lt-topic-box" id="topic-{{ .key }}" data-lt-topic="{{ .key }}" aria-labelledby="topic-{{ .key }}-title" tabindex="-1">
+        <h3 id="topic-{{ .key }}-title" class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}{{ .title }}</h3>
+        <div class="lt-topic-description">{{ .description | markdownify }}</div>
+        {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
+        {{ with where $topic.items "status" $k }}
+        <h4 class="lt-status is-{{ $k }}"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+        <ul class="lt-topic-items">
+          {{ range . }}
+          <li class="lt-topic-item is-{{ $k }}">
+            <div class="lt-topic-text">
+              <p class="lt-topic-item-title">{{ .text }}</p>
+              {{ with .detail }}<p>{{ . }}</p>{{ end }}
+            </div>
+            {{ with .cite }}
+            <ul class="lt-topic-pubs" aria-label="Publications">
+              {{ range . }}{{ with site.GetPage (printf "/publication/%v" .) }}
+              {{ $authors := .Params.authors | default slice }}
+              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
+              {{ end }}{{ end }}
+            </ul>
+            {{ end }}
+          </li>
+          {{ end }}
+        </ul>
+        {{ end }}
+        {{ end }}
+        <button type="button" class="lt-topic-close" hidden><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to our focus</button>
+      </section>
+      {{ end }}
+    </div>
+  </section>
+  </div>
+  {{ end }}
+</article>
+{{- end -}}

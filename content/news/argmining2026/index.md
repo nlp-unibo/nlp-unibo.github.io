@@ -4,23 +4,12 @@ date: 2025-10-01
 tags: ["natural language processing", "workshop", "argument mining", "reasoning"]
 summary: "The 2026 edition of the ArgMining workshop places a special focus on understanding and evaluating arguments in both human and machine reasoning." 
 
+# Colored tags on the homepage card, from data/topics.yaml
+topics: [argument-mining, llm-reasoning]
 ---
 
-## Introduction
-
-The 2026 edition of the ArgMining workshop places a special focus on understanding and evaluating arguments in both human and machine reasoning. 
-With this topic, we broaden the workshop's focus to include reasoning, a long-standing area of research in AI that has recently gained renewed interest within the *ACL community, driven by the latest generation of LLMs. 
-Reasoning is tightly connected to argumentation as it represents, analyzes and evaluates the process of reaching conclusions on the basis of available information. 
-If we consider argumentation as a paradigm to capture reasoning, then machines (particularly LLMs) can be evaluated based on their ability to address argument mining tasks.
-
-The workshop will be co-located with ACL 2026 and held in San Diego, United States in a hybrid format.
-
-## Useful Links
-
-+ [Workshop Page](https://argmining-org.github.io/2026/)
-+ [Email](mailto:argmining.org@gmail.com)
-+ [Github](https://github.com/argmining-org)
-+ [X/Twitter](https://x.com/ArgminingOrg)
-+ [Bluesky](https://bsky.app/profile/argminingorg.bsky.social)
-
-
+- [Workshop Page](https://argmining-org.github.io/2026/)
+- [Email](mailto:argmining.org@gmail.com)
+- [Github](https://github.com/argmining-org)
+- [X/Twitter](https://x.com/ArgminingOrg)
+- [Bluesky](https://bsky.app/profile/argminingorg.bsky.social)

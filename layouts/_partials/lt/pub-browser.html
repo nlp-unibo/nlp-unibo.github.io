@@ -1,0 +1,35 @@
+{{/* Publications with a search box, a type filter, a topic filter, and a live count (assets/js/ltlab.js), newest first */}}
+{{/* under year headings, as compact rows from lt/pub-row.html, with a link back to the filters at the end. Without */}}
+{{/* JavaScript every publication is listed and the filters are hidden. Input: `pubs`, `id` of the heading, `title`. */}}
+{{ $pubs := .pubs }}
+{{ $kinds := slice (dict "key" "Journal" "title" "Journals") (dict "key" "Conference" "title" "Conferences") (dict "key" "Workshop" "title" "Workshops") (dict "key" "Preprint" "title" "Preprints") }}
+<section class="lt-pubs-section" aria-labelledby="{{ .id }}" data-lt-filter-scope>
+  <h2 class="lt-paths-title" id="{{ .id }}">{{ .title }}</h2>
+  <input class="lt-work-search" type="search" placeholder="Search titles, authors, and venues" aria-label="Search titles, authors, and venues" data-lt-search hidden>
+  <div class="lt-filter" role="group" aria-label="Show publications by type" data-lt-filter-group>
+    <button type="button" aria-pressed="true" data-lt-filter="">All types</button>
+    {{ range $kinds }}{{ $n := len (where $pubs "Params.categories" "intersect" (slice .key)) }}{{ if $n }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .key }}">{{ .title }} ({{ $n }})</button>{{ end }}{{ end }}
+  </div>
+  {{/* Topic buttons: every topic used by a publication, most frequent first. */}}
+  {{ $counts := dict }}{{ range $pubs }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+  {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
+  <div class="lt-filter lt-filter-topics" role="group" aria-label="Show publications by topic" data-lt-filter-group data-lt-filter-key="ltTopics">
+    <button type="button" aria-pressed="true" data-lt-filter="">All topics</button>
+    {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}"><span class="lt-filter-swatch" style="{{ printf "background:%s" .background | safeCSS }}" aria-hidden="true"></span>{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
+  </div>
+  <p class="lt-work-count" aria-live="polite" data-lt-count></p>
+  {{ range $pubs.GroupByDate "2006" }}
+  <div class="lt-work-year">
+    <h3>{{ .Key }}</h3>
+    <ol class="lt-pub-list">
+      {{ range .Pages }}
+      {{ $kind := index (intersect (slice "Journal" "Conference" "Workshop" "Preprint") (.Params.categories | default slice) | default (slice "Publication")) 0 }}
+      <li class="lt-pub-row" data-lt-tag="{{ urlize $kind }}" data-lt-topics="{{ delimit (.Params.topics | default slice) " " }}">
+        {{ partial "lt/pub-row.html" . }}
+      </li>
+      {{ end }}
+    </ol>
+  </div>
+  {{ end }}
+  <a class="lt-pubs-top" href="#{{ .id }}"><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to the filters</a>
+</section>

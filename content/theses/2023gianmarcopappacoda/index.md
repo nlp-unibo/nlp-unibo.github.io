@@ -30,4 +30,5 @@ categories:
   - Master thesis
 aliases:
   - /students_mscs/2023gianmarcopappacoda/
+topics: [knowledge-extraction, llms]
 ---

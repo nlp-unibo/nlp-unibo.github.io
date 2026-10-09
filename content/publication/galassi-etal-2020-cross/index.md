@@ -82,4 +82,5 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/galassi-etal-2020-cross/
+topics: [legal, benchmark]
 ---

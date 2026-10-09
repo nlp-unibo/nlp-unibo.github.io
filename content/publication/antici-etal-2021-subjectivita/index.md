@@ -80,4 +80,5 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/antici-etal-2021-subjectivita/
+topics: [fact-checking, benchmark]
 ---

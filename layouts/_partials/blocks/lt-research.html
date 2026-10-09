@@ -1,0 +1,28 @@
+{{/* Research map: one card per page of the research section. */}}
+{{/* Card topics are the focus topic titles of each area page, or its h3 headings when it has no focus topics. */}}
+{{ $block := .wcBlock }}
+{{ $section := site.GetPage ($block.content.section | default "research") }}
+{{ $areas := $section.RegularPages.ByWeight }}
+{{ partial "lt/section-head.html" $block }}
+<div class="lt-areas">
+  {{ range $areas }}
+  <a class="lt-area lt-link-card" href="{{ .RelPermalink }}">
+    <div class="lt-area-head">
+      {{ partial "lt/cover.html" (dict "seed" .Title "pattern" (.Params.cover_pattern | default "dots")) }}
+    </div>
+    <div class="lt-area-body">
+      <h3 class="lt-area-title">{{ with .Params.icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}{{ .Title }}</h3>
+      <p class="lt-area-tagline">{{ .Params.tagline | default (.Summary | plainify | truncate 110) }}</p>
+      {{ with .Params.focus }}
+      <ul class="lt-area-topics">
+        {{ range . }}<li>{{ .title }}</li>{{ end }}
+      </ul>
+      {{ else }}{{ with findRESubmatch `<h3[^>]*>(.*?)</h3>` .Content }}
+      <ul class="lt-area-topics">
+        {{ range . }}<li>{{ index . 1 | plainify | htmlUnescape }}</li>{{ end }}
+      </ul>
+      {{ end }}{{ end }}
+    </div>
+  </a>
+  {{ end }}
+</div>

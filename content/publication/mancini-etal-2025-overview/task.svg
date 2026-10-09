@@ -1,0 +1,32 @@
+<svg viewBox="0 0 640 448" role="img" aria-labelledby="mmaf-task-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mmaf-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mmaf-task-title">The two subtasks of MM-ArgFallacy2025: a sentence from a U.S. presidential debate, given as text, audio, or both, first goes to fallacy detection, which decides whether it contains a fallacy; a fallacious sentence then goes to fallacy classification, which picks one of six fallacy types. The example sentence is labeled Ad Hominem.</title>
+  <text class="lt-s-sub" x="20" y="24">A SENTENCE FROM A U.S. PRESIDENTIAL DEBATE</text>
+  <rect class="lt-s-tok" x="20" y="34" width="600" height="50" rx="8"/>
+  <text class="lt-s-txt" x="320" y="64">Governor Carter apparently doesn't know the facts.</text>
+
+  <text class="lt-s-sub" x="20" y="110">THREE INPUT MODES</text>
+  <rect class="lt-s-tok" x="20" y="120" width="190" height="32" rx="6"/><text class="lt-s-txt" x="115" y="141">Text only</text>
+  <rect class="lt-s-tok" x="225" y="120" width="190" height="32" rx="6"/><text class="lt-s-txt" x="320" y="141">Audio only</text>
+  <rect class="lt-s-tok" x="430" y="120" width="190" height="32" rx="6"/><text class="lt-s-txt" x="525" y="141">Text and its audio</text>
+  <path class="lt-s-arrow" marker-end="url(#mmaf-arrow)" d="M320 156 V176"/>
+
+  <rect class="lt-s-box lt-s-pred" x="120" y="180" width="400" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="320" y="204">1. Detection (AFD)</text>
+  <text class="lt-s-txt lt-s-small" x="320" y="224">Does the sentence contain a fallacy? Yes or no.</text>
+  <path class="lt-s-arrow" marker-end="url(#mmaf-arrow)" d="M320 240 V262"/>
+  <text class="lt-s-txt lt-s-small" x="440" y="256">only fallacious sentences</text>
+
+  <rect class="lt-s-box lt-s-pred" x="120" y="266" width="400" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="320" y="290">2. Classification (AFC)</text>
+  <text class="lt-s-txt lt-s-small" x="320" y="310">Which fallacy type does the sentence contain?</text>
+  <path class="lt-s-arrow" marker-end="url(#mmaf-arrow)" d="M320 326 V346"/>
+
+  <text class="lt-s-sub" x="20" y="364">SIX FALLACY TYPES</text>
+  <rect class="lt-s-tok" x="20" y="374" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="115" y="394">Appeal to Emotion</text>
+  <rect class="lt-s-tok" x="225" y="374" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="320" y="394">Appeal to Authority</text>
+  <rect class="lt-s-on" x="430" y="374" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-ontxt" x="525" y="394">Ad Hominem</text>
+  <rect class="lt-s-tok" x="20" y="412" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="115" y="432">False Cause</text>
+  <rect class="lt-s-tok" x="225" y="412" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="320" y="432">Slippery Slope</text>
+  <rect class="lt-s-tok" x="430" y="412" width="190" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="525" y="432">Slogan</text>
+</svg>

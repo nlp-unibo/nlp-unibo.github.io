@@ -80,4 +80,5 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/delmoro-etal-2023-inception-fashion/
+topics: [multimodal]
 ---

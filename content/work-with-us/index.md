@@ -1,147 +1,130 @@
 ---
 title: Work with us
 date: 2026-09-28
-# Hidden until the application procedures are finalized. Remove this line and restore the menu entry to publish.
-draft: true
-type: landing
 
-sections:
-  - block: markdown
-    id: overview
-    content:
-      title: Work with us
-      text: |-
-        The Language Technologies Lab welcomes students and researchers who want to work on natural language processing.
-        This page describes five ways to join our activities.
-        Each section states who can apply, how to apply, and whom to contact.
-        Please use the pre-formatted email subject of each section, so that we can route your request quickly.
+# The old For Students page now lives here.
+aliases:
+  - /students/
+  - /students_publications/
 
-        - [Master thesis](#master-thesis)
-        - [Project work](#project-work)
-        - [Visiting student](#visiting-student)
-        - [Visiting researcher](#visiting-researcher)
-        - [Prospective master and PhD students](#prospective-students)
-    design:
-      columns: '1'
+# Contacts: the people who receive every message, as folder names in content/authors, whose `email` is used.
+# A path may set its own `contacts`.
+contacts: [paolo-torroni, andrea-galassi, federico-ruggeri]
 
-  - block: markdown
-    id: master-thesis
-    content:
-      title: Master thesis
-      text: |-
-        **Who can apply.**
-        The master thesis activity is reserved for students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
-
-        **Description.**
-        A master thesis is a research activity on one of the topics listed in our [research proposals](/students/#proposals).
-        Each proposal names the lab members who supervise it.
-
-        **Procedure.**
-        1. Choose a proposal from the [research proposals](/students/#proposals).
-        2. Email the contacts listed in that proposal with the subject `[Master thesis] <proposal title>`.
-        3. State your current curriculum status, including how many exams you still have to pass.
-        4. State the degree session in which you intend to graduate.
-
-        Please contact us at least six months before your intended degree session.
-
-        **Contact.**
-        The contacts listed in the chosen proposal.
-        Email subject: `[Master thesis] <proposal title>`.
-    design:
-      columns: '1'
-
-  - block: markdown
-    id: project-work
-    content:
-      title: Project work
-      text: |-
-        **Who can apply.**
-        The project work activity is reserved for students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence).
-
-        **Description.**
-        A project work is a 3 CFU activity.
-        Students are free to propose any topic.
-        The following resources suggest possible topics:
-
-        - our [research proposals](/students/#proposals);
-        - international [contests, benchmarks, and challenges](/students/#challenges);
-        - academic [workshops](/students/#workshops) that propose shared tasks.
-
-        **Procedure.**
-        1. Choose a topic, either from the resources above or of your own.
-        2. Email a lab member associated with a related proposal with the subject `[Project work] <topic>`.
-        3. Briefly describe the topic and the intended approach.
-
-        **Contact.**
-        Any [lab member](/people/) associated with a related proposal.
-        Email subject: `[Project work] <topic>`.
-    design:
-      columns: '1'
-
-  - block: markdown
-    id: visiting-student
-    content:
-      title: Visiting student
-      text: |-
-        **Who can apply.**
-        Master and PhD students enrolled at another institution.
-
-        **Description.**
-        A visit typically lasts between three and six months.
-        Funding is expected from the home institution.
-
-        **Procedure.**
-        1. Contact Prof. Paolo Torroni to agree on the visit and its research topic.
-        2. Contact the administrations of your home institution and of the University of Bologna to complete the required formalities.
-
-        **Contact.**
-        [Paolo Torroni](mailto:p.torroni@unibo.it?subject=%5BVisiting%20student%5D%20Application) ([profile](https://www.unibo.it/sitoweb/p.torroni/en)).
-        Email subject: `[Visiting student] Application`.
-    design:
-      columns: '1'
-
-  - block: markdown
-    id: visiting-researcher
-    content:
-      title: Visiting researcher
-      text: |-
-        **Who can apply.**
-        Researchers affiliated with another institution.
-
-        **Description.**
-        Funding for the visit is expected from the applicant.
-
-        **Procedure.**
-        Email Prof. Paolo Torroni with the following documents:
-
-        1. a curriculum vitae;
-        2. a research statement;
-        3. a proposal for the research activity during the visit.
-
-        **Contact.**
-        [Paolo Torroni](mailto:p.torroni@unibo.it?subject=%5BVisiting%20researcher%5D%20Application) ([profile](https://www.unibo.it/sitoweb/p.torroni/en)).
-        Email subject: `[Visiting researcher] Application`.
-    design:
-      columns: '1'
-
-  - block: markdown
-    id: prospective-students
-    content:
-      title: Prospective master and PhD students
-      text: |-
-        **Who can apply.**
-        Students who intend to enroll in a master or PhD programme at the University of Bologna and to work with the lab.
-
-        **Description.**
-        Admission follows the official procedures of the University of Bologna.
-        See the [admission page of the Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence/admission) and the [application page of the PhD in Computer Science and Engineering](https://phd.unibo.it/cse/en/apply).
-
-        **Procedure.**
-        Please contact Prof. Paolo Torroni before applying, to discuss your research interests.
-
-        **Contact.**
-        [Paolo Torroni](mailto:p.torroni@unibo.it?subject=%5BProspective%20student%5D%20Enquiry) ([profile](https://www.unibo.it/sitoweb/p.torroni/en)).
-        Email subject: `[Prospective student] Enquiry`.
-    design:
-      columns: '1'
+# Paths: one card each under "What are you looking for?". A path has a `key` (its anchor, such as /work-with-us/#thesis),
+# a card `label` and `summary` (at most two sentences), an `icon` (Font Awesome 5 solid), a `title`, and Markdown `who`
+# and `what`. Its `steps` are numbered in order: each has a `title`, Markdown `text`, and an optional `show`, which places
+# a section in the step: proposals, projects, or contact (the email form). `inspiration: student-work` adds a last,
+# unnumbered step with the work done with students.
+# `form` sets the email: `subject` may name fields in braces, such as {proposal}; each field has a `key`, a `label`,
+# a `type` (text, textarea, or select), an optional `when` that shows the field only when another field has a value, such
+# as {funding: I need funding from the lab}, `options` (a list for a select, or `proposals`, which lists the research proposals
+# in a select and lets "Choose this proposal" fill a text field), and `required`. Every form also asks for the sender's name.
+paths:
+  - key: thesis
+    label: Master thesis
+    summary: "A research thesis on one of our proposals, for master students of the University of Bologna."
+    icon: graduation-cap
+    title: Master thesis
+    who: "Master students of the University of Bologna. Most come from the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence), but other degrees are welcome."
+    what: "A master thesis is a research activity on one of our research proposals, supervised by the lab members that the proposal names."
+    steps:
+      - title: Choose a proposal
+        text: "Open a proposal to read its description and supervisors, then select **Choose this proposal**."
+        show: proposals
+      - title: Write to us
+        text: "State how many exams you still have to pass and the degree session in which you intend to graduate. Please contact us at least six months before that session."
+        show: contact
+    inspiration: student-work
+    form:
+      subject: "[Master thesis] {proposal}"
+      fields:
+        - {key: proposal, label: Proposal, type: select, options: proposals, required: true}
+        - {key: exams, label: Exams still to pass, type: text, required: true}
+        - {key: session, label: Intended degree session, type: text, required: true}
+        - {key: message, label: Message, type: textarea}
+  - key: project
+    label: NLP project work
+    summary: "A 3 CFU project for the Master's degree in Artificial Intelligence, on our proposals or on a topic of your own."
+    icon: tools
+    title: Project work
+    who: "Students of the University of Bologna enrolled in the [Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence)."
+    what: "A project work is a 3 CFU activity. You can choose one of our research proposals or propose a topic of your own."
+    steps:
+      - title: Read the course pages
+        text: "The [course page](https://www.unibo.it/en/study/course-units-transferable-skills-moocs/course-unit-catalogue/course-unit/2026/530679) and the [Virtuale page](https://virtuale.unibo.it/course/view.php?id=81838) describe the project work and how it is assessed."
+      - title: Choose a topic
+        text: "Select **Choose this proposal** on one of our research proposals, or write a topic of your own in the next step."
+        show: proposals
+      - title: Write to us
+        text: "Describe the topic and your intended approach."
+        show: contact
+    inspiration: student-work
+    form:
+      subject: "[Project work] {topic}"
+      fields:
+        - {key: topic, label: Topic, type: text, options: proposals, required: true}
+        - {key: approach, label: Intended approach, type: textarea, required: true}
+  - key: visiting
+    label: Visiting period
+    summary: "A research stay of a few months, for students and researchers of another institution."
+    icon: plane
+    title: Visiting student or researcher
+    who: "Master and PhD students enrolled at another institution, and researchers affiliated with another institution."
+    what: "A student visit typically lasts between three and six months."
+    steps:
+      - title: Find a research topic
+        text: "Our research proposals show the topics we currently work on."
+        show: proposals
+      - title: Write to us
+        text: "Agree with us on the visit and its research topic. Tell us how the visit is funded: by your home institution, or by the lab, and in that case how much funding you need. Researchers attach a curriculum vitae, a research statement, and a proposal for the research activity during the visit."
+        show: contact
+      - title: Complete the formalities
+        text: "Students complete the required formalities with the administrations of their home institution and of the University of Bologna."
+    form:
+      subject: "[{role}] Application"
+      fields:
+        - {key: role, label: I am applying as, type: select, options: [Visiting student, Visiting researcher], required: true}
+        - {key: institution, label: Home institution, type: text, required: true}
+        - {key: topic, label: Research topic of the visit, type: textarea, required: true}
+        - {key: funding, label: Funding, type: select, options: [Funded by my home institution, I need funding from the lab], required: true}
+        - {key: amount, label: Funding needed from the lab, type: text, required: true, when: {funding: I need funding from the lab}}
+  - key: programme
+    label: Master or PhD
+    summary: "Admission to a master or PhD programme of the University of Bologna, to work with the lab."
+    icon: university
+    title: Master or PhD programme
+    who: "Students who intend to enroll in a master or PhD programme at the University of Bologna and to work with the lab."
+    what: "Admission follows the official procedures of the University of Bologna."
+    steps:
+      - title: Apply
+        text: "Follow the [admission page of the Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence/admission) or the [application page of the PhD in Computer Science and Engineering](https://phd.unibo.it/cse/en/apply)."
+      - title: Write to us
+        text: "Tell us which programme you apply to and which research interests you would like to pursue with the lab."
+        show: contact
+    inspiration: student-work
+    form:
+      subject: "[Prospective student] {programme}"
+      fields:
+        - {key: programme, label: Programme, type: select, options: [Master's degree in Artificial Intelligence, PhD in Computer Science and Engineering], required: true}
+        - {key: interests, label: Research interests, type: textarea, required: true}
+  - key: partnership
+    label: Project partnership
+    summary: "A national or international research project with a company, a public institution, or a research group."
+    icon: handshake
+    title: Project partnership
+    who: "Companies, public institutions, and research groups that want to start a research project with us."
+    what: "We take part in national and international research projects."
+    steps:
+      - title: See our recent projects
+        text: "The [Projects](/projects/) page lists all of them."
+        show: projects
+      - title: Write to us
+        text: "Describe your organisation and your idea."
+        show: contact
+    form:
+      subject: "[Partnership] {organisation}"
+      fields:
+        - {key: organisation, label: Organisation, type: text, required: true}
+        - {key: idea, label: Your idea, type: textarea, required: true}
 ---

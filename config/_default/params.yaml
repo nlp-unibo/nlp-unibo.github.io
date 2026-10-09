@@ -13,8 +13,8 @@ content:
 
 # Appearance
 
+# The site is dark only: without `theme_day`, the theme starts in dark mode and hides the day and night switch.
 appearance:
-  theme_day: ltlab
   theme_night: ltlab
   font: ltlab
   font_size: L
@@ -46,7 +46,7 @@ header:
     align: r
     show_logo: true
     show_language: false
-    show_day_night: true
+    show_day_night: false
     show_search: false
     highlight_active_link: false
 

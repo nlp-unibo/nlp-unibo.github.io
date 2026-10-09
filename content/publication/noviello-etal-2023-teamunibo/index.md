@@ -42,5 +42,6 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/noviello-etal-2023-teamunibo/
+topics: [legal, knowledge-extraction]
 ---
 

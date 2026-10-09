@@ -1,0 +1,9 @@
+{{/* Topic keys a person works on: `works_on` from the profile, or else the three most frequent `topics` of their */}}
+{{/* publications, except `prototype`, which marks a kind of work rather than a topic. Input: the profile page. */}}
+{{ $topics := slice }}
+{{ with .Params.works_on }}{{ $topics = . }}{{ else }}
+  {{ $counts := dict }}{{ range where .Pages "Section" "publication" }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+  {{ $used := slice }}{{ range $key, $n := $counts }}{{ if ne $key "prototype" }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}{{ end }}
+  {{ range first 3 (sort $used "n" "desc") }}{{ $topics = $topics | append .key }}{{ end }}
+{{ end }}
+{{ return $topics }}

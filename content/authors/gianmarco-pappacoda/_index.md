@@ -21,8 +21,8 @@ interests:
   - Knowledge Integration
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/gianmarco.pappacoda/en'
   - icon: envelope
     icon_pack: fas

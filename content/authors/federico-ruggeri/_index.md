@@ -22,8 +22,8 @@ interests:
   - Interpretability
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/federico.ruggeri6/en'
   - icon: envelope
     icon_pack: fas
@@ -44,6 +44,9 @@ social:
 email: 'federico.ruggeri6@unibo.it'
 
 highlight_name: true
+
+# Topics for "Works on" on the People page, in place of the ones computed from publications.
+works_on: [argument-mining, interpretability, knowledge-extraction]
 
 user_groups:
   - Members

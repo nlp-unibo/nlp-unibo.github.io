@@ -78,4 +78,5 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/ruggeri-etal-2023-definition-prescriptive/
+topics: [fact-checking]
 ---

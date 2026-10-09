@@ -1,0 +1,36 @@
+{{/* Tools page: the page intro, then one band per tool, newest first. Each band shows the tool's `schema` (an SVG */}}
+{{/* file in the tool folder, drawn with the `lt-s-*` classes) with its `caption` on the left, and on the right the */}}
+{{/* name, the `kind` pill, an open-source pill with the code `license`, the summary, the topic tags, the `package` */}}
+{{/* install command, and link chips: the website in `external_link`, the web demo in `demo`, the source code in */}}
+{{/* `code`, and the publication named by `publication`. */}}
+{{- define "main" -}}
+<article class="lt-proj">
+  {{ partial "lt/page-intro.html" . }}
+  {{ range .RegularPages.ByDate.Reverse }}
+  {{ $page := . }}
+  <section class="lt-band" aria-labelledby="tool-{{ .File.ContentBaseName }}">
+    <div class="lt-research-row lt-tool-row">
+      {{ with .Params.schema }}
+      <figure class="lt-research-tile lt-tool-figure">
+        {{ with $page.Resources.Get . }}<div class="lt-svg">{{ .Content | safeHTML }}</div>{{ else }}{{ errorf "tool schema %q not found in %s" . $page.File.Path }}{{ end }}
+        {{ with $page.Params.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+      </figure>
+      {{ end }}
+      <div class="lt-research-summary">
+        <h2 class="lt-research-title" id="tool-{{ .File.ContentBaseName }}">{{ .Title }}</h2>
+        {{ if or .Params.kind .Params.license }}<p class="lt-meta">{{ with .Params.kind }}<span class="lt-pill">{{ . }}</span>{{ end }}{{ with .Params.license }}<span class="lt-pill lt-pill-open"><i class="fab fa-osi" aria-hidden="true"></i> Open source · {{ . }}</span>{{ end }}</p>{{ end }}
+        {{ with .Params.summary }}<p class="lt-research-text">{{ . | markdownify }}</p>{{ end }}
+        {{ partial "lt/topic-tags.html" .Params.topics }}
+        {{ with .Params.package }}<p class="lt-tool-install"><code>pip install {{ . }}</code></p>{{ end }}
+        {{ $links := slice }}
+        {{ with .Params.external_link }}{{ $links = $links | append (dict "name" "Website" "url" . "icon" "fas fa-external-link-alt") }}{{ end }}
+        {{ with .Params.demo }}{{ $links = $links | append (dict "name" "Try the demo" "url" . "icon" "fas fa-play") }}{{ end }}
+        {{ with .Params.code }}{{ $links = $links | append (dict "name" "Code" "url" . "icon" "fab fa-github") }}{{ end }}
+        {{ with .Params.publication }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ $links = $links | append (dict "name" "Paper" "url" .RelPermalink "icon" "fas fa-file-alt") }}{{ else }}{{ errorf "publication %q not found for %s" . $page.File.Path }}{{ end }}{{ end }}
+        {{ partial "lt/link-chips.html" (dict "links" $links "max" 4) }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+</article>
+{{- end -}}

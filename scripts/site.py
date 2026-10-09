@@ -41,7 +41,6 @@ BUILD = ROOT / ".build"
 GO_VERSION = "1.27.1"
 CONTENT_TYPES = {
     "news": ("news", "news"),
-    "event": ("events", "event"),
     "person": ("authors", "person"),
     "national-project": ("projects", "project-national"),
     "international-project": ("projects", "project-international"),
@@ -54,18 +53,17 @@ CONTENT_TYPES = {
     "conference": ("publication", "publication-conference"),
     "workshop": ("publication", "publication-workshop"),
     "preprint": ("publication", "publication-preprint"),
+    "proposal": ("proposals", "proposal"),
 }
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "user_groups"),
     "news": ("title", "date", "summary"),
-    "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
-    "opportunities": ("title", "categories"),
     "tools": ("title", "date", "summary", "external_link", "topics"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
-    "proposals": ("title", "date", "summary"),
+    "proposals": ("title", "date", "summary", "brief", "contacts"),
 }
 # Proposals nest one folder per topic, whose _index.md needs these fields, around the proposal bundles.
 TOPIC_FIELDS = ("title", "summary")
@@ -79,7 +77,6 @@ SECTION_CATEGORIES = {
     "publication": {"Journal", "Conference", "Workshop", "Preprint"},
     "projects": {"International project", "National project"},
     "theses": {"Master thesis", "Bachelor thesis"},
-    "opportunities": {"Challenge", "Academic workshop"},
 }
 PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),
@@ -89,6 +86,101 @@ PLACEHOLDER_PATTERNS = {
     "publication boilerplate": re.compile(r"Add the \*\*full text\*\*", re.IGNORECASE),
 }
 MAX_ASSET_BYTES = 5 * 1024 * 1024
+
+
+def rules_view_errors(view: dict) -> list[str]:
+    """Return the problems of one rules view: marks with an unknown role or type, and clauses whose level and rule
+    name no listed rule, or whose marks do not match the rule they name."""
+    types = {"open", "closed"}
+    rules = {(rule.get("level"), rule.get("n")): rule for rule in view.get("rules") or []}
+    errors = [] if rules else ["rules view has no rules"]
+    errors += [f"rule {key} has a type outside open, closed, any, or none" for key, rule in rules.items()
+               if any(rule.get(name) not in types | {"any", "none"} for name in ("category", "specification", "subcategory"))]
+
+    def marks(parts: list) -> list[dict]:
+        found = []
+        for part in parts or []:
+            if part.get("role"):
+                found.append(part)
+            found += marks(part.get("parts"))
+        return found
+
+    sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+    for n, sentence in enumerate(sentences, 1):
+        found = marks(sentence.get("parts"))
+        errors += [f"sentence {n}: mark {mark.get('text')!r} needs a role of category, specification, or subcategory and a type of open or closed"
+                   for mark in found if mark.get("role") not in {"category", "specification", "subcategory"} or mark.get("type") not in types]
+        if "level" not in sentence and "rule" not in sentence:
+            continue
+        rule = rules.get((sentence.get("level"), sentence.get("rule")))
+        if not rule:
+            errors.append(f"sentence {n}: level {sentence.get('level')} rule {sentence.get('rule')} is not listed")
+            continue
+        # A rule holds when each element is absent for `none`, present for `any`, and of the stated type otherwise;
+        # subcategories are open when any of them is open.
+        def kind(role: str) -> str:
+            values = {mark.get("type") for mark in found if mark.get("role") == role}
+            return "none" if not values else "open" if "open" in values else "closed"
+        for name in ("category", "specification", "subcategory"):
+            want, have = rule.get(name), kind(name)
+            if not (want == have or (want == "any" and have != "none")):
+                errors.append(f"sentence {n}: {name} is {have}, but level {rule.get('level')} rule {rule.get('n')} needs {want}")
+    return errors
+
+
+def voices_view_errors(view: dict) -> list[str]:
+    """Return the problems of one voices view: no reading, a reading without a gold answer, a word without text, a
+    positive duration, a loudness in [0, 1], or a pitch pair in [0, 1], a missing question, or a model whose answers do
+    not match the readings one to one."""
+    readings = view.get("readings") or []
+    errors = [] if readings and view.get("question") else ["voices view needs readings and a question"]
+    unit = lambda x: isinstance(x, (int, float)) and 0 <= x <= 1
+    for n, reading in enumerate(readings, 1):
+        if not reading.get("gold") or not reading.get("words"):
+            errors.append(f"reading {n} needs a gold answer and words")
+        errors += [f"reading {n}: word {word.get('w')!r} needs a positive dur, a loud in [0, 1], and a pitch pair in [0, 1]"
+                   for word in reading.get("words") or []
+                   if not word.get("w") or not isinstance(word.get("dur"), (int, float)) or word["dur"] <= 0 or not unit(word.get("loud"))
+                   or not isinstance(word.get("pitch"), list) or len(word["pitch"]) != 2 or not all(map(unit, word["pitch"]))]
+    errors += [f"model {model.get('label')!r} needs one answer per reading" for model in view.get("models") or []
+               if len(model.get("answers") or []) != len(readings)]
+    return errors
+
+
+def view_errors(view: dict) -> list[str]:
+    """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
+    undefined components, unknown relations, or roles sharing a short name. A detect view needs sentences with text, and each annotated
+    clause needs a category and a level of 1, 2, or 3."""
+    if view.get("type") == "rules":
+        return rules_view_errors(view)
+    if view.get("type") == "voices":
+        return voices_view_errors(view)
+    if view.get("type") == "detect":
+        sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+        errors = [] if sentences else ["detect view has no sentences"]
+        for n, sentence in enumerate(sentences, 1):
+            if not sentence.get("text"):
+                errors.append(f"sentence {n} has no text")
+            if ("level" in sentence or "category" in sentence) and (sentence.get("level") not in {1, 2, 3} or not sentence.get("category")):
+                errors.append(f"sentence {n} needs a category and a level of 1, 2, or 3")
+        return errors
+    roles = {role.get("key") for role in view.get("roles") or []}
+    texts = view.get("texts") or [{"segments": view.get("segments") or []}]
+    parts = [segment for text in texts for segment in text.get("segments") or [] if segment.get("id")]
+    parts += view.get("implicit") or []
+    ids = {part.get("id") for part in parts}
+    errors = [f"component {part.get('id')!r} has an unknown role" for part in parts if part.get("role") not in roles]
+    listed = [part.get("id") for part in parts]
+    errors += [f"component {key!r} is repeated" for key in sorted({str(key) for key in listed if listed.count(key) > 1})]
+    errors += [f"edge relation {edge.get('relation')!r} is not support, attack, or link"
+               for edge in view.get("edges") or [] if edge.get("relation") not in {"support", "attack", "link"}]
+    named = [node for row in view.get("rows") or [] for node in row]
+    named += [edge.get(end) for edge in view.get("edges") or [] for end in ("from", "to")]
+    errors += [f"rows or edges name an undefined component {node!r}" for node in sorted({str(n) for n in named if n not in ids})]
+    # Component IDs start with the role's short name (layouts/research/single.html), so short names must differ.
+    shorts = [role.get("short") or "".join(word[:1].upper() for word in str(role.get("label", "")).split(" ")) for role in view.get("roles") or []]
+    errors += [f"roles share the short name {short!r}; set `short` on one of them" for short in sorted({s for s in shorts if shorts.count(s) > 1})]
+    return errors
 
 
 def category_error(section: str, categories: list) -> str | None:
@@ -474,10 +566,24 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            if section in {"projects", "tools"}:
-                for topic in metadata.get("topics") or []:
-                    if topic not in project_topics:
-                        failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
+            # Research area views, fields, and focus topics need unique keys; focus items need a known status,
+            # and their citations must name existing publications.
+            for name in ("views", "fields", "focus"):
+                keys = [entry.get("key") for entry in metadata.get(name) or []]
+                for key in {key for key in keys if keys.count(key) > 1 or not key}:
+                    failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
+            for topic in metadata.get("focus") or []:
+                for item in topic.get("items") or []:
+                    if item.get("status") not in {"done", "now", "next"}:
+                        failures.append(f"{page.relative_to(ROOT)}: focus item status must be done, now, or next")
+                    for slug in item.get("cite") or []:
+                        if not (content_root / "publication" / str(slug) / "index.md").exists():
+                            failures.append(f"{page.relative_to(ROOT)}: focus item cites unknown publication {slug!r}")
+            for view in metadata.get("views") or []:
+                failures += [f"{page.relative_to(ROOT)}: view {view.get('key')!r}: {error}" for error in view_errors(view)]
+            for topic in metadata.get("topics") or []:
+                if topic not in project_topics:
+                    failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
             if section in SECTION_CATEGORIES and not is_draft:
                 error = category_error(section, metadata.get("categories") or [])
                 if error:
@@ -581,9 +687,16 @@ def new_content(content_type: str, slug: str) -> None:
     if content_type not in CONTENT_TYPES:
         available = ", ".join(CONTENT_TYPES)
         raise SystemExit(f"Unknown content type {content_type!r}. Choose one of: {available}")
-    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     section, kind = CONTENT_TYPES[content_type]
+    # A proposal lives inside its topic folder, so its slug is TOPIC/NAME.
+    if content_type == "proposal":
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*", slug):
+            raise SystemExit("A proposal slug is TOPIC/NAME, such as legal/new-idea.")
+        topic = slug.split("/")[0]
+        if not (ROOT / "content" / section / topic / "_index.md").exists():
+            raise SystemExit(f"Topic folder content/{section}/{topic}/ does not exist.")
+    elif not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     env, hugo, _ = environment()
     relative_path = f"{section}/{slug}"
     run([str(hugo), "new", "content", "--kind", kind, relative_path], env=env)

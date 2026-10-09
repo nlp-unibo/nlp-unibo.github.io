@@ -1,0 +1,15 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="A privacy policy checked against three GDPR criteria: required information met, lawful processing met, clear language not met.">
+  <text class="lt-s-sub" x="6" y="12">GDPR CHECK</text>
+  <circle class="lt-s-head lt-s-support" cx="16" cy="34" r="10"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="16" y="39">✓</text>
+  <text class="lt-s-txt" x="34" y="39" style="text-anchor: start">Required information</text>
+  <circle class="lt-s-head lt-s-support" cx="16" cy="64" r="10"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="16" y="69">✓</text>
+  <text class="lt-s-txt" x="34" y="69" style="text-anchor: start">Lawful processing</text>
+  <circle class="lt-s-head lt-s-attack" cx="16" cy="94" r="10"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="16" y="99">✗</text>
+  <text class="lt-s-txt" x="34" y="99" style="text-anchor: start">Clear language</text>
+  <text class="lt-s-small" x="236" y="38" text-anchor="end">met</text>
+  <text class="lt-s-small" x="236" y="68" text-anchor="end">met</text>
+  <text class="lt-s-small" x="236" y="98" text-anchor="end">not met</text>
+</svg>

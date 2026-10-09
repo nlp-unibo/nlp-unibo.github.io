@@ -1,0 +1,49 @@
+{{/* News page: the title with an optional `intro`, a kind filter and year links, then every news item and every */}}
+{{/* publication, preprints included, on a vertical timeline grouped by year, newest first. Previews come from */}}
+{{/* lt/news-data.html: kind pill and date, title, venue, summary, topic tags, and link chips. News items have no page */}}
+{{/* of their own, so titles are not links; each item has an `id` for links from profile pages. Without JavaScript */}}
+{{/* every item is shown and the filter is hidden (assets/js/ltlab.js). A Back to top button follows the scroll. */}}
+{{- define "main" -}}
+{{ $pubs := where site.RegularPages "Section" "publication" }}
+{{ $items := (.RegularPages | union $pubs).ByDate.Reverse }}
+{{ $years := $items.GroupByDate "2006" }}
+{{ $kinds := slice }}{{ $counts := dict }}
+{{ range $items }}{{ $k := partial "lt/news-kind.html" . }}
+  {{ if not (isset $counts $k.key) }}{{ $kinds = $kinds | append $k }}{{ end }}
+  {{ $counts = merge $counts (dict $k.key (add (index $counts $k.key | default 0) 1)) }}
+{{ end }}
+<article class="lt-proj">
+  {{ partial "lt/page-intro.html" . }}
+  <div class="lt-band">
+    <section class="lt-pubs-section lt-news-page" aria-label="News timeline" data-lt-filter-scope>
+      <div class="lt-filter" role="group" aria-label="Show news by kind" data-lt-filter-group>
+        <button type="button" aria-pressed="true" data-lt-filter="">All news</button>
+        {{ range sort $kinds "label" }}<button type="button" aria-pressed="false" data-lt-filter="{{ .key }}"><i class="{{ .icon }}" aria-hidden="true"></i> {{ .label }} ({{ index $counts .key }})</button>{{ end }}
+      </div>
+      <nav class="lt-news-years" aria-label="Jump to year">
+        {{ range $years }}<a href="#year-{{ .Key }}">{{ .Key }}</a>{{ end }}
+      </nav>
+      <p class="lt-work-count" aria-live="polite" data-lt-count></p>
+      {{ range $years }}
+      <section class="lt-news-year" id="year-{{ .Key }}" aria-labelledby="year-{{ .Key }}-title">
+        <h2 class="lt-news-year-title" id="year-{{ .Key }}-title">{{ .Key }}</h2>
+        <ol class="lt-news-line">
+          {{ range .Pages }}{{ $n := partial "lt/news-data.html" . }}
+          <li class="lt-news-item is-{{ $n.kind.slug }}" id="{{ $n.id }}" data-lt-tag="{{ $n.kind.key }}">
+            <div class="lt-meta"><span class="lt-pill lt-pill-{{ $n.kind.slug }}"><i class="{{ $n.kind.icon }}" aria-hidden="true"></i> {{ $n.kind.label }}</span><time datetime="{{ $n.iso }}">{{ $n.date }}</time></div>
+            <h3 class="lt-news-item-title">{{ .Title }}</h3>
+            {{ with $n.venue }}<p class="lt-news-venue">{{ . }}</p>{{ end }}
+            {{ with $n.summary }}<p class="lt-news-item-text">{{ . }}</p>{{ end }}
+            {{ partial "lt/topic-tags.html" .Params.topics }}
+            {{ partial "lt/link-chips.html" (dict "links" $n.links "max" 4) }}
+          </li>
+          {{ end }}
+        </ol>
+      </section>
+      {{ end }}
+    </section>
+  </div>
+  {{/* Fixed at the side of the window. The script shows it only once the kind filter has scrolled out of sight. */}}
+  <a class="lt-to-top" href="#top" data-lt-to-top=".lt-news-page .lt-filter"><i class="fas fa-arrow-up" aria-hidden="true"></i><span>Back to top</span></a>
+</article>
+{{- end -}}

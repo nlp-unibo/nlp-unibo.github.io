@@ -1,0 +1,29 @@
+{{/* Results chart: horizontal bars with hover values and a table view. */}}
+{{/* Inner YAML: `metric`, optional `unit`, `min`, `max`, `lower_is_better`, and `bars` with `label`, `value`, optional `err` (standard deviation), and `ours: true`. */}}
+{{- $d := transform.Unmarshal .Inner -}}
+{{- $values := slice -}}
+{{- range $d.bars }}{{ $values = $values | append (add (float .value) (float (.err | default 0))) }}{{ end -}}
+{{- $max := $d.max | default (math.Max $values) -}}
+{{- $min := $d.min | default 0 -}}
+{{- $unit := $d.unit | default "" -}}
+<figure class="lt-viz lt-bars">
+  <figcaption class="lt-viz-title">{{ $d.metric | markdownify }}{{ with $d.lower_is_better }} <span>(lower is better)</span>{{ else }} <span>(higher is better)</span>{{ end }}</figcaption>
+  <ul>
+    {{- range $d.bars }}
+    {{- $w := mul 100 (div (sub (float .value) $min) (sub (float $max) $min)) -}}
+    <li class="lt-bar{{ if .ours }} is-ours{{ end }}" tabindex="0">
+      <span class="lt-bar-label">{{ .label | markdownify }}{{ if .ours }} <span class="lt-ours">This work</span>{{ end }}</span>
+      <span class="lt-bar-track"><span class="lt-bar-fill" style="--w: {{ math.Max 1 (math.Min 100 $w) }}%"></span>
+        {{- with .err }}{{ $e := mul 100 (div (float .) (sub (float $max) $min)) }}<span class="lt-bar-err" style="--l: {{ math.Max 0 (sub $w $e) }}%; --ew: {{ mul 2 $e }}%" aria-hidden="true"></span>{{ end -}}
+      </span>
+      <span class="lt-bar-value">{{ .value }}{{ $unit }}{{ with .err }} <small>± {{ . }}</small>{{ end }}</span>
+    </li>
+    {{- end }}
+  </ul>
+  {{ with .Get "caption" }}<p class="lt-viz-note">{{ . | markdownify }}</p>{{ end }}
+  <details class="lt-viz-table">
+    <summary>Show as table</summary>
+    <table><thead><tr><th scope="col">System</th><th scope="col">{{ $d.metric | plainify }}</th></tr></thead>
+    <tbody>{{ range $d.bars }}<tr><td>{{ .label | plainify }}{{ if .ours }} (this work){{ end }}</td><td>{{ .value }}{{ $unit }}{{ with .err }} ± {{ . }}{{ end }}</td></tr>{{ end }}</tbody></table>
+  </details>
+</figure>

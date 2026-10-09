@@ -1,0 +1,40 @@
+{{/* Research proposal page in the style of a publication page: topic, title, summary, contacts, a link to apply, */}}
+{{/* the section menu, the body (Context, Objective, and References, as the proposal needs), and the tags. */}}
+{{/* The Work with us page links here only when the proposal has a body. */}}
+{{- define "main" -}}
+{{ $body := .Content | replaceRE `<!--[\s\S]*?-->` "" | strings.TrimSpace }}
+{{ $sections := findRESubmatch `<h2 id="([^"]+)"[^>]*>(.*?)</h2>` $body }}
+<article class="lt-proj">
+  <header class="lt-proj-header">
+    <p class="lt-proj-venue">
+      <span class="lt-pill">Research proposal</span>
+      <span>{{ .Parent.Title }}</span>
+    </p>
+    <h1 class="lt-proj-title">{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="lt-proj-tagline">{{ . | markdownify }}</p>{{ end }}
+    {{ with .Params.contacts }}<div class="lt-proj-people">{{ partial "lt/people-row.html" (partial "lt/contacts.html" .) }}</div>{{ end }}
+    <div class="lt-proj-buttons">
+      <a class="lt-proj-button" href="{{ relref . "/work-with-us" }}?proposal={{ .Title | urlquery }}#thesis-contact"><i class="fas fa-graduation-cap" aria-hidden="true"></i> Apply for a thesis</a>
+      <a class="lt-proj-button lt-proj-button-light" href="{{ relref . "/work-with-us" }}?proposal={{ .Title | urlquery }}#project-contact"><i class="fas fa-tools" aria-hidden="true"></i> Apply for a project</a>
+    </div>
+  </header>
+
+  {{/* From 1200px the section menu is a sticky column beside the body; narrower, it is the bar of publication pages. */}}
+  <div class="lt-proj-layout">
+  {{ with $sections }}
+  <nav class="lt-proj-nav lt-proj-side" aria-label="Sections">
+    <p class="lt-proj-side-label">On this page</p>
+    {{ range . }}<a href="#{{ index . 1 }}">{{ index . 2 | plainify | htmlUnescape }}</a>{{ end }}
+  </nav>
+  {{ end }}
+
+  <div class="lt-proj-body article-style">
+    {{ with $body }}{{ . | safeHTML }}{{ else }}{{ with $.Params.brief }}<p>{{ . | markdownify }}</p>{{ end }}{{ end }}
+
+    {{ with .GetTerms "tags" }}
+    <ul class="lt-tags lt-proj-tags">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>
+    {{ end }}
+  </div>
+  </div>
+</article>
+{{- end -}}

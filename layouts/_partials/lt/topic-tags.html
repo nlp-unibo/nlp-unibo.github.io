@@ -1,0 +1,6 @@
+{{/* Colored topic tags. Input: a slice of keys from data/topics.yaml; unknown keys are skipped. */}}
+{{- with . -}}
+<span class="lt-topics">
+  {{- range . }}{{ with index hugo.Data.topics . }}<span class="lt-topic" style="{{ printf "background:%s;color:%s" .background .text | safeCSS }}">{{ .label }}</span>{{ end }}{{ end -}}
+</span>
+{{- end -}}
