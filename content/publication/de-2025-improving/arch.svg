@@ -1,0 +1,25 @@
+<svg viewBox="0 0 640 146" role="img" aria-labelledby="ar-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="ar-title">How a game is run: two student players, each inside a virtual machine provided by the teaching staff, exchange JSON messages with a Java server that acts as game engine and referee.</title>
+  <text class="lt-s-sub" style="text-anchor:middle" x="100" y="22">STUDENT TEAM A</text>
+  <text class="lt-s-sub" style="text-anchor:middle" x="320" y="22">TEACHING STAFF</text>
+  <text class="lt-s-sub" style="text-anchor:middle" x="540" y="22">STUDENT TEAM B</text>
+  <rect class="lt-s-off" x="10" y="34" width="180" height="104" rx="12"/>
+  <text class="lt-s-txt lt-s-small" x="100" y="54">virtual machine</text>
+  <rect class="lt-s-box lt-s-sel" x="26" y="66" width="148" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="100" y="90">AI player</text>
+  <text class="lt-s-txt lt-s-small" x="100" y="108">any language</text>
+  <rect class="lt-s-box lt-s-pred" x="236" y="50" width="168" height="88" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="320" y="80">Server (Java)</text>
+  <text class="lt-s-txt lt-s-small" x="320" y="100">game engine</text>
+  <text class="lt-s-txt lt-s-small" x="320" y="118">and referee</text>
+  <rect class="lt-s-off" x="450" y="34" width="180" height="104" rx="12"/>
+  <text class="lt-s-txt lt-s-small" x="540" y="54">virtual machine</text>
+  <rect class="lt-s-box lt-s-sel" x="466" y="66" width="148" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="540" y="90">AI player</text>
+  <text class="lt-s-txt lt-s-small" x="540" y="108">any language</text>
+  <path class="lt-s-arrow" marker-start="url(#ar-arrow)" marker-end="url(#ar-arrow)" d="M178 94 H232"/>
+  <path class="lt-s-arrow" marker-start="url(#ar-arrow)" marker-end="url(#ar-arrow)" d="M408 94 H462"/>
+  <text class="lt-s-txt lt-s-mono lt-s-small" x="213" y="84">JSON</text>
+  <text class="lt-s-txt lt-s-mono lt-s-small" x="427" y="84">JSON</text>
+</svg>

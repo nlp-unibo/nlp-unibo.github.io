@@ -1,0 +1,26 @@
+<svg viewBox="0 0 640 300" role="img" aria-labelledby="newssd-task-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="newssd-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="newssd-task-title">Two sentences from the annotation guidelines. The sentence about India filming the video at the royal residence reports facts and is labeled OBJ. The sentence calling it a sad truth that villages in Portugal are dying conveys the author's opinion and is labeled SUBJ.</title>
+  <text class="lt-s-sub" x="20" y="22">ONE SENTENCE AT A TIME</text>
+  <text class="lt-s-sub" x="472" y="22">LABEL</text>
+
+  <rect class="lt-s-tok" x="20" y="34" width="420" height="100" rx="8"/>
+  <text class="lt-s-txt" x="230" y="60">India, who was the bridesmaid at the King’s wedding</text>
+  <text class="lt-s-txt" x="230" y="81">to Princess Diana in 1981, could not be seen in the</text>
+  <text class="lt-s-txt" x="230" y="102">footage, but filmed the video as she walked through</text>
+  <text class="lt-s-txt" x="230" y="123">the grounds of the royal residence.</text>
+  <path class="lt-s-arrow" marker-end="url(#newssd-arrow)" d="M444 84 H486"/>
+  <rect class="lt-s-box lt-s-pred" x="490" y="62" width="130" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong" x="555" y="89">OBJ</text>
+  <text class="lt-s-txt lt-s-small" x="555" y="124">reports facts</text>
+
+  <rect class="lt-s-tok" x="20" y="166" width="420" height="62" rx="8"/>
+  <text class="lt-s-txt" x="230" y="192">It is a sad truth that many of the villages in</text>
+  <text class="lt-s-txt" x="230" y="213">this region of Portugal are dying.</text>
+  <path class="lt-s-arrow" marker-end="url(#newssd-arrow)" d="M444 197 H486"/>
+  <rect class="lt-s-box lt-s-sel" x="490" y="175" width="130" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong" x="555" y="202">SUBJ</text>
+  <text class="lt-s-txt lt-s-small" x="555" y="237">author’s opinion</text>
+
+  <text class="lt-s-txt lt-s-small" x="320" y="276">Subjective: based on or influenced by personal feelings, tastes, or opinions</text>
+</svg>

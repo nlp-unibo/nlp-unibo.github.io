@@ -1,0 +1,25 @@
+<svg style="max-width: 620px; margin: 0 auto;" viewBox="0 0 440 466" role="img" aria-labelledby="worth-task-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="worth-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="worth-task-title">Unfair clause detection: a sentence from the 9GAG Terms of Service goes to a detector, which answers for each of the nine unfairness categories whether the sentence is unfair. The paper discusses this sentence as a privacy included clause.</title>
+  <text class="lt-s-sub" x="10" y="24">A SENTENCE FROM THE 9GAG TERMS OF SERVICE</text>
+  <rect class="lt-s-tok" x="10" y="34" width="420" height="106" rx="8"/>
+  <text class="lt-s-txt" x="220" y="60">Please review our Privacy Policy, which governs</text>
+  <text class="lt-s-txt" x="220" y="81">the use of personal information on the Site and</text>
+  <text class="lt-s-txt" x="220" y="102">to which Subscriber agrees to be bound as a user</text>
+  <text class="lt-s-txt" x="220" y="123">of the Site.</text>
+  <path class="lt-s-arrow" marker-end="url(#worth-arrow)" d="M220 144 V164"/>
+  <rect class="lt-s-box lt-s-pred" x="70" y="168" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="220" y="192">Detector</text>
+  <text class="lt-s-txt lt-s-small" x="220" y="212">a prompted LLM or a fine-tuned classifier</text>
+  <path class="lt-s-arrow" marker-end="url(#worth-arrow)" d="M220 228 V248"/>
+  <text class="lt-s-sub" x="10" y="266">UNFAIR FOR WHICH CATEGORIES? NONE MEANS FAIR</text>
+  <rect class="lt-s-tok" x="10" y="276" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="112.5" y="296">arbitration</text>
+  <rect class="lt-s-tok" x="225" y="276" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="327.5" y="296">unilateral change</text>
+  <rect class="lt-s-tok" x="10" y="314" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="112.5" y="334">content removal</text>
+  <rect class="lt-s-tok" x="225" y="314" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="327.5" y="334">jurisdiction</text>
+  <rect class="lt-s-tok" x="10" y="352" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="112.5" y="372">choice of law</text>
+  <rect class="lt-s-tok" x="225" y="352" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="327.5" y="372">limitation of liability</text>
+  <rect class="lt-s-tok" x="10" y="390" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="112.5" y="410">unilateral termination</text>
+  <rect class="lt-s-tok" x="225" y="390" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-small" x="327.5" y="410">contract by using</text>
+  <rect class="lt-s-on" x="117.5" y="428" width="205" height="30" rx="6"/><text class="lt-s-txt lt-s-ontxt" x="220" y="448">privacy included</text>
+</svg>

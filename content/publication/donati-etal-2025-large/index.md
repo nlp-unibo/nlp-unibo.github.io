@@ -49,9 +49,14 @@ abstract: "This paper investigates whether Large Language Models (LLMs) can effe
   task-specific instruction tuning to improve alignment with human editorial standards."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Twenty-four language models score Italian news summaries against an editorial rubric, and most of them rate the summaries higher than a human expert does.
 
-tags: []
+tags:
+- LLM judges
+- summarization evaluation
+- evaluation rubric
+- italian
+- positive bias
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -74,7 +79,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: ''
+  caption: "Error against agreement: each dot is one judge model, placed by its mean absolute error (MAE) and its Spearman's ρ with the human expert (Figure 1 of the paper)."
   focal_point: ''
   preview_only: false
 
@@ -91,5 +96,166 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/donati-etal-2025-large/
-topics: [llms]
+topics: [llms, benchmark, industry]
 ---
+
+## Research setting
+
+An LLM judge is a large language model (LLM) that reads a generated text and grades it, instead of a human reviewer.
+This paper studies LLM judges for news summaries. The judge receives an Italian news article and a summary, and it gives a score from 1 to 5 with a written explanation.
+The score follows a rubric, a list of quality criteria in which each criterion has a definition, sub-criteria, and a description of every score level.
+A good judge gives scores close to those of a human expert.
+
+{{< pipeline caption="The judging task studied in the paper. The prompt asks for a JSON answer with a score and an explanation in Italian (Appendix A of the paper)." >}}
+- title: Article and summary
+  text: An Italian news article and one summary of it.
+  icon: newspaper
+- title: Rubric prompt
+  text: One criterion, its sub-criteria, and examples.
+  icon: list-ol
+- title: LLM judge
+  text: Reads both texts and applies the criterion.
+  icon: gavel
+  highlight: true
+- title: Score and explanation
+  text: A score from 1 to 5 and the reason for it.
+  icon: comment-alt
+{{< /pipeline >}}
+
+Terms used on this page:
+
+- **Few-shot prompting** shows the model a few solved examples inside the prompt, without any training.
+- **MAE** (mean absolute error) is the average distance between the model score and the expert score. Lower is better.
+- **Spearman's ρ** measures whether the model ranks the summaries in the same order as the expert. It ranges from -1 to 1, and 0 means no relation.
+- **Positive bias** means that a judge gives higher scores than the expert.
+
+## Motivation
+
+Overlap metrics such as ROUGE and BLEU count shared words, so they miss whether a summary is faithful or useful to its reader.
+Human evaluation captures these qualities, but it is costly, inconsistent, and hard to scale.
+LLM judges promise consistent and cheap scores, but only if they understand the language and the structure of the criteria they receive.
+Public summarization benchmarks are also a weak test, because their reference summaries often miss editorial standards and models may have seen them during training.
+
+{{< gap caption="How the paper positions itself against the related work it discusses (Sections 2 and 3 of the paper)." >}}
+label: Approach
+columns: [No judge training, One model per judgment, Criteria with explicit sub-criteria, Test texts unseen in training]
+rows:
+  - name: Prompted judges
+    cells: [true, true, "not discussed", "not discussed"]
+  - name: Fine-tuned judges
+    cells: [false, true, "not discussed", "not discussed"]
+  - name: Multi-agent judges
+    cells: ["not discussed", false, "not discussed", "not discussed"]
+  - name: G-Eval criteria
+    cells: ["not discussed", "not discussed", "partial", "not discussed"]
+  - name: This paper
+    ours: true
+    cells: [true, true, true, true]
+{{< /gap >}}
+
+> **Objective.** Test whether LLMs, prompted with a detailed editorial rubric, understand its criteria well enough to score summaries and explain their scores as a human expert would.
+
+## Approach
+
+The rubric comes from the practice of professional editors and has five criteria.
+
+| Criterion | What the judge checks |
+|---|---|
+| Coherence | The summary reads as a logical, connected narrative. |
+| Consistency | Every factual claim is supported by the article. |
+| Fluency | Grammar, spelling, punctuation, and phrasing are correct. |
+| Relevance | The summary keeps the core points and drops filler. |
+| Ordering | Key points follow the order of the article. |
+
+The authors pick 10 Italian news articles published after the training cutoff of every tested model.
+GPT-4o writes 50 summaries, each made to show a set quality level on one criterion, and humans review and correct them.
+An expert scores every summary on all five criteria, which gives 250 reference scores.
+The judges are 24 models: open models of five families (DeepSeek, Gemma 3, Llama 3, Phi 4, Qwen 3) from 0.6B to 14B parameters, and seven OpenAI GPT models.
+No judge is fine-tuned: each one only sees the rubric prompt with few-shot examples.
+
+{{< stages caption="How the test is built and run. No model is trained at any step (Sections 3 and 4 of the paper)." >}}
+flow: [Article, GPT-4o, Summary, Expert, LLM judge]
+icons:
+  evolved: user-edit
+labels:
+  evolved: Human
+legend:
+  evolved: Human work
+stages:
+  - title: 1. Write the summaries
+    text: GPT-4o summarizes each article several times, with a target quality level for one criterion in each summary. Humans check and correct the results.
+    states: {Article: data, GPT-4o: frozen, Summary: evolved}
+  - title: 2. Score with the expert
+    text: An expert annotator scores each of the 50 summaries from 1 to 5 on all five criteria.
+    states: {Article: data, Summary: data, Expert: evolved}
+  - title: 3. Score with the judges
+    text: Each judge model receives the rubric prompt and few-shot examples, then scores every summary on every criterion.
+    states: {Article: data, Summary: data, LLM judge: frozen}
+  - title: 4. Compare the scores
+    text: The judge scores are compared with the expert scores through MAE and Spearman's ρ.
+    states: {Summary: data, Expert: data, LLM judge: data}
+{{< /stages >}}
+
+## Results
+
+The authors compare each judge with the expert over the 250 scores, through MAE and Spearman's ρ.
+They also compare the judges with one another, through Spearman's ρ between their scores.
+
+{{< numbers >}}
+- value: "0.277"
+  label: highest Spearman's ρ with the expert (GPT o4 mini)
+- value: "1.04"
+  label: lowest MAE on the 1 to 5 scale (GPT o4 mini)
+- value: "0.810"
+  label: Spearman's ρ between two judges, GPT-4.1 and GPT-4o
+{{< /numbers >}}
+
+| Family | Model | MAE | Spearman's ρ | p-value |
+|---|---|---|---|---|
+| DeepSeek | 1.5B | 1.47 | 0.008 | 0.894 |
+| | 7B | 1.71 | 0.031 | 0.627 |
+| | 8B | 1.21 | -0.018 | 0.773 |
+| | 14B | 1.05 | 0.031 | 0.628 |
+| Gemma 3 | 1B | 1.84 | -0.078 | 0.222 |
+| | 4B | 1.38 | -0.179 | 0.005 |
+| | 12B | 1.53 | 0.010 | 0.878 |
+| Llama 3 | 1B | 1.34 | -0.005 | 0.936 |
+| | 3B | 1.51 | 0.027 | 0.666 |
+| | 8B | 1.47 | -0.039 | 0.535 |
+| Phi 4 | 3.8B | 1.44 | 0.219 | 0.000 |
+| | 14B | 1.31 | 0.010 | 0.874 |
+| Qwen 3 | 0.6B | 1.36 | 0.137 | 0.031 |
+| | 1.7B | 1.24 | 0.040 | 0.528 |
+| | 4B | 1.54 | 0.048 | 0.453 |
+| | 8B | 1.49 | 0.065 | 0.303 |
+| | 14B | 1.46 | 0.114 | 0.072 |
+| GPT | 4o | 1.41 | 0.064 | 0.314 |
+| | 4o mini | 1.15 | -0.032 | 0.611 |
+| | 4.1 | 1.25 | 0.095 | 0.136 |
+| | 4.1 mini | 1.42 | 0.173 | 0.006 |
+| | 4.1 nano | 1.24 | 0.034 | 0.594 |
+| | o3 mini | 1.31 | 0.238 | 0.000 |
+| | o4 mini | 1.04 | 0.277 | 0.000 |
+
+*Agreement of each judge with the expert (Table 1 of the paper).*
+
+Agreement with the expert is weak. The best Spearman's ρ is 0.277, and most values are close to 0.
+A larger model often makes smaller errors, as in DeepSeek, where MAE drops from 1.47 at 1.5B to 1.05 at 14B, but its ranking does not improve.
+In the Phi 4 family the smaller model ranks better, with ρ = 0.219 at 3.8B against 0.010 at 14B.
+Large judges agree more with one another than with the expert, up to ρ = 0.810 between GPT-4.1 and GPT-4o.
+
+{{< figure src="bias.png" caption="Score counts of the expert (blue) and of three judges (orange) for fluency and coherence. The judges pile up on scores 4 and 5 (Figure 6 of the paper)." >}}
+
+Almost every judge gives higher scores than the expert, most of all for fluency and coherence.
+The few-shot examples cover the whole 1 to 5 scale in equal amounts, so the authors trace this positive bias to training data and alignment rather than to the prompt.
+
+## Takeaways
+
+{{< takeaways >}}
+- title: Smaller errors do not mean better ranking.
+  text: Larger models often score closer to the expert on average, but they do not order the summaries more like the expert. The best Spearman's ρ is 0.277.
+- title: Judges are too generous.
+  text: Almost every judge rates summaries higher than the expert, most of all for fluency and coherence. Their high scores do not carry the weight of an expert score.
+- title: Agreement among judges grows with size.
+  text: Small models often disagree with one another, while large models, mostly within one family, converge. Consistency across several judges appears only above a certain size.
+{{< /takeaways >}}
