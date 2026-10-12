@@ -88,6 +88,8 @@ categories:
 aliases:
   - /publication_conferences/10890448/
 topics: [interpretability, speech]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: icassp
 ---
 
 ## Research setting

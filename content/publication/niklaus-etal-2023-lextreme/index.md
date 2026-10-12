@@ -94,4 +94,6 @@ categories:
 aliases:
   - /publication_conferences/niklaus-etal-2023-lextreme/
 topics: [legal, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: findings-emnlp
 ---

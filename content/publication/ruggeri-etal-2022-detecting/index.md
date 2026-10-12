@@ -77,4 +77,6 @@ categories:
 aliases:
   - /publication_journals/ruggeri-etal-2022-detecting/
 topics: [legal, interpretability]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ai-and-law
 ---

@@ -26,7 +26,7 @@
         {{ with .Params.external_link }}{{ $links = $links | append (dict "name" "Website" "url" . "icon" "fas fa-external-link-alt") }}{{ end }}
         {{ with .Params.demo }}{{ $links = $links | append (dict "name" "Try the demo" "url" . "icon" "fas fa-play") }}{{ end }}
         {{ with .Params.code }}{{ $links = $links | append (dict "name" "Code" "url" . "icon" "fab fa-github") }}{{ end }}
-        {{ with .Params.publication }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ $links = $links | append (dict "name" "Paper" "url" .RelPermalink "icon" "fas fa-file-alt") }}{{ else }}{{ errorf "publication %q not found for %s" . $page.File.Path }}{{ end }}{{ end }}
+        {{ with .Params.publication }}{{ with site.GetPage (printf "/publication/%s" .) }}{{ with (partial "lt/pub-meta.html" .).url }}{{ $links = $links | append (dict "name" "Paper" "url" . "icon" "fas fa-file-alt") }}{{ end }}{{ else }}{{ errorf "publication %q not found for %s" . $page.File.Path }}{{ end }}{{ end }}
         {{ partial "lt/link-chips.html" (dict "links" $links "max" 4) }}
       </div>
     </div>

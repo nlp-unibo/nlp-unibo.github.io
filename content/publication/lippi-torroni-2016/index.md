@@ -75,4 +75,6 @@ categories:
 aliases:
   - /publication_conferences/lippi-torroni-2016/
 topics: [argument-mining, speech, multimodal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: aaai
 ---

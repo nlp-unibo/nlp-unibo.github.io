@@ -105,6 +105,8 @@ categories:
 aliases:
   - /publication_workshops/alam-etal-2025-overview/
 topics: [fact-checking, information-retrieval, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clef
 ---
 
 ## Research setting

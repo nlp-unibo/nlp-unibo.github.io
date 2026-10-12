@@ -1,3 +1,10 @@
+{{/* A publication without a body has no blog page: its address redirects to the paper (lt/pub-meta.html), or to the */}}
+{{/* Publications page when the paper has no link. */}}
+{{- $redirect := "" -}}
+{{- if and .IsPage (eq .Section "publication") -}}
+  {{- with partial "lt/pub-meta.html" . }}{{ if not .blog }}{{ $redirect = .url | default ("/publication/" | relURL) }}{{ end }}{{ end -}}
+{{- end -}}
+{{- with $redirect }}{{ template "alias.html" (dict "Permalink" .) }}{{ else -}}
 <!DOCTYPE html>
 {{ "<!-- This site was created with Hugo Blox. https://hugoblox.com -->" | safeHTML }}
 {{ printf "<!-- Last Published: %s -->" (now | time.Format ":date_long") | safeHTML }}
@@ -73,3 +80,4 @@
 
 </body>
 </html>
+{{- end }}

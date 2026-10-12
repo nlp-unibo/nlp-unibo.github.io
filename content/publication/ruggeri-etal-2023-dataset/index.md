@@ -94,4 +94,6 @@ categories:
 aliases:
   - /publication_conferences/ruggeri-etal-2023-dataset/
 topics: [argument-mining, dialogue, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: acl
 ---

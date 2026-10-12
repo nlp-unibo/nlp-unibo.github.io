@@ -93,4 +93,6 @@ categories:
 aliases:
   - /publication_conferences/cedeno-etal-2023-clef/
 topics: [fact-checking, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ecir
 ---

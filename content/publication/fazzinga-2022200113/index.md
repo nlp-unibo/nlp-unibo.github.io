@@ -92,4 +92,6 @@ categories:
 aliases:
   - /publication_journals/fazzinga-2022200113/
 topics: [privacy, dialogue]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: iswa
 ---

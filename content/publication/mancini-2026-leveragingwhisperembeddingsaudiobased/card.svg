@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 296" role="img" aria-labelledby="wealy-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="wealy-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="wealy-card-title">After Figure 1 of the paper. Stage 1, feature extraction: the song audio is cut into 30-second chunks and a frozen Whisper model turns it into decoder latents, without a transcript. Stage 2, feature adaptation: a transformer encoder trained with a contrastive loss maps the latents to one song embedding. The embedding ranks the other songs so that versions of the query come first. On LyricCovers2.0, WEALY reaches MAP 0.692, against 0.573 for the best transcription baseline.</title>
+  <text class="lt-s-sub" x="8" y="18">1. FEATURE EXTRACTION</text>
+  <rect class="lt-s-node lt-role-2" x="8" y="26" width="344" height="66" rx="10"/>
+  <rect class="lt-s-tok" x="18" y="36" width="130" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="83.0" y="56.0">Song audio</text>
+  <text class="lt-s-txt lt-s-small" x="83.0" y="74.0">30 s chunks</text>
+  <path class="lt-s-arrow" marker-end="url(#wealy-card-arrow)" d="M152 59 H190"/>
+  <rect class="lt-s-node lt-role-3" x="194" y="36" width="148" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="268.0" y="56.0">Whisper</text>
+  <text class="lt-s-txt lt-s-small" x="268.0" y="74.0">frozen</text>
+  <text class="lt-s-txt lt-s-small" x="306" y="114">latents</text>
+  <text class="lt-s-sub" x="8" y="118">2. FEATURE ADAPTATION</text>
+  <rect class="lt-s-node lt-role-2" x="8" y="126" width="344" height="66" rx="10"/>
+  <path class="lt-s-arrow" marker-end="url(#wealy-card-arrow)" d="M268 86 V132"/>
+  <rect class="lt-s-box lt-s-pred" x="70" y="136" width="220" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="156.0">Transformer encoder</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="174.0">trained, contrastive loss</text>
+  <path class="lt-s-arrow" marker-end="url(#wealy-card-arrow)" d="M88 186 V218"/>
+  <rect class="lt-s-label" x="8" y="222" width="160" height="32" rx="16.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="88.0" y="243.0">Song embedding</text>
+  <path class="lt-s-arrow" marker-end="url(#wealy-card-arrow)" d="M172 238 H196"/>
+  <rect class="lt-s-tok" x="200" y="215" width="152" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="276.0" y="235.0">Ranked list</text>
+  <text class="lt-s-txt lt-s-small" x="276.0" y="253.0">versions first</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="286">MAP on LYC: 0.692, best transcript baseline 0.573</text>
+</svg>

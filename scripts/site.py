@@ -48,7 +48,6 @@ CONTENT_TYPES = {
     "tool": ("tools", "tool"),
     "bachelors-thesis": ("theses", "bachelors-thesis"),
     "masters-thesis": ("theses", "masters-thesis"),
-    "publication-highlight": ("publication", "publication-highlight"),
     "journal": ("publication", "publication-journal"),
     "conference": ("publication", "publication-conference"),
     "workshop": ("publication", "publication-workshop"),
@@ -72,7 +71,6 @@ PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter"
 # Each `user_groups` value selects one group on the People page.
 AUTHOR_GROUPS = {"Members", "Associate Fellows", "Former Members"}
 # Each `categories` value selects one list on the section's landing page.
-# A publication may add `Highlight`, which also lists it under Highlights.
 SECTION_CATEGORIES = {
     "publication": {"Journal", "Conference", "Workshop", "Preprint"},
     "projects": {"International project", "National project"},
@@ -185,14 +183,8 @@ def view_errors(view: dict) -> list[str]:
 
 def category_error(section: str, categories: list) -> str | None:
     allowed = SECTION_CATEGORIES[section]
-    if section == "publication":
-        highlights = categories.count("Highlight")
-        categories = [category for category in categories if category != "Highlight"]
-        if highlights > 1:
-            return "categories must list Highlight at most once"
     if len(categories) != 1 or categories[0] not in allowed:
-        suffix = ", optionally with Highlight" if section == "publication" else ""
-        return f"categories must be exactly one of {', '.join(sorted(allowed))}{suffix}"
+        return f"categories must be exactly one of {', '.join(sorted(allowed))}"
     return None
 
 
@@ -482,6 +474,7 @@ def validate_content_quality() -> None:
     # Hugo merges terms that share a URL, and then shows whichever spelling it reads first.
     term_names: dict[str, dict[str, tuple[str, Path]]] = {"authors": {}, "tags": {}, "categories": {}}
     project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
+    venues = yaml.safe_load((ROOT / "data/venues.yaml").read_text(encoding="utf-8"))
     for key, topic in project_topics.items():
         if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
             failures.append(f"data/topics.yaml: topic {key!r} needs label, background, and text")
@@ -559,6 +552,10 @@ def validate_content_quality() -> None:
 
             if section == "publication" and not bib.exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
+            # A conference or journal paper names its venue in data/venues.yaml, whose rank selects the Highlights.
+            if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal"}:
+                if metadata.get("venue_key") not in venues:
+                    failures.append(f"{page.relative_to(ROOT)}: venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
             if section in {"publication", "theses"} and not is_draft:
                 types = metadata.get("publication_types") or []
                 if len(types) != 1 or types[0] not in PUBLICATION_TYPES:

@@ -83,11 +83,12 @@ links:
   url: https://doi.org/10.1613/jair.1.16406
 
 categories:
-  - Highlight
   - Journal
 aliases:
   - /publication_highlights/mancini-etal-2025-promoting-datasets/
 topics: [speech, biomedical, ethics]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jair
 ---
 
 ## Research setting

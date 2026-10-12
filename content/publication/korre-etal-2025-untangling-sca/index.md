@@ -96,6 +96,8 @@ categories:
 aliases:
   - /publication_conferences/korre-etal-2025-untangling-sca/
 topics: [benchmark, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: findings-naacl
 ---
 
 ## Research setting

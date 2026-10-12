@@ -83,10 +83,11 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Highlight
   - Journal
 aliases:
   - /publication_highlights/9194070/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: tnnls
 ---
 
 ## Research setting

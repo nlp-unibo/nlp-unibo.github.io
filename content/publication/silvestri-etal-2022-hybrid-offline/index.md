@@ -79,4 +79,6 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/silvestri-etal-2022-hybrid-offline/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: cpaior
 ---

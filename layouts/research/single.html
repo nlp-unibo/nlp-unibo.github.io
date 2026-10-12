@@ -421,7 +421,8 @@
             <ul class="lt-topic-pubs" aria-label="Publications">
               {{ range . }}{{ with site.GetPage (printf "/publication/%v" .) }}
               {{ $authors := .Params.authors | default slice }}
-              <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
+              {{ $url := (partial "lt/pub-meta.html" .).url }}
+              <li>{{ if $url }}<a href="{{ $url }}">{{ .Title }}</a>{{ else }}{{ .Title }}{{ end }}<span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
               {{ end }}{{ end }}
             </ul>
             {{ end }}

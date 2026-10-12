@@ -78,4 +78,6 @@ categories:
 aliases:
   - /publication_journals/lippi-2019-claudette/
 topics: [legal, prototype]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ai-and-law
 ---

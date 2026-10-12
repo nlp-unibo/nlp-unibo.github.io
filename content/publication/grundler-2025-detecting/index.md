@@ -102,6 +102,8 @@ categories:
 aliases:
   - /publication_conferences/grundler-2025-detecting/
 topics: [privacy, legal, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ecai
 ---
 
 ## Research setting

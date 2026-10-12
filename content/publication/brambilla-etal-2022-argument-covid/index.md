@@ -103,4 +103,6 @@ categories:
 aliases:
   - /publication_journals/brambilla-etal-2022-argument-covid/
 topics: [argument-mining, biomedical]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: frontiers-public-health
 ---

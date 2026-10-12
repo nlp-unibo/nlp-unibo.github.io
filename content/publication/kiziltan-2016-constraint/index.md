@@ -73,4 +73,6 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/kiziltan-2016-constraint/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ijcai
 ---

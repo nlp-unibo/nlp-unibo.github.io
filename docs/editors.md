@@ -26,7 +26,7 @@ To change the design or the code of the site, read [the developers' guide](devel
   - [Edit the Work with us page](#edit-the-work-with-us-page)
 - [4. Change existing content](#4-change-existing-content)
   - [Find and edit a file](#find-and-edit-a-file)
-  - [Remove a paper from the Highlights carousel, or add one](#remove-a-paper-from-the-highlights-carousel-or-add-one)
+  - [How the Highlights carousel chooses papers](#how-the-highlights-carousel-chooses-papers)
   - [Change the text of a page](#change-the-text-of-a-page)
   - [Replace an image](#replace-an-image)
   - [Reorder items](#reorder-items)
@@ -94,7 +94,7 @@ The check rejects a missing or unknown value.
 
 | Folder | Allowed `categories` values |
 | --- | --- |
-| `content/publication/` | `Journal`, `Conference`, `Workshop`, `Preprint`, plus an optional `Highlight` |
+| `content/publication/` | `Journal`, `Conference`, `Workshop`, `Preprint` |
 | `content/projects/` | `International project`, `National project` |
 | `content/theses/` | `Master thesis`, `Bachelor thesis` |
 
@@ -172,7 +172,7 @@ Follow these rules for every file:
 
 ### Add a publication
 
-**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20Keywords.%20Add%20student%20publication%20for%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint.%20Add%20Highlight%20for%20the%20carousel.%0Acategories%3A%0A%20%20-%20Conference%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Leave%20it%20empty%3A%20the%20page%20then%20shows%20the%20abstract.%20--%3E%0A)
+**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20Keywords.%20Add%20student%20publication%20for%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint%0Acategories%3A%0A%20%20-%20Conference%0A%23%20For%20a%20conference%20or%20a%20journal%3A%20the%20venue%20key%20in%20data%2Fvenues.yaml%2C%20whose%20rank%20selects%20the%20Highlights%0Avenue_key%3A%20%22TODO%22%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Write%20it%20only%20for%20a%20paper%20from%20a%20top%20venue%20or%20of%20the%20current%20year%3B%20without%20it%2C%20the%20title%20opens%20the%20paper.%20--%3E%0A)
 
 Name the folder after the first author, `etal`, the year, and one keyword, such as `rossi-etal-2026-example`.
 A folder holds these files:
@@ -191,7 +191,8 @@ content/publication/rossi-etal-2026-example/
 | `date` | Required | `2026-05-20` | The publication date. It orders every list and places the paper on the News timeline |
 | `publishDate` | Optional | `2026-05-20` | The day the page appears. Usually the same as `date` |
 | `publication_types` | Required | `- paper-conference` | Exactly one of `article-journal` (journal), `paper-conference` (conference or workshop), `article` (preprint), or `chapter` (book chapter) |
-| `categories` | Required | `- Conference` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint`. Add `Highlight` as a second value to show the paper in the Highlights carousel |
+| `categories` | Required | `- Conference` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint` |
+| `venue_key` | Required for `Conference` and `Journal` | `acl` | The venue's key in `data/venues.yaml`. Its `rank` decides whether the paper enters the Highlights carousel. Add a missing venue there with its rank and source |
 | `publication` | Optional | `"Proceedings of ACL 2026"` | The full venue name |
 | `abstract` | Optional | `"We introduce ..."` | Shown in full on the publication page |
 | `summary` | Optional | `"GCAM has annotators report ..."` | One sentence, shown under the title and on publication cards. Every highlight needs one |
@@ -203,7 +204,7 @@ content/publication/rossi-etal-2026-example/
 | `tags` | Optional | `- argument mining` | Keywords. Add `student publication` to list the paper under "Work done with students" |
 | `award` | Optional | `Best Paper Award` | Shown with a trophy under the title in every publication list |
 | `affiliations` | Optional | `- University of Bologna` | Institution names shown under the authors |
-| `featured` | Optional | `false` | Leave it `false`: the `Highlight` category replaces it |
+| `featured` | Optional | `false` | Leave it `false`: the venue rank selects the highlights |
 
 Then add the citation file:
 
@@ -215,7 +216,7 @@ Images:
 
 - `featured.png` (or `featured.jpg`) is the most representative figure of the paper.
   It becomes the teaser of the page and the preview on every card.
-  Give every `Highlight` publication both `featured.png` and a `summary`, because its carousel card shows them.
+  Give every paper from a top venue both `featured.png` and a `summary`, because its Highlights card shows them.
 - `card.png` is optional.
   Add it when `featured.png` is too detailed to read at card size: 1600 by 1000 pixels, with large text.
   Cards then show `card.png`, and the page keeps `featured.png`.
@@ -242,8 +243,9 @@ Common mistakes:
 - No `cite.bib` file: the check warns `missing cite.bib`, and the Cite button is missing.
 
 The body of the file can stay empty.
-The page then shows the abstract.
-Some publications also have a long body page; see [5. Publication blog pages](#6-publication-blog-pages).
+A publication without a body has no page of its own: its title opens the paper, through the DOI, the arXiv page, the PDF, or the first link, in this order, and its old address redirects there.
+A preprint shows "Preprint" in place of a venue, or "arXiv preprint" when `publication` names arXiv.
+Write a body only for a highlighted paper or a paper of the current year; see [6. Publication blog pages](#6-publication-blog-pages).
 
 ### Add a news item
 
@@ -662,22 +664,18 @@ The body, after the second `---`, holds the text of the page.
 Research area pages and the Work with us page keep almost all their text in front matter fields, so edit the field that holds the sentence you want to change.
 Use the search box of GitHub (press `/` in the repository) to find a sentence when you are not sure which file holds it.
 
-### Remove a paper from the Highlights carousel, or add one
+### How the Highlights carousel chooses papers
 
-The Highlights carousel of the Publications page shows every publication whose `categories` list includes `Highlight`.
+The Highlights carousel of the Publications page shows the twelve newest papers of the last four years from a top venue, with a "current/total" counter beside its title.
+A top venue is a conference ranked A* or A by ICORE, a journal in the first quartile (Q1) of the SCImago Journal Rank (SJR), or a venue that `data/venues.yaml` marks with `top: true`, such as ICASSP.
+Findings papers count as their main conference. Industry and demo tracks are separate venues without a rank, such as `ijcai-demo`.
+Each conference or journal paper names its venue with `venue_key`, and `data/venues.yaml` holds the rank of every venue with the edition it comes from.
 
-1. Open `content/publication/<slug>/index.md`.
-2. In `categories`, delete the line `  - Highlight`, and keep the type line (`Journal`, `Conference`, `Workshop`, or `Preprint`).
-3. Commit to a new branch and open a pull request.
+- To add a paper from a known venue, set `venue_key` to the venue's key.
+- To add a paper from a new venue, add the venue to `data/venues.yaml` with its rank: the ICORE class from the [CORE portal](https://portal.core.edu.au/conf-ranks/) for a conference, or the SJR best quartile from [SCImago](https://www.scimagojr.com/journalrank.php) for a journal.
+- When ICORE or SJR publish a new edition, update the ranks and the `source` values in `data/venues.yaml`.
 
-To add a paper to the carousel, add the line `  - Highlight` under its type.
-A highlighted paper needs a `featured.png` image and a `summary`, because its carousel card shows them.
-
-```yaml
-categories:
-  - Conference
-  - Highlight
-```
+A paper that leaves the carousel keeps its blog page.
 
 ### Change the text of a page
 
@@ -807,7 +805,7 @@ The table lists the messages of the check and how to fix each one.
 | `contains example domain` or `contains example email` | A template address such as `example.org` or `test@example.org` is still there. Replace it with the real one |
 | `contains Lorem ipsum` or `contains publication boilerplate` | Placeholder text from an old template is still there. Replace it |
 | `categories must be exactly one of ...` | The `categories` value is missing, misspelled, or repeated. Copy one allowed value from the message |
-| `categories must list Highlight at most once` | Remove the second `Highlight` |
+| `venue_key '...' is not defined in data/venues.yaml` | Set `venue_key` to a key of `data/venues.yaml`, or add the venue there |
 | `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
 | `user_groups must be exactly one of ...` | Use exactly one of `Members`, `Associate Fellows`, or `Former Members` |
 | `author slug must be '...'` | A person's folder name does not match their `title`. Create the folder with the name the message shows |
@@ -855,13 +853,13 @@ When you cannot fix a failure, write a comment on the pull request and ask the m
 ## 6. Publication blog pages
 
 A publication can have a long body: a page that tells the story of the paper, like the project pages that research groups publish.
-31 of the 77 publications have one today, such as `content/publication/ruggeri-et-al-2026-gcam/`.
+Blog pages are reserved for highlighted papers, those from a top venue, and papers of the current year, such as `content/publication/ruggeri-et-al-2026-gcam/`; whoever adds such a publication decides whether to write one.
 Such a page explains the paper to a reader outside the field, in five sections: **Research setting**, **Motivation**, **Approach**, **Results**, and **Takeaways**.
 It uses visual components such as figures, method diagrams, and result charts.
 
 Writing one follows a brief from the maintainer, which sets the structure and the style of every page.
 Ask the maintainer for it before you start.
-You may leave the body empty: the page then shows the abstract, and you or someone else can add the long page later.
+You may leave the body empty: the title then opens the paper, and you or someone else can add the long page later.
 
 The page answers four questions for a reader outside the field:
 

@@ -85,11 +85,12 @@ links:
 - name: URL
   url: https://aclanthology.org/2024.eacl-short.16
 categories:
-  - Highlight
   - Conference
 aliases:
   - /publication_highlights/mancini-etal-2024-multimodal/
 topics: [argument-mining, multimodal, speech, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: eacl
 ---
 
 ## Research setting

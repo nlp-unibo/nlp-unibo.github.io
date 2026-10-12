@@ -79,4 +79,6 @@ categories:
 aliases:
   - /publication_conferences/contissa-2018-automated/
 topics: [privacy, legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
 ---

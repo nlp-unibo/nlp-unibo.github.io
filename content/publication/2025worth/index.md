@@ -49,11 +49,12 @@ featured: false
 award: '"Peter Jackson" Award for Best Innovative Application Paper'
 
 categories:
-  - Highlight
   - Conference
 aliases:
   - /publication_highlights/2025worth/
 topics: [legal, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: icail
 ---
 
 ## Research setting

@@ -82,6 +82,8 @@ categories:
 aliases:
   - /publication_preprints/mancini-2026-leveragingwhisperembeddingsaudiobased/
 topics: [information-retrieval, speech, multimodal, reproducibility]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: icassp
 ---
 
 ## Research setting

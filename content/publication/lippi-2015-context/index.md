@@ -73,4 +73,6 @@ categories:
 aliases:
   - /publication_conferences/lippi-2015-context/
 topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ijcai
 ---

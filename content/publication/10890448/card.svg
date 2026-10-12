@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 312" role="img" aria-labelledby="lmactd-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="lmactd-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="lmactd-card-title">The input audio goes to a frozen classifier, a CNN14 network, which predicts a class. The LMAC-TD interpreter reads the classifier representations and the waveform, and decodes the explanation directly as a waveform: a listenable clip on which the frozen classifier keeps its decision, while it loses it on the masked-out rest.</title>
+  <text class="lt-s-sub" x="8" y="18">EXPLAINING AN AUDIO CLASSIFIER</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="54.0">Input audio x(t)</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M90 74 V94"/>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M326 74 V182"/>
+  <rect class="lt-s-tok" x="8" y="98" width="164" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="90.0" y="120.0">Classifier</text>
+  <text class="lt-s-txt lt-s-small" x="90.0" y="138.0">frozen CNN14</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M176 123 H196"/>
+  <rect class="lt-s-label" x="200" y="106" width="100" height="34" rx="17.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="250.0" y="128.0">class</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M90 152 V182"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="186" width="344" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="208.0">Interpreter</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="226.0">trained; reads the classifier and the audio</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M98 240 V258"/>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-card-arrow)" d="M274 240 V258"/>
+  <rect class="lt-s-box lt-s-sel" x="8" y="262" width="180" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="98.0" y="289.0">Explanation i(t)</text>
+  <rect class="lt-s-tok" x="196" y="262" width="156" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="274.0" y="289.0">Masked-out rest</text>
+</svg>

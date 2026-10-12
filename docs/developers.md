@@ -89,7 +89,7 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
 | `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, and the research view validators |
 
-`new` accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `publication-highlight`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
+`new` accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
 A proposal slug is `TOPIC/NAME`, as in `new proposal legal/new-idea`, and the topic folder must exist.
 
 The production build uses its own resource folder, so `--gc` cannot delete files that a running preview uses.
@@ -159,7 +159,7 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `layouts/authors/list.html` | Profile page: header band, then publications with filters and a Back to top button |
 | `layouts/work-with-us/single.html` | Work with us page: path tabs, steps, email form, proposals, work done with students |
 | `layouts/redirect/single.html` | Pages with `type: redirect`: an alias page to `target` or `external_link`; the build fails without one |
-| `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest` | Theme copies with current Hugo calls |
+| `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest` | Theme copies with current Hugo calls; `baseof.html` also turns a publication without a body into a redirect to its paper |
 
 Theses, tag pages, category pages, and `content/mm-argfallacy/` use theme layouts.
 
@@ -193,7 +193,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `person-topics.html` | A profile | Returns the three most frequent topics of the ten most recent publications, except `prototype` |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |
-| `pub-meta.html` | A publication | Returns `kind`, `venue`, `links`, `tldr`, shared by cards and pages |
+| `pub-meta.html` | A publication | Returns `kind`, `venue` ("Preprint" for a preprint), `links`, `tldr`, `blog` (it has a body), and `url` (the blog, else the DOI, arXiv, PDF, or first link), shared by cards, rows, and pages |
 | `pub-row.html` | A publication | Compact list row |
 | `rule-parts.html` | Parts of a rules-view sentence | Marked spans, recursive |
 | `section-head.html` | A block | Eyebrow, title, subtitle, and "see all" link |
@@ -878,7 +878,7 @@ Continue from the pull request steps in [editors.md](editors.md#5-publish-your-c
 ### Create content from the command line
 
 - Publication: On your computer, run `uv run python scripts/site.py new conference rossi-etal-2026-example`.
-  Replace `conference` with `journal`, `workshop`, `preprint`, or `publication-highlight` as needed.
+  Replace `conference` with `journal`, `workshop`, or `preprint` as needed.
 - News item: Copy an existing news item, or run `uv run python scripts/site.py new news acl-2026`.
 - Team member: Copy the folder of an existing member, or run `uv run python scripts/site.py new person maria-rossi`.
   Without a photo, keep the default person avatar from `archetypes/person/avatar.png`.
@@ -901,7 +901,7 @@ A new value also needs a list block on the matching landing page.
 
 Notes on how some pages render their content, kept from the former README.
 
-The Publications page (`layouts/publication/section.html`) starts with the Highlights carousel, which loops and advances every eight seconds.
+The Publications page (`layouts/publication/section.html`) starts with the Highlights carousel: the twelve newest papers of the last four years whose `venue_key` has rank `A*`, `A`, or `Q1`, or `top: true`, in `data/venues.yaml`. It loops and advances every eight seconds.
 Every publication follows, newest first and grouped by year, with a search box, a filter by type, and a filter by topic.
 The topic counts follow the chosen type and the search, and a topic without matches is hidden.
 

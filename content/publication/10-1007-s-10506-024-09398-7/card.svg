@@ -1,0 +1,50 @@
+<svg viewBox="0 0 360 318" role="img" aria-labelledby="tos-multi-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="tos-multi-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="tos-multi-card-title">After Figure 1 of the paper, with German as the target language; English is blue, German is orange. 1. New corpus: a newly annotated German corpus trains a German model. 2. Projection: labels of the English corpus are projected onto the German versions of the same contracts, which train a German model. 3. Translate training set: the English corpus is translated into German, keeping its labels, and trains a German model. 4. Translate queries: each German sentence is translated into English and classified by the English model used as is; with good machine translation this scored the best F1.</title>
+  <text class="lt-s-sub" x="8" y="16">FOUR STRATEGIES FOR A NEW LANGUAGE (DE)</text>
+  <text class="lt-s-sub" x="8" y="40">1. NEW CORPUS</text>
+  <rect class="lt-s-node lt-role-2" x="130" y="48" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="67.0">DE corpus</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="85.0">new labels</text>
+  
+  <rect class="lt-s-node lt-role-2" x="252" y="48" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="302.0" y="67.0">DE model</text>
+  <text class="lt-s-txt lt-s-small" x="302.0" y="85.0">trained</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M232 70 H248"/>
+  <text class="lt-s-sub" x="8" y="112">2. PROJECTION</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="120" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="58.0" y="139.0">EN corpus</text>
+  <text class="lt-s-txt lt-s-small" x="58.0" y="157.0">with labels</text>
+  <rect class="lt-s-node lt-role-2" x="130" y="120" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="139.0">DE corpus</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="157.0">projected</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M110 142 H126"/>
+  <rect class="lt-s-node lt-role-2" x="252" y="120" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="302.0" y="139.0">DE model</text>
+  <text class="lt-s-txt lt-s-small" x="302.0" y="157.0">trained</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M232 142 H248"/>
+  <text class="lt-s-sub" x="8" y="184">3. TRANSLATE TRAINING SET</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="192" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="58.0" y="211.0">EN corpus</text>
+  <text class="lt-s-txt lt-s-small" x="58.0" y="229.0">with labels</text>
+  <rect class="lt-s-node lt-role-2" x="130" y="192" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="211.0">DE corpus</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="229.0">translated</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M110 214 H126"/>
+  <rect class="lt-s-node lt-role-2" x="252" y="192" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="302.0" y="211.0">DE model</text>
+  <text class="lt-s-txt lt-s-small" x="302.0" y="229.0">trained</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M232 214 H248"/>
+  <text class="lt-s-sub" x="8" y="256">4. TRANSLATE QUERIES</text>
+  <rect class="lt-s-node lt-role-2" x="8" y="264" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="58.0" y="283.0">DE query</text>
+  <text class="lt-s-txt lt-s-small" x="58.0" y="301.0">sentence</text>
+  <rect class="lt-s-node lt-role-1" x="130" y="264" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="283.0">EN query</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="301.0">translated</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M110 286 H126"/>
+  <rect class="lt-s-node lt-role-1" x="252" y="264" width="100" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="302.0" y="283.0">EN model</text>
+  <text class="lt-s-txt lt-s-small" x="302.0" y="301.0">used as is</text>
+  <path class="lt-s-arrow" marker-end="url(#tos-multi-card-arrow)" d="M232 286 H248"/>
+</svg>

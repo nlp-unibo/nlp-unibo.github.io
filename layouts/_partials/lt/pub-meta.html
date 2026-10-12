@@ -1,7 +1,11 @@
 {{/* Display data of a publication, shared by its card and its page. Input: the publication page. */}}
+{{/* `url` is where a title links: the publication page when it has a body (its blog), else the DOI, the arXiv page, */}}
+{{/* the PDF, or the first link, in this order; empty when there is none. A preprint's venue reads "Preprint", or */}}
+{{/* "arXiv preprint" when the venue field names arXiv. */}}
 {{- $kinds := slice "Journal" "Conference" "Workshop" "Preprint" -}}
 {{- $kind := index (intersect $kinds (.Params.categories | default slice) | default (slice "Publication")) 0 -}}
 {{- $venue := .Params.publication_short | default .Params.publication | default "" | markdownify | plainify | htmlUnescape -}}
+{{- if eq $kind "Preprint" }}{{ $venue = cond (eq $venue "") "Preprint" (printf "%s preprint" $venue) }}{{ end -}}
 {{- $links := slice -}}
 {{- $arxiv := "" -}}
 {{- range .Params.links -}}
@@ -21,4 +25,12 @@
 {{- end -}}
 {{- $tldr := .Params.card_summary | default .Params.summary | default "" -}}
 {{- if and (not $tldr) .Params.abstract }}{{ $tldr = .Params.abstract | plainify | truncate 170 }}{{ end -}}
-{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr -}}
+{{- $blog := ne (.RawContent | replaceRE `<!--[\s\S]*?-->` "" | strings.TrimSpace) "" -}}
+{{- $url := "" -}}
+{{- if $blog }}{{ $url = .RelPermalink -}}
+{{- else if .Params.doi }}{{ $url = printf "https://doi.org/%s" .Params.doi -}}
+{{- else if $arxiv }}{{ $url = printf "https://arxiv.org/abs/%s" $arxiv -}}
+{{- else if .Params.url_pdf }}{{ $url = .Params.url_pdf | relURL -}}
+{{- else }}{{ with index (.Params.links | default slice) 0 }}{{ $url = .url }}{{ end -}}
+{{- end -}}
+{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr "blog" $blog "url" $url -}}

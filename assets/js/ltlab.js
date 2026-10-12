@@ -1143,6 +1143,9 @@
     const loop = carousel.hasAttribute("data-lt-loop");
     const centered = carousel.classList.contains("is-centered");
     const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    // An optional counter, such as the one beside the Highlights title, reads "current/total"; without the script it
+    // shows the total.
+    const counter = carousel.id && document.querySelector(`[data-lt-count-for="${carousel.id}"]`);
     // A centered loop shows a copy of the last slide before the first and a copy of the first after the last,
     // so a neighbour always peeks on both sides; landing on a copy jumps to the slide it copies.
     const copies = new Map();
@@ -1193,6 +1196,7 @@
       const before = current;
       current = slides.indexOf(copies.get(item) || item);
       if (current !== before) carousel.dispatchEvent(new CustomEvent("lt-slide", { detail: current }));
+      if (counter) counter.textContent = `${current + 1}/${slides.length}`;
       dots.forEach((dot, i) => dot.setAttribute("aria-current", String(i === current)));
       items.forEach((other) => other.classList.toggle("is-active", other === item));
       if (!loop && previous && next) {
@@ -1212,8 +1216,18 @@
       settle = setTimeout(settled, 150);
     };
     dots.forEach((dot, i) => dot.addEventListener("click", () => go(i)));
-    if (previous) previous.addEventListener("click", () => go(current - 1));
-    if (next) next.addEventListener("click", () => go(current + 1));
+    // A click on a slide beside the current one moves the carousel to it, as an arrow does; only the current slide
+    // follows its link. Copies handle their own clicks above.
+    track.addEventListener("click", (event) => {
+      const index = slides.indexOf(event.target.closest(".lt-carousel-track > *"));
+      if (index < 0 || index === current) return;
+      event.preventDefault();
+      event.stopPropagation();
+      go(index);
+    }, true);
+    // An arrow moves one slide per click; the second click of a double click is ignored, so it does not skip a slide.
+    if (previous) previous.addEventListener("click", (event) => { if (event.detail < 2) go(current - 1); });
+    if (next) next.addEventListener("click", (event) => { if (event.detail < 2) go(current + 1); });
     track.addEventListener("scroll", () => { update(); wait(); }, { passive: true });
     // With the script the track does not scroll freely, so a vertical page scroll can never shift it.
     // A horizontal swipe, a horizontal wheel or trackpad gesture, or an arrow key moves one slide.

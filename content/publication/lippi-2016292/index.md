@@ -85,11 +85,12 @@ links:
 - name: URL
   url: https://www.sciencedirect.com/science/article/pii/S0957417416304493
 categories:
-  - Highlight
   - Journal
 aliases:
   - /publication_highlights/lippi-2016292/
 topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: eswa
 ---
 
 ## Research setting

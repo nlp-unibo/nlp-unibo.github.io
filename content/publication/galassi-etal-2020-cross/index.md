@@ -83,4 +83,6 @@ categories:
 aliases:
   - /publication_conferences/galassi-etal-2020-cross/
 topics: [legal, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: coling
 ---

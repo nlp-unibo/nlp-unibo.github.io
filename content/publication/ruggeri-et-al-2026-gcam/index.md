@@ -77,10 +77,11 @@ image:
 #   Otherwise, set `projects: []`.
 projects: []
 categories:
-  - Highlight
   - Journal
 aliases:
   - /publication_highlights/ruggeri-et-al-2026-gcam/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: tacl
 ---
 
 ## Research setting

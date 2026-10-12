@@ -8,8 +8,11 @@
 {{ $authors := .Params.authors | default slice }}
 <article class="lt-card lt-link-card lt-slide">
   <div class="lt-slide-media">
-    {{/* A simpler `card` image, readable at card size, replaces the `featured` teaser figure when present. */}}
-    {{ with or ((.Resources.ByType "image").GetMatch "card.*") ((.Resources.ByType "image").GetMatch "*featured*") }}
+    {{/* A drawn `card.svg` schema, inline so its classes follow the light and dark themes, or a simpler `card` image, */}}
+    {{/* readable at card size, replaces the `featured` teaser figure when present. */}}
+    {{ with .Resources.Get "card.svg" }}
+      <div class="lt-svg lt-card-schema">{{ .Content | safeHTML }}</div>
+    {{ else with or ((.Resources.ByType "image").GetMatch "card.*") ((.Resources.ByType "image").GetMatch "*featured*") }}
       {{ $img := .Fit "1000x700 webp" }}
       <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
     {{ else }}
@@ -17,9 +20,10 @@
     {{ end }}
   </div>
   <div class="lt-slide-body">
-    <h3 class="lt-slide-title"><a class="lt-stretch" href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <h3 class="lt-slide-title">{{ with $meta.url }}<a class="lt-stretch" href="{{ . }}"{{ if not $meta.blog }} target="_blank" rel="noopener"{{ end }}>{{ $page.Title }}</a>{{ else }}{{ .Title }}{{ end }}</h3>
     {{ $kind := "" }}{{ if $showKind }}{{ range slice "Preprint" "Journal" "Conference" "Workshop" }}{{ if and (not $kind) (in ($page.Params.categories | default slice) .) }}{{ $kind = . }}{{ end }}{{ end }}{{ end }}
-    <div class="lt-meta">{{ with $kind }}<span class="lt-pill lt-pill-{{ if eq . "Preprint" }}preprint{{ else }}paper{{ end }}">{{ . }}</span>{{ end }}<span>{{ with $meta.venue }}<span class="lt-slide-venue">{{ . }}</span> {{ end }}<span class="lt-nowrap">{{ with $meta.venue }}· {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ if $yearOnly }}{{ .Date.Format "2006" }}{{ else }}{{ .Date | time.Format ":date_medium" }}{{ end }}</time></span></span></div>
+    {{/* A Preprint pill already says what the venue "Preprint" would. */}}{{ $venue := $meta.venue }}{{ if eq $venue $kind }}{{ $venue = "" }}{{ end }}
+    <div class="lt-meta">{{ with $kind }}<span class="lt-pill lt-pill-{{ if eq . "Preprint" }}preprint{{ else }}paper{{ end }}">{{ . }}</span>{{ end }}<span>{{ with $venue }}<span class="lt-slide-venue">{{ . }}</span> {{ end }}<span class="lt-nowrap">{{ with $venue }}· {{ end }}<time datetime="{{ .Date.Format "2006-01-02" }}">{{ if $yearOnly }}{{ .Date.Format "2006" }}{{ else }}{{ .Date | time.Format ":date_medium" }}{{ end }}</time></span></span></div>
     {{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
     {{ with $authors }}<p class="lt-slide-authors">{{ delimit (first 4 .) ", " }}{{ if gt (len .) 4 }}, et al.{{ end }}</p>{{ end }}
     {{ with $meta.tldr }}<p class="lt-slide-text">{{ . }}</p>{{ end }}

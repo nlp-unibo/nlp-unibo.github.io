@@ -80,4 +80,6 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/ijcai-2018-p-714/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ijcai
 ---

@@ -94,11 +94,12 @@ links:
 - name: URL
   url: https://doi.org/10.1007/s10506-024-09398-7
 categories:
-  - Highlight
   - Journal
 aliases:
   - /publication_highlights/10-1007-s-10506-024-09398-7/
 topics: [legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ai-and-law
 ---
 
 ## Research setting

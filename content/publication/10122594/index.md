@@ -86,4 +86,6 @@ categories:
 aliases:
   - /publication_journals/10122594/
 topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: taslp
 ---

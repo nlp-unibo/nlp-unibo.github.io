@@ -90,6 +90,8 @@ categories:
 aliases:
   - /publication_conferences/muti-etal-2024-language/
 topics: [llm-reasoning, llms, argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: emnlp
 ---
 
 ## Research setting

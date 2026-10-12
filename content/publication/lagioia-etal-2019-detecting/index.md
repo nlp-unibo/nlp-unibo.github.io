@@ -81,4 +81,6 @@ categories:
 aliases:
   - /publication_conferences/lagioia-etal-2019-detecting/
 topics: [legal, interpretability]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
 ---

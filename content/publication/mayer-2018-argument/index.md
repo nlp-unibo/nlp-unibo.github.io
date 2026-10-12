@@ -75,4 +75,6 @@ categories:
 aliases:
   - /publication_conferences/mayer-2018-argument/
 topics: [argument-mining, biomedical]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: comma
 ---

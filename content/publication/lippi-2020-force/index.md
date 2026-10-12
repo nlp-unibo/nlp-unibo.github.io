@@ -78,4 +78,6 @@ categories:
 aliases:
   - /publication_journals/lippi-2020-force/
 topics: [legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jair
 ---

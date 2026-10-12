@@ -77,4 +77,6 @@ categories:
 aliases:
   - /publication_journals/10-1007-978-3-030-89391-0-27/
 topics: [dialogue, prototype]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clar
 ---

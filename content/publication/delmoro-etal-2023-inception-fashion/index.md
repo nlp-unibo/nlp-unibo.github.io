@@ -81,4 +81,6 @@ categories:
 aliases:
   - /publication_workshops/delmoro-etal-2023-inception-fashion/
 topics: [multimodal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clef
 ---

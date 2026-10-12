@@ -101,6 +101,8 @@ categories:
 aliases:
   - /publication_conferences/muti-et-al-2024-pejorativity/
 topics: [benchmark, fairness, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: lrec-coling
 ---
 
 ## Research setting

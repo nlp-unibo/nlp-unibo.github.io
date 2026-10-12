@@ -96,6 +96,8 @@ categories:
 aliases:
   - /publication_conferences/antici-et-al-2024-subjectivity/
 topics: [benchmark, fact-checking]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: lrec-coling
 ---
 
 ## Research setting

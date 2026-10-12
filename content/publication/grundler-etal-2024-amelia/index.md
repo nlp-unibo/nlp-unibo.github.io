@@ -96,6 +96,8 @@ categories:
 aliases:
   - /publication_conferences/grundler-etal-2024-amelia/
 topics: [argument-mining, legal, benchmark, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clic-it
 ---
 
 ## Research setting

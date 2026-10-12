@@ -113,6 +113,8 @@ categories:
 aliases:
   - /publication_workshops/barron-etal-20240-overview/
 topics: [fact-checking, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clef
 ---
 
 ## Research setting

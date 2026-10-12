@@ -85,6 +85,8 @@ categories:
   - Journal
 aliases:
   - /publication_journals/de-2025-improving/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: intelligenza-artificiale
 ---
 
 ## Research setting

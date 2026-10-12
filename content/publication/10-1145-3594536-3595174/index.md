@@ -101,4 +101,6 @@ aliases:
   - /publication_conferences/10-1145-3594536-3595174/
   - /publication_conferences/santin-etal-2023-argumentation-cjeu/
 topics: [argument-mining, legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: icail
 ---

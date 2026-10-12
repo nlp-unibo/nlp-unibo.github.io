@@ -91,4 +91,6 @@ categories:
 aliases:
   - /publication_conferences/10849473/
 topics: [dialogue, prototype, privacy]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ictai
 ---

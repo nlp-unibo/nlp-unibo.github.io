@@ -81,4 +81,6 @@ categories:
 aliases:
   - /publication_workshops/antici-etal-2021-subjectivita/
 topics: [fact-checking, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clef
 ---

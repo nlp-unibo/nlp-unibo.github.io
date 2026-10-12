@@ -99,6 +99,8 @@ categories:
 aliases:
   - /publication_conferences/dougrez-lewis-etal-2025-assessing/
 topics: [llm-reasoning, fact-checking, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: findings-acl
 ---
 
 ## Research setting

@@ -86,6 +86,8 @@ categories:
 aliases:
   - /publication_conferences/grundler-2025-automated/
 topics: [legal, knowledge-extraction, llms]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
 ---
 
 ## Research setting
