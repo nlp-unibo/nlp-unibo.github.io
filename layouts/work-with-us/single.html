@@ -64,9 +64,9 @@
               <p class="lt-mail-to"><span>To</span> <output class="lt-mail-names">{{ delimit $names ", " }}</output></p>
               <form class="lt-mail-form" hidden data-lt-to="{{ delimit $emails "," }}" data-lt-names="{{ delimit $names "|" }}" data-lt-subject="{{ $path.form.subject }}">
                 <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
-                <label>Your name<input name="name" type="text" required autocomplete="name"></label>
+                <label>Your name <small class="lt-mail-req">(required)</small><input name="name" type="text" required autocomplete="name"></label>
                 {{ range $path.form.fields }}
-                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}{{ range $k, $v := .when }} data-lt-when="{{ $k }}" data-lt-when-value="{{ $v }}"{{ end }}>{{ .label }}{{ if not .required }} <small>(optional)</small>{{ end }}
+                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}{{ range $k, $v := .when }} data-lt-when="{{ $k }}" data-lt-when-value="{{ $v }}"{{ end }}>{{ .label }} {{ if .required }}<small class="lt-mail-req">(required)</small>{{ else }}<small>(optional)</small>{{ end }}
                   {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
                   {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
                     <option value="">Choose…</option>
@@ -76,7 +76,10 @@
                   {{- else }}<input name="{{ .key }}" type="text" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>{{ end }}
                 </label>
                 {{ end }}
-                <button type="submit" class="lt-btn lt-btn-primary">Write the email <i class="fas fa-paper-plane" aria-hidden="true"></i></button>
+                <div class="lt-mail-actions">
+                  <a class="lt-btn lt-btn-primary lt-mail-send" role="link" aria-disabled="true" aria-describedby="{{ $path.key }}-mail-wait">Contact us <i class="fas fa-paper-plane" aria-hidden="true"></i></a>
+                  <p class="lt-mail-wait" id="{{ $path.key }}-mail-wait" role="status">Fill the necessary information to contact us.</p>
+                </div>
                 <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
               </form>
               <a class="lt-mail-direct" href="{{ $mailto | safeURL }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
@@ -104,9 +107,10 @@
     </section>
   </div>
 
-  {{/* Research proposals: compact cards with a topic filter. Opening a card hides the others and shows its panel beside */}}
-  {{/* it (the research-area pattern, `data-lt-fields`): the brief, the contacts, the tags, "Choose this proposal", which */}}
-  {{/* fills the open path's proposal field and sends the email to the proposal's contacts, and the proposal page. */}}
+  {{/* Research proposals: compact cards with a topic filter. Opening a card hides the others and shows its panel below */}}
+  {{/* it (the research-area pattern, `data-lt-fields`): the proposal body, or the brief without a body, the contacts, */}}
+  {{/* and "Choose this proposal", which fills the open path's proposal field and sends the email to the */}}
+  {{/* proposal's contacts. A proposal has no page of its own, so the body headings become h4 without ids. */}}
   {{ with $proposals }}
   <div class="lt-band" data-lt-section="proposals">
     <details class="lt-expand" id="proposals" open>
@@ -130,14 +134,12 @@
             </button>
             <div class="lt-field-panel" id="{{ $id }}-panel" role="region" aria-labelledby="{{ $id }}">
               <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All proposals</button>
-              <p>{{ $p.Params.brief | markdownify }}</p>
-              <p class="lt-path-label">Contacts</p>
-              {{ partial "lt/people-row.html" $contacts }}
-              {{ with $p.Params.tags }}<ul class="lt-tags">{{ range first 3 . }}<li>{{ . }}</li>{{ end }}</ul>{{ end }}
+              {{/* Contacts and "Choose this proposal" come first, so the action stays in view above the proposal. */}}
               <div class="lt-proposal-actions">
+                <div><p class="lt-path-label">Contacts</p>{{ partial "lt/people-row.html" $contacts }}</div>
                 <button type="button" class="lt-btn lt-btn-primary lt-proposal-pick" data-lt-proposal="{{ $p.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
-                {{ if $p.Content }}<a class="lt-proposal-page" href="{{ $p.RelPermalink }}">Full proposal <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{{ end }}
               </div>
+              {{ with $p.Content }}<div class="lt-proposal-body">{{ . | replaceRE `<h2[^>]*>` "<h4>" | replaceRE `</h2>` "</h4>" | safeHTML }}</div>{{ else }}<p>{{ $p.Params.brief | markdownify }}</p>{{ end }}
             </div>
           </div>
           {{ end }}
@@ -148,7 +150,8 @@
   {{ end }}
 
   {{/* Work done with students: theses and publications tagged `student publication`, newest first, grouped by year, */}}
-  {{/* with their `topics` as colored tags. A search box and two filters, by kind and by topic, combine. */}}
+  {{/* with their `topics` as colored tags; a thesis title opens its record. A search box and two filters, by kind and */}}
+  {{/* by topic, combine. */}}
   {{ $theses := where site.RegularPages "Section" "theses" }}
   {{ $pubs := where (where site.RegularPages "Section" "publication") "Params.tags" "intersect" (slice "student publication") }}
   {{ $work := union $theses $pubs }}
@@ -178,7 +181,8 @@
           {{ $kind := "Publication" }}{{ if eq .Section "theses" }}{{ $kind = index .Params.categories 0 }}{{ end }}
           <li data-lt-tag="{{ urlize $kind }}" data-lt-topics="{{ delimit (.Params.topics | default slice) " " }}">
             <span class="lt-pill lt-pill-{{ index $kinds $kind }}">{{ $kind }}</span>
-            <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+            {{ $link := partial "lt/item-link.html" . }}
+            {{ if $link }}<a href="{{ $link }}"{{ if .Params.external_link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>{{ else }}<span class="lt-work-title">{{ .Title }}</span>{{ end }}
             <span class="lt-work-by">{{ if eq .Section "theses" }}{{ delimit .Params.authors ", " }}{{ else }}{{ .Params.publication | markdownify | plainify }}{{ end }}</span>
             {{ with .Params.topics }}<span class="lt-work-topics">{{ partial "lt/topic-tags.html" . }}</span>{{ end }}
           </li>

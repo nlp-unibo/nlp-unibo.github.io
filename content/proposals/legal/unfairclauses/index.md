@@ -17,11 +17,13 @@ aliases:
 
 ## Context
 
-For several years, the lab has worked on tools for the automatic detection of unfair clauses in Terms of Service and Privacy Policies written in English.
-This work belongs to the CLAUDETTE and PRIMA projects, listed on the [Projects](/projects/) page.
-The lab has already conducted several studies on this topic.
+Terms of Service and Privacy Policies are the documents that people accept when they use an online service.
+Some of their clauses can be unfair to the people who accept them.
+For several years, the lab has built tools that detect unfair clauses in such documents written in English, in the CLAUDETTE and PRIMA projects listed on the [Projects](/projects/) page.
 
 ## Objective
 
-Apply new effective methods and techniques to the detection and classification of unfair clauses.
+This proposal applies new methods to detect unfair clauses and to classify them.
 The current focus is on large language models (LLMs), and alternative techniques are also of interest.
+
+{{< svg src="clauses.svg" caption="The task on three illustrative clauses written for this page: the model marks each clause as fair or unfair, then classifies each unfair clause." >}}

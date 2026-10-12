@@ -117,9 +117,8 @@
   // section opens, and a slot with `data-lt-open` lets the step title replace the section heading. Filter buttons show
   // the items of one tag. A path's form becomes an email: its subject fills {field} names from the form, and its body greets the
   // recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
-  // proposal field. Changing path closes an open proposal and resets every filter to All. A link to `#<path>-contact`,
-  // such as the Apply buttons of a proposal page, opens the path at its email step; `?proposal=<title>` fills the
-  // proposal field.
+  // proposal field. Changing path closes an open proposal and resets every filter to All. A link to `#<path>-contact`
+  // opens the path at its email step, and `?proposal=<title>` fills the proposal field.
   document.querySelectorAll(".lt-paths").forEach((paths) => {
     const sections = [...document.querySelectorAll("[data-lt-section]")];
     const picks = [...document.querySelectorAll(".lt-proposal-pick")];
@@ -259,6 +258,19 @@
       const source = proposal ? { to: proposal.dataset.ltProposalTo, names: proposal.dataset.ltProposalNames } : { to: form.dataset.ltTo, names: form.dataset.ltNames };
       return { to: source.to, names: source.names.split("|") };
     };
+    // "Contact us" is a real link whose address follows the form, active only once every required field is filled: a mailto address opened from a script reaches some
+    // web mail handlers, such as Outlook on the web, without its subject and body.
+    const send = form.querySelector(".lt-mail-send");
+    const wait = form.querySelector(".lt-mail-wait");
+    const ready = () => [...form.elements].every((field) => !field.required || field.disabled || field.value.trim());
+    const mailto = () => {
+      const lines = [...form.elements]
+        .filter((field) => field.dataset.ltLabel && !field.disabled && field.value.trim())
+        .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
+      const { to, names: people } = recipients();
+      const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
+      return `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+    };
     const output = form.querySelector(".lt-mail-subject");
     const names = form.parentElement.querySelector(".lt-mail-names");
     // The plain email link is only for readers without JavaScript; the form replaces it.
@@ -273,19 +285,20 @@
         label.hidden = value(label.dataset.ltWhen) !== label.dataset.ltWhenValue;
         label.querySelectorAll("input, select, textarea").forEach((field) => { field.disabled = label.hidden; });
       });
+      // Without an address the link is inactive; the message beside it names what is missing.
+      const done = ready();
+      if (done) send.href = mailto(); else send.removeAttribute("href");
+      send.setAttribute("aria-disabled", String(!done));
+      wait.hidden = done;
     };
     form.hidden = false;
     form.addEventListener("input", update);
     form.addEventListener("change", update);
     update();
+    // Enter in a field opens the email when the form is complete, and otherwise marks the missing fields.
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      const lines = [...form.elements]
-        .filter((field) => field.dataset.ltLabel && !field.disabled && field.value.trim())
-        .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
-      const { to, names: people } = recipients();
-      const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
-      location.href = `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+      if (ready()) send.click(); else form.reportValidity();
     });
   });
 

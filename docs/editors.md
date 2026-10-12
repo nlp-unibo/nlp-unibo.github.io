@@ -129,7 +129,7 @@ Each row says where you create the content, where the site shows it without furt
 | News item | `content/news/<slug>/index.md` | The News page timeline, with its topic tags. The homepage News block, while it is among the six newest (the three newest as cards) | No page of its own: the preview shows only the title, the venue, the summary, and the links of the body. No topic tags on the homepage. Not on profile pages, even with an `authors` list. No publication entry |
 | Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
 | Thesis | `content/theses/<year><name>/index.md` | "Work done with students" on the Work with us page, with its topics. The Theses list at `/theses/`. The profile page of the student, when the student has one | Not on the News page or the homepage. No link to the supervisors, who are not listed |
-| Research proposal | `content/proposals/<topic>/<slug>/index.md` | A card on the Work with us page, under its topic filter. Its own page at `/proposals/<topic>/<slug>/` | No news item. A topic folder that does not exist yet needs its own `_index.md` first |
+| Research proposal | `content/proposals/<topic>/<slug>/index.md` | A card on the Work with us page, under its topic filter. Opening the card shows the whole proposal; the proposal has no page of its own | No news item. A topic folder that does not exist yet needs its own `_index.md` first |
 | Project | `content/projects/<slug>/index.md` | A card and a timeline entry on the Projects page, with scope and topic filters. The three newest projects (by `date`) in a step of the Work with us page | No page of its own: the address of the project redirects to `external_link`. No link to its publications or people |
 | Tool | `content/tools/<slug>/index.md` | A band on the Tools page, newest `date` first. A **Paper** link chip, when `publication` names a publication folder | No page of its own: the address of the tool redirects to `external_link`. Not on the homepage. The publication page does not mention the tool |
 | Research area | `content/research/<slug>/index.md` | A card in the homepage Research block, ordered by `weight`. A band on the Research page. Its own page at `/research/<slug>/`, which lists the publications cited in `focus` | No publications are collected by topic: only the folder names in `cite` appear. No menu entry |
@@ -351,7 +351,7 @@ Common mistakes:
 
 ### Add a thesis
 
-**Start:** [create `content/theses/2026firstnamelastname/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/theses/2026firstnamelastname/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Thesis%20title%22%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20Student%20Name%22%0A%23%20The%20graduation%20date%2C%20YYYY-MM-DD%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Adoi%3A%20%22%22%0Apublication_types%3A%0A%20%20-%20thesis%0Apublication%3A%20%22%22%0Apublication_short%3A%20%22%22%0Aabstract%3A%20%22%22%0Asummary%3A%20%22%22%0A%23%20For%20a%20bachelor%20thesis%2C%20write%20bachelor%20thesis%20here%20and%20Bachelor%20thesis%20in%20categories.%0Atags%3A%0A%20%20-%20master%20thesis%0A%20%20-%20student%0A%23%20The%20AMS%20Laurea%20record%2C%20when%20it%20exists%0Aurl_pdf%3A%20%22%22%0Acategories%3A%0A%20%20-%20Master%20thesis%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A---%0A)
+**Start:** [create `content/theses/2026firstnamelastname/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/theses/2026firstnamelastname/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Thesis%20title%22%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20Student%20Name%22%0A%23%20The%20graduation%20date%2C%20YYYY-MM-DD%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Adoi%3A%20%22%22%0Apublication_types%3A%0A%20%20-%20thesis%0Apublication%3A%20%22%22%0Apublication_short%3A%20%22%22%0Aabstract%3A%20%22%22%0Asummary%3A%20%22%22%0A%23%20For%20a%20bachelor%20thesis%2C%20write%20bachelor%20thesis%20here%20and%20Bachelor%20thesis%20in%20categories.%0Atags%3A%0A%20%20-%20master%20thesis%0A%20%20-%20student%0A%23%20The%20AMS%20Laurea%20record%2C%20which%20every%20list%20links%20to%0Aexternal_link%3A%20%22TODO%3A%20https%3A%2F%2Famslaurea.unibo.it%2Fid%2Feprint%2F...%22%0Acategories%3A%0A%20%20-%20Master%20thesis%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A---%0A)
 
 Name the folder after the year and the student's name, without hyphens, such as `2026mariarossi`.
 
@@ -363,23 +363,26 @@ Name the folder after the year and the student's name, without hyphens, such as 
 | `publication_types` | Required | `- thesis` | Keep `thesis` |
 | `categories` | Required | `- Master thesis` | `Master thesis` or `Bachelor thesis`. It sets the kind under "Work done with students" |
 | `tags` | Optional | `- master thesis` | Keep `master thesis` and `student`, or `bachelor thesis` and `student` |
-| `url_pdf` | Optional | `https://amslaurea.unibo.it/...` | The thesis record, such as its AMS Laurea page, when it exists |
+| `external_link` | Required without `target` | `https://amslaurea.unibo.it/id/eprint/...` | The thesis record, such as its AMS Laurea page. Every list links the title there |
+| `target` | Required without `external_link` | `/work-with-us/#student-work` | Only for a thesis without a public record: the old thesis address opens this page |
 | `topics` | Optional | `[llms, legal]` | One to three topic keys. They feed the topic filter under "Work done with students" |
 | `abstract`, `summary` | Optional | | Leave them empty when you have no text |
 
-A thesis needs no image and no body.
+A thesis needs no image and no body. It has no page of its own: its address only redirects to `external_link`.
 
 What else to update: when the thesis led to a paper, add the paper as a publication with the tag `student publication`.
 
 Common mistakes:
 
 - A bachelor thesis left with `Master thesis` in `categories`.
+- A thesis with neither `external_link` nor `target`.
+  The build reports `redirect: ... has no target or external_link`.
 - Topic keys that do not exist.
   The check reports `topic '...' is not defined in data/topics.yaml`.
 
 ### Add a research proposal
 
-**Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20on%20the%20card%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations.%20The%20opened%20card%20shows%20the%20first%20three.%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20proposal%20page%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
+**Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20on%20the%20card%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20opened%20card%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
 
 Research proposals are grouped by topic under `content/proposals/`.
 Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
@@ -395,7 +398,8 @@ content/proposals/legal/
 
 The Work with us page lists every proposal as a card, with a filter by topic.
 On phones the cards form one row that scrolls sideways.
-Opening a card shows the `brief`, the contacts, the first three tags, **Choose this proposal**, and a **Full proposal** link when the proposal has a body.
+Opening a card shows the contacts, **Choose this proposal**, and the body (or the `brief` when there is no body).
+The old address `/proposals/<topic>/<slug>/` redirects to the proposals step of the Work with us page.
 A reader who chooses a proposal writes to its contacts.
 
 | Field | Required | Example | Rule |
@@ -405,18 +409,15 @@ A reader who chooses a proposal writes to its contacts.
 | `summary` | Required | `"Mine the arguments of legal documents ..."` | One sentence of about 18 words, shown on the card |
 | `brief` | Required | `"Argumentation in legal documents ..."` | Two to four sentences, at most 70 words: the problem, the idea, and what a student would do |
 | `contacts` | Required | `- andrea-galassi` | Folder names in `content/authors/`. For a person outside the lab, write `{name: Maria Rossi, email: maria.rossi@unibo.it}` |
-| `tags` | Optional | `- legal analytics` | Plain words, not abbreviations. The card shows the first three |
+| `tags` | Optional | `- legal analytics` | Plain words, not abbreviations. The Work with us page does not show them |
 | `math` | Optional | `true` | Set it when the body uses LaTeX |
 
-The body is optional.
-It is the proposal page, in the style of a publication page.
-Use `##` sections such as `Context`, `Objective`, `Directions`, and `References`.
-On wide screens they appear in a side menu that marks the current section.
+The body is optional, and the opened card shows it whole, so keep it short: about 120 words of prose.
+Use exactly two `##` sections, `Context` and `Objective`, with no references.
 Define every technical term at its first use.
 
-Some proposals add a `pipeline` flow diagram, built only from the proposal's own definitions and captioned as such.
-Copy one from an existing proposal.
-Without a body, the proposal page shows the `brief`, and the card shows no **Full proposal** link.
+Add one schema when it helps, built only from the proposal's own definitions and captioned as such: a drawn `svg` file in the proposal folder (see `content/proposals/interpretability/llms/`), or a `pipeline` diagram.
+On phones a schema keeps a readable size and scrolls sideways inside its own box.
 
 To add a new topic, create its `_index.md` first.
 **Start:** [create `content/proposals/new-topic/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/new-topic/_index.md&value=---%0Atitle%3A%20%22TODO%3A%20Topic%20title%22%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20topic.%22%0A---%0A%0ATODO%3A%20A%20short%20description%20of%20the%20topic%2C%20in%20a%20few%20sentences.%0A)
@@ -649,7 +650,7 @@ Find the file, edit it on the GitHub website, and publish the change as in [Publ
 | A news item on the News page | `content/news/<slug>/index.md` |
 | A person, `/author/<name>/` | `content/authors/<name>/_index.md` |
 | A research area, `/research/<slug>/` | `content/research/<slug>/index.md` |
-| A research proposal, `/proposals/<topic>/<slug>/` | `content/proposals/<topic>/<slug>/index.md` |
+| A research proposal, opened on the Work with us page | `content/proposals/<topic>/<slug>/index.md` |
 | A project or a tool | `content/projects/<slug>/index.md` or `content/tools/<slug>/index.md` |
 | The introduction of a list page, such as Publications or Tools | `_index.md` in the folder of that section |
 | The Work with us page | `content/work-with-us/index.md` |

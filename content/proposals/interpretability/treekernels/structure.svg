@@ -1,0 +1,36 @@
+<svg viewBox="0 0 800 400" role="img" aria-labelledby="treekernels-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="treekernels-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="treekernels-title">The input text the food was cold goes through a transformation technique that turns it into a tree, the structured content. A rationalization system, guided by a structural constraint on the allowed types of trees, extracts a rationale from that tree: the connected nodes was and cold, while food and the are left out.</title>
+  <text class="lt-s-sub" x="40" y="22">INPUT TEXT</text>
+  <rect class="lt-s-tok" x="287.8" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="311.2" y="55">the</text><rect class="lt-s-tok" x="340.6" y="32" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="368.8" y="55">food</text><rect class="lt-s-tok" x="403.0" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="426.4" y="55">was</text><rect class="lt-s-tok" x="455.8" y="32" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="484.0" y="55">cold</text>
+  <path class="lt-s-arrow" marker-end="url(#treekernels-arrow)" d="M400 70 V96"/>
+  <rect class="lt-s-tok" x="250" y="100" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="124">Transformation technique</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="144">turns the text into a tree</text>
+  <path class="lt-s-arrow" marker-end="url(#treekernels-arrow)" d="M400 160 V180 H200 V210"/>
+  <text class="lt-s-sub" x="40" y="200">STRUCTURED CONTENT</text>
+  <path class="lt-s-arrow" d="M200 248 L150 284"/>
+  <path class="lt-s-arrow" d="M200 248 L250 284"/>
+  <path class="lt-s-arrow" d="M150 318 V354"/>
+  <rect class="lt-s-tok" x="176.6" y="214" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="200" y="237">was</text>
+  <rect class="lt-s-tok" x="121.8" y="284" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="150" y="307">food</text>
+  <rect class="lt-s-tok" x="221.8" y="284" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="250" y="307">cold</text>
+  <rect class="lt-s-tok" x="126.6" y="354" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="150" y="377">the</text>
+  <path class="lt-s-arrow" marker-end="url(#treekernels-arrow)" d="M228 231 H296"/>
+  <rect class="lt-s-box lt-s-sel" x="300" y="214" width="230" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="415" y="238">Rationalization system</text>
+  <text class="lt-s-txt lt-s-small" x="415" y="258">extracts a rationale</text>
+  <path class="lt-s-arrow" marker-end="url(#treekernels-arrow)" d="M415 300 V274"/>
+  <rect class="lt-s-tok" x="300" y="300" width="230" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="415" y="324">Structural constraint</text>
+  <text class="lt-s-txt lt-s-small" x="415" y="344">allowed: types of trees</text>
+  <path class="lt-s-arrow" marker-end="url(#treekernels-arrow)" d="M534 231 H620"/>
+  <text class="lt-s-sub" x="560" y="200">RATIONALE</text>
+  <path class="lt-s-arrow" d="M650 248 L600 284"/>
+  <path class="lt-s-arrow" d="M650 248 L700 284"/>
+  <path class="lt-s-arrow" d="M600 318 V354"/>
+  <rect class="lt-s-on" x="626.6" y="214" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="650" y="237">was</text>
+  <rect class="lt-s-off" x="571.8" y="284" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="600" y="307">food</text>
+  <rect class="lt-s-on" x="671.8" y="284" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="700" y="307">cold</text>
+  <rect class="lt-s-off" x="576.6" y="354" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="600" y="377">the</text>
+</svg>

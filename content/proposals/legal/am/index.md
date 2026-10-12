@@ -16,15 +16,15 @@ aliases:
 
 ## Context
 
-Legal documents are one of the domains that would benefit the most from NLP tools.
-Tasks in this domain typically require a highly specialized person with background knowledge, and are difficult to transfer to an automatic tool.
-Argument mining is the problem of automatically detecting and extracting arguments from text. An argument usually combines a premise, a fact, that supports a subjective conclusion, a claim.
-Argumentation in legal documents is typically well-structured and follows specific domain rules.
+Legal documents are among the domains that would benefit most from natural language processing (NLP), the field that builds tools to analyze text automatically.
+Tasks in this domain usually require a specialist with background knowledge, and they are hard to transfer to an automatic tool.
+Argument mining is the task of detecting and extracting arguments from text automatically.
+An argument usually combines a premise and a claim.
+The premise is a fact, and it supports the claim, a subjective conclusion.
 
 ## Objective
 
-Apply both the most recent NLP techniques and hybrid techniques that can leverage domain knowledge to argument mining on legal documents.
+Arguments in legal documents are usually well-structured and follow specific domain rules.
+This proposal applies the most recent NLP techniques, and hybrid techniques that can use domain knowledge, to argument mining on legal documents.
 
-## Resources
-
-The lab is in close contact with teams of legal experts, and has access to reserved datasets that can be used to develop automatic tools.
+{{< svg src="argument.svg" caption="Argument mining on an illustrative sentence that comes from no legal document. The premise is a fact, and the claim is the subjective conclusion it supports." >}}

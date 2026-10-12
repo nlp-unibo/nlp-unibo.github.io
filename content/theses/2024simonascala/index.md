@@ -24,7 +24,7 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/31515/'
+external_link: 'https://amslaurea.unibo.it/31515/'
 
 categories:
   - Master thesis

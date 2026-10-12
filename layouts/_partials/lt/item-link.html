@@ -1,0 +1,5 @@
+{{/* The address a list links an item to: its `external_link`, such as a thesis record, or else its own page. A */}}
+{{/* redirect page without `external_link`, such as a thesis without a public record, has no address of its own. */}}
+{{- $link := .Params.external_link -}}
+{{- if and (not $link) (ne .Type "redirect") }}{{ $link = .RelPermalink }}{{ end -}}
+{{- return $link -}}

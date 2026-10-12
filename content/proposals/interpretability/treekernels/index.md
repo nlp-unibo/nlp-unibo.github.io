@@ -16,18 +16,14 @@ aliases:
 
 ## Context
 
-Selective rationalization is the process of learning by providing highlights as explanations. Highlights, called rationales, are a subset of the input text meant to be interpretable by a user and to describe faithfully the inference process of a classification model.
-Several techniques transform text into abstract structured content, such as abstract meaning representation (AMR) graphs and parse trees.
+Selective rationalization explains the prediction of a classification model with highlights of the input text, called rationales.
+A rationale should be readable by a user and should faithfully describe how the model reaches its prediction.
+Several techniques transform text into structured content, such as parse trees and abstract meaning representation graphs.
 
 ## Objective
 
-Apply rationalization to structured content, and enforce structural constraints that depend on the application scenario.
-The constraints describe which types of structures the rationalization system can extract.
-A tree kernel is a function that measures the similarity between two trees; in the case of tree kernels, the allowed structures are different types of trees.
+This proposal applies rationalization to structured content and constrains the structures that a rationale can take.
+These structural constraints depend on the application scenario and define which types of structures the rationalization system can extract.
+With tree kernels, functions that measure the similarity between two trees, the allowed structures are different types of trees.
 
-## References
-
-**Tree-constrained Graph Neural Networks for Argument Mining**\
-Federico Ruggeri, Marco Lippi, Paolo Torroni\
-September 2021\
-[PDF](https://arxiv.org/abs/2110.00124)
+{{< svg src="structure.svg" caption="The setup this proposal studies, on an illustrative sentence and tree that come from no dataset. The structural constraint defines which types of trees the rationalization system can extract as a rationale." >}}

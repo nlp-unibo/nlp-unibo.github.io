@@ -16,19 +16,14 @@ aliases:
 
 ## Context
 
-Selective rationalization is the process of learning by providing highlights as explanations. Highlights, called rationales, are a subset of the input text meant to be interpretable by a user and to describe faithfully the inference process of a classification model.
-A popular architecture for selective rationalization is the Select-then-Predict Pipeline (SPP): a generator selects the rationale, and a predictor classifies it.
-The SPP has been shown to suffer from local minima derived from a suboptimal interplay between the generator and the predictor, a phenomenon known as interlocking.
+Selective rationalization trains a model to explain each prediction with highlights of its input text.
+These highlights, called rationales, are a part of the input that a user can read and that faithfully shows how the model classifies.
+In the Select-then-Predict Pipeline (SPP), a generator selects the rationale and a predictor classifies it.
+Training an SPP can get stuck in poor solutions, called local minima, because of interlocking: a suboptimal interplay between generator and predictor.
 
 ## Objective
 
-Mixture of experts (MoE) is a technique whereby several models are trained on the same data, each specializing in a certain subset.
-MoE models have been successful in a variety of applications, and their original formulation dates back to the early 1990s.
-The idea is to understand whether an MoE model for selective rationalization can address interlocking.
+A mixture of experts (MoE) trains several models, called experts, on the same data, and each expert specializes in a subset of it.
+This proposal studies whether an MoE model for selective rationalization can address interlocking.
 
-## References
-
-**A Survey on Mixture of Experts in Large Language Models**\
-W. Cai, J. Jiang, F. Wang, J. Tang, S. Kim and J. Huang.\
-In IEEE Transactions on Knowledge and Data Engineering, vol. 37, no. 7, pp. 3896-3915, July 2025.\
-[DOI](https://doi.org/10.1109/TKDE.2025.3554028)
+{{< svg src="interlocking.svg" caption="The two ideas this proposal brings together. Left, the SPP, where the interplay between generator and predictor can cause interlocking. Right, an MoE, where three experts stand for several." >}}

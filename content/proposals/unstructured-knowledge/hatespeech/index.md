@@ -20,17 +20,14 @@ aliases:
 
 ## Context
 
-What is attributable as abusive or hate speech depends on the given socio-cultural context.
-The same text might be deemed offensive by a certain culture, allowed by another, and, in the most extreme case, legally prosecutable by a third one.
+What counts as abusive or hate speech depends on the socio-cultural context: the culture, norms, and laws of the people who read a text.
+The same text might be deemed offensive in one culture, allowed in another, and legally prosecutable in a third.
+A detection model is a machine learning model that flags a text as abusive or hate speech.
+It learns from labeled examples.
 
 ## Objective
 
-Evaluate how machine learning models are affected by different definitions of abusive and hate speech, to promote awareness in developing accurate abusive speech detection systems.
+This proposal evaluates how different definitions of abusive and hate speech affect detection models.
+The aim is to promote awareness when developing accurate detection models.
 
-## References
-
-**Untangling Hate Speech Definitions: A Semantic Componential Analysis Across Cultures and Domains.**\
-Katerina Korre, Arianna Muti, Federico Ruggeri, and Alberto Barrón-Cedeño. 2025.\
-In Findings of the Association for Computational Linguistics: NAACL 2025, pages 3184–3198, Albuquerque, New Mexico. Association for Computational Linguistics.\
-[DOI](https://doi.org/10.18653/v1/2025.findings-naacl.175)
-| [PDF](https://aclanthology.org/2025.findings-naacl.175.pdf)
+{{< svg src="definitions.svg" caption="One text judged in three socio-cultural contexts, each with its own definition of abusive and hate speech. Cultures A, B, and C are placeholders, not real cultures." >}}

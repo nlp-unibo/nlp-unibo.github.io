@@ -1,0 +1,36 @@
+<svg viewBox="0 0 800 400" role="img" aria-labelledby="clfguide-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="clfguide-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="clfguide-title">Two training settings side by side. Left, standard training: the guidelines train the annotators, the annotators label the data into an annotated dataset, and the model learns from the labels alone. Right, guidelines-only training: the model receives the guidelines and unlabeled data with no class labels, learns the mapping from the guidelines, and assigns classes to the data.</title>
+  <text class="lt-s-sub" x="40" y="26">STANDARD TRAINING</text>
+  <rect class="lt-s-tok" x="70" y="40" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="210" y="64">Guidelines</text>
+  <text class="lt-s-txt lt-s-small" x="210" y="84">define how to assign the classes</text>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M210 100 V128"/>
+  <rect class="lt-s-tok" x="70" y="132" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="210" y="156">Annotators</text>
+  <text class="lt-s-txt lt-s-small" x="210" y="176">label the data with the classes</text>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M210 192 V220"/>
+  <rect class="lt-s-tok" x="70" y="224" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="210" y="248">Annotated dataset</text>
+  <text class="lt-s-txt lt-s-small" x="210" y="268">the data and their class labels</text>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M210 284 V312"/>
+  <rect class="lt-s-box lt-s-pred" x="70" y="316" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="210" y="340">Model</text>
+  <text class="lt-s-txt lt-s-small" x="210" y="360">learns from the labels alone</text>
+  <text class="lt-s-sub" x="420" y="26">GUIDELINES-ONLY TRAINING</text>
+  <rect class="lt-s-tok" x="420" y="40" width="160" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="500" y="64">Guidelines</text>
+  <text class="lt-s-txt lt-s-small" x="500" y="84">same as annotators</text>
+  <rect class="lt-s-tok" x="600" y="40" width="160" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="680" y="64">Unlabeled data</text>
+  <text class="lt-s-txt lt-s-small" x="680" y="84">no class labels</text>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M500 100 V128"/>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M680 100 V128"/>
+  <rect class="lt-s-box lt-s-sel" x="420" y="132" width="340" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="590" y="156">Model</text>
+  <text class="lt-s-txt lt-s-small" x="590" y="176">learns the mapping from the guidelines</text>
+  <path class="lt-s-arrow" marker-end="url(#clfguide-arrow)" d="M590 192 V220"/>
+  <rect class="lt-s-label" x="530" y="224" width="120" height="36" rx="18"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="590" y="247">Classes</text>
+  <text class="lt-s-txt lt-s-small" x="590" y="282">assigned to the data</text>
+</svg>

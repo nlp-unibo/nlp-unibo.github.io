@@ -125,8 +125,8 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `content/publication/` | All publications; `categories` selects their list |
 | `content/news/` | News items; the section cascade sets `build.render: never`, so items have no page |
 | `content/projects/`, `content/tools/` | Projects and tools; a cascade gives each page `type: redirect` |
-| `content/theses/` | Master's and bachelor's theses, rendered by theme layouts |
-| `content/proposals/` | Research proposals, one folder per topic with an `_index.md` |
+| `content/theses/` | Master's and bachelor's theses. Lists link to each record in `external_link`, and each thesis page only redirects there |
+| `content/proposals/` | Research proposals, one folder per topic with an `_index.md`. Each proposal is read in its opened card on the Work with us page, and its page only redirects there |
 | `content/research/` | Research areas; `am`, `legal`, and `speech` hold the reference `views` |
 | `content/people/index.md` | People page (`type: people`) |
 | `content/work-with-us/index.md` | Work with us page, as data for `layouts/work-with-us/single.html` |
@@ -157,7 +157,6 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `layouts/tools/list.html` | Tools page: one band per tool with its `schema`, pills, install line, and link chips |
 | `layouts/people/single.html` | People page: one band per `user_groups` value |
 | `layouts/authors/list.html` | Profile page: header band, news and theses, publications with filters |
-| `layouts/proposals/single.html` | Research proposal page in the style of a publication page |
 | `layouts/work-with-us/single.html` | Work with us page: path tabs, steps, email form, proposals, work done with students |
 | `layouts/redirect/single.html` | Pages with `type: redirect`: an alias page to `target` or `external_link`; the build fails without one |
 | `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest` | Theme copies with current Hugo calls |
@@ -248,7 +247,7 @@ The sections appear in this order.
 | `Research section page` | `layouts/research/list.html` |
 | `Work with us page` | Path picker, view transition, steps, contact box, expandable sections, proposals, student work |
 | `A view that returns to its blank state`, `View animation` | States that exist only while a research view plays, and the flying boxes |
-| `Research proposal page`, `Side section menu` | Proposal header and the sticky side menu shared with publication pages |
+| `Side section menu` | The sticky side menu of publication pages |
 | `Publications page`, `Projects page`, `News page`, `Tools page`, `People page` | One section per list layout |
 | `Opening band of section pages`, `Profile page` | `lt/page-intro.html` and `layouts/authors/list.html` |
 
@@ -302,7 +301,7 @@ The theme uses Bootstrap 4 breakpoints, and the site reuses them.
 | `max-width: 767.98px` | Small tablets and phones; most stacked layouts |
 | `max-width: 991.98px`, `min-width: 992px` | Research view panels side by side from 992px |
 | `min-width: 992px and max-width: 1279.98px` | Collapsed navbar, which repeats the theme's below-992px rules from `components/_nav.scss` |
-| `min-width: 1200px` | Side section menus on publication, proposal, and Work with us pages |
+| `min-width: 1200px` | Side section menus on publication and Work with us pages |
 | `min-width: 576px`, `min-width: 768px` | A few grid steps |
 
 The full menu fits on one line from 1280px.

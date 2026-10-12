@@ -1,0 +1,33 @@
+<svg viewBox="0 0 800 380" role="img" aria-labelledby="mam-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mam-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mam-title">A spoken argument has a transcript and recorded speech. Text features come from the transcript and speech features, such as prosody, come from the recorded speech. Argument detection uses both sets of features and finds premises and claims.</title>
+  <text class="lt-s-sub" x="40" y="22">INPUT</text>
+  <rect class="lt-s-tok" x="60" y="32" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="200" y="56">Transcript</text>
+  <text class="lt-s-txt lt-s-small" x="200" y="76">the written words of the speech</text>
+  <rect class="lt-s-tok" x="460" y="32" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="600" y="56">Recorded speech</text>
+  <text class="lt-s-txt lt-s-small" x="600" y="76">the spoken argument</text>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M200 92 V126"/>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M600 92 V126"/>
+  <text class="lt-s-sub" x="40" y="118">FEATURES</text>
+  <rect class="lt-s-tok" x="60" y="130" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="200" y="154">Text features</text>
+  <text class="lt-s-txt lt-s-small" x="200" y="174">from the transcript</text>
+  <rect class="lt-s-box lt-s-sel" x="460" y="130" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="600" y="154">Speech features</text>
+  <text class="lt-s-txt lt-s-small" x="600" y="174">such as prosody</text>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M200 190 V212 H360 V236"/>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M600 190 V212 H440 V236"/>
+  <text class="lt-s-sub" x="40" y="272">DETECTION</text>
+  <rect class="lt-s-box lt-s-pred" x="250" y="240" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="264">Argument detection</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="284">uses both sets of features</text>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M340 300 V322"/>
+  <path class="lt-s-arrow" marker-end="url(#mam-arrow)" d="M460 300 V322"/>
+  <text class="lt-s-sub" x="40" y="349">OUTPUT</text>
+  <rect class="lt-s-label" x="285" y="326" width="110" height="36" rx="18"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="340" y="349">premise</text>
+  <rect class="lt-s-label" x="405" y="326" width="110" height="36" rx="18"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="460" y="349">claim</text>
+</svg>

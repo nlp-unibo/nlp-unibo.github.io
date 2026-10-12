@@ -33,8 +33,9 @@
         <li>
           <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006" }}</time>
           <span class="lt-kind lt-kind-{{ $kind | urlize }}">{{ $kind }}</span>
-          {{/* News items have no page: their link opens the item on the News page. */}}
-          <a href="{{ if eq .Section "news" }}{{ printf "/news/#news-%s" (.File.ContentBaseName | urlize) | relURL }}{{ else }}{{ .RelPermalink }}{{ end }}">{{ .Title }}</a>
+          {{/* News items have no page: their link opens the item on the News page. A thesis opens its record. */}}
+          {{ $link := partial "lt/item-link.html" . }}{{ if eq .Section "news" }}{{ $link = printf "/news/#news-%s" (.File.ContentBaseName | urlize) | relURL }}{{ end }}
+          {{ if $link }}<a href="{{ $link }}"{{ if .Params.external_link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>{{ else }}<span class="lt-activity-title">{{ .Title }}</span>{{ end }}
         </li>
         {{ end }}
       </ul>

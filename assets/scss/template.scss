@@ -3529,10 +3529,13 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   }
 }
 
+// A long word in a narrow column hyphenates, or else breaks, instead of crossing the card border.
 .lt-field-title {
   font-size: 1.1rem;
   font-weight: 700;
   color: $lt-navy;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .lt-field-question {
@@ -3639,6 +3642,9 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   .lt-field-title, .lt-field-tasks dt { color: #f1f5fa; }
   .lt-field-question, .lt-field-panel > p, .lt-field-tasks dd { color: #c9d6e3; }
   .lt-field-panel { background: rgba(255, 255, 255, 0.05); }
+  .lt-proposal-body { color: #c9d6e3; }
+  .lt-proposal-body h4 { color: #f1f5fa; }
+  .lt-proposal-actions { border-color: $lt-dark-border; }
   .lt-field-back { color: $lt-sky; }
 }
 
@@ -4325,7 +4331,24 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
   }
 
-  button { align-self: flex-start; margin-top: 0.3rem; }
+  .lt-mail-req { font-weight: 700; color: $lt-navy; }
+}
+
+.lt-mail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 0.3rem; }
+
+.lt-mail-send[aria-disabled="true"] { cursor: not-allowed; opacity: 0.45; pointer-events: none; }
+
+.lt-mail-wait {
+  margin: 0;
+  padding: 0.4rem 0.7rem;
+  border-left: 3px solid $lt-orange;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: $lt-ink;
+  background: rgba($lt-orange, 0.14);
+
+  &[hidden] { display: none; }
 }
 
 .lt-mail-hint { margin: 0; font-size: 0.78rem; color: $lt-muted; }
@@ -4412,17 +4435,52 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
 .lt-fields-grid.has-open .lt-proposal-more { display: none; }
 
+// An opened proposal is self-contained: its card becomes a full-width header and the panel below holds the whole
+// proposal, so figures get the width of the step.
+.lt-proposals .lt-field-cell.is-open {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+
+  .lt-field { padding: 1.1rem 1.4rem; border-radius: 16px 16px 0 0; }
+
+  .lt-field:hover { transform: none; }
+
+  .lt-field-title { font-size: 1.3rem; }
+
+  .lt-field-panel { margin-top: 0; padding: 1.2rem 1.4rem 1.4rem; border-radius: 0 0 16px 16px; }
+}
+
+.lt-proposal-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: $lt-ink;
+
+  h4 { margin: 1.2rem 0 0.4rem; font-size: 1rem; font-weight: 700; color: $lt-navy; }
+
+  > :first-child { margin-top: 0; }
+
+  p, ol, ul { margin: 0 0 0.7rem; }
+
+  .lt-viz { margin: 1rem 0; }
+
+  // A schema keeps a readable size on phones and scrolls sideways inside its own box.
+  .lt-svg { overflow-x: auto; }
+
+  .lt-svg svg { min-width: 560px; }
+}
+
 .lt-proposal-actions {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-end;
+  justify-content: space-between;
   gap: 0.8rem 1.4rem;
-  margin-top: 1rem;
+  margin: 0.4rem 0 1.2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $lt-border;
 }
 
-.lt-proposal-page { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; }
 
-.lt-field-panel .lt-tags { margin: 0.8rem 0 0; }
 
 // People: avatar, or initials for a person outside the lab, then the name.
 .lt-people {
@@ -4505,7 +4563,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
   .lt-pill { justify-self: start; align-self: start; margin-top: 0.15rem; }
 
-  a { font-weight: 600; color: $lt-navy; text-decoration: none; }
+  a, .lt-work-title { font-weight: 600; color: $lt-navy; text-decoration: none; }
 
   a:hover { color: $lt-blue; }
 
@@ -4534,11 +4592,13 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
   .lt-path-facts dd, .lt-mail-to { color: #c9d6e3; }
-  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a { color: #f1f5fa; }
+  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a, .lt-work-list .lt-work-title { color: #f1f5fa; }
   .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); }
   // The native option list draws its own popup: a dark color scheme and an opaque option background keep it readable.
   .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { color-scheme: dark; }
   .lt-mail-form option { color: #f1f5fa; background: $lt-dark-card; }
+  .lt-mail-form .lt-mail-req { color: $lt-sky; }
+  .lt-mail-wait { color: #f1f5fa; background: rgba($lt-orange, 0.18); }
   .lt-expand > summary::after { color: $lt-sky; }
   .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
   .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }
@@ -4735,10 +4795,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   background: transparent;
 }
 
-// Research proposal page (layouts/proposals/single.html): the contacts sit under the summary, centered like the authors.
-.lt-proj-people { display: flex; justify-content: center; margin: 1rem 0 0; }
-
-// Side section menu (layouts/proposals/single.html, layouts/publication/single.html): from 1200px the menu leaves the
+// Side section menu (layouts/publication/single.html): from 1200px the menu leaves the
 // sticky bar and becomes a sticky column left of the body, on a rule like the Work with us steps; the current section
 // is marked by the script.
 .lt-proj-side-label { display: none; }
@@ -5301,14 +5358,14 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     padding: 0.7rem 0;
     border-bottom: 1px solid $lt-border;
 
-    @media (max-width: 575.98px) { grid-template-columns: auto minmax(0, 1fr); a { grid-column: 1 / -1; } }
+    @media (max-width: 575.98px) { grid-template-columns: auto minmax(0, 1fr); a, .lt-activity-title { grid-column: 1 / -1; } }
   }
 
   time { font-size: 0.85rem; color: $lt-muted; font-variant-numeric: tabular-nums; }
 
   .lt-kind { justify-self: start; margin: 0; }
 
-  a { font-weight: 600; }
+  a, .lt-activity-title { font-weight: 600; }
 }
 
 .dark {

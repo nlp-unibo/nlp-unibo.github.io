@@ -14,7 +14,9 @@ summary: ""
 tags:
   - bachelor thesis
   - student
-url_pdf: ""
+# The AMS Laurea record, which every list links to. Without a public record, replace this line with
+# target: /work-with-us/#student-work
+external_link: "https://amslaurea.unibo.it/id/eprint/TODO/"
 categories:
   - Bachelor thesis
 ---
