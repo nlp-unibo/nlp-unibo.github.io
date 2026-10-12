@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 318" role="img" aria-labelledby="disruptive-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="disruptive-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="disruptive-card-title">A passenger's speech recording, mixed in training with real noise recordings that mimic a train, is turned into audio features (MFCCs and RMSE). A CNN or SVM classifier labels the recording as disruptive or non-disruptive from the emotion it expresses; the best CNN reaches an F1 of 0.91 on the disruptive class on RAVDESS.</title>
+  <text class="lt-s-sub" x="8" y="18">SPEECH ON PUBLIC TRANSPORT</text>
+  <rect class="lt-s-tok" x="8" y="26" width="156" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="86.0" y="48.0">Speech</text>
+  <text class="lt-s-txt lt-s-small" x="86.0" y="66.0">a short recording</text>
+  <text class="lt-s-txt lt-s-strong" x="180" y="56">+</text>
+  <rect class="lt-s-box lt-s-sel" x="196" y="26" width="156" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="274.0" y="48.0">Real noise</text>
+  <text class="lt-s-txt lt-s-small" x="274.0" y="66.0">added in training</text>
+  <path class="lt-s-arrow" marker-end="url(#disruptive-card-arrow)" d="M180 80 V100"/>
+  <rect class="lt-s-tok" x="8" y="104" width="344" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="126.0">Audio features</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="144.0">MFCCs and RMSE</text>
+  <path class="lt-s-arrow" marker-end="url(#disruptive-card-arrow)" d="M180 158 V178"/>
+  <rect class="lt-s-box lt-s-pred" x="80" y="182" width="200" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="204.0">Classifier</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="222.0">CNN or SVM</text>
+  <path class="lt-s-arrow" marker-end="url(#disruptive-card-arrow)" d="M130 236 V254"/>
+  <path class="lt-s-arrow" marker-end="url(#disruptive-card-arrow)" d="M230 236 V254"/>
+  <rect class="lt-s-label" x="30" y="258" width="140" height="32" rx="16.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="100.0" y="279.0">disruptive</text>
+  <rect class="lt-s-tok" x="190" y="258" width="140" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-strong" x="260" y="279">non-disruptive</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="310">F1 on the disruptive class: 0.91 (RAVDESS)</text>
+</svg>

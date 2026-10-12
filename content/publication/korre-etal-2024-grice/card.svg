@@ -1,0 +1,30 @@
+<svg viewBox="0 0 360 324" role="img" aria-labelledby="korre-etal-2024-grice-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="korre-grice-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="korre-etal-2024-grice-card-title">Built from Sections 4 and 5 and Figure 5 of the paper. Each human turn of the ToxiChat Reddit threads is labeled as offensive or safe. Each of the four Gricean Maxims becomes an NLP metric: a deception classifier for Quality, informativeness from syntactic cohesion for Quantity, BERT embedding similarity for Relevance, and ambiguity, readability, and profanity for Manner. The paper compares offensive and safe turns on each metric, then uses the metrics to pick offensive examples for a close reading by hand. Profanity is found in 53.8% of offensive turns and in 16.4% of safe turns.</title>
+  <text class="lt-s-sub" x="8" y="18">TOXICHAT REDDIT THREADS</text>
+  <rect class="lt-s-tok" x="60" y="26" width="240" height="34" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="48">Offensive or safe turn</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-grice-card-arrow)" d="M180 62 V80"/>
+  <rect class="lt-s-node lt-role-1" x="8" y="84" width="344" height="140" rx="14"/>
+  <text class="lt-s-sub" x="18" y="102">ONE METRIC PER MAXIM</text>
+  <rect class="lt-s-tok" x="20" y="112" width="156" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="98" y="132">Quality</text>
+  <text class="lt-s-txt lt-s-small" x="98" y="150">deception classifier</text>
+  <rect class="lt-s-tok" x="184" y="112" width="156" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="262" y="132">Quantity</text>
+  <text class="lt-s-txt lt-s-small" x="262" y="150">informativeness</text>
+  <rect class="lt-s-tok" x="20" y="166" width="156" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="98" y="186">Relevance</text>
+  <text class="lt-s-txt lt-s-small" x="98" y="204">BERT similarity</text>
+  <rect class="lt-s-box lt-s-sel" x="184" y="166" width="156" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="262" y="186">Manner</text>
+  <text class="lt-s-txt lt-s-small" x="262" y="204">profanity, ambiguity</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-grice-card-arrow)" d="M98 228 V242"/>
+  <rect class="lt-s-box lt-s-pred" x="20" y="246" width="156" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="98" y="266">Compare classes</text>
+  <text class="lt-s-txt lt-s-small" x="98" y="284">offensive vs safe</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-grice-card-arrow)" d="M178 269 H202"/>
+  <rect class="lt-s-label" x="206" y="255" width="134" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="273" y="274">Close reading</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="316">Profanity: 53.8% of offensive, 16.4% of safe turns</text>
+</svg>

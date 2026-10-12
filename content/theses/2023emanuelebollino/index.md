@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/30026/'
+external_link: 'https://amslaurea.unibo.it/30026/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2023emanuelebollino/
+topics: [biomedical, knowledge-extraction]
 ---

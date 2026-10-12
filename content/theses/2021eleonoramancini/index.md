@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/24721/'
+external_link: 'https://amslaurea.unibo.it/24721/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2021eleonoramancini/
+topics: [speech]
 ---

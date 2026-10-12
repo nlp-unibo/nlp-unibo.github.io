@@ -51,9 +51,14 @@ abstract: With recent advances in question-answering models, various datasets ha
   ArgSciChat.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: ArgSciChat collects 41 dialogues in which scientists question and argue about NLP papers, a hard test for dialogue agents that must explain and defend answers.
 
-tags: []
+tags:
+- argumentative dialogue
+- scientific papers
+- dataset
+- document-grounded dialogue
+- dialogue intents
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -93,4 +98,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/ruggeri-etal-2023-dataset/
+topics: [argument-mining, dialogue, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: acl
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/dialogues]
 ---

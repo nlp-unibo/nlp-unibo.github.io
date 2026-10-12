@@ -32,12 +32,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'We propose a study on multimodal argument mining in the domain of political debates. We collate and extend existing corpora and provide an initial empirical study on multimodal architectures, with a special emphasis on input encoding methods. Our results provide interesting indications about future directions in this important domain.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: MM-USElecDeb60To16 aligns decades of US presidential debate transcripts with their audio, and shows that pre-trained audio embeddings beat spectral features for argument mining.
 
-tags: []
+tags:
+- multimodal argument mining
+- political debates
+- audio
+- wav2vec
+- corpus
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -77,4 +82,9 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/mancini-etal-2022-multimodal/
+topics: [argument-mining, multimodal, speech]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/multimodality, speech/modalities]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: argmining
 ---

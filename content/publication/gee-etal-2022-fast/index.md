@@ -40,7 +40,7 @@ abstract: Real-world business applications require a trade-off between language 
   in model size and inference time while marginally compromising on performance.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Fast Vocabulary Transfer moves a language model to an in-domain tokenizer, so the model runs faster and can shrink, with little loss in F1.
 
 tags:
 - industry track
@@ -48,6 +48,7 @@ tags:
 - language models
 - model compression
 - student publication
+- knowledge distillation
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -87,4 +88,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/gee-etal-2022-fast/
+topics: [model-compression, industry]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: emnlp-industry
 ---

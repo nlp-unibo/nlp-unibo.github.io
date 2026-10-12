@@ -1,0 +1,8 @@
+{{/* Link chips for card previews. Input: `links` from lt/links.html and the `max` number of chips. */}}
+{{ with first .max .links }}
+<ul class="lt-chips">
+  {{ range . }}
+  <li><a class="lt-chip" href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener"{{ end }}><i class="{{ .icon }}" aria-hidden="true"></i> {{ .name }}</a></li>
+  {{ end }}
+</ul>
+{{ end }}

@@ -1,0 +1,22 @@
+<svg viewBox="0 0 800 270" role="img" aria-labelledby="extraction-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="extraction-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="extraction-title">Three examples of the same class, negative, each with its rationale highlighted: cold, cold, and rude. Aggregation reads the three rationales, aggregates and summarizes them, and outputs a global explanation, such as a knowledge base.</title>
+  <text class="lt-s-sub" x="40" y="22">EXAMPLES OF ONE CLASS</text>
+  <rect class="lt-s-tok" x="40" y="36" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="63.4" y="59">the</text><rect class="lt-s-tok" x="92.8" y="36" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="121" y="59">food</text><rect class="lt-s-tok" x="155.2" y="36" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="178.6" y="59">was</text><rect class="lt-s-on" x="208" y="36" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="236.2" y="59">cold</text>
+  <rect class="lt-s-label" x="330" y="36" width="120" height="34" rx="17"/><text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="390" y="58">negative</text>
+  <rect class="lt-s-tok" x="40" y="86" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="63.4" y="109">the</text><rect class="lt-s-tok" x="92.8" y="86" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="121" y="109">soup</text><rect class="lt-s-tok" x="155.2" y="86" width="85.2" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="197.8" y="109">arrived</text><rect class="lt-s-on" x="246.4" y="86" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="274.6" y="109">cold</text>
+  <rect class="lt-s-label" x="330" y="86" width="120" height="34" rx="17"/><text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="390" y="108">negative</text>
+  <rect class="lt-s-tok" x="40" y="136" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="63.4" y="159">the</text><rect class="lt-s-tok" x="92.8" y="136" width="66" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="125.8" y="159">staff</text><rect class="lt-s-tok" x="164.8" y="136" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="188.2" y="159">was</text><rect class="lt-s-on" x="217.6" y="136" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="245.8" y="159">rude</text>
+  <rect class="lt-s-label" x="330" y="136" width="120" height="34" rx="17"/><text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="390" y="158">negative</text>
+  <text class="lt-s-txt lt-s-small" x="245" y="200">highlighted words: the rationale of each example</text>
+  <path class="lt-s-arrow" marker-end="url(#extraction-arrow)" d="M454 53 L496 86"/>
+  <path class="lt-s-arrow" marker-end="url(#extraction-arrow)" d="M454 103 L496 98"/>
+  <path class="lt-s-arrow" marker-end="url(#extraction-arrow)" d="M454 153 L496 110"/>
+  <rect class="lt-s-box lt-s-sel" x="500" y="66" width="260" height="64" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="630" y="92">Aggregation</text>
+  <text class="lt-s-txt lt-s-small" x="630" y="114">aggregates and summarizes</text>
+  <path class="lt-s-arrow" marker-end="url(#extraction-arrow)" d="M630 134 V176"/>
+  <rect class="lt-s-box lt-s-pred" x="500" y="180" width="260" height="64" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="630" y="206">Global explanation</text>
+  <text class="lt-s-txt lt-s-small" x="630" y="228">such as a knowledge base</text>
+</svg>

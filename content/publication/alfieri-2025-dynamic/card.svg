@@ -1,0 +1,32 @@
+<svg viewBox="0 0 360 300" role="img" aria-labelledby="alfieri-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="alfieri-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="alfieri-card-title">Built from the definitions in Section 4.1 of the paper. Dynamic graph-based selection picks new demonstrations for each query, the sentence to classify. A graph links training examples whose embeddings are close. Nodes far from the query are dropped. The Louvain method splits the remaining nodes into communities, and the node with the highest PageRank score is taken from each one. The picked examples go into the few-shot prompt of the LLM, which outputs the class label.</title>
+  <text class="lt-s-sub" x="8" y="18">QUERY</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="49">Sentence to classify</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="76" width="344" height="152" rx="14"/>
+  <text class="lt-s-sub" x="18" y="94">DYNAMIC GRAPH SELECTION</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M265 66 V100"/>
+  <rect class="lt-s-tok" x="20" y="104" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="95" y="124">Training graph</text>
+  <text class="lt-s-txt lt-s-small" x="95" y="142">close pairs linked</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M172 127 H186"/>
+  <rect class="lt-s-tok" x="190" y="104" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="265" y="124">Near query</text>
+  <text class="lt-s-txt lt-s-small" x="265" y="142">far nodes dropped</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M265 152 V168"/>
+  <rect class="lt-s-box lt-s-sel" x="190" y="172" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="265" y="192">Communities</text>
+  <text class="lt-s-txt lt-s-small" x="265" y="210">Louvain method</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M188 195 H174"/>
+  <rect class="lt-s-tok" x="20" y="172" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="95" y="192">One per group</text>
+  <text class="lt-s-txt lt-s-small" x="95" y="210">top PageRank</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M95 220 V238"/>
+  <rect class="lt-s-box lt-s-pred" x="20" y="242" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="95" y="262">LLM</text>
+  <text class="lt-s-txt lt-s-small" x="95" y="280">few-shot prompt</text>
+  <path class="lt-s-arrow" marker-end="url(#alfieri-card-arrow)" d="M174 265 H206"/>
+  <rect class="lt-s-label" x="210" y="251" width="130" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="275" y="270">class label</text>
+</svg>

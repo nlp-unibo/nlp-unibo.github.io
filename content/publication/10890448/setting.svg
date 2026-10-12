@@ -1,0 +1,28 @@
+<svg style="max-width: 620px; margin: 0 auto;" viewBox="0 0 440 318" role="img" aria-labelledby="lmactd-setting-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="lmactd-setting-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="lmactd-setting-title">Post-hoc explanation of an audio classifier: the input audio goes to a pre-trained classifier, which predicts a class. A separate interpreter reads the audio and the classifier representations and returns a listenable explanation, the part of the audio behind the decision, plus the masked-out rest.</title>
+  <text class="lt-s-sub" x="10" y="20">INPUT AUDIO x(t)</text>
+  <rect class="lt-s-tok" x="10" y="30" width="420" height="58" rx="8"/>
+  <path class="lt-s-arrow" d="M24 59 L36 59 L40 47 L44 71 L48 51 L52 67 L56 55 L60 63 L64 59 L84 59 L88 41 L92 77 L96 45 L100 73 L104 49 L108 69 L112 55 L116 63 L120 59 L150 59 L153 53 L156 65 L159 55 L162 63 L165 59 L190 59"/>
+  <text class="lt-s-txt lt-s-small" x="310" y="55">a sound clip, for example an</text>
+  <text class="lt-s-txt lt-s-small" x="310" y="72">environmental sound mixed with noise</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-setting-arrow)" d="M112 92 V116"/>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-setting-arrow)" d="M335 92 V116"/>
+  <rect class="lt-s-tok" x="10" y="120" width="205" height="60" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="112.5" y="145">Audio classifier</text>
+  <text class="lt-s-txt lt-s-small" x="112.5" y="165">pre-trained, left unchanged</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-setting-arrow)" d="M215 150 H236"/>
+  <rect class="lt-s-box lt-s-sel" x="240" y="120" width="190" height="60" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="335" y="145">Post-hoc interpreter</text>
+  <text class="lt-s-txt lt-s-small" x="335" y="165">reads the classifier's features</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-setting-arrow)" d="M112 180 V206"/>
+  <rect class="lt-s-label" x="22" y="210" width="181" height="34" rx="17"/>
+  <text class="lt-s-txt lt-s-labeltxt" x="112.5" y="232">Predicted class</text>
+  <path class="lt-s-arrow" marker-end="url(#lmactd-setting-arrow)" d="M335 180 V206"/>
+  <rect class="lt-s-on" x="240" y="210" width="190" height="52" rx="8"/>
+  <text class="lt-s-txt lt-s-ontxt" x="335" y="232">Explanation i(t)</text>
+  <text class="lt-s-txt lt-s-small" x="335" y="250">the audio behind the decision</text>
+  <rect class="lt-s-off" x="240" y="270" width="190" height="40" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="335" y="287">Masked-out part i_out(t)</text>
+  <text class="lt-s-txt lt-s-small" x="335" y="302">the rest of the audio</text>
+</svg>

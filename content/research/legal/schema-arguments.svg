@@ -1,0 +1,15 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="A conclusion supported by a factual premise and by a legal premise that follows the rule scheme.">
+  <rect class="lt-s-node lt-role-1" x="50" y="4" width="140" height="32" rx="6"/>
+  <text class="lt-s-txt" x="120" y="25">Conclusion</text>
+  <rect class="lt-s-node lt-role-2" x="4" y="72" width="106" height="40" rx="6"/>
+  <text class="lt-s-txt" x="57" y="90">Premise</text>
+  <text class="lt-s-small" x="57" y="105" text-anchor="middle">factual</text>
+  <rect class="lt-s-node lt-role-3" x="130" y="72" width="106" height="40" rx="6"/>
+  <text class="lt-s-txt" x="183" y="90">Premise</text>
+  <text class="lt-s-small" x="183" y="105" text-anchor="middle">legal · rule</text>
+  <line class="lt-s-arrow lt-s-support" x1="80" y1="72" x2="80" y2="43"/>
+  <polygon class="lt-s-head lt-s-support" points="74,44 86,44 80,36"/>
+  <line class="lt-s-arrow lt-s-support" x1="160" y1="72" x2="160" y2="43"/>
+  <polygon class="lt-s-head lt-s-support" points="154,44 166,44 160,36"/>
+  <text class="lt-s-small" x="120" y="60" text-anchor="middle">supports</text>
+</svg>

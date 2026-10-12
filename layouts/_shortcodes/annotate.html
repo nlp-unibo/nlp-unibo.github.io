@@ -1,0 +1,19 @@
+{{/* Annotated text example. Inner YAML: `labels` (up to four names, in legend order) and `segments` with `text` and an optional `label`. */}}
+{{/* Segments are joined by spaces, so punctuation belongs at the end of a segment. Clicking a legend entry highlights only that label (assets/js/ltlab.js). */}}
+{{- $d := transform.Unmarshal .Inner -}}
+<figure class="lt-viz lt-annotate">
+  <div class="lt-annotate-legend" role="group" aria-label="Labels">
+    {{- range $i, $l := $d.labels }}
+    <button type="button" class="lt-annotate-key lt-c{{ add $i 1 }}" data-lt-label="{{ $l | anchorize }}" aria-pressed="false">{{ $l }}</button>
+    {{- end }}
+  </div>
+  <p class="lt-annotate-text">
+    {{ range $seg := $d.segments }}
+    {{- if $seg.label }}
+    {{- $idx := 1 }}{{ range $j, $l := $d.labels }}{{ if eq $l $seg.label }}{{ $idx = add $j 1 }}{{ end }}{{ end -}}
+    <mark class="lt-c{{ $idx }}" data-lt-label="{{ $seg.label | anchorize }}">{{ $seg.text }}<span class="lt-annotate-tag">{{ $seg.label }}</span></mark>
+    {{- else }}<span>{{ $seg.text }}</span>{{ end }}
+    {{ end }}
+  </p>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

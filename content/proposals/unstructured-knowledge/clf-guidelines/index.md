@@ -1,29 +1,29 @@
 ---
 title: Text Classification with Guidelines Only
 date: 2026-03-02
-
-tags: ["text classification", "uki", "LLMs", "guidelines-only", 'GCAM']
-
-summary: "Train classifiers with guidelines only, without the need for classification labels during training"
-
+summary: Train text classifiers from annotation guidelines alone, without class labels.
+brief: Annotators label data by following guidelines, while models learn the same mapping from labels alone, so they can fit any mapping that matches the data. This proposal gives the guidelines directly to models, without access to class labels during training.
+contacts:
+- federico-ruggeri
+tags:
+- text classification
+- annotation guidelines
+- large language models
 aliases:
-  - /proposals_uki/clf_guidelines/
-  - /proposals/unstructured-knowledge/clf_guidelines/
+- /proposals_uki/clf_guidelines/
+- /proposals/unstructured-knowledge/clf_guidelines/
 ---
 
-**Description:**\
-The standard approach for training a machine learning model on a task is to provide an annotated dataset $(\mathcal{X}, \mathcal{Y})$.
-The dataset is built by providing unlabeled data $\mathcal{X}$ to a group of annotators previously trained on a set of annotation guidelines $\mathcal{G}$.
-Annotators label data $\mathcal{X}$ via a given class set $\mathcal{C}$.
-The main issue of this approach is that annotators define the mapping from data $\mathcal{X}$ to the class set $\mathcal{C}$ via the guidelines $\mathcal{G}$, while machine learning models are trained to learn the same mapping without guidelines $\mathcal{G}$.
-Consequently, these models can learn any kind of mapping from $\mathcal{X}$ to $\mathcal{C}$ that better fits given data.
-Our idea is to directly provide guidelines $\mathcal{G}$ to models without any access to class labels during training.
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+The standard way to train a machine learning model is to give it an annotated dataset: data paired with class labels.
+Annotators build this dataset after training on annotation guidelines, the rules that define how to assign the classes.
+They label the data with classes from a given class set.
+The model learns from the labels alone, without the guidelines, so it can learn any mapping from data to classes that fits the given data.
 
-**References:**
+## Objective
 
-**Let Guidelines Guide You: A Prescriptive Guideline-Centered Data Annotation Methodology**\
-Federico Ruggeri, Eleonora Misino, Arianna Muti, Katerina Korre, Paolo Torroni, Alberto Barrón-Cedeño\
-September 2024\
-[PDF](https://arxiv.org/abs/2406.14099)
+This proposal gives the annotation guidelines directly to the model.
+During training, the model receives the guidelines and unlabeled data, but no class labels.
+
+{{< svg src="settings.svg" caption="The two settings this proposal compares. In standard training, only the annotators learn from the guidelines; in guidelines-only training, the model receives the guidelines and no class labels." >}}

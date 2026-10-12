@@ -40,9 +40,15 @@ abstract: Deep learning is bringing remarkable contributions to the field of arg
   of symbolic and sub-symbolic methods to achieve this goal.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Argues that argument mining needs reasoning, and that neural-symbolic and statistical relational learning can join deep networks and logic rules to provide it.
 
-tags: []
+tags:
+- argumentation mining
+- neural-symbolic learning
+- statistical relational learning
+- probabilistic logic programming
+- deepproblog
+- markov logic networks
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -82,4 +88,9 @@ categories:
   - Journal
 aliases:
   - /publication_journals/10-3389-fdata-2019-00052/
+topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: frontiers-big-data
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/reasoning]
 ---

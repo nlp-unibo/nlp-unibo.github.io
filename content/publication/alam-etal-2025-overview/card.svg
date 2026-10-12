@@ -1,0 +1,41 @@
+<svg viewBox="0 0 360 304" role="img" aria-labelledby="alam-etal-2025-overview-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="alam-etal-2025-overview-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="alam-etal-2025-overview-card-title">After Figure 1 of the paper. On the left, the four core stages of the verification pipeline run from top to bottom: check-worthiness estimation, retrieval of previously verified claims, retrieval of supporting evidence from the Web, and claim verification with the labels true, false, or other. On the right, the 2025 tasks point to the stage they support: Task 1 on subjectivity in news sentences supports check-worthiness, Task 2 on claim normalization of social media posts and Task 4a on scientific web discourse detection support verified claim retrieval, Task 4b on claim-source retrieval supports evidence retrieval, and Task 3 on numerical claims supports claim verification.</title>
+  <text class="lt-s-sub" x="8" y="16">PIPELINE STAGE</text>
+  <text class="lt-s-sub" x="188" y="16">2025 TASK</text>
+  <rect class="lt-s-tok" x="8" y="26" width="156" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="86" y="45">Check-worthiness</text>
+  <text class="lt-s-txt lt-s-small" x="86" y="62">estimation</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M86 72 V104"/>
+  <rect class="lt-s-tok" x="8" y="107" width="156" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="86" y="126">Claim retrieval</text>
+  <text class="lt-s-txt lt-s-small" x="86" y="143">past verified claims</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M86 153 V185"/>
+  <rect class="lt-s-tok" x="8" y="188" width="156" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="86" y="207">Evidence retrieval</text>
+  <text class="lt-s-txt lt-s-small" x="86" y="224">from the Web</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M86 234 V249"/>
+  <rect class="lt-s-tok" x="8" y="252" width="156" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="86" y="271">Verification</text>
+  <text class="lt-s-txt lt-s-small" x="86" y="288">true, false, other</text>
+  <rect class="lt-s-box lt-s-sel" x="188" y="26" width="164" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="45">T1 Subjectivity</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="62">news sentences</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M186 48 H168"/>
+  <rect class="lt-s-box lt-s-sel" x="188" y="80" width="164" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="99">T2 Normalization</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="116">social media posts</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M186 102 L168 118"/>
+  <rect class="lt-s-box lt-s-sel" x="188" y="134" width="164" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="153">T4a Sci. discourse</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="170">science in tweets</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M186 156 L168 140"/>
+  <rect class="lt-s-box lt-s-sel" x="188" y="188" width="164" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="207">T4b Claim source</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="224">find mentioned paper</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M186 210 H168"/>
+  <rect class="lt-s-box lt-s-sel" x="188" y="252" width="164" height="44" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="271">T3 Numerical claims</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="288">numbers and dates</text>
+  <path class="lt-s-arrow" marker-end="url(#alam-etal-2025-overview-card-arrow)" d="M186 274 H168"/>
+</svg>

@@ -11,7 +11,7 @@ summary: "The FAIR project aims to contribute to addressing the research questio
 
 external_link: 'https://fondazione-fair.it/'
 categories:
-  - National project
+  - International project
 aliases:
   - /projects_international/fair/
 ---

@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/30623/'
+external_link: 'https://amslaurea.unibo.it/30623/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2023michelefaedi/
+topics: [biomedical, knowledge-extraction, llms]
 ---

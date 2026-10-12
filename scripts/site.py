@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import date, datetime
+import difflib
 import hashlib
 import json
 import os
@@ -41,7 +42,6 @@ BUILD = ROOT / ".build"
 GO_VERSION = "1.27.1"
 CONTENT_TYPES = {
     "news": ("news", "news"),
-    "event": ("events", "event"),
     "person": ("authors", "person"),
     "national-project": ("projects", "project-national"),
     "international-project": ("projects", "project-international"),
@@ -49,37 +49,40 @@ CONTENT_TYPES = {
     "tool": ("tools", "tool"),
     "bachelors-thesis": ("theses", "bachelors-thesis"),
     "masters-thesis": ("theses", "masters-thesis"),
-    "publication-highlight": ("publication", "publication-highlight"),
     "journal": ("publication", "publication-journal"),
     "conference": ("publication", "publication-conference"),
     "workshop": ("publication", "publication-workshop"),
     "preprint": ("publication", "publication-preprint"),
+    "proposal": ("proposals", "proposal"),
 }
+def same_keyword(first: str, second: str) -> bool:
+    """Whether two keywords differ only in case, spaces, hyphens, a final s, or a small typo."""
+    def plain(text: str) -> str:
+        return re.sub(r"[\s_-]+", "", text.lower()).removesuffix("s")
+    return plain(first) == plain(second) or difflib.SequenceMatcher(None, first.lower(), second.lower()).ratio() >= 0.92
+
+
 REQUIRED_FIELDS = {
-    "authors": ("title", "first_name", "last_name", "user_groups"),
+    "authors": ("title", "first_name", "last_name", "user_groups", "build"),
     "news": ("title", "date", "summary"),
-    "events": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),
-    "opportunities": ("title", "categories"),
     "tools": ("title", "date", "summary", "external_link", "topics"),
     "theses": ("title", "authors", "date", "publication_types", "categories"),
     "publication": ("title", "authors", "date", "publication_types", "categories"),
-    "proposals": ("title", "date", "summary"),
+    "proposals": ("title", "date", "summary", "brief", "contacts"),
 }
 # Proposals nest one folder per topic, whose _index.md needs these fields, around the proposal bundles.
 TOPIC_FIELDS = ("title", "summary")
 # publication_types values that the theme can label.
 PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter", "thesis", "report", "book"}
 # Each `user_groups` value selects one group on the People page.
-AUTHOR_GROUPS = {"Members", "Associate Fellows", "Former Members"}
+AUTHOR_GROUPS = {"Members", "Associate Fellows", "External Collaborators", "Former Members"}
 # Each `categories` value selects one list on the section's landing page.
-# A publication may add `Highlight`, which also lists it under Highlights.
 SECTION_CATEGORIES = {
     "publication": {"Journal", "Conference", "Workshop", "Preprint"},
     "projects": {"International project", "National project"},
     "theses": {"Master thesis", "Bachelor thesis"},
-    "opportunities": {"Challenge", "Academic workshop"},
 }
 PLACEHOLDER_PATTERNS = {
     "Lorem ipsum": re.compile(r"\blorem ipsum\b", re.IGNORECASE),
@@ -91,16 +94,105 @@ PLACEHOLDER_PATTERNS = {
 MAX_ASSET_BYTES = 5 * 1024 * 1024
 
 
+def rules_view_errors(view: dict) -> list[str]:
+    """Return the problems of one rules view: marks with an unknown role or type, and clauses whose level and rule
+    name no listed rule, or whose marks do not match the rule they name."""
+    types = {"open", "closed"}
+    rules = {(rule.get("level"), rule.get("n")): rule for rule in view.get("rules") or []}
+    errors = [] if rules else ["rules view has no rules"]
+    errors += [f"rule {key} has a type outside open, closed, any, or none" for key, rule in rules.items()
+               if any(rule.get(name) not in types | {"any", "none"} for name in ("category", "specification", "subcategory"))]
+
+    def marks(parts: list) -> list[dict]:
+        found = []
+        for part in parts or []:
+            if part.get("role"):
+                found.append(part)
+            found += marks(part.get("parts"))
+        return found
+
+    sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+    for n, sentence in enumerate(sentences, 1):
+        found = marks(sentence.get("parts"))
+        errors += [f"sentence {n}: mark {mark.get('text')!r} needs a role of category, specification, or subcategory and a type of open or closed"
+                   for mark in found if mark.get("role") not in {"category", "specification", "subcategory"} or mark.get("type") not in types]
+        if "level" not in sentence and "rule" not in sentence:
+            continue
+        rule = rules.get((sentence.get("level"), sentence.get("rule")))
+        if not rule:
+            errors.append(f"sentence {n}: level {sentence.get('level')} rule {sentence.get('rule')} is not listed")
+            continue
+        # A rule holds when each element is absent for `none`, present for `any`, and of the stated type otherwise;
+        # subcategories are open when any of them is open.
+        def kind(role: str) -> str:
+            values = {mark.get("type") for mark in found if mark.get("role") == role}
+            return "none" if not values else "open" if "open" in values else "closed"
+        for name in ("category", "specification", "subcategory"):
+            want, have = rule.get(name), kind(name)
+            if not (want == have or (want == "any" and have != "none")):
+                errors.append(f"sentence {n}: {name} is {have}, but level {rule.get('level')} rule {rule.get('n')} needs {want}")
+    return errors
+
+
+def voices_view_errors(view: dict) -> list[str]:
+    """Return the problems of one voices view: no reading, a reading without a gold answer, a word without text, a
+    positive duration, a loudness in [0, 1], or a pitch pair in [0, 1], a missing question, or a model whose answers do
+    not match the readings one to one."""
+    readings = view.get("readings") or []
+    errors = [] if readings and view.get("question") else ["voices view needs readings and a question"]
+    unit = lambda x: isinstance(x, (int, float)) and 0 <= x <= 1
+    for n, reading in enumerate(readings, 1):
+        if not reading.get("gold") or not reading.get("words"):
+            errors.append(f"reading {n} needs a gold answer and words")
+        errors += [f"reading {n}: word {word.get('w')!r} needs a positive dur, a loud in [0, 1], and a pitch pair in [0, 1]"
+                   for word in reading.get("words") or []
+                   if not word.get("w") or not isinstance(word.get("dur"), (int, float)) or word["dur"] <= 0 or not unit(word.get("loud"))
+                   or not isinstance(word.get("pitch"), list) or len(word["pitch"]) != 2 or not all(map(unit, word["pitch"]))]
+    errors += [f"model {model.get('label')!r} needs one answer per reading" for model in view.get("models") or []
+               if len(model.get("answers") or []) != len(readings)]
+    return errors
+
+
+def view_errors(view: dict) -> list[str]:
+    """Return the problems of one argument view: unknown roles, repeated components, rows and edges naming
+    undefined components, unknown relations, or roles sharing a short name. A detect view needs sentences with text, and each annotated
+    clause needs a category and a level of 1, 2, or 3."""
+    if view.get("type") == "rules":
+        return rules_view_errors(view)
+    if view.get("type") == "voices":
+        return voices_view_errors(view)
+    if view.get("type") == "detect":
+        sentences = [sentence for section in view.get("sections") or [] for sentence in section.get("sentences") or []]
+        errors = [] if sentences else ["detect view has no sentences"]
+        for n, sentence in enumerate(sentences, 1):
+            if not sentence.get("text"):
+                errors.append(f"sentence {n} has no text")
+            if ("level" in sentence or "category" in sentence) and (sentence.get("level") not in {1, 2, 3} or not sentence.get("category")):
+                errors.append(f"sentence {n} needs a category and a level of 1, 2, or 3")
+        return errors
+    roles = {role.get("key") for role in view.get("roles") or []}
+    texts = view.get("texts") or [{"segments": view.get("segments") or []}]
+    parts = [segment for text in texts for segment in text.get("segments") or [] if segment.get("id")]
+    parts += view.get("implicit") or []
+    ids = {part.get("id") for part in parts}
+    errors = [f"component {part.get('id')!r} has an unknown role" for part in parts if part.get("role") not in roles]
+    listed = [part.get("id") for part in parts]
+    errors += [f"component {key!r} is repeated" for key in sorted({str(key) for key in listed if listed.count(key) > 1})]
+    errors += [f"edge relation {edge.get('relation')!r} is not support, attack, or link"
+               for edge in view.get("edges") or [] if edge.get("relation") not in {"support", "attack", "link"}]
+    named = [node for row in view.get("rows") or [] for node in row]
+    named += [edge.get(end) for edge in view.get("edges") or [] for end in ("from", "to")]
+    errors += [f"rows or edges name an undefined component {node!r}" for node in sorted({str(n) for n in named if n not in ids})]
+    # Component IDs start with the role's short name (layouts/research/single.html), so short names must differ.
+    shorts = [role.get("short") or "".join(word[:1].upper() for word in str(role.get("label", "")).split(" ")) for role in view.get("roles") or []]
+    errors += [f"roles share the short name {short!r}; set `short` on one of them" for short in sorted({s for s in shorts if shorts.count(s) > 1})]
+    return errors
+
+
 def category_error(section: str, categories: list) -> str | None:
     allowed = SECTION_CATEGORIES[section]
-    if section == "publication":
-        highlights = categories.count("Highlight")
-        categories = [category for category in categories if category != "Highlight"]
-        if highlights > 1:
-            return "categories must list Highlight at most once"
     if len(categories) != 1 or categories[0] not in allowed:
-        suffix = ", optionally with Highlight" if section == "publication" else ""
-        return f"categories must be exactly one of {', '.join(sorted(allowed))}{suffix}"
+        return f"categories must be exactly one of {', '.join(sorted(allowed))}"
     return None
 
 
@@ -390,9 +482,22 @@ def validate_content_quality() -> None:
     # Hugo merges terms that share a URL, and then shows whichever spelling it reads first.
     term_names: dict[str, dict[str, tuple[str, Path]]] = {"authors": {}, "tags": {}, "categories": {}}
     project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
+    venues = yaml.safe_load((ROOT / "data/venues.yaml").read_text(encoding="utf-8"))
+    # Publication keywords come from one vocabulary, so a tag is never spelled in two ways.
+    keywords = [str(tag) for tag in yaml.safe_load((ROOT / "data/tags.yaml").read_text(encoding="utf-8")) or []]
+    for index, keyword in enumerate(keywords):
+        for other in keywords[index + 1:]:
+            if same_keyword(keyword, other):
+                failures.append(f"data/tags.yaml: {keyword!r} and {other!r} look like the same keyword; keep one")
+    # Focus topics of the research areas, as <area>/<key>, which publications name in their `focus` field.
+    focus_topics = {
+        f"{page.parent.name}/{topic.get('key')}"
+        for page in (content_root / "research").glob("*/index.md")
+        for topic in read_page(page)[0].get("focus") or []
+    }
     for key, topic in project_topics.items():
-        if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
-            failures.append(f"data/topics.yaml: topic {key!r} needs label, background, and text")
+        if not isinstance(topic, dict) or not topic.get("label"):
+            failures.append(f"data/topics.yaml: topic {key!r} needs a label")
 
     for section in REQUIRED_FIELDS:
         for stray in sorted((content_root / section).glob("*.md")):
@@ -409,6 +514,9 @@ def validate_content_quality() -> None:
             checked_pages += 1
             is_draft = metadata.get("draft") is True
             for field in required_fields:
+                # An acceptance (tag `paper`) needs no summary: its title and venue already say what it is.
+                if section == "news" and field == "summary" and "paper" in [str(tag).lower() for tag in metadata.get("tags") or []]:
+                    continue
                 if metadata.get(field) in (None, "", []):
                     failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
             if section == "authors":
@@ -467,6 +575,11 @@ def validate_content_quality() -> None:
 
             if section == "publication" and not bib.exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
+            # A conference, journal, or workshop paper names its venue in data/venues.yaml, whose name every list shows
+            # and whose rank selects the Highlights.
+            if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal", "Workshop"}:
+                if metadata.get("venue_key") not in venues:
+                    failures.append(f"{page.relative_to(ROOT)}: venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
             if section in {"publication", "theses"} and not is_draft:
                 types = metadata.get("publication_types") or []
                 if len(types) != 1 or types[0] not in PUBLICATION_TYPES:
@@ -474,10 +587,30 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            if section in {"projects", "tools"}:
-                for topic in metadata.get("topics") or []:
-                    if topic not in project_topics:
-                        failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
+            # Research area views, fields, and focus topics need unique keys, and a publication may join only
+            # existing focus topics.
+            if section == "research":
+                for name in ("views", "fields", "focus"):
+                    keys = [entry.get("key") for entry in metadata.get(name) or []]
+                    for key in {key for key in keys if keys.count(key) > 1 or not key}:
+                        failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
+            if section == "publication":
+                for tag in map(str, metadata.get("tags") or []):
+                    if tag in keywords:
+                        continue
+                    match = next((keyword for keyword in keywords if same_keyword(tag, keyword)), None)
+                    if match:
+                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; use the existing {match!r}")
+                    else:
+                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; add it there if it is a new keyword")
+                for topic in metadata.get("focus") or []:
+                    if topic not in focus_topics:
+                        failures.append(f"{page.relative_to(ROOT)}: focus topic {topic!r} is not a <area>/<key> of content/research")
+            for view in metadata.get("views") or []:
+                failures += [f"{page.relative_to(ROOT)}: view {view.get('key')!r}: {error}" for error in view_errors(view)]
+            for topic in metadata.get("topics") or []:
+                if topic not in project_topics:
+                    failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
             if section in SECTION_CATEGORIES and not is_draft:
                 error = category_error(section, metadata.get("categories") or [])
                 if error:
@@ -574,16 +707,23 @@ def build() -> None:
 
 def serve() -> None:
     env, hugo, _ = environment()
-    run([str(hugo), "server", "--buildDrafts", "--buildFuture", "--disableFastRender", "--cleanDestinationDir"], env=env)
+    run([str(hugo), "server", "--buildDrafts", "--buildFuture", "--disableFastRender", "--cleanDestinationDir", "--noChmod"], env=env)
 
 
 def new_content(content_type: str, slug: str) -> None:
     if content_type not in CONTENT_TYPES:
         available = ", ".join(CONTENT_TYPES)
         raise SystemExit(f"Unknown content type {content_type!r}. Choose one of: {available}")
-    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     section, kind = CONTENT_TYPES[content_type]
+    # A proposal lives inside its topic folder, so its slug is TOPIC/NAME.
+    if content_type == "proposal":
+        if not re.fullmatch(r"[a-z0-9][a-z0-9-]*/[a-z0-9][a-z0-9-]*", slug):
+            raise SystemExit("A proposal slug is TOPIC/NAME, such as legal/new-idea.")
+        topic = slug.split("/")[0]
+        if not (ROOT / "content" / section / topic / "_index.md").exists():
+            raise SystemExit(f"Topic folder content/{section}/{topic}/ does not exist.")
+    elif not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        raise SystemExit("Slug must contain only lowercase letters, numbers, and hyphens.")
     env, hugo, _ = environment()
     relative_path = f"{section}/{slug}"
     run([str(hugo), "new", "content", "--kind", kind, relative_path], env=env)

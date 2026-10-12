@@ -21,8 +21,8 @@ interests:
   - Knowledge Integration
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/gianmarco.pappacoda/en'
   - icon: envelope
     icon_pack: fas
@@ -35,6 +35,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 6
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Gianmarco graduated cum laude in Artificial Intelligence in 2023 with a thesis on the integration of knowledge graphs in LLMs. 

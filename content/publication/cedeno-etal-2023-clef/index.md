@@ -53,9 +53,15 @@ abstract: 'The five editions of the CheckThat! lab so far have focused on the ma
   authorities that should be trusted to verify a contended claim.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The 2023 CheckThat! lab proposes five shared tasks in seven languages, from check-worthy claims to biased media and trusted authorities, to support fact-checkers.
 
-tags: []
+tags:
+- check-worthiness
+- subjectivity
+- political bias
+- factuality
+- authority finding
+- shared task
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -92,4 +98,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/cedeno-etal-2023-clef/
+topics: [fact-checking, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ecir
 ---

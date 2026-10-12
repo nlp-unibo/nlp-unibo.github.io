@@ -21,8 +21,8 @@ interests:
   - Text Generation
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/n.donati/en'
   - icon: envelope
     icon_pack: fas
@@ -35,6 +35,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 4
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Nicolò Donati is a PhD student who joined the lab in 2023.

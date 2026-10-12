@@ -30,18 +30,18 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: "We present an application of neural-symbolic learning to the task of argument mining, where argument components and their relations are extracted from unstructured textual corpora. We use the framework of Logic Tensor Networks to train neural models to jointly fit the data and satisfy specific domain rules. Our experiments on a corpus of scientific abstracts indicate that including symbolic rules during the training process improves classification performance, compliance to the rules, and robustness of the results. As in the case of other neural-symbolic applications, we further discuss how scalability remains a crucial issue."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: "Logic Tensor Networks train argument mining models to fit the data and satisfy domain rules, which improves classification, rule compliance, and robustness on scientific abstracts."
 
-tags: []
+tags: [argument mining, neural-symbolic learning, logic tensor networks, scientific abstracts]
 
 # Display this page in a list of Featured pages?
 featured: false
 
 # Links
-url_pdf: ''
+url_pdf: 'http://lr2020.iit.demokritos.gr/online/IJCLR_2021_paper_58.pdf'
 url_code: ''
 url_dataset: ''
 url_poster: ''
@@ -72,4 +72,9 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/galassi-2021-investigating/
+topics: [argument-mining]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/reasoning]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: starai
 ---

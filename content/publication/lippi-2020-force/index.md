@@ -35,12 +35,18 @@ publication_short: ''
 
 doi: 10.1613/jair.1.11519
 
-abstract: ''
+abstract: 'Recent years have been tainted by market practices that continuously expose us, as consumers, to new risks and threats. We have become accustomed, and sometimes even resigned, to businesses monitoring our activities, examining our data, and even meddling with our choices. Artificial Intelligence (AI) is often depicted as a weapon in the hands of businesses and blamed for allowing this to happen. In this paper, we envision a paradigm shift, where AI technologies are brought to the side of consumers and their organizations, with the aim of building an efficient and effective counter-power. AI-powered tools can support a massive-scale automated analysis of textual and audiovisual data, as well as code, for the benefit of consumers and their organizations. This in turn can lead to a better oversight of business activities, help consumers exercise their rights, and enable the civil society to mitigate information overload. We discuss the societal, political, and technological challenges that stand before that vision.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A position paper that argues AI can serve consumers, not only businesses, by analyzing contracts, privacy policies, ads, and app code at scale.
 
-tags: []
+tags:
+- consumer law
+- consumer empowerment
+- terms of service
+- privacy policies
+- neural-symbolic learning
+- position paper
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -77,4 +83,9 @@ categories:
   - Journal
 aliases:
   - /publication_journals/lippi-2020-force/
+topics: [legal, privacy]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jair
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

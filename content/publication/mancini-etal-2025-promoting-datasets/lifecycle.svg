@@ -1,0 +1,41 @@
+<svg viewBox="0 0 640 400" role="img" aria-labelledby="lc-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="lc-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="lc-title">How a speech dataset for mental health and neurological disorders is built, with DAIC-WoZ as the example: an interview is recorded and transcribed, a PHQ-8 score gives a binary depression label, and AI models learn to detect depression from the audio.</title>
+  <text class="lt-s-sub" x="20" y="24">SPEECH DATASET</text>
+  <text class="lt-s-sub" x="340" y="24">EXAMPLE: DAIC-WOZ</text>
+
+  <rect class="lt-s-box lt-s-sel" x="20" y="36" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="160" y="62">1. Speech collection</text>
+  <text class="lt-s-txt lt-s-small" x="160" y="82">a participant performs a discourse genre</text>
+  <rect class="lt-s-tok" x="340" y="36" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="480" y="62">Semi-structured interview</text>
+  <text class="lt-s-txt lt-s-small" x="480" y="82">screens for PTSD and major depression</text>
+  <path class="lt-s-arrow" stroke-dasharray="3 3" d="M304 67 H336"/>
+  <path class="lt-s-arrow" marker-end="url(#lc-arrow)" d="M160 100 V124"/>
+
+  <rect class="lt-s-box lt-s-sel" x="20" y="128" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="160" y="154">2. Recording</text>
+  <text class="lt-s-txt lt-s-small" x="160" y="174">speech audio, often with a transcription</text>
+  <rect class="lt-s-tok" x="340" y="128" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="480" y="154">Audio and transcripts</text>
+  <text class="lt-s-txt lt-s-small" x="480" y="174">of each interview</text>
+  <path class="lt-s-arrow" stroke-dasharray="3 3" d="M304 159 H336"/>
+  <path class="lt-s-arrow" marker-end="url(#lc-arrow)" d="M160 192 V216"/>
+
+  <rect class="lt-s-box lt-s-sel" x="20" y="220" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="160" y="246">3. Annotation</text>
+  <text class="lt-s-txt lt-s-small" x="160" y="266">a label from a questionnaire or a clinician</text>
+  <rect class="lt-s-tok" x="340" y="220" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="480" y="246">PHQ-8 questionnaire score</text>
+  <text class="lt-s-txt lt-s-small" x="480" y="266">binary label: depressed if score &gt; 9</text>
+  <path class="lt-s-arrow" stroke-dasharray="3 3" d="M304 251 H336"/>
+  <path class="lt-s-arrow" marker-end="url(#lc-arrow)" d="M160 284 V308"/>
+
+  <rect class="lt-s-box lt-s-pred" x="20" y="312" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="160" y="338">4. AI model</text>
+  <text class="lt-s-txt lt-s-small" x="160" y="358">learns to detect the disorder from speech</text>
+  <rect class="lt-s-tok" x="340" y="312" width="280" height="62" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="480" y="338">Depression detection</text>
+  <text class="lt-s-txt lt-s-small" x="480" y="358">mostly binary, from the interview audio</text>
+  <path class="lt-s-arrow" stroke-dasharray="3 3" d="M304 343 H336"/>
+</svg>

@@ -1,0 +1,32 @@
+<svg viewBox="0 0 360 296" role="img" aria-labelledby="mancini-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mancini-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mancini-card-title">Seven desiderata for responsible speech datasets on mental health and neurological disorders become checklist items C1 to C7: informed consent, storage and security, privacy, ethical board approval, fairness, data quality, and discourse genre. The checklist is used to survey 36 dataset papers, and few of them report security or privacy measures.</title>
+  <text class="lt-s-sub" x="8" y="18">METHOD</text>
+  <rect class="lt-s-tok" x="8" y="26" width="102" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="59" y="47">Desiderata</text>
+  <text class="lt-s-txt lt-s-small" x="59" y="65">7 properties</text>
+  <path class="lt-s-arrow" marker-end="url(#mancini-card-arrow)" d="M112 51 H125"/>
+  <rect class="lt-s-box lt-s-sel" x="129" y="26" width="102" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="47">Checklist</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="65">C1 to C7</text>
+  <path class="lt-s-arrow" marker-end="url(#mancini-card-arrow)" d="M233 51 H246"/>
+  <rect class="lt-s-tok" x="250" y="26" width="102" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="301" y="47">Survey</text>
+  <text class="lt-s-txt lt-s-small" x="301" y="65">36 papers</text>
+  <text class="lt-s-sub" x="8" y="106">CHECKLIST ITEMS</text>
+  <rect class="lt-s-tok" x="8" y="116" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt" x="92" y="136">C1 Consent</text>
+  <rect class="lt-s-on" x="8" y="154" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-ontxt" x="92" y="174">C2 Security</text>
+  <rect class="lt-s-on" x="8" y="192" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-ontxt" x="92" y="212">C3 Privacy</text>
+  <rect class="lt-s-tok" x="8" y="230" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt" x="92" y="250">C4 Ethics board</text>
+  <rect class="lt-s-tok" x="184" y="116" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt" x="268" y="136">C5 Fairness</text>
+  <rect class="lt-s-tok" x="184" y="154" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt" x="268" y="174">C6 Data quality</text>
+  <rect class="lt-s-tok" x="184" y="192" width="168" height="30" rx="8"/>
+  <text class="lt-s-txt" x="268" y="212">C7 Discourse genre</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="284">few of the 36 papers report security or privacy</text>
+</svg>

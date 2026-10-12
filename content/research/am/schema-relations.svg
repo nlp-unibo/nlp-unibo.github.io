@@ -1,0 +1,14 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="A graph in which one premise supports a claim and another premise attacks it.">
+  <rect class="lt-s-node lt-role-1" x="50" y="6" width="140" height="32" rx="6"/>
+  <text class="lt-s-txt" x="120" y="27">Claim</text>
+  <rect class="lt-s-node lt-role-2" x="10" y="78" width="95" height="32" rx="6"/>
+  <text class="lt-s-txt" x="57.5" y="99">Premise</text>
+  <rect class="lt-s-node lt-role-2" x="135" y="78" width="95" height="32" rx="6"/>
+  <text class="lt-s-txt" x="182.5" y="99">Premise</text>
+  <line class="lt-s-arrow lt-s-support" x1="78" y1="78" x2="78" y2="45"/>
+  <polygon class="lt-s-head lt-s-support" points="72,46 84,46 78,38"/>
+  <text class="lt-s-small" x="72" y="64" text-anchor="end">supports</text>
+  <line class="lt-s-arrow lt-s-attack" x1="162" y1="78" x2="162" y2="45"/>
+  <polygon class="lt-s-head lt-s-attack" points="156,46 168,46 162,38"/>
+  <text class="lt-s-small" x="168" y="64">attacks</text>
+</svg>

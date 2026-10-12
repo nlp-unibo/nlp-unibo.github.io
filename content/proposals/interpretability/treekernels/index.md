@@ -1,27 +1,29 @@
 ---
-title: Structured Rationalization via Tree kernel methods
+title: Structured Rationalization via Tree Kernel Methods
 date: 2026-03-02
-
-tags: ["interpretability", "selective rationalization", "structured rationales", "tree kernels"]
-
-
-summary: "Applying rationalization in these contexts by also enforcing some structural constraints depending on the given scenario of application"
-
+summary: Extract rationales from structured representations of text, such as trees, under structural constraints.
+brief: Text can be transformed into structured content, such as parse trees or abstract meaning representation graphs. This proposal applies rationalization to such content and constrains which structures a rationale can take. With tree kernels, these structures are different types of trees.
+contacts:
+- federico-ruggeri
+tags:
+- interpretability
+- selective rationalization
+- structured rationales
+- tree kernels
 aliases:
-  - /proposals_interpretability/treekernels/
+- /proposals_interpretability/treekernels/
 ---
 
-**Description:**\
-There are several techniques for transforming text into abstract structured content (AMR graphs, Parse trees, etc...). 
-We are interested in applying rationalization in these contexts by also enforcing some structural constraints depending on the given scenario of application.
-The constraints describe which type of allowed structures the rationalization system can extract. 
-In the case of tree kernels, these structures are different types of trees.
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+Selective rationalization explains the prediction of a classification model with highlights of the input text, called rationales.
+A rationale should be readable by a user and should faithfully describe how the model reaches its prediction.
+Several techniques transform text into structured content, such as parse trees and abstract meaning representation graphs.
 
-**References:**
+## Objective
 
-**Tree-constrained Graph Neural Networks for Argument Mining**\
-Federico Ruggeri, Marco Lippi, Paolo Torroni\
-September 2021\
-[PDF](https://arxiv.org/abs/2110.00124)
+This proposal applies rationalization to structured content and constrains the structures that a rationale can take.
+These structural constraints depend on the application scenario and define which types of structures the rationalization system can extract.
+With tree kernels, functions that measure the similarity between two trees, the allowed structures are different types of trees.
+
+{{< svg src="structure.svg" caption="The setup this proposal studies, on an illustrative sentence and tree that come from no dataset. The structural constraint defines which types of trees the rationalization system can extract as a rationale." >}}

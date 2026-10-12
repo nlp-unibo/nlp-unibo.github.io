@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/38693/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/38693/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2026tianchengxia/
+topics: [interpretability]
 ---

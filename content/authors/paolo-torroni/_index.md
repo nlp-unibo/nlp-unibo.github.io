@@ -23,8 +23,8 @@ interests:
   - Computational Logics
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/p.torroni/en'
   - icon: envelope
     icon_pack: fas
@@ -40,6 +40,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 1
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Paolo obtained his PhD from the University of Bologna in 2002 and has been an associate professor at the [Department of Computer Science and Engineering](https://disi.unibo.it/it) since 2015.

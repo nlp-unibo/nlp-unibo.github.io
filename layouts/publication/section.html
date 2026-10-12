@@ -1,0 +1,43 @@
+{{/* Publications page: the highlights as a looping carousel, then every publication by year with filters */}}
+{{/* (lt/pub-browser.html). */}}
+{{- define "main" -}}
+{{ $pubs := (where site.RegularPages "Section" "publication").ByDate.Reverse }}
+{{/* Highlights: the twelve newest papers of the last four years from a top venue, an ICORE A* or A conference or an */}}
+{{/* SJR Q1 journal, or a venue with `top: true`, as listed in data/venues.yaml. The counter beside the title reads */}}
+{{/* "current/total". */}}
+{{/* Papers with the same date, often a year-only date, put journals before conferences, so a journal wins the last */}}
+{{/* slot on a tie; papers of the same kind and date keep the order of the publication list. */}}
+{{ $top := slice }}{{ $since := sub now.Year 3 }}
+{{ range $pubs }}{{ $p := . }}{{ if ge .Date.Year $since }}{{ with index hugo.Data.venues (.Params.venue_key | default "none") }}{{ if or .top (in (slice "A*" "A" "Q1") .rank) }}
+  {{ $top = $top | append (dict "page" $p "key" (printf "%s-%d" ($p.Date.Format "2006-01-02") (cond (in ($p.Params.categories | default slice) "Journal") 2 1))) }}
+{{ end }}{{ end }}{{ end }}{{ end }}
+{{ $highlights := slice }}{{ range first 12 (sort $top "key" "desc") }}{{ $highlights = $highlights | append .page }}{{ end }}
+<article class="lt-pubs">
+  <div class="lt-band">
+    <section class="lt-pubs-section lt-pubs-wide" aria-labelledby="highlights-title">
+      <h1 class="sr-only">{{ .Title }}</h1>
+      {{ with $highlights }}
+      <h2 class="lt-paths-title" id="highlights-title">Highlights <span class="lt-carousel-count" data-lt-count-for="highlights-carousel">{{ len . }} papers</span></h2>
+      <div class="lt-carousel is-centered lt-highlights" id="highlights-carousel" data-lt-carousel data-lt-loop data-lt-autoplay="8000">
+        <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Highlighted publications">
+          {{ range . }}{{ partial "lt/pub-card.html" (dict "page" . "year" true) }}{{ end }}
+        </div>
+        <div class="lt-carousel-nav" hidden>
+          <div class="lt-carousel-dots">
+            {{ range $i, $pub := . }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $pub.Title }}"></button>{{ end }}
+          </div>
+          <div class="lt-carousel-arrows">
+            <button type="button" data-lt-step="-1" aria-label="Previous highlight"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+            <button type="button" data-lt-step="1" aria-label="Next highlight"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </section>
+  </div>
+
+  <div class="lt-band">
+    {{ partial "lt/pub-browser.html" (dict "pubs" $pubs "id" "all-title" "title" "All publications") }}
+  </div>
+</article>
+{{- end -}}

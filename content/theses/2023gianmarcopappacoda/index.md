@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/30105/'
+external_link: 'https://amslaurea.unibo.it/30105/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2023gianmarcopappacoda/
+topics: [knowledge-extraction, llms]
 ---

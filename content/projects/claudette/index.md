@@ -7,7 +7,7 @@ topics:
   - legal
   - argument-mining
 
-summary: CLAUDETTE is an interdisciplinary research project hosted at the Law Department of the European University Institute.
+summary: CLAUDETTE uses machine learning to analyze consumer contracts and privacy policies, with the aim of automating the enforcement of consumer and personal data law.
 
 external_link: 'http://claudette.eui.eu/'
 categories:

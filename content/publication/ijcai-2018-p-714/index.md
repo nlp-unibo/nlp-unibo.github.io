@@ -35,12 +35,18 @@ publication_short: ''
 
 doi: 10.24963/ijcai.2018/714
 
-abstract: ''
+abstract: 'Artificial Intelligence and Law is undergoing a critical transformation. Traditionally focused on the development of expert systems and on a scholarly effort to develop theories and methods for knowledge representation and reasoning in the legal domain, this discipline is now adapting to a sudden change of scenery. No longer confined to the walls of academia, it has welcomed new actors, such as businesses and companies, who are willing to play a major role and seize new opportunities offered by the same transformational impact that recent AI breakthroughs are having on many other areas. As it happens, commercial interests create new opportunities but they also represent a potential threat to consumers, as the balance of power seems increasingly determined by the availability of data. We believe that while this transformation is still in progress, time is ripe for the next frontier of this field of study, where a new shift of balance may be enabled by tools and services that can be of service not only to businesses but also to consumers and, more generally, the civil society. We call that frontier consumer-empowering AI.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Businesses use AI and big data to profile consumers; this paper argues that AI and Law should also build AI tools that defend consumers.
 
-tags: []
+tags:
+- ai and law
+- consumer law
+- consumer protection
+- unfair practices
+- big data
+topics: [legal, fairness, privacy, ethics]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -80,4 +86,8 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/ijcai-2018-p-714/
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ijcai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

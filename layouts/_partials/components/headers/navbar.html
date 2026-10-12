@@ -21,9 +21,9 @@
       <div class="d-none d-lg-inline-flex">
         <a class="navbar-brand" href="{{ site.Home.RelPermalink }}">
           {{- if $has_logo -}}
-            <img src="{{ $logo.RelPermalink }}" alt="{{ site.Title }}"
+            <img src="{{ $logo.RelPermalink }}" alt=""
             {{with site.Params.header.image.width}}width="{{.}}"{{end}}
-            {{with site.Params.header.image.height}}height="{{.}}"{{end}}>
+            {{with site.Params.header.image.height}}height="{{.}}"{{end}}><span class="lt-brand-text">{{ site.Title }}</span>
           {{- else -}}
             {{- site.Title -}}
           {{- end -}}
@@ -42,9 +42,9 @@
       <div class="navbar-brand-mobile-wrapper d-inline-flex d-lg-none">
         <a class="navbar-brand" href="{{ site.Home.RelPermalink }}">
         {{- if $has_logo -}}
-          <img src="{{ $logo.RelPermalink }}" alt="{{ site.Title }}"
+          <img src="{{ $logo.RelPermalink }}" alt=""
           {{with site.Params.header.image.width}}width="{{.}}"{{end}}
-          {{with site.Params.header.image.height}}height="{{.}}"{{end}}>
+          {{with site.Params.header.image.height}}height="{{.}}"{{end}}><span class="lt-brand-text">{{ site.Title }}</span>
         {{- else -}}
           {{- site.Title -}}
         {{- end -}}

@@ -35,12 +35,12 @@ publication_short: ''
 
 doi: 10.3233/FAIA190305
 
-abstract: ''
+abstract: "Consumer contracts often contain unfair clauses, in apparent violation of the relevant legislation. In this paper we present a new methodology for evaluating such clauses in online Terms of Services. We expand a set of tagged documents (terms of service), with a structured corpus where unfair clauses are liked to a knowledge base of rationales for unfairness, and experiment with machine learning methods on this expanded training set. Our experimental study is based on deep neural networks that aim to combine learning and reasoning tasks, one major example being Memory Networks. Preliminary results show that this approach may not only provide reasons and explanations to the user, but also enhance the automated detection of unfair clauses."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: "Linking unfair clauses in Terms of Service to a knowledge base of rationales may let memory networks explain their outputs and detect unfair clauses better."
 
-tags: []
+tags: [unfair clause detection, terms of service, memory networks, legal rationales]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -80,4 +80,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lagioia-etal-2019-detecting/
+topics: [legal, interpretability]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/interpretability]
 ---

@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/30082/'
+external_link: 'https://amslaurea.unibo.it/30082/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2023davidebaldelli/
+topics: [information-retrieval, model-compression, llms]
 ---

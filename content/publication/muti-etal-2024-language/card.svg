@@ -1,0 +1,23 @@
+<svg viewBox="0 0 360 316" role="img" aria-labelledby="toulmin-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="toulmin-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="toulmin-card-title">A message goes to a large language model prompted with the Toulmin argument model. The model states the claim and the warrant, the implied assumption, and classifies the message from the warrant.</title>
+  <text class="lt-s-sub" x="8" y="20">MESSAGE</text>
+  <rect class="lt-s-tok" x="8" y="30" width="344" height="62" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="56.0">Women football commentators</text>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="76.0">annoy me so much.</text>
+  <path class="lt-s-arrow" marker-end="url(#toulmin-card-arrow)" d="M180 96 V116"/>
+  <rect class="lt-s-box lt-s-pred" x="80" y="120" width="200" height="54" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="144.0">LLM</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="162.0">Toulmin prompt</text>
+  <path class="lt-s-arrow" marker-end="url(#toulmin-card-arrow)" d="M130 178 V198"/>
+  <path class="lt-s-arrow" marker-end="url(#toulmin-card-arrow)" d="M230 178 V198"/>
+  <rect class="lt-s-tok" x="8" y="202" width="166" height="54" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="91.0" y="226.0">Claim</text>
+  <text class="lt-s-txt lt-s-small" x="91.0" y="244.0">what it states</text>
+  <rect class="lt-s-box lt-s-sel" x="186" y="202" width="166" height="54" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="269.0" y="226.0">Warrant</text>
+  <text class="lt-s-txt lt-s-small" x="269.0" y="244.0">implied assumption</text>
+  <path class="lt-s-arrow" marker-end="url(#toulmin-card-arrow)" d="M269 260 V276"/>
+  <rect class="lt-s-label" x="194" y="280" width="150" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="269.0" y="300.0">misogynous?</text>
+</svg>

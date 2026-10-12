@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 296" role="img" aria-labelledby="9194070-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="9194070-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="9194070-card-title">Built from the core attention model in Section II-B and the taxonomy in Section IV of the paper. A compatibility function f scores the keys K against an optional query q and gives energy scores e. A distribution function g, most often a softmax, turns the scores into attention weights a. The weights are applied to the values V, and the weighted values are summed into the context vector c. The four dimensions of the taxonomy are the input representation, the compatibility function, the distribution function, and multiplicity, the number of distinct inputs and outputs.</title>
+  <text class="lt-s-sub" x="8" y="18">INPUT REPRESENTATION</text>
+  <rect class="lt-s-tok" x="8" y="26" width="108" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="62" y="49">Keys K</text>
+  <rect class="lt-s-tok" x="126" y="26" width="108" height="36" rx="10"/>
+  <text class="lt-s-txt" x="180" y="49">Query q</text>
+  <rect class="lt-s-tok" x="244" y="26" width="108" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298" y="49">Values V</text>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M62 66 V88"/>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M180 66 V88"/>
+  <rect class="lt-s-box lt-s-sel" x="8" y="92" width="226" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="121" y="112">Compatibility f</text>
+  <text class="lt-s-txt lt-s-small" x="121" y="130">energy scores e</text>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M121 142 V160"/>
+  <rect class="lt-s-box lt-s-sel" x="8" y="164" width="226" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="121" y="184">Distribution g</text>
+  <text class="lt-s-txt lt-s-small" x="121" y="202">weights a, often softmax</text>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M121 214 V232"/>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M298 66 V226"/>
+  <text class="lt-s-txt lt-s-small" x="114" y="250">weighted values, summed</text>
+  <path class="lt-s-arrow" marker-end="url(#9194070-card-arrow)" d="M196 245 H240"/>
+  <rect class="lt-s-label" x="244" y="230" width="108" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="298" y="250">Context c</text>
+  <text class="lt-s-sub" x="8" y="286">MULTIPLICITY</text>
+  <text class="lt-s-small" x="112" y="286">one or more inputs, outputs</text>
+</svg>

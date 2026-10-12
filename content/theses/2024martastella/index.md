@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: ''
+external_link: 'https://amslaurea.unibo.it/id/eprint/32380/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2024martastella/
+topics: [knowledge-extraction, information-retrieval]
 ---

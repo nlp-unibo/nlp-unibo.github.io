@@ -1,0 +1,33 @@
+<svg viewBox="0 0 360 322" role="img" aria-labelledby="grundler-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="grundler-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="grundler-card-title">A CAT clause from the TikTok policy, which describes the personal data collected, has three annotated elements: an Open Category, an Open Specification and Closed Subcategories. Rules turn them into the label insufficiently informative, or vague. Below, annotated data transfer between the English corpus and the new Italian corpus by translation, in both directions. Fine-tuned BERT reaches 0.79 macro F1 on informativeness, against 0.72 for the best LLM.</title>
+  <text class="lt-s-sub" x="8" y="18">CAT CLAUSE, TIKTOK POLICY</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="54" rx="10"/>
+  <text class="lt-s-txt" x="180" y="48">We receive information about you …</text>
+  <text class="lt-s-txt" x="180" y="68">such as payment confirmation details, …</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-card-arrow)" d="M180 84 V100"/>
+  <rect class="lt-s-node lt-role-4" x="8" y="104" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="62.0" y="124.0">Open</text>
+  <text class="lt-s-txt lt-s-small" x="62.0" y="142.0">category</text>
+  <rect class="lt-s-node lt-role-4" x="126" y="104" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="124.0">Open</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="142.0">specification</text>
+  <rect class="lt-s-node lt-role-4" x="244" y="104" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298.0" y="124.0">Closed</text>
+  <text class="lt-s-txt lt-s-small" x="298.0" y="142.0">subcategories</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-card-arrow)" d="M180 154 V170"/>
+  <text class="lt-s-txt lt-s-small" x="206" y="166">rules</text>
+  <rect class="lt-s-label" x="58" y="174" width="244" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="180.0" y="194.0">insufficiently informative</text>
+  <text class="lt-s-sub" x="8" y="232">CROSS-LINGUAL TRANSFER</text>
+  <rect class="lt-s-tok" x="8" y="240" width="136" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="76.0" y="260.0">English corpus</text>
+  <text class="lt-s-txt lt-s-small" x="76.0" y="278.0">prior work</text>
+  <rect class="lt-s-box lt-s-sel" x="216" y="240" width="136" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="284.0" y="260.0">Italian corpus</text>
+  <text class="lt-s-txt lt-s-small" x="284.0" y="278.0">new, this paper</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-card-arrow)" d="M148 250 H212"/>
+  <path class="lt-s-arrow" marker-end="url(#grundler-card-arrow)" d="M212 280 H148"/>
+  <text class="lt-s-txt lt-s-small" x="180" y="269">translate</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="312">Fine-tuned BERT 0.79 vs best LLM 0.72 macro F1</text>
+</svg>

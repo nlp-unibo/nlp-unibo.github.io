@@ -1,0 +1,21 @@
+<svg viewBox="0 0 360 236" role="img" aria-labelledby="moroni-etal-2025-sustainable-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="moroni-etal-2025-sustainable-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="moroni-etal-2025-sustainable-card-title">Built from the four questions listed in the Introduction and treated in Sections 2 to 5 of the paper. What to benchmark is set by three dimensions: linguistic competence, domain and knowledge, and task generalization. How to benchmark covers task formulation, task evaluation, and task variation through different prompts. Where to benchmark, that is where to get the data, compares three sources: translated, adapted, and native Italian data. Sustainable benchmarking proposes a community-driven living benchmark.</title>
+  <rect class="lt-s-node lt-role-1" x="8" y="8" width="344" height="152" rx="14"/>
+  <text class="lt-s-sub" x="18" y="26">ITALIAN LLM EVALUATION</text>
+  <rect class="lt-s-tok" x="16" y="36" width="162" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="97" y="57">What to test</text>
+  <text class="lt-s-txt lt-s-small" x="97" y="76">three dimensions</text>
+  <rect class="lt-s-tok" x="182" y="36" width="162" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="263" y="57">How to test</text>
+  <text class="lt-s-txt lt-s-small" x="263" y="76">format, scoring, prompts</text>
+  <rect class="lt-s-tok" x="16" y="98" width="162" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="97" y="119">Where to get data</text>
+  <text class="lt-s-txt lt-s-small" x="97" y="138">three data sources</text>
+  <rect class="lt-s-box lt-s-sel" x="182" y="98" width="162" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="263" y="119">Sustainability</text>
+  <text class="lt-s-txt lt-s-small" x="263" y="138">community-driven</text>
+  <path class="lt-s-arrow" marker-end="url(#moroni-etal-2025-sustainable-card-arrow)" d="M263 150 V194"/>
+  <rect class="lt-s-label" x="188" y="198" width="150" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="263" y="218">Living benchmark</text>
+</svg>

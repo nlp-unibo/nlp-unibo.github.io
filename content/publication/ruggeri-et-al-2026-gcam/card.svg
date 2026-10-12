@@ -1,0 +1,30 @@
+<svg viewBox="0 0 360 318" role="img" aria-labelledby="gcam-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="gcam-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="gcam-card-title">After Figure 1 of the paper. A guideline set G and a class set C. In SAM the annotator sees both and maps a text to a class. In GCAM the annotator sees only the guidelines and maps a text to the guidelines that apply; a fixed mapping then gives the class.</title>
+  <text class="lt-s-sub" x="8" y="18">GUIDELINE SET G</text>
+  <text class="lt-s-sub" x="240" y="18">CLASS SET C</text>
+  <rect class="lt-s-tok" x="8" y="26" width="220" height="70" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="118" y="52">g₁: derogation</text>
+  <text class="lt-s-txt lt-s-strong" x="118" y="74">g₂: mistreatment</text>
+  <text class="lt-s-txt lt-s-small" x="118" y="90">…</text>
+  <rect class="lt-s-tok" x="240" y="26" width="112" height="70" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="296" y="55">sexist</text>
+  <text class="lt-s-txt lt-s-strong" x="296" y="79">non-sexist</text>
+  <text class="lt-s-sub" x="8" y="124">SAM: SEES G AND C</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="132" width="344" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="64" y="158">Text</text>
+  <path class="lt-s-arrow" marker-end="url(#gcam-card-arrow)" d="M100 153 H226"/>
+  <text class="lt-s-txt lt-s-small" x="163" y="147">annotator</text>
+  <text class="lt-s-txt lt-s-strong" x="290" y="158">class c₁</text>
+  <text class="lt-s-sub" x="8" y="204">GCAM: SEES ONLY G</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="212" width="344" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="64" y="238">Text</text>
+  <path class="lt-s-arrow" marker-end="url(#gcam-card-arrow)" d="M100 233 H226"/>
+  <text class="lt-s-txt lt-s-small" x="163" y="227">annotator</text>
+  <text class="lt-s-txt lt-s-strong" x="290" y="238">guideline g₁</text>
+  <rect class="lt-s-node lt-role-3" x="8" y="262" width="344" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="64" y="288">g₁</text>
+  <path class="lt-s-arrow" marker-end="url(#gcam-card-arrow)" d="M100 283 H226"/>
+  <text class="lt-s-txt lt-s-small" x="163" y="277">fixed mapping</text>
+  <text class="lt-s-txt lt-s-strong" x="290" y="288">class c₁</text>
+</svg>

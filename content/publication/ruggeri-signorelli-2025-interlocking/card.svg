@@ -1,0 +1,39 @@
+<svg viewBox="0 0 360 322" role="img" aria-labelledby="genspp-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="genspp-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="genspp-card-title">Top: the select-then-predict pipeline, where a generator selects a highlight and a predictor labels it. Bottom: GenSPP searches a population of generators with a genetic algorithm. Each generator is frozen and judged by a predictor trained anew, so no predictor adapts to an earlier selection and interlocking cannot arise.</title>
+  <text class="lt-s-sub" x="8" y="18">SELECT-THEN-PREDICT</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="26" width="112" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="64.0" y="46.0">Generator</text><text class="lt-s-txt lt-s-small" x="64.0" y="64.0">selects tokens</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M124 49 H150"/>
+  
+  <rect class="lt-s-box lt-s-pred" x="154" y="26" width="112" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="210.0" y="46.0">Predictor</text><text class="lt-s-txt lt-s-small" x="210.0" y="64.0">reads only them</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M270 49 H288"/>
+  <rect class="lt-s-label" x="292" y="32" width="60" height="34" rx="17.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="322.0" y="54.0">label</text>
+  <text class="lt-s-sub" x="8" y="106">GENETIC SEARCH OVER GENERATORS</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="114" width="76" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="46.0" y="134.0">G₁</text>
+  <text class="lt-s-txt lt-s-small" x="46.0" y="152.0">frozen</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M46 164 V182"/>
+  <rect class="lt-s-box lt-s-sel" x="92" y="114" width="76" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="130.0" y="134.0">G₂</text>
+  <text class="lt-s-txt lt-s-small" x="130.0" y="152.0">frozen</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M130 164 V182"/>
+  <rect class="lt-s-box lt-s-sel" x="176" y="114" width="76" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="214.0" y="134.0">G₃</text>
+  <text class="lt-s-txt lt-s-small" x="214.0" y="152.0">frozen</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M214 164 V182"/>
+  <rect class="lt-s-box lt-s-sel" x="260" y="114" width="76" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298.0" y="134.0">G₄</text>
+  <text class="lt-s-txt lt-s-small" x="298.0" y="152.0">frozen</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M298 164 V182"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="186" width="328" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="172.0" y="208.0">Predictor trained anew</text>
+  <text class="lt-s-txt lt-s-small" x="172.0" y="226.0">one for each generator</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M172 240 V256"/>
+  <rect class="lt-s-label" x="122" y="260" width="100" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="172.0" y="280.0">fitness</text>
+  <path class="lt-s-arrow" marker-end="url(#genspp-card-arrow)" d="M226 275 H352 V96 H298 V110"/>
+  <text class="lt-s-txt lt-s-small" x="172" y="312">fittest generators breed the next generation</text>
+</svg>

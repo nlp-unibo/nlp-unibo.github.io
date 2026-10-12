@@ -1,0 +1,17 @@
+<svg viewBox="0 0 360 132" role="img" aria-label="Two configurations hold only parameters, and two components hold only code. Each configuration can bind to either component.">
+  <text class="lt-s-sub" x="78" y="12" text-anchor="middle">CONFIGURATIONS</text>
+  <text class="lt-s-sub" x="282" y="12" text-anchor="middle">COMPONENTS</text>
+  <path class="lt-s-off" d="M180 20 V128"/>
+  <rect class="lt-s-tok" x="6" y="34" width="144" height="26" rx="6"/>
+  <text class="lt-s-mono lt-s-small" x="78" y="51" text-anchor="middle">hidden_size=256</text>
+  <rect class="lt-s-tok" x="6" y="84" width="144" height="26" rx="6"/>
+  <text class="lt-s-mono lt-s-small" x="78" y="101" text-anchor="middle">hidden_size=512</text>
+  <path class="lt-s-arrow" d="M150 47 H202 M150 47 H164 L194 97 H202 M150 97 H164 L194 47 H202 M150 97 H202"/>
+  <path class="lt-s-head" d="M210 47 L201 42.5 V51.5 Z M210 97 L201 92.5 V101.5 Z"/>
+  <rect class="lt-s-pred lt-s-box" x="210" y="34" width="144" height="26" rx="6"/>
+  <text class="lt-s-mono lt-s-small lt-s-strong" x="282" y="51" text-anchor="middle">MLPClassifier</text>
+  <rect class="lt-s-pred lt-s-box" x="210" y="84" width="144" height="26" rx="6"/>
+  <text class="lt-s-mono lt-s-small lt-s-strong" x="282" y="101" text-anchor="middle">CNNClassifier</text>
+  <text class="lt-s-small" x="78" y="126" text-anchor="middle">parameters only</text>
+  <text class="lt-s-small" x="282" y="126" text-anchor="middle">code only</text>
+</svg>

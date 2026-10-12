@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 320" role="img" aria-labelledby="mmfallacy-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mmfallacy-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mmfallacy-card-title">After Figure 1 of the paper. A debate passage comes as text and as audio. A text module (BERT, RoBERTa, or SBERT) and an audio module (Wav2Vec or CLAP) encode it, their outputs are concatenated, and a classification module predicts one of six fallacy categories.</title>
+  <text class="lt-s-sub" x="8" y="18">DEBATE PASSAGE</text>
+  <rect class="lt-s-tok" x="8" y="26" width="166" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="91.0" y="48.0">Text</text>
+  <text class="lt-s-txt lt-s-small" x="91.0" y="66.0">transcript sentences</text>
+  <rect class="lt-s-tok" x="186" y="26" width="166" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="269.0" y="48.0">Audio</text>
+  <text class="lt-s-txt lt-s-small" x="269.0" y="66.0">matching recording</text>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M91 80 V98"/>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M269 80 V98"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="102" width="166" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="91.0" y="124.0">Text module</text>
+  <text class="lt-s-txt lt-s-small" x="91.0" y="142.0">BERT, RoBERTa, SBERT</text>
+  <rect class="lt-s-box lt-s-pred" x="186" y="102" width="166" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="269.0" y="124.0">Audio module</text>
+  <text class="lt-s-txt lt-s-small" x="269.0" y="142.0">Wav2Vec or CLAP</text>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M91 156 V185 H111"/>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M269 156 V185 H249"/>
+  <rect class="lt-s-box lt-s-sel" x="115" y="168" width="130" height="34" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="191.0">Concatenation</text>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M180 206 V222"/>
+  <rect class="lt-s-box lt-s-pred" x="70" y="226" width="220" height="34" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="249.0">Classification module</text>
+  <path class="lt-s-arrow" marker-end="url(#mmfallacy-card-arrow)" d="M180 264 V278"/>
+  <rect class="lt-s-label" x="95" y="282" width="170" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="180.0" y="302.0">Fallacy category</text>
+</svg>

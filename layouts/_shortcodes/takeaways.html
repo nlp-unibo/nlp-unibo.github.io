@@ -1,0 +1,7 @@
+{{/* Takeaways as numbered cards. Inner YAML: a list of items with `title` and `text`. */}}
+{{- $items := transform.Unmarshal .Inner -}}
+<ol class="lt-viz lt-takeaways">
+  {{- range $items }}
+  <li><strong>{{ .title | markdownify }}</strong><span>{{ .text | markdownify }}</span></li>
+  {{- end }}
+</ol>

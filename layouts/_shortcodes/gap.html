@@ -1,0 +1,26 @@
+{{/* Comparison with related work. Inner YAML: `columns` (properties) and `rows` with `name`, `cells`, and `ours: true` for this paper. */}}
+{{/* A cell is true, false, "partial", or a short text. */}}
+{{- $d := transform.Unmarshal .Inner -}}
+<figure class="lt-viz lt-gap">
+  <div class="lt-viz-scroll">
+  <table>
+    <thead><tr><th scope="col">{{ $d.label | default "Approach" }}</th>{{ range $d.columns }}<th scope="col">{{ . | markdownify }}</th>{{ end }}</tr></thead>
+    <tbody>
+      {{- range $d.rows }}
+      <tr{{ if .ours }} class="is-ours"{{ end }}>
+        <th scope="row">{{ .name | markdownify }}{{ if .ours }} <span class="lt-ours">This work</span>{{ end }}</th>
+        {{- range .cells }}
+        <td>
+          {{- if eq . true }}<i class="fas fa-check-circle lt-yes" aria-hidden="true"></i><span class="sr-only">yes</span>
+          {{- else if eq . false }}<i class="fas fa-times-circle lt-no" aria-hidden="true"></i><span class="sr-only">no</span>
+          {{- else if eq . "partial" }}<i class="fas fa-adjust lt-partial" aria-hidden="true"></i><span class="sr-only">partially</span>
+          {{- else }}{{ . | markdownify }}{{ end -}}
+        </td>
+        {{- end }}
+      </tr>
+      {{- end }}
+    </tbody>
+  </table>
+  </div>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

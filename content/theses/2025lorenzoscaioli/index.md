@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/35717/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/35717/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2025lorenzoscaioli/
+topics: [dialogue, information-retrieval, prototype]
 ---

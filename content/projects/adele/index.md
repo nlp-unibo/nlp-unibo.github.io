@@ -6,7 +6,7 @@ date: '2021-01-01'
 topics:
   - legal
   
-summary: Project ADELE is premised on the ongoing paradigm shift towards cognitive computing and human-centered AI which is transforming many socio-economic activities, including justice.
+summary: ADELE applies machine learning and natural language processing to Italian and Bulgarian court decisions on trademarks, patents, and Value Added Tax. Its pilot tool extracts arguments, links cited cases, and predicts likely outcomes to support judges.
 
 external_link: 'https://site.unibo.it/adele/en'
 categories:

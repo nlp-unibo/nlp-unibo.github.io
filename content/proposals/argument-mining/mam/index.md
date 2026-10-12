@@ -1,38 +1,30 @@
 ---
 title: Multimodal Argument Mining
 date: 2026-03-02
-
-tags: ["MAM", "argument mining", "speech", "multimodal"]
-
-summary: "Make use of speech information (e.g. prosody) to enhance the set of features that can be used to detect arguments."
-
+summary: Detect arguments with speech information, such as prosody, in addition to text.
+brief: This proposal adds speech information, such as prosody, to the features used to detect arguments. Speech can be represented with ad hoc features or with end-to-end architectures. Few existing corpora offer both argument annotations and the speech of the annotated text.
+contacts:
+- eleonora-mancini
+- federico-ruggeri
+tags:
+- argument mining
+- multimodal
+- speech
 aliases:
-  - /proposals_am/mam/
+- /proposals_am/mam/
 ---
 
-**Description:**\
-Make use of speech information (e.g. prosody) to enhance the set of features that can be used to detect arguments. 
-Speech can either be represented by means of ad-hoc feature extraction methods (e.g. MFCC) or via end-to-end architectures. 
-Few existing corpora both offer argument annotation layers and speech data regarding a given text document.
+## Context
 
-**Contact:** [Eleonora Mancini](mailto:e.mancini@unibo.it), [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+Argument mining automatically detects and extracts arguments from text.
+An argument usually combines a premise and a claim.
+The premise is a fact, and it supports the claim, a subjective conclusion.
+Spoken arguments also carry speech information, such as prosody, which is the rhythm and intonation of speech.
+A spoken argument comes as recorded speech together with its transcript, the written words of that speech.
 
-**References:** 
+## Objective
 
-**MAMKit: A Comprehensive Multimodal Argument Mining Toolkit.**\
-Eleonora Mancini, Federico Ruggeri, Stefano Colamonaco, Andrea Zecca, Samuele Marro, and Paolo Torroni. 2024.\
-In Proceedings of the 11th Workshop on Argument Mining (ArgMining 2024), pages 69–82, Bangkok, Thailand. Association for Computational Linguistics.\
-[DOI](https://doi.org/10.18653/v1/2024.argmining-1.7)
-| [PDF](https://aclanthology.org/2024.argmining-1.7.pdf)
+This proposal aims to detect arguments with speech information in addition to text.
+Speech information enhances the set of features used to find premises and claims.
 
-**Multimodal Fallacy Classification in Political Debates**\
-Eleonora Mancini, Federico Ruggeri, Paolo Torroni\
-18th Conference of the European Chapter of the Association for Computational Linguistics (EACL), pp. 170–178, 2024\
-[DOI](https://doi.org/10.18653/v1/2024.eacl-short.16)
-| [PDF](https://aclanthology.org/2024.eacl-short.16.pdf)
-
-**Multimodal Argument Mining: A Case Study in Political Debates**\
-Eleonora Mancini, Federico Ruggeri, Andrea Galassi, and Paolo Torroni.\
-In Proceedings of the 9th Workshop on Argument Mining, pages 158–170, Online and in Gyeongju, Republic of Korea. International Conference on Computational Linguistics, 2022.\
-[PDF](https://aclanthology.org/2022.argmining-1.15.pdf)
-| [Anthology](https://aclanthology.org/2022.argmining-1.15)
+{{< svg src="features.svg" caption="Text features from the transcript and speech features from the recorded speech of one spoken argument both feed argument detection, which finds premises and claims." >}}

@@ -35,32 +35,19 @@ publication_short: ''
 
 doi: 10.1109/ICTAI62512.2024.00104
 
-abstract: ''
+abstract: 'We present ACME: A Chatbot for asylum-seeking Migrants in Europe. ACME relies on computational argumentation and aims to help migrants identify the highest level of protection they can apply for. This would contribute to a more sustainable migration by reducing the load on territorial commissions, Courts, and humanitarian organizations supporting asylum applicants. We describe the background context, system architecture, underlying technologies, and a case study used to validate the tool with domain experts.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: ACME, a chatbot built on computational argumentation, helps asylum seekers find the highest protection they can apply for, with explanations and privacy by design.
 
-tags:
-- europe
-- systems architecture
-- organizations
-- chatbots
-- protection
-- artificial intelligence
-- chatbot dialogue system
-- immigration
-- privacy
-- argumentation
-- natural language processing
-- NLP
-- abstract argumentation
+tags: [chatbot, dialogue systems, immigration, privacy, abstract argumentation]
 
 # Display this page in a list of Featured pages?
 featured: false
 
 # Links
 url_pdf: ''
-url_code: ''
+url_code: 'https://github.com/nlp-unibo/ACME-A-Chatbot-for-Migrants-in-Europe'
 url_dataset: ''
 url_poster: ''
 url_project: ''
@@ -90,4 +77,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/10849473/
+topics: [dialogue, legal, privacy, prototype]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ictai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/dialogues]
 ---

@@ -41,7 +41,7 @@ abstract: Technology companies have quickly become powerful with their access to
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [consumer protection, consumer law, position paper]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -81,4 +81,9 @@ categories:
   - Journal
 aliases:
   - /publication_journals/lippi-2019/
+topics: [legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: nature-mi
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

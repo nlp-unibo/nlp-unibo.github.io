@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/23884'
+external_link: 'https://amslaurea.unibo.it/id/eprint/23884'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2021francescoantici/
+topics: [legal]
 ---

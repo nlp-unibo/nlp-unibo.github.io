@@ -30,12 +30,18 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: We propose a novel architecture for Graph Neural Networks that is inspired by the idea behind Tree Kernels of measuring similarity between trees by taking into account their common substructures, named fragments. By imposing a series of regularization constraints to the learning problem, we exploit a pooling mechanism that incorporates such notion of fragments within the node soft assignment function that produces the embeddings. We present an extensive experimental evaluation on a collection of sentence classification tasks conducted on several argument mining corpora, showing that the proposed approach performs well with respect to state-of-the-art techniques.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: TC-GNN constrains graph pooling to pick out tree-kernel fragments of a sentence parse, and uses them to detect claims and premises across four corpora.
+card_summary: A graph neural network with tree-kernel-inspired pooling for argument mining sentence classification.
 
-tags: []
+tags:
+- argument mining
+- graph neural networks
+- tree kernels
+- differentiable pooling
+- constituency trees
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -75,4 +81,7 @@ categories:
   - Preprint
 aliases:
   - /publication_preprints/ruggeri-etal-2021-tree-constrained/
+topics: [argument-mining, interpretability]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/interpretability]
 ---

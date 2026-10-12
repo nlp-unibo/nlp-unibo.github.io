@@ -35,12 +35,12 @@ publication_short: ''
 
 doi: 10.1007/s10506-019-09243-2
 
-abstract: ''
+abstract: "Terms of service of on-line platforms too often contain clauses that are potentially unfair to the consumer. We present an experimental study where machine learning is employed to automatically detect such potentially unfair clauses. Results show that the proposed system could provide a valuable tool for lawyers and consumers alike."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: "CLAUDETTE uses machine learning to detect potentially unfair clauses in online terms of service, and could serve lawyers and consumers alike."
 
-tags: []
+tags: [unfair clause detection, terms of service, consumer protection, machine learning]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -77,4 +77,9 @@ categories:
   - Journal
 aliases:
   - /publication_journals/lippi-2019-claudette/
+topics: [legal, prototype]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ai-and-law
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

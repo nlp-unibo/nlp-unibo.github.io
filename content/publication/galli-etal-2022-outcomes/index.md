@@ -37,19 +37,24 @@ publication_short: ''
 
 doi: 10.3233/FAIA220465
 
-abstract: ''
+abstract: 'This study aims at predicting the outcomes of legal cases based on the textual content of judicial decisions. We present a new corpus of Italian documents, consisting of 226 annotated decisions on Value Added Tax by Regional Tax law commissions. We address the task of predicting whether a request is upheld or rejected in the final decision. We employ traditional classifiers and NLP methods to assess which parts of the decision are more informative for the task.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A new corpus of 226 annotated Italian VAT appeal decisions, used to predict whether each request is upheld or rejected and which decision parts help.
 
-tags: []
+tags:
+- outcome prediction
+- predictive justice
+- tax law
+- case law
+- text classification
 
 # Display this page in a list of Featured pages?
 featured: false
 
 # Links
 url_pdf: ''
-url_code: ''
+url_code: 'https://github.com/adele-project/italianVAT'
 url_dataset: ''
 url_poster: ''
 url_project: ''
@@ -82,4 +87,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/galli-etal-2022-outcomes/
+topics: [legal, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
 ---

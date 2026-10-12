@@ -88,4 +88,7 @@ categories:
   - Journal
 aliases:
   - /publication_journals/10-1145-2850417/
+topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: acm-toit
 ---

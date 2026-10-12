@@ -34,6 +34,10 @@ highlight_name: true
 user_groups:
   - Associate Fellows
 weight: 7
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Marco obtained his PhD in 2010 with a thesis on statistical learning for relational and structured data which received a best PhD dissertation award. 

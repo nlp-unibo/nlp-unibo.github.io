@@ -20,8 +20,8 @@ interests:
   - Argument Mining
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/giulia.grundler2/en'
   - icon: envelope
     icon_pack: fas
@@ -37,6 +37,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 5
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Giulia graduated cum laude in Computer Engineering in 2021 and joined the lab as a Research Fellow on the ADELE project, a European DG JUSTICE project that develops machine learning and natural language processing methods for multilingual legal analytics.

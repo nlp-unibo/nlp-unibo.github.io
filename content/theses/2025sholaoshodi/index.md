@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/35310/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/35310/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2025sholaoshodi/
+topics: [dialogue, llms]
 ---

@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 244" role="img" aria-labelledby="barron-etal-20240-overview-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="barron-etal-20240-overview-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="barron-etal-20240-overview-card-title">After Figure 1 of the paper. The verification pipeline of the CheckThat! lab has four core stages: check-worthiness estimation, verified claim retrieval, supporting evidence retrieval, and claim verification. Four of the six 2024 tasks attach to the check-worthiness stage: Task 1 on check-worthiness, Task 2 on subjectivity, Task 3 on persuasion techniques, and Task 4 on the roles of entities in memes. The other two attach to the verification stage: Task 5 on rumor verification with evidence from authorities, and Task 6 on adversarial examples against misinformation classifiers.</title>
+  <text class="lt-s-sub" x="8" y="18">CORE PIPELINE</text>
+  <text class="lt-s-sub" x="204" y="18">2024 TASKS</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="26" width="152" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="84" y="49">Check-worthiness</text>
+  <path class="lt-s-arrow" marker-end="url(#barron-etal-20240-overview-card-arrow)" d="M84 64 V80"/>
+  <rect class="lt-s-tok" x="8" y="84" width="152" height="36" rx="10"/>
+  <text class="lt-s-txt" x="84" y="107">Verified claims</text>
+  <path class="lt-s-arrow" marker-end="url(#barron-etal-20240-overview-card-arrow)" d="M84 122 V138"/>
+  <rect class="lt-s-tok" x="8" y="142" width="152" height="36" rx="10"/>
+  <text class="lt-s-txt" x="84" y="165">Evidence retrieval</text>
+  <path class="lt-s-arrow" marker-end="url(#barron-etal-20240-overview-card-arrow)" d="M84 180 V196"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="200" width="152" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="84" y="223">Verification</text>
+  <rect class="lt-s-node lt-role-2" x="204" y="26" width="148" height="124" rx="12"/>
+  <text class="lt-s-txt" x="278" y="52">T1 Check-worthy</text>
+  <text class="lt-s-txt" x="278" y="78">T2 Subjectivity</text>
+  <text class="lt-s-txt" x="278" y="104">T3 Persuasion</text>
+  <text class="lt-s-txt" x="278" y="130">T4 Meme roles</text>
+  <path class="lt-s-arrow" marker-end="url(#barron-etal-20240-overview-card-arrow)" d="M202 44 H164"/>
+  <rect class="lt-s-node lt-role-1" x="204" y="162" width="148" height="74" rx="12"/>
+  <text class="lt-s-txt" x="278" y="190">T5 Authorities</text>
+  <text class="lt-s-txt" x="278" y="216">T6 Adversarial</text>
+  <path class="lt-s-arrow" marker-end="url(#barron-etal-20240-overview-card-arrow)" d="M202 218 H164"/>
+</svg>

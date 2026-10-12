@@ -53,13 +53,14 @@ abstract: Argument structure prediction aims to identify the relations between a
   networks yields the best results.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The paper annotates five kinds of support and attack links in CJEU state aid decisions and tests which neural models predict them best.
 
 tags:
 - argument mining
 - CJEU decisions
 - legal argument
 - link prediction
+- residual networks
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -100,4 +101,9 @@ categories:
 aliases:
   - /publication_conferences/10-1145-3594536-3595174/
   - /publication_conferences/santin-etal-2023-argumentation-cjeu/
+topics: [argument-mining, legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: icail
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/argumentation]
 ---

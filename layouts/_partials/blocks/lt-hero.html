@@ -1,0 +1,23 @@
+{{/* Homepage hero: the lab logo (assets/media/logo.svg, inline so it stays sharp and themeable), eyebrow, title, */}}
+{{/* short lead, and action buttons. */}}
+{{ $block := .wcBlock }}
+<div class="lt-hero">
+  <div class="lt-hero-copy">
+    {{ with resources.Get "media/logo.svg" }}<div class="lt-hero-logo" aria-hidden="true">{{ .Content | safeHTML }}</div>{{ end }}
+    {{ with $block.content.eyebrow }}<p class="lt-eyebrow">{{ . | markdownify }}</p>{{ end }}
+    {{ with $block.content.title }}<h1 class="lt-hero-title">{{ . | markdownify }}</h1>{{ end }}
+    {{ with $block.content.text }}<div class="lt-hero-lead">{{ . | markdownify }}</div>{{ end }}
+    {{/* Internal targets must be published pages, so a draft target hides its button instead of linking to a 404. */}}
+    {{ $buttons := slice }}
+    {{ range $block.content.buttons }}
+      {{ if or (not (hasPrefix .url "/")) (site.GetPage (strings.TrimSuffix "/" .url)) }}{{ $buttons = $buttons | append . }}{{ end }}
+    {{ end }}
+    {{ with $buttons }}
+    <div class="lt-hero-actions">
+      {{ range . }}
+      <a class="lt-btn {{ if .secondary }}lt-btn-ghost{{ else }}lt-btn-primary{{ end }}" href="{{ .url | relURL }}">{{ .text }}{{ if not .secondary }} <i class="fas fa-arrow-right" aria-hidden="true"></i>{{ end }}</a>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+</div>

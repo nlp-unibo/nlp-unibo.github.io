@@ -30,12 +30,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'Argumentation mining aims to automatically identify structured argument data from unstructured natural language text. This challenging, multi-faceted task is recently gaining a growing attention, especially due to its many potential applications. One particularly important aspect of argumentation mining is claim identification. Most of the current approaches are engineered to address specific domains. However, argumentative sentences are often characterized by common rhetorical structures, independently of the domain. We thus propose a method that exploits structured parsing information to detect claims without resorting to contextual information, and yet achieve a performance comparable to that of state-of-the-art methods that heavily rely on the context.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A tree kernel over parse trees spots sentences that contain claims without knowing the topic, and performs comparably to systems that rely on topic knowledge.
 
-tags: []
+tags:
+- argument mining
+- claim detection
+- tree kernels
+- parse trees
+- support vector machines
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -72,4 +77,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-2015-context/
+topics: [argument-mining]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: ijcai
 ---

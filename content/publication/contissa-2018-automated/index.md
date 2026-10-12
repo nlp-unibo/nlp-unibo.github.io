@@ -36,12 +36,12 @@ publication_short: ''
 
 doi: 10.3233/978-1-61499-935-5-51
 
-abstract: ''
+abstract: "Two years after its entry into force, the EU General Data Protection Regulation became applicable on the 25th May 2018. Despite the long time for preparation, privacy policies of online platforms and services still often fail to comply with information duties and the standard of lawfulness of data processing. In this paper we present a new methodology for processing privacy policies under GDPR's provisions, and a novel annotated corpus, to be used by machine learning systems to automatically check the compliance and adequacy of privacy policies. Preliminary results confirm the potential of the methodology."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: "A new methodology and annotated corpus let machine learning systems check the compliance and adequacy of privacy policies under the GDPR."
 
-tags: []
+tags: [privacy policies, gdpr, corpus, compliance checking]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -78,4 +78,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/contissa-2018-automated/
+topics: [privacy, legal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: jurix
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

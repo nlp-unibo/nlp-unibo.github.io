@@ -44,7 +44,7 @@ abstract: Dialogue systems are a class of increasingly popular AI-based solution
   and evaluate it empirically.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A dialogue system that keeps personal data in a language module and picks replies by argumentation over sanitized facts, so answers are defended and explainable.
 
 tags:
 - dialogue systems
@@ -52,6 +52,7 @@ tags:
 - data protection
 - explainable AI
 - trustworthy AI
+- sentence embeddings
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -91,4 +92,9 @@ categories:
   - Journal
 aliases:
   - /publication_journals/fazzinga-2022200113/
+topics: [privacy, dialogue, ethics, prototype]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: iswa
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/dialogues]
 ---

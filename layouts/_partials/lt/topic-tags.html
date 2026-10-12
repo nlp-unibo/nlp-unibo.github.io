@@ -1,0 +1,6 @@
+{{/* Topic tags, all in one neutral style. Input: a slice of keys from data/topics.yaml; unknown keys are skipped. */}}
+{{- with . -}}
+<span class="lt-topics">
+  {{- range . }}{{ with index hugo.Data.topics . }}<span class="lt-topic">{{ .label }}</span>{{ end }}{{ end -}}
+</span>
+{{- end -}}

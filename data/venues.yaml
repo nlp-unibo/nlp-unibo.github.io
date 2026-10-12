@@ -1,0 +1,198 @@
+# Venues of conference, journal, and workshop papers, keyed by the `venue_key` of each publication. `name` is what every
+# publication list and page shows: the full venue name with its acronym in brackets, or the full name alone when the
+# venue has no established acronym.
+# `rank` is the ICORE class of a conference (A*, A, B, C) or the SCImago (SJR) best quartile of a journal (Q1 to Q4);
+# an empty rank means the source does not rate the venue. The Highlights carousel shows the twelve newest papers of the
+# last four years whose venue rank is A*, A, or Q1, or whose venue sets `top: true`. `source` names the edition the rank
+# comes from. Industry and demo tracks are separate venues without a rank.
+
+# Conferences: ICORE2026, exported from https://portal.core.edu.au/conf-ranks/ on 2026-10-12.
+findings-acl:
+  name: "Findings of the Association for Computational Linguistics: ACL (Findings of ACL)"
+  rank: "A*"
+  source: ICORE2026 rank of the main conference (Findings count as the main conference)
+findings-emnlp:
+  name: "Findings of the Association for Computational Linguistics: EMNLP (Findings of EMNLP)"
+  rank: "A*"
+  source: ICORE2026 rank of the main conference (Findings count as the main conference)
+findings-naacl:
+  name: "Findings of the Association for Computational Linguistics: NAACL (Findings of NAACL)"
+  rank: "A"
+  source: ICORE2026 rank of the main conference (Findings count as the main conference)
+acl:
+  name: "Annual Meeting of the Association for Computational Linguistics (ACL)"
+  rank: "A*"
+  source: ICORE2026
+emnlp-industry:
+  name: "Conference on Empirical Methods in Natural Language Processing: Industry Track (EMNLP Industry Track)"
+  rank: ""
+  source: ICORE2026
+emnlp:
+  name: "Conference on Empirical Methods in Natural Language Processing (EMNLP)"
+  rank: "A*"
+  source: ICORE2026
+eacl:
+  name: "Conference of the European Chapter of the Association for Computational Linguistics (EACL)"
+  rank: "A"
+  source: ICORE2026
+lrec-coling:
+  name: "Joint International Conference on Computational Linguistics, Language Resources and Evaluation (LREC-COLING)"
+  rank: ""
+  source: ICORE2026
+coling:
+  name: "International Conference on Computational Linguistics (COLING)"
+  rank: "B"
+  source: ICORE2026
+aaai:
+  name: "AAAI Conference on Artificial Intelligence (AAAI)"
+  rank: "A*"
+  source: ICORE2026
+ijcai-demo:
+  name: "International Joint Conference on Artificial Intelligence: Demo Track (IJCAI Demo Track)"
+  rank: ""
+  source: "Demo track, not ranked"
+ijcai:
+  name: "International Joint Conference on Artificial Intelligence (IJCAI)"
+  rank: "A*"
+  source: ICORE2026
+ecai:
+  name: "European Conference on Artificial Intelligence (ECAI)"
+  rank: "A"
+  source: ICORE2026
+icassp:
+  name: "IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)"
+  rank: "Multiconference"
+  source: ICORE2026
+  top: true
+ecir:
+  name: "European Conference on Information Retrieval (ECIR)"
+  rank: "A"
+  source: ICORE2026
+clef:
+  name: "Conference and Labs of the Evaluation Forum (CLEF)"
+  rank: ""
+  source: ICORE2026
+jurix:
+  name: "International Conference on Legal Knowledge and Information Systems (JURIX)"
+  rank: "C"
+  source: ICORE2026
+icail:
+  name: "International Conference on Artificial Intelligence and Law (ICAIL)"
+  rank: "C"
+  source: ICORE2026
+ictai:
+  name: "International Conference on Tools with Artificial Intelligence (ICTAI)"
+  rank: "B"
+  source: ICORE2026
+comma:
+  name: "International Conference on Computational Models of Argument (COMMA)"
+  rank: "C"
+  source: ICORE2026
+clic-it:
+  name: "Italian Conference on Computational Linguistics (CLiC-it)"
+  rank: ""
+  source: ICORE2026
+cpaior:
+  name: "International Conference on the Integration of Constraint Programming, Artificial Intelligence, and Operations Research (CPAIOR)"
+  rank: "B"
+  source: ICORE2026
+clar:
+  name: "International Conference on Logic and Argumentation (CLAR)"
+  rank: ""
+  source: ICORE2026
+
+# Journals: SCImago Journal Rank (SJR) 2025, best quartile, exported from https://www.scimagojr.com/journalrank.php on 2026-10-12.
+acm-toit:
+  name: "ACM Transactions on Internet Technology (TOIT)"
+  rank: "Q1"
+  source: SJR2025
+ai-and-law:
+  name: "Artificial Intelligence and Law"
+  rank: "Q1"
+  source: SJR2025
+eswa:
+  name: "Expert Systems with Applications (ESWA)"
+  rank: "Q1"
+  source: SJR2025
+frontiers-big-data:
+  name: "Frontiers in Big Data"
+  rank: "Q2"
+  source: SJR2025
+frontiers-public-health:
+  name: "Frontiers in Public Health"
+  rank: "Q1"
+  source: SJR2025
+tnnls:
+  name: "IEEE Transactions on Neural Networks and Learning Systems (TNNLS)"
+  rank: "Q1"
+  source: SJR2025
+taslp:
+  name: "IEEE/ACM Transactions on Audio, Speech, and Language Processing (TASLP)"
+  rank: "Q1"
+  source: SJR2025
+iswa:
+  name: "Intelligent Systems with Applications (ISWA)"
+  rank: "Q1"
+  source: SJR2025
+intelligenza-artificiale:
+  name: "Intelligenza Artificiale"
+  rank: "Q3"
+  source: SJR2025
+jair:
+  name: "Journal of Artificial Intelligence Research (JAIR)"
+  rank: "Q1"
+  source: SJR2025
+nature-mi:
+  name: "Nature Machine Intelligence"
+  rank: "Q1"
+  source: SJR2025
+tacl:
+  name: "Transactions of the Association for Computational Linguistics (TACL)"
+  rank: "Q1"
+  source: SJR2025
+
+# Workshops: not ranked, so they never enter the Highlights.
+amelr:
+  name: "Argument Mining and Empirical Legal Research Workshop (AMELR)"
+  rank: ""
+  source: ""
+argmining:
+  name: "Workshop on Argument Mining (ArgMining)"
+  rank: ""
+  source: ""
+clef-wn:
+  name: "Working Notes of the Conference and Labs of the Evaluation Forum (CLEF)"
+  rank: ""
+  source: ""
+finnlp:
+  name: "Workshop on Financial Technology and Natural Language Processing (FinNLP)"
+  rank: ""
+  source: ""
+icasspw:
+  name: "IEEE International Conference on Acoustics, Speech, and Signal Processing Workshops (ICASSPW)"
+  rank: ""
+  source: ""
+luhme:
+  name: "Workshop on Language Understanding in the Human-Machine Era (LUHME)"
+  rank: ""
+  source: ""
+nllp:
+  name: "Natural Legal Language Processing Workshop (NLLP)"
+  rank: ""
+  source: ""
+semeval:
+  name: "International Workshop on Semantic Evaluation (SemEval)"
+  rank: ""
+  source: ""
+starai:
+  name: "International Workshop on Statistical Relational AI (StarAI)"
+  rank: ""
+  source: ""
+tafa:
+  name: "International Workshop on Theory and Applications of Formal Argumentation (TAFA)"
+  rank: ""
+  source: ""
+text2story:
+  name: "Workshop on Narrative Extraction From Texts (Text2Story)"
+  rank: ""
+  source: ""

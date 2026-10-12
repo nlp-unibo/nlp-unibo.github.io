@@ -1,0 +1,20 @@
+{{/* Method diagram: a row of steps joined by animated arrows. The inner YAML is a list of steps with `title`, `text`, an optional Font Awesome `icon`, */}}
+{{/* `highlight: true` for the novel step, and optional `branches` (a list of `title` and `text`) for parallel paths inside one step. */}}
+{{- $steps := transform.Unmarshal .Inner -}}
+<figure class="lt-viz lt-pipeline">
+  <ol>
+    {{- range $i, $s := $steps }}
+    <li class="lt-pipeline-step{{ if $s.highlight }} is-highlight{{ end }}">
+      <span class="lt-pipeline-index">{{ with $s.icon }}<i class="fas fa-{{ . }}" aria-hidden="true"></i>{{ else }}{{ add $i 1 }}{{ end }}</span>
+      <strong>{{ $s.title | markdownify }}</strong>
+      {{ with $s.text }}<span>{{ . | markdownify }}</span>{{ end }}
+      {{ with $s.branches }}
+      <ul class="lt-pipeline-branches">
+        {{ range . }}<li><b>{{ .title | markdownify }}</b>{{ with .text }} {{ . | markdownify }}{{ end }}</li>{{ end }}
+      </ul>
+      {{ end }}
+    </li>
+    {{- end }}
+  </ol>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>

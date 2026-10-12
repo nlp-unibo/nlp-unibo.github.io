@@ -37,7 +37,7 @@ abstract: ''
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [argument mining, clinical trials]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -74,4 +74,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/mayer-2018-argument/
+topics: [argument-mining, biomedical]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: comma
 ---

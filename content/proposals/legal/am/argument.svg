@@ -1,0 +1,25 @@
+<svg viewBox="0 0 800 310" role="img" aria-labelledby="am-arg-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="am-arg-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="am-arg-title">Argument mining on one input sentence: The tenant did not pay rent for three months, so the landlord may end the lease. Argument mining detects and extracts the argument. The premise, a fact, is: the tenant did not pay rent for three months. It supports the claim, a subjective conclusion: the landlord may end the lease.</title>
+  <text class="lt-s-sub" x="40" y="22">INPUT TEXT</text>
+  <rect class="lt-s-tok" x="40" y="32" width="720" height="40" rx="8"/>
+  <text class="lt-s-txt" x="400" y="57">The tenant did not pay rent for three months, so the landlord may end the lease.</text>
+  <path class="lt-s-arrow" marker-end="url(#am-arg-arrow)" d="M400 76 V104"/>
+  <rect class="lt-s-box lt-s-sel" x="250" y="108" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="132">Argument mining</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="152">detects and extracts arguments</text>
+  <path class="lt-s-arrow" marker-end="url(#am-arg-arrow)" d="M400 168 V184 H200 V206"/>
+  <path class="lt-s-arrow" marker-end="url(#am-arg-arrow)" d="M400 184 H600 V206"/>
+  <text class="lt-s-sub" x="60" y="202">PREMISE</text>
+  <text class="lt-s-sub" x="460" y="202">CLAIM</text>
+  <rect class="lt-s-box lt-s-pred" x="60" y="210" width="280" height="84" rx="12"/>
+  <text class="lt-s-txt" x="200" y="236">The tenant did not pay rent</text>
+  <text class="lt-s-txt" x="200" y="256">for three months.</text>
+  <text class="lt-s-txt lt-s-small" x="200" y="280">a fact</text>
+  <rect class="lt-s-box lt-s-sel" x="460" y="210" width="280" height="84" rx="12"/>
+  <text class="lt-s-txt" x="600" y="236">The landlord may end</text>
+  <text class="lt-s-txt" x="600" y="256">the lease.</text>
+  <text class="lt-s-txt lt-s-small" x="600" y="280">a subjective conclusion</text>
+  <text class="lt-s-txt lt-s-strong" x="400" y="242">supports</text>
+  <path class="lt-s-arrow" marker-end="url(#am-arg-arrow)" d="M344 252 H456"/>
+</svg>

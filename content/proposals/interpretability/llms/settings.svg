@@ -1,0 +1,38 @@
+<svg viewBox="0 0 800 400" role="img" aria-labelledby="llmrat-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="llmrat-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="llmrat-title">The same input text in two settings. Left, the Select-then-Predict Pipeline: a generator selects the rationale cold and rude, and a predictor that sees only the rationale outputs the label negative. Right, a prompted LLM reads the whole text and returns both the rationale and the label.</title>
+  <text class="lt-s-sub" x="40" y="22">INPUT TEXT</text>
+  <rect class="lt-s-tok" x="131.8" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="155.2" y="55">the</text><rect class="lt-s-tok" x="184.6" y="32" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="212.8" y="55">food</text><rect class="lt-s-tok" x="247.0" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="270.4" y="55">was</text><rect class="lt-s-tok" x="299.8" y="32" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="328.0" y="55">cold</text><rect class="lt-s-tok" x="362.2" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="385.6" y="55">and</text><rect class="lt-s-tok" x="415.0" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="438.4" y="55">the</text><rect class="lt-s-tok" x="467.8" y="32" width="85.2" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="510.4" y="55">service</text><rect class="lt-s-tok" x="559.0" y="32" width="46.8" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="582.4" y="55">was</text><rect class="lt-s-tok" x="611.8" y="32" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono" x="640.0" y="55">rude</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M400 70 V84 H300 V112"/>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M400 84 H590 V112"/>
+  <text class="lt-s-sub" x="40" y="104">SELECT-THEN-PREDICT PIPELINE</text>
+  <text class="lt-s-sub" x="440" y="104">PROMPTED LLM</text>
+  <rect class="lt-s-box lt-s-sel" x="60" y="116" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="200" y="140">Generator</text>
+  <text class="lt-s-txt lt-s-small" x="200" y="160">selects the rationale</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M200 176 V206"/>
+  <text class="lt-s-sub" x="40" y="233">RATIONALE</text>
+  <rect class="lt-s-on" x="140.6" y="212" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="168.8" y="235">cold</text><rect class="lt-s-on" x="203.0" y="212" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="231.2" y="235">rude</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M200 250 V270"/>
+  <rect class="lt-s-box lt-s-pred" x="60" y="274" width="280" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="200" y="298">Predictor</text>
+  <text class="lt-s-txt lt-s-small" x="200" y="318">sees only the rationale</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M200 334 V350"/>
+  <text class="lt-s-sub" x="40" y="377">LABEL</text>
+  <rect class="lt-s-label" x="140" y="354" width="120" height="36" rx="18"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="200" y="377">negative</text>
+  <rect class="lt-s-tok" x="440" y="116" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="590" y="140">Prompt</text>
+  <text class="lt-s-txt lt-s-small" x="590" y="160">asks for a rationale and a label</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M590 176 V206"/>
+  <rect class="lt-s-box lt-s-pred" x="440" y="210" width="300" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="590" y="234">LLM</text>
+  <text class="lt-s-txt lt-s-small" x="590" y="254">reads the whole text, then answers</text>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M520 270 V286"/>
+  <path class="lt-s-arrow" marker-end="url(#llmrat-arrow)" d="M680 270 V286"/>
+  <rect class="lt-s-on" x="460.6" y="290" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="488.8" y="313">cold</text><rect class="lt-s-on" x="523.0" y="290" width="56.4" height="34" rx="6"/><text class="lt-s-txt lt-s-mono lt-s-ontxt" x="551.2" y="313">rude</text>
+  <rect class="lt-s-label" x="620" y="290" width="120" height="36" rx="18"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="680" y="313">negative</text>
+  <text class="lt-s-sub" x="460.6" y="346">RATIONALE</text>
+  <text class="lt-s-sub" x="620" y="346">LABEL</text>
+</svg>

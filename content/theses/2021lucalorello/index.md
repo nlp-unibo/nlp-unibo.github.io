@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/23883/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/23883/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2021lucalorello/
+topics: [biomedical]
 ---

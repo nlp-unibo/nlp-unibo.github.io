@@ -24,10 +24,12 @@ tags:
     - master thesis
     - student
 
-url_pdf: ''
+# No public record: the old page address opens the work done with students.
+target: /work-with-us/#student-work
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2024matteoperiani/
+topics: [llms, prototype]
 ---

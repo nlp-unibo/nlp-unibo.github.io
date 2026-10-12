@@ -18,21 +18,9 @@ main:
   - name: People
     url: people
     weight: 50
-  - name: News & Events
-    identifier: updates
-    weight: 60
   - name: News
     url: news
-    parent: updates
-    weight: 1
-  - name: Events
-    url: events
-    parent: updates
-    weight: 2
-  - name: For Students
-    url: students
-    weight: 70
-  # Hidden while content/work-with-us/ is a draft.
-  # - name: Work with us
-  #   url: work-with-us
-  #   weight: 80
+    weight: 60
+  - name: Work with us
+    url: work-with-us
+    weight: 80

@@ -1,0 +1,26 @@
+{{/* Resolves a `contacts` list into people: dicts with `name`, `email`, `url` (the profile page, lab authors only), */}}
+{{/* `avatar` (a 96x96 image, lab authors only), and `initials`. A string is a folder name in content/authors, whose */}}
+{{/* `email` is used; a map with `name` and `email` is a person outside the lab. The build fails on an unknown author */}}
+{{/* or a missing email. */}}
+{{ $people := slice }}
+{{ range . }}
+  {{ if reflect.IsMap . }}
+    {{ if not (and .name .email) }}{{ errorf "contact %v needs a name and an email" . }}{{ end }}
+    {{ $people = $people | append (dict "name" .name "email" .email "url" "" "avatar" "") }}
+  {{ else }}
+    {{ $key := . }}
+    {{ with site.GetPage (printf "/authors/%s" $key) }}
+      {{ $author := . }}
+      {{ with $author.Params.email }}
+        {{ $avatar := "" }}{{ with ($author.Resources.ByType "image").GetMatch "*avatar*" }}{{ $avatar = (.Fill "96x96 Center webp").RelPermalink }}{{ end }}
+        {{ $people = $people | append (dict "name" $author.Title "email" . "url" $author.RelPermalink "avatar" $avatar) }}
+      {{ else }}{{ errorf "author %q has no email" $key }}{{ end }}
+    {{ else }}{{ errorf "contact %q is not in content/authors" $key }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ $out := slice }}
+{{ range $people }}
+  {{ $initials := delimit (apply (first 2 (split .name " ")) "substr" "." 0 1) "" }}
+  {{ $out = $out | append (merge . (dict "initials" $initials)) }}
+{{ end }}
+{{ return $out }}

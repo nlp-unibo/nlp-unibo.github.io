@@ -1,0 +1,5 @@
+{{/* Headline numbers. Inner YAML: a list of `value` and `label` pairs taken from the paper. Place them where the text has explained what they measure. */}}
+{{- $items := transform.Unmarshal .Inner -}}
+<ul class="lt-viz lt-proj-numbers">
+  {{- range $items }}<li><span class="lt-proj-number">{{ .value }}</span><span class="lt-proj-number-label">{{ .label | markdownify }}</span></li>{{ end }}
+</ul>

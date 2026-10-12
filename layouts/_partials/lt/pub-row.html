@@ -1,0 +1,10 @@
+{{/* Compact publication entry for the publications page: title, authors, venue, award, topics, and links. The list */}}
+{{/* groups rows by year, so a row shows no year. The title links to the blog or to the paper (lt/pub-meta.html). */}}
+{{/* Input: the publication page. */}}
+{{ $meta := partial "lt/pub-meta.html" . }}
+{{ with $meta.url }}<a class="lt-pub-row-title" href="{{ . }}"{{ if not $meta.blog }} target="_blank" rel="noopener"{{ end }}>{{ $.Title }}</a>{{ else }}<span class="lt-pub-row-title">{{ .Title }}</span>{{ end }}
+<p class="lt-pub-row-authors">{{ partial "page_metadata_authors" . }}</p>
+{{ with $meta.venue }}<p class="lt-pub-row-venue"><span>{{ . }}</span></p>{{ end }}
+{{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
+{{ with .Params.topics }}{{ partial "lt/topic-tags.html" . }}{{ end }}
+{{ partial "lt/link-chips.html" (dict "links" $meta.links "max" 4) }}

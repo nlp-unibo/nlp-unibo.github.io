@@ -1,26 +1,29 @@
 ---
 title: Mixture of Experts for Rationalization
 date: 2026-03-02
-
-tags: ["interlocking", "interpretability", "selective rationalization", "MoE"]
-
-
-summary: "Understand whether we can develop a MoE model for selective rationalization to address interlocking."
-
+summary: Study whether a mixture of experts model can address interlocking in selective rationalization.
+brief: Selective rationalization models can suffer from interlocking, a poor interplay between the component that selects highlights and the one that predicts. In a mixture of experts, several models are trained on the same data, each specializing in a subset. This proposal studies whether such a model can address interlocking.
+contacts:
+- federico-ruggeri
+tags:
+- interpretability
+- selective rationalization
+- mixture of experts
+- interlocking
 aliases:
-  - /proposals_interpretability/mixture/
+- /proposals_interpretability/mixture/
 ---
 
-**Description:**\
-Mixture of Experts (MoE) is a technique whereby several models are trained on the same data, each specializing in a certain subset. 
-MoE have been shown to be successful in a variety of applications and their original formulation dates back to the early 1990s. 
-The idea is to understand whether we can develop a MoE model for selective rationalization to address interlocking.
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+Selective rationalization trains a model to explain each prediction with highlights of its input text.
+These highlights, called rationales, are a part of the input that a user can read and that faithfully shows how the model classifies.
+In the Select-then-Predict Pipeline (SPP), a generator selects the rationale and a predictor classifies it.
+Training an SPP can get stuck in poor solutions, called local minima, because of interlocking: a suboptimal interplay between generator and predictor.
 
-**References:**
+## Objective
 
-**A Survey on Mixture of Experts in Large Language Models**\
-W. Cai, J. Jiang, F. Wang, J. Tang, S. Kim and J. Huang.\
-In IEEE Transactions on Knowledge and Data Engineering, vol. 37, no. 7, pp. 3896-3915, July 2025.\
-[DOI](https://doi.org/10.1109/TKDE.2025.3554028)
+A mixture of experts (MoE) trains several models, called experts, on the same data, and each expert specializes in a subset of it.
+This proposal studies whether an MoE model for selective rationalization can address interlocking.
+
+{{< svg src="interlocking.svg" caption="The two ideas this proposal brings together. Left, the SPP, where the interplay between generator and predictor can cause interlocking. Right, an MoE, where three experts stand for several." >}}

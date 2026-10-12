@@ -32,9 +32,14 @@ doi: 10.1609/aaai.v30i1.10384
 abstract: "The automatic extraction of arguments from text, also known as argument mining, has recently become a hot topic in artificial intelligence. Current research has only focused on linguistic analysis. However, in many domains where communication may be also vocal or visual, paralinguistic features too may contribute to the transmission of the message that arguments intend to convey. For example, in political debates a crucial role is played by speech. The research question we address in this work is whether in such domains one can improve claim detection for argument mining, by employing features from text and speech in combination. To explore this hypothesis, we develop a machine learning classifier and train it on an original dataset based on the 2015 UK political elections debate."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The first system that detects claims in spoken political debates shows that voice features from the audio can improve text-based claim detection.
 
-tags: []
+tags:
+- argument mining
+- claim detection
+- political debates
+- speech recognition
+- acoustic features
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -74,4 +79,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-torroni-2016/
+topics: [argument-mining, speech, multimodal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: aaai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/multimodality, speech/arguments]
 ---

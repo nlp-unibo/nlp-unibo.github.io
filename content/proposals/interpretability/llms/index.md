@@ -1,30 +1,27 @@
 ---
 title: Rationalization via LLMs
 date: 2026-03-02
-
-tags: ["interpretability", "LLMs", "prompting", "selective rationalization"]
-
-summary: "Evaluate LLM capabilities in performing selective rationalization via prompting"
-
+summary: Evaluate whether large language models can perform selective rationalization through prompting.
+brief: Selective rationalization explains a prediction with highlights of the input text. This proposal evaluates how well large language models perform it through prompting, compared with traditional Select-then-Predict Pipeline models.
+contacts:
+- federico-ruggeri
+tags:
+- interpretability
+- selective rationalization
+- large language models
+- prompting
 aliases:
-  - /proposals_interpretability/llms/
+- /proposals_interpretability/llms/
 ---
 
-**Description:**\
-LLMs are ubiquitous in NLP. Our aim is to evaluate LLM capabilities in performing selective rationalization via prompting. 
-How do they compare w.r.t. traditional SPP models?
+## Context
 
-**Contact:** [Federico Ruggeri](mailto:federico.ruggeri6@unibo.it)
+Selective rationalization explains a prediction with a rationale: a short part of the input text that a user can read and that faithfully shows what the prediction is based on.
+The Select-then-Predict Pipeline (SPP) builds this into the model: a generator selects the rationale, and a predictor classifies the rationale only.
 
-**References:**
+## Objective
 
-**Towards Faithful Explanations: Boosting Rationalization with Shortcuts Discovery**\
-Linan Yue, Qi Liu, Yichao Du, Li Wang, Weibo Gao, Yanqing An.\
-The Twelfth International Conference on Learning Representations, 2024.\
-[PDF](https://openreview.net/pdf?id=uGtfk2OphU)
+Large language models (LLMs) can select a rationale and predict a label in a single answer when a prompt asks them to.
+This proposal evaluates how well they perform selective rationalization through prompting, compared with traditional SPP models.
 
-**Learning Robust Rationales for Model Explainability: A Guidance-Based Approach**\
-S Hu, K Yu.\
-Proceedings of the AAAI Conference on Artificial Intelligence, 2024.\
-[DOI](https://doi.org/10.1609/aaai.v38i16.29783)
-| [PDF](https://ojs.aaai.org/index.php/AAAI/article/view/29783/31352)
+{{< svg src="settings.svg" caption="The two settings this proposal compares, on an illustrative sentence that comes from no dataset. In the SPP, the label comes from the rationale alone. The prompted LLM reads the whole text and returns both." >}}

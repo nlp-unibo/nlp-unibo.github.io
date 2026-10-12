@@ -1,0 +1,36 @@
+<svg viewBox="0 0 360 284" role="img" aria-labelledby="tridep-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="tridep-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="tridep-card-title">After Figure 1 of the paper. Each subject gives three signals: resting-state EEG, the audio of 29 interview answers, and text transcribed from that audio with WhisperX. Each signal has its own pipeline: CBraMod embeddings with a CNN for EEG, HuBERT embeddings with a CNN, BiGRU, and attention encoder and a CNN classifier for speech, and MacBERT embeddings with an LSTM for text. The three predictions are combined by late fusion, with weighted averaging or Bayesian fusion, into one label: major depressive disorder or healthy control. Over 5 subject-level folds, trimodal fusion reaches a macro-F1 of 0.864, against 0.809 for speech alone; the paper reports that fusion does not yield a statistically significant improvement over the best unimodal model at this sample size (Section 4).</title>
+  <text class="lt-s-sub" x="8" y="18">THREE SIGNALS PER SUBJECT</text>
+  <rect class="lt-s-tok" x="8" y="26" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="62.0" y="46.0">EEG</text>
+  <text class="lt-s-txt lt-s-small" x="62.0" y="64.0">resting state</text>
+  <rect class="lt-s-tok" x="126" y="26" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="46.0">Speech</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="64.0">29 answers</text>
+  <rect class="lt-s-tok" x="244" y="26" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298.0" y="46.0">Text</text>
+  <text class="lt-s-txt lt-s-small" x="298.0" y="64.0">via WhisperX</text>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M62 76 V92"/>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M180 76 V92"/>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M298 76 V92"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="96" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="62.0" y="116.0">CBraMod</text>
+  <text class="lt-s-txt lt-s-small" x="62.0" y="134.0">+ CNN</text>
+  <rect class="lt-s-box lt-s-pred" x="126" y="96" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="116.0">HuBERT</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="134.0">+ BiGRU, CNN</text>
+  <rect class="lt-s-box lt-s-pred" x="244" y="96" width="108" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298.0" y="116.0">MacBERT</text>
+  <text class="lt-s-txt lt-s-small" x="298.0" y="134.0">+ LSTM</text>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M62 146 V183 H102"/>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M180 146 V156"/>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M298 146 V183 H258"/>
+  <rect class="lt-s-box lt-s-sel" x="106" y="160" width="148" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="180.0">Late fusion</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="198.0">weighted, Bayesian</text>
+  <path class="lt-s-arrow" marker-end="url(#tridep-card-arrow)" d="M180 210 V220"/>
+  <rect class="lt-s-label" x="95" y="224" width="170" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="180.0" y="244.0">MDD or control</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="276">Macro-F1 0.864 fused vs 0.809, not significant</text>
+</svg>

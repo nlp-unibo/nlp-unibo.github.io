@@ -1,0 +1,28 @@
+<svg viewBox="0 0 360 294" role="img" aria-labelledby="mancini-etal-2024-mamkit-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mamkit-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mancini-etal-2024-mamkit-card-title">After Figure 1 and Section 3.1 of the paper. MAMKit is a PyTorch toolkit organized in five packages. The data package loads the 4 datasets, the configs package stores the settings of published experiments, and the modules package holds shared layers. All three feed the models package, which defines 6 model architectures. The utility package trains and evaluates the models with PyTorch Lightning, which gives benchmarks on multimodal argument mining tasks.</title>
+  <rect class="lt-s-node lt-role-1" x="8" y="8" width="344" height="222" rx="14"/>
+  <text class="lt-s-sub" x="18" y="26">MAMKIT: FIVE PACKAGES</text>
+  <rect class="lt-s-tok" x="16" y="36" width="104" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="68" y="56">Data</text>
+  <text class="lt-s-txt lt-s-small" x="68" y="74">4 datasets</text>
+  <rect class="lt-s-tok" x="128" y="36" width="104" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="56">Configs</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="74">paper settings</text>
+  <rect class="lt-s-tok" x="240" y="36" width="104" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="292" y="56">Modules</text>
+  <text class="lt-s-txt lt-s-small" x="292" y="74">shared layers</text>
+  <path class="lt-s-arrow" marker-end="url(#mamkit-card-arrow)" d="M68 86 V100"/>
+  <path class="lt-s-arrow" marker-end="url(#mamkit-card-arrow)" d="M180 86 V100"/>
+  <path class="lt-s-arrow" marker-end="url(#mamkit-card-arrow)" d="M292 86 V100"/>
+  <rect class="lt-s-box lt-s-sel" x="16" y="104" width="328" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="124">Models</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="142">6 architectures, text and audio</text>
+  <path class="lt-s-arrow" marker-end="url(#mamkit-card-arrow)" d="M180 154 V170"/>
+  <rect class="lt-s-box lt-s-pred" x="16" y="174" width="328" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="194">Utility</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="212">train and evaluate, Lightning</text>
+  <path class="lt-s-arrow" marker-end="url(#mamkit-card-arrow)" d="M180 234 V254"/>
+  <rect class="lt-s-label" x="110" y="258" width="140" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="180" y="278">Benchmarks</text>
+</svg>

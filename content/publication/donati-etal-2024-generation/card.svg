@@ -1,0 +1,27 @@
+<svg viewBox="0 0 360 296" role="img" aria-labelledby="donati-etal-2024-generation-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="donati-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="donati-etal-2024-generation-card-title">Built from Sections 4 to 7 and Section 9.1 of the paper. The input is one of 19 grammar topics. Llama 3 8B, fine-tuned with quantized low-rank adapters (QLoRA), writes a multiple-choice cloze exercise for that topic: a sentence with a gap, the key that fills the gap, and the distractors. A rule-based structural check then tests the exercise for pertinence and homogeneity. Against the judgements of a human expert, this check reaches an F1 score of 95%.</title>
+  <text class="lt-s-sub" x="8" y="18">INPUT, ONE OF 19 TOPICS</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="49">Grammar topic</text>
+  <path class="lt-s-arrow" marker-end="url(#donati-card-arrow)" d="M180 64 V78"/>
+  <rect class="lt-s-box lt-s-pred" x="50" y="82" width="260" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="102">Llama 3 8B</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="120">QLoRA fine-tuned</text>
+  <path class="lt-s-arrow" marker-end="url(#donati-card-arrow)" d="M180 130 V144"/>
+  <text class="lt-s-sub" x="8" y="166">GENERATED EXERCISE</text>
+  <rect class="lt-s-tok" x="8" y="174" width="148" height="34" rx="8"/>
+  <text class="lt-s-txt" x="82" y="196">Gapped sentence</text>
+  <rect class="lt-s-on" x="166" y="174" width="66" height="34" rx="8"/>
+  <text class="lt-s-txt lt-s-strong" x="199" y="196">Key</text>
+  <rect class="lt-s-tok" x="242" y="174" width="110" height="34" rx="8"/>
+  <text class="lt-s-txt" x="297" y="196">Distractors</text>
+  <path class="lt-s-arrow" marker-end="url(#donati-card-arrow)" d="M105 212 V236"/>
+  <rect class="lt-s-box lt-s-sel" x="20" y="240" width="170" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="105" y="260">Structural check</text>
+  <text class="lt-s-txt lt-s-small" x="105" y="278">pertinence, homogeneity</text>
+  <path class="lt-s-arrow" marker-end="url(#donati-card-arrow)" d="M192 263 H214"/>
+  <rect class="lt-s-label" x="218" y="249" width="122" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="279" y="268">95% F1</text>
+  <text class="lt-s-txt lt-s-small" x="279" y="241">vs expert labels</text>
+</svg>

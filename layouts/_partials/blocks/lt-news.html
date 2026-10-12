@@ -1,0 +1,36 @@
+{{/* Latest news: the newest items as text cards, the next ones as compact rows. */}}
+{{/* Items are news items only: publications have their own Latest papers block (lt-papers.html). News items have */}}
+{{/* no page, so previews are self-contained: title, venue, summary, and link chips (lt/news-data.html). */}}
+{{ $block := .wcBlock }}
+{{ $items := first ($block.content.count | default 6) (where site.RegularPages "Section" "news").ByDate.Reverse }}
+{{ $featured := $block.content.featured | default 3 }}
+{{ partial "lt/section-head.html" $block }}
+<div class="lt-news-grid">
+  {{ range first $featured $items }}
+  {{ $n := partial "lt/news-data.html" . }}
+  <article class="lt-card lt-news-card">
+    <div class="lt-card-body">
+      <div class="lt-meta"><span class="lt-pill lt-pill-{{ $n.kind.slug }}"><i class="{{ $n.kind.icon }}" aria-hidden="true"></i> {{ $n.kind.label }}</span><time datetime="{{ $n.iso }}">{{ $n.date }}</time></div>
+      <h3 class="lt-card-title">{{ .Title }}</h3>
+      {{ with $n.venue }}<p class="lt-news-venue">{{ . }}</p>{{ end }}
+      {{ with $n.summary }}<p class="lt-card-text">{{ . }}</p>{{ end }}
+      {{ partial "lt/link-chips.html" (dict "links" $n.links "max" 3) }}
+    </div>
+  </article>
+  {{ end }}
+</div>
+{{ with after $featured $items }}
+<ul class="lt-news-list">
+  {{ range . }}
+  {{ $n := partial "lt/news-data.html" . }}
+  <li class="lt-news-row">
+    <time datetime="{{ $n.iso }}">{{ $n.date }}</time>
+    <span class="lt-pill lt-pill-{{ $n.kind.slug }}"><i class="{{ $n.kind.icon }}" aria-hidden="true"></i> {{ $n.kind.label }}</span>
+    <div class="lt-news-row-main">
+      <div><span class="lt-news-row-title">{{ .Title }}</span>{{ with $n.venue }}<span class="lt-news-venue">{{ . }}</span>{{ end }}</div>
+      {{ partial "lt/link-chips.html" (dict "links" $n.links "max" 3) }}
+    </div>
+  </li>
+  {{ end }}
+</ul>
+{{ end }}

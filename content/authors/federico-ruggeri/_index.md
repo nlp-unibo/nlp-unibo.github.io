@@ -22,8 +22,8 @@ interests:
   - Interpretability
 
 social:
-  - icon: unibo
-    icon_pack: custom
+  - icon: university
+    icon_pack: fas
     link: 'https://www.unibo.it/sitoweb/federico.ruggeri6/en'
   - icon: envelope
     icon_pack: fas
@@ -48,6 +48,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 3
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Federico obtained his PhD from the University of Bologna in 2022 with the thesis *"Towards Integrating Unstructured Knowledge in Natural Language Processing"*.

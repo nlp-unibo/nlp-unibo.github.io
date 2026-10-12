@@ -1,0 +1,9 @@
+{{/* Heading of a custom homepage block: eyebrow, title, subtitle, and an optional "see all" link. */}}
+<div class="lt-section-head">
+  <div>
+    {{ with .content.eyebrow }}<p class="lt-eyebrow">{{ . }}</p>{{ end }}
+    {{ with .content.title }}<h2 class="lt-section-title">{{ . | markdownify }}</h2>{{ end }}
+    {{ with .content.subtitle }}<p class="lt-section-subtitle">{{ . | markdownify }}</p>{{ end }}
+  </div>
+  {{ with .content.more }}<a class="lt-see-all" href="{{ .url | relURL }}">{{ .text }} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{{ end }}
+</div>

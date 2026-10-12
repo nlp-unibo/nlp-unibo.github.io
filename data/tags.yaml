@@ -1,0 +1,257 @@
+# Keywords that publications may list in `tags`. The check rejects a tag missing from this list, and a new tag that
+# only differs from an existing one in case, spaces, hyphens, a final s, or a small typo; it then names the existing tag
+# to use. To add a genuinely new keyword, add it here, in lowercase except names such as SemEval, in the same pull request.
+# These two keywords also change lists: `student publication` lists the paper under "Work done with students" on the
+# Work with us page, and `shared task` keeps the paper out of the authors' "Latest topics".
+- student publication
+- shared task
+- abductive reasoning
+- abstract argumentation
+- acoustic features
+- adversarial examples
+- affective computing
+- ai and law
+- annotated corpus
+- annotation guidelines
+- annotation projection
+- argument mining
+- argument schemes
+- argumentation
+- argumentation mining
+- argumentative dialogue
+- argumentative reasoning
+- artificial intelligence
+- artificial intelligence teaching
+- attention
+- audio
+- audio classification
+- authority finding
+- beam search
+- benchmark
+- benchmarking
+- big data
+- calamita
+- case law
+- challenge
+- chatbot
+- chatgpt
+- check-worthiness
+- checklist
+- cjeu
+- CJEU decisions
+- claim detection
+- claim normalization
+- claim verification
+- CLEF
+- clinical trials
+- compliance checking
+- computational argumentation
+- computational linguistics
+- constituency trees
+- constrained optimization
+- constraint detection
+- constraint programming
+- consumer empowerment
+- consumer law
+- consumer protection
+- contrastive learning
+- cooperative principle
+- corpus
+- court of justice of the eu
+- covid-19
+- cross-cultural analysis
+- cross-lingual
+- cross-lingual transfer
+- data annotation
+- data augmentation
+- data ethics
+- data protection
+- dataset
+- deductive reasoning
+- deepproblog
+- definitions
+- demonstration selection
+- depression detection
+- dialogue intents
+- dialogue systems
+- differentiable pooling
+- discourse analysis
+- disinformation
+- distractor generation
+- document-grounded dialogue
+- dynamic time warping
+- education
+- EEG
+- emotion recognition
+- encoder-decoder
+- energy management
+- ensemble learning
+- evaluation methodology
+- evaluation metric
+- evaluation rubric
+- evidence detection
+- explainability
+- explainable AI
+- explainable deep learning
+- fact-checking
+- factuality
+- factuality of reporting
+- faithfulness
+- fallacy classification
+- fallacy detection
+- fashion
+- few-shot learning
+- financial
+- FinNLP
+- game-based competition
+- gdpr
+- genetic algorithms
+- graph neural networks
+- gricean maxims
+- hate speech
+- higher education
+- human evaluation
+- image captioning
+- immigration
+- implicit hate speech
+- in-context learning
+- industry track
+- information retrieval
+- inter-annotator agreement
+- inter-rater agreement
+- interlocking
+- interpretability
+- italian
+- italian language
+- italian tweets
+- judicial interpretative formulas
+- knowledge distillation
+- knowledge representation
+- language learning
+- language models
+- large language models
+- late fusion
+- legal
+- legal analytics
+- legal argument
+- legal argument mining
+- legal argumentation
+- legal nlp
+- legal rationales
+- legal-bert
+- link prediction
+- listenable explanations
+- llm annotation
+- LLM judges
+- LLMs
+- logic tensor networks
+- lyrics matching
+- machine learning
+- machine translation
+- MAMKit
+- markov logic networks
+- memory networks
+- memory-augmented networks
+- mental health
+- misogyny
+- misogyny detection
+- model compression
+- model robustness
+- multi-task learning
+- multilingual
+- multimodal
+- multimodal argument mining
+- multimodality
+- multiple-choice cloze
+- music information retrieval
+- musical version identification
+- natural language explanations
+- natural language processing
+- NER
+- neural attention
+- neural-symbolic learning
+- neuroevolution
+- neurological disorders
+- news articles
+- newspapers
+- numerical claims
+- offensive language
+- offline/online optimization
+- outcome prediction
+- parallel corpus
+- parkinson's disease
+- parse trees
+- passage reranking
+- pejorative language
+- persuasion techniques
+- political bias
+- political debates
+- position paper
+- positive bias
+- pragmatics
+- predictive justice
+- prescriptive paradigm
+- pretrained embeddings
+- price forecasting
+- privacy
+- privacy policies
+- probabilistic logic programming
+- project-based learning
+- prompting
+- public transport
+- rationale generation
+- reinforcement learning
+- residual networks
+- rhetorical roles
+- saliency maps
+- scientific abstracts
+- scientific literature
+- scientific papers
+- scientific web discourse
+- search engine
+- selective rationalization
+- semantic componential analysis
+- SemEval
+- sentence alignment
+- sentence classification
+- sentence embeddings
+- sentiment analysis
+- sequence labeling
+- social media
+- source separation
+- speech
+- speech datasets
+- speech emotion recognition
+- speech recognition
+- statistical relational learning
+- structured output
+- subjectivity
+- subjectivity detection
+- summarization evaluation
+- support vector machines
+- survey
+- systematic reviews
+- tablut
+- tax law
+- taxonomy
+- terms of service
+- text classification
+- time-domain analysis
+- toolkit
+- toulmin
+- transformers
+- tree kernels
+- trustworthy AI
+- uncertainty
+- unfair clause detection
+- unfair practices
+- vagueness
+- value added tax
+- vocabulary transfer
+- wav2vec
+- web server
+- whisper
+- word embeddings
+- word sense disambiguation
+- wordnet
+- zero-shot evaluation

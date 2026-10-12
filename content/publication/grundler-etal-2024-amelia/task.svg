@@ -1,0 +1,37 @@
+<svg viewBox="0 0 640 430" role="img" aria-labelledby="amelia-task-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="amelia-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="amelia-task-title">The three AMELIA tasks applied in sequence to one argument component from an Italian VAT decision. Task 1 labels it a premise, task 2 labels the premise as legal, and task 3 labels the legal premise with the Rule scheme, because it refers to articles of a legislative decree.</title>
+  <text class="lt-s-sub" x="20" y="24">AN ARGUMENT COMPONENT FROM A VAT DECISION (ENGLISH TRANSLATION)</text>
+  <rect class="lt-s-tok" x="20" y="34" width="600" height="80" rx="8"/>
+  <text class="lt-s-txt" x="320" y="58">"In fact, it is true that under Articles 54 and 23 of Legislative Decree</text>
+  <text class="lt-s-txt" x="320" y="80">No. 546/1992, the defendant on appeal must come up for trial within</text>
+  <text class="lt-s-txt" x="320" y="102">60 days from the day on which appeal was served."</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M220 118 V138"/>
+
+  <rect class="lt-s-box lt-s-pred" x="20" y="142" width="400" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="220" y="166">1. Argument Component</text>
+  <text class="lt-s-txt lt-s-small" x="220" y="186">Premise or conclusion?</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M424 170 H468"/>
+  <rect class="lt-s-label" x="472" y="154" width="148" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="546" y="175">Premise</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M220 202 V230"/>
+  <text class="lt-s-txt lt-s-small" x="300" y="221">premises only</text>
+
+  <rect class="lt-s-box lt-s-pred" x="20" y="234" width="400" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="220" y="258">2. Premise Type</text>
+  <text class="lt-s-txt lt-s-small" x="220" y="278">Factual, legal, or both?</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M424 262 H468"/>
+  <rect class="lt-s-label" x="472" y="246" width="148" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="546" y="267">Legal</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M220 294 V322"/>
+  <text class="lt-s-txt lt-s-small" x="310" y="313">legal premises only</text>
+
+  <rect class="lt-s-box lt-s-sel" x="20" y="326" width="400" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="220" y="350">3. Argument Scheme</text>
+  <text class="lt-s-txt lt-s-small" x="220" y="370">Which of five schemes? One or more.</text>
+  <path class="lt-s-arrow" marker-end="url(#amelia-arrow)" d="M424 354 H468"/>
+  <rect class="lt-s-label" x="472" y="338" width="148" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="546" y="359">Rule</text>
+
+  <text class="lt-s-txt lt-s-small" x="320" y="414">Five schemes: Rule, Precedent, Classification, Interpretative, Principle</text>
+</svg>

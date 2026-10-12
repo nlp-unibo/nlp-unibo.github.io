@@ -51,9 +51,14 @@ abstract: Lately, propelled by phenomenal advances around the transformer archit
   a public Weights and Biases project containing all runs for transparency.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: LEXTREME gathers 11 legal datasets in 24 languages into one benchmark with a single score, and shows that legal language understanding remains hard.
 
-tags: []
+tags:
+- legal nlp
+- benchmark
+- multilingual
+- language models
+- chatgpt
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -93,4 +98,9 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/niklaus-etal-2023-lextreme/
+topics: [legal, benchmark]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: findings-emnlp
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/crosslinguality]
 ---

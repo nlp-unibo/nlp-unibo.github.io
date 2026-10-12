@@ -1,0 +1,35 @@
+<svg viewBox="0 0 360 312" role="img" aria-labelledby="korre-sca-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="korre-sca-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="korre-sca-card-title">Top: HateDefCon breaks each of 493 hate speech definitions, from five domains and more than 100 cultures, into semantic components: the target, such as race or gender, the intent or purpose, such as degrade, and the act or means, such as insults. Bottom: an LLM receives a definition and a post and answers yes or no zero-shot; only the definition is swapped between runs, and the answers change with it.</title>
+  <text class="lt-s-sub" x="8" y="18">HATEDEFCON: 493 DEFINITIONS</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="46">Hate speech definition</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="64">five domains, 100+ cultures</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M56 80 V98"/>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M180 80 V98"/>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M304 80 V98"/>
+  <rect class="lt-s-node lt-role-1" x="8" y="102" width="96" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="56" y="122">Target</text>
+  <text class="lt-s-txt lt-s-small" x="56" y="140">race, gender</text>
+  <rect class="lt-s-node lt-role-4" x="112" y="102" width="136" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="122">Intent/purpose</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="140">degrade</text>
+  <rect class="lt-s-node lt-role-3" x="256" y="102" width="96" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="304" y="122">Act/means</text>
+  <text class="lt-s-txt lt-s-small" x="304" y="140">insults</text>
+  <text class="lt-s-sub" x="8" y="176">ZERO-SHOT DETECTION</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="184" width="104" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="60" y="204">Definition</text>
+  <text class="lt-s-txt lt-s-small" x="60" y="222">swapped</text>
+  <rect class="lt-s-tok" x="8" y="238" width="104" height="40" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="60" y="263">Post</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M116 207 L146 222"/>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M116 258 L146 242"/>
+  <rect class="lt-s-box lt-s-pred" x="150" y="198" width="92" height="62" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="196" y="225">LLM</text>
+  <text class="lt-s-txt lt-s-small" x="196" y="243">3 open LLMs</text>
+  <path class="lt-s-arrow" marker-end="url(#korre-sca-card-arrow)" d="M246 229 H262"/>
+  <rect class="lt-s-label" x="266" y="214" width="86" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="309" y="234">yes / no</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="302">the answers change with the definition</text>
+</svg>

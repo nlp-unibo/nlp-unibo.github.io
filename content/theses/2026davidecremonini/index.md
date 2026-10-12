@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/38741/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/38741/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2026davidecremonini/
+topics: [llm-reasoning, llms]
 ---

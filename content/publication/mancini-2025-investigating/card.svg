@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 272" role="img" aria-labelledby="mancini-2025-investigating-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="mancini-2025-investigating-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="mancini-2025-investigating-card-title">Built from Section III of the paper. A speech recording is turned into a spectrogram with the short-time Fourier transform. The HuBERT detector, trained to tell Parkinson's disease from healthy controls, is kept fixed. Six gradient-based explanation methods use it to produce one saliency map per method, marking the spectrogram cells behind its decision. The maps then get two checks: faithfulness metrics, computed on each map alone and on pairs combined by intersection or union, and a CNN14 classifier trained only on the maps to tell Parkinson's disease from healthy controls.</title>
+  <text class="lt-s-sub" x="8" y="18">INPUT</text>
+  <rect class="lt-s-tok" x="8" y="26" width="160" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="88" y="46">Spectrogram</text>
+  <text class="lt-s-txt lt-s-small" x="88" y="64">speech via STFT</text>
+  <path class="lt-s-arrow" marker-end="url(#mancini-2025-investigating-card-arrow)" d="M170 49 H188"/>
+  <rect class="lt-s-box lt-s-pred" x="192" y="26" width="160" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="272" y="46">HuBERT detector</text>
+  <text class="lt-s-txt lt-s-small" x="272" y="64">PD or HC, fixed</text>
+  <path class="lt-s-arrow" marker-end="url(#mancini-2025-investigating-card-arrow)" d="M272 74 V92"/>
+  <text class="lt-s-sub" x="8" y="92">SALIENCY MAPS</text>
+  <g><rect class="lt-s-off" x="14" y="100" width="22" height="12" rx="3"/><rect class="lt-s-on" x="38" y="100" width="22" height="12" rx="3"/><rect class="lt-s-on" x="62" y="100" width="22" height="12" rx="3"/><rect class="lt-s-off" x="86" y="100" width="22" height="12" rx="3"/><rect class="lt-s-on" x="110" y="100" width="22" height="12" rx="3"/><rect class="lt-s-off" x="134" y="100" width="22" height="12" rx="3"/><rect class="lt-s-off" x="14" y="114" width="22" height="12" rx="3"/><rect class="lt-s-off" x="38" y="114" width="22" height="12" rx="3"/><rect class="lt-s-on" x="62" y="114" width="22" height="12" rx="3"/><rect class="lt-s-off" x="86" y="114" width="22" height="12" rx="3"/><rect class="lt-s-off" x="110" y="114" width="22" height="12" rx="3"/><rect class="lt-s-on" x="134" y="114" width="22" height="12" rx="3"/><rect class="lt-s-on" x="14" y="128" width="22" height="12" rx="3"/><rect class="lt-s-off" x="38" y="128" width="22" height="12" rx="3"/><rect class="lt-s-off" x="62" y="128" width="22" height="12" rx="3"/><rect class="lt-s-off" x="86" y="128" width="22" height="12" rx="3"/><rect class="lt-s-off" x="110" y="128" width="22" height="12" rx="3"/><rect class="lt-s-off" x="134" y="128" width="22" height="12" rx="3"/></g>
+  <rect class="lt-s-box lt-s-sel" x="192" y="96" width="160" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="272" y="116">Six XAI methods</text>
+  <text class="lt-s-txt lt-s-small" x="272" y="134">gradient-based</text>
+  <path class="lt-s-arrow" marker-end="url(#mancini-2025-investigating-card-arrow)" d="M190 119 H162"/>
+  <path class="lt-s-arrow" marker-end="url(#mancini-2025-investigating-card-arrow)" d="M84 144 V200"/>
+  <path class="lt-s-arrow" marker-end="url(#mancini-2025-investigating-card-arrow)" d="M84 154 H276 V200"/>
+  <rect class="lt-s-node lt-role-1" x="8" y="168" width="344" height="96" rx="14"/>
+  <text class="lt-s-sub" x="100" y="188">TWO CHECKS</text>
+  <rect class="lt-s-tok" x="16" y="204" width="160" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="96" y="225">Faithfulness</text>
+  <text class="lt-s-txt lt-s-small" x="96" y="244">alone, ∩ and ∪</text>
+  <rect class="lt-s-tok" x="184" y="204" width="160" height="50" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="264" y="225">CNN14 on maps</text>
+  <text class="lt-s-txt lt-s-small" x="264" y="244">learns PD vs HC</text>
+</svg>

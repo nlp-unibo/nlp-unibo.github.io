@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 296" role="img" aria-labelledby="jif-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="jif-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="jif-card-title">Built from Sections 2 and 3 and Table 4 of the paper. Of 101 CJEU rulings on VAT, legal experts label 21 for validation and testing, and DeepSeek-R1 labels 80 for training. A fine-tuned BERT-based classifier learns from the LLM labels and labels each paragraph as a Judicial Interpretative Formula (JIF) or not. On the test split, LEGAL-BERT reaches 0.76 macro F1, against 0.75 for DeepSeek-R1.</title>
+  <text class="lt-s-sub" x="8" y="18">101 CJEU RULINGS ON VAT</text>
+  <rect class="lt-s-tok" x="8" y="28" width="166" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="91.0" y="48.0">Experts</text>
+  <text class="lt-s-txt lt-s-small" x="91.0" y="66.0">21 rulings</text>
+  <rect class="lt-s-box lt-s-pred" x="186" y="28" width="166" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="269.0" y="48.0">DeepSeek-R1</text>
+  <text class="lt-s-txt lt-s-small" x="269.0" y="66.0">80 rulings</text>
+  <path class="lt-s-arrow" marker-end="url(#jif-card-arrow)" d="M91 78 V134 H116"/>
+  <path class="lt-s-arrow" marker-end="url(#jif-card-arrow)" d="M269 78 V134 H244"/>
+  <text class="lt-s-txt lt-s-small" x="46" y="112">evaluation</text>
+  <text class="lt-s-txt lt-s-small" x="310" y="112">train</text>
+  <rect class="lt-s-box lt-s-sel" x="120" y="111" width="120" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180.0" y="131.0">Classifier</text>
+  <text class="lt-s-txt lt-s-small" x="180.0" y="149.0">fine-tuned BERT</text>
+  <path class="lt-s-arrow" marker-end="url(#jif-card-arrow)" d="M180 161 V181"/>
+  <rect class="lt-s-label" x="90" y="185" width="180" height="30" rx="15.0"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="180.0" y="205.0">JIF or not JIF</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="232">one label per paragraph</text>
+  <text class="lt-s-sub" x="8" y="262">MACRO F1, TEST SPLIT</text>
+  <text class="lt-s-txt lt-s-strong" x="91" y="286">LEGAL-BERT 0.76</text>
+  <text class="lt-s-txt lt-s-strong" x="269" y="286">DeepSeek-R1 0.75</text>
+</svg>

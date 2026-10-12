@@ -46,12 +46,18 @@ publication_short: ''
 
 doi: 10.1007/978-3-031-42448-9_20
 
-abstract: ''
+abstract: 'We describe the sixth edition of the CheckThat! lab, part of the 2023 Conference and Labs of the Evaluation Forum (CLEF). The five previous editions of CheckThat! focused on the main tasks of the information verification pipeline: check-worthiness, verifying whether a claim was fact-checked before, supporting evidence retrieval, and claim verification. In this sixth edition, we zoom into some new problems and for the first time we offer five tasks in seven languages: Arabic, Dutch, English, German, Italian, Spanish, and Turkish. Task 1 asks to determine whether an item —text or text plus image— is check-worthy. Task 2 aims to predict whether a sentence from a news article is subjective or not. Task 3 asks to assess the political bias of the news at the article and at the media outlet level. Task 4 focuses on the factuality of reporting of news media. Finally, Task 5 looks at identifying authorities in Twitter that could help verify a given target claim. For a second year, CheckThat! was the most popular lab at CLEF-2023 in terms of team registrations: 127 teams. About one-third of them (a total of 37) actually participated.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The 2023 CheckThat! lab offers five shared tasks in seven languages, from check-worthiness to media bias and authority finding, to support fact-checkers.
 
-tags: []
+tags:
+- fact-checking
+- check-worthiness
+- subjectivity
+- political bias
+- factuality of reporting
+- authority finding
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -91,4 +97,7 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/cedeno-etal-2023-clef-overview/
+topics: [fact-checking, benchmark, multimodal]
+# Key in data/venues.yaml, whose rank decides the Highlights carousel
+venue_key: clef
 ---

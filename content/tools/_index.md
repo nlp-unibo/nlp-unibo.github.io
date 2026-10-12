@@ -1,14 +1,11 @@
 ---
 title: Tools
 date: 2026-02-02
+intro: Our Python libraries are open source, and our web services and demos are free for anyone to use.
 
-view: card
-
-# Tool cards show no date and link straight to the tool website in `external_link`,
+# The page is drawn by layouts/tools/list.html. Each tool links to its own website in `external_link`,
 # so each tool page only redirects to that website.
 cascade:
-  - params:
-      show_date: false
   - type: redirect
     sitemap:
       disable: true

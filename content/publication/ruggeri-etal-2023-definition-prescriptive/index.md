@@ -36,12 +36,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'Defining subjectivity indicators without relying on domain-specific assumptions or incurring interpretation biases is a well-known challenge. To account for these limitations, recent work is shifting toward annotation procedures for subjectivity detection that are not limited to language-specific cues. Nonetheless, developing a rigorous methodology to address edge cases and annotators’ bias, while maintaining desired properties like language agnosticism, is yet an open problem. In this work, we rely on the prescriptive annotation paradigm and propose a methodology based on three key aspects. We present a case study on subjectivity detection for fact-checking in English and Italian news to evaluate the efficacy of the proposed methodology and discuss the open challenges.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A three-step method to write subjectivity annotation guidelines that hold across languages, tested on English and Italian news for fact-checking.
 
-tags: []
+tags:
+- subjectivity detection
+- annotation guidelines
+- prescriptive paradigm
+- inter-annotator agreement
+- multilingual
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -78,4 +83,7 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/ruggeri-etal-2023-definition-prescriptive/
+topics: [subjectivity, annotation, fact-checking]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: text2story
 ---

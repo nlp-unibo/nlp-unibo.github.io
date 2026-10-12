@@ -1,0 +1,12 @@
+<svg viewBox="0 0 240 116" role="img" aria-label="A premise leads to a claim through a warrant that the text leaves implicit, drawn with a dashed border.">
+  <rect class="lt-s-node lt-role-4 lt-s-implicit" x="65" y="4" width="110" height="40" rx="6"/>
+  <text class="lt-s-txt" x="120" y="22">Warrant</text>
+  <text class="lt-s-small" x="120" y="38" text-anchor="middle">implicit</text>
+  <rect class="lt-s-node lt-role-2" x="4" y="78" width="88" height="32" rx="6"/>
+  <text class="lt-s-txt" x="48" y="99">Premise</text>
+  <rect class="lt-s-node lt-role-1" x="148" y="78" width="88" height="32" rx="6"/>
+  <text class="lt-s-txt" x="192" y="99">Claim</text>
+  <line class="lt-s-arrow" x1="92" y1="94" x2="140" y2="94"/>
+  <polygon class="lt-s-head" points="139,88 139,100 147,94"/>
+  <line class="lt-s-off" x1="120" y1="44" x2="120" y2="94"/>
+</svg>

@@ -22,6 +22,10 @@ highlight_name: true
 user_groups:
   - Former Members
 weight: 3
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Luca obtained his Master's degree in Artificial Intelligence from the University of Bologna, with a thesis on emotion recognition for human-centered conversational agents.

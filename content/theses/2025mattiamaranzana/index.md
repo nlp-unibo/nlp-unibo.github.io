@@ -24,10 +24,11 @@ tags:
     - master thesis
     - student
 
-url_pdf: 'https://amslaurea.unibo.it/id/eprint/37309/'
+external_link: 'https://amslaurea.unibo.it/id/eprint/37309/'
 
 categories:
   - Master thesis
 aliases:
   - /students_mscs/2025mattiamaranzana/
+topics: [information-retrieval, benchmark]
 ---
