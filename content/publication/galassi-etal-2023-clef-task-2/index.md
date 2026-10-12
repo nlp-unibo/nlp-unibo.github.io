@@ -45,12 +45,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'We describe the outcome of the 2023 edition of the CheckThat!Lab at CLEF. We focus on subjectivity (Task 2), which has been proposed for the first time. It aims at fostering the technology for the identification of subjective text fragments in news articles. For that, we produced corpora consisting of 9,530 manually-annotated sentences, covering six languages —Arabic, Dutch, English, German, Italian, and Turkish. Task 2 attracted 12 teams, which submitted a total of 40 final runs covering all languages. The most successful approaches addressed the task using state-of-the-art multilingual transformer models, which were fine-tuned on language-specific data. Teams also experimented with a rich set of other neural architectures, including foundation models, zero-shot classifiers, and standard transformers, mainly coupled with data augmentation and multilingual training strategies to address class imbalance. We publicly release all the datasets and evaluation scripts, with the purpose of promoting further research on this topic.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The first shared task on telling subjective from objective sentences in six languages, with 9,530 hand-labeled sentences and 12 teams testing current systems.
 
-tags: []
+tags:
+- subjectivity detection
+- shared task
+- multilingual
+- news articles
+- text classification
 
 # Display this page in a list of Featured pages?
 featured: false

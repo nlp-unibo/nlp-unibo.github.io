@@ -43,7 +43,7 @@ abstract: Creating balanced labeled textual corpora for complex tasks, like lega
   that our method is more robust than the alternatives.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Replacing words in legal sentences with WordNet candidates chosen by GloVe similarity yields synthetic samples that legal experts scored above four alternative methods.
 
 tags:
 - data augmentation
@@ -51,6 +51,7 @@ tags:
 - wordnet
 - legal
 - student publication
+- human evaluation
 
 # Display this page in a list of Featured pages?
 featured: false

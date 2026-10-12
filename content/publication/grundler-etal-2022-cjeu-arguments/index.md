@@ -38,12 +38,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'The successful application of argument mining in the legal domain can dramatically impact many disciplines related to law. For this purpose, we present Demosthenes, a novel corpus for argument mining in legal documents, composed of 40 decisions of the Court of Justice of the European Union on matters of fiscal state aid. The annotation specifies three hierarchical levels of information: the argumentative elements, their types, and their argument schemes. In our experimental evaluation, we address 4 different classification tasks, combining advanced language models and traditional classifiers.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Demosthenes is a corpus of 40 EU Court of Justice decisions on fiscal state aid, annotated with premises, conclusions, and legal argument schemes.
 
-tags: []
+tags:
+- argument mining
+- legal argumentation
+- argument schemes
+- corpus
+- cjeu
 
 # Display this page in a list of Featured pages?
 featured: false

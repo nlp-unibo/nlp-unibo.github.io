@@ -46,9 +46,14 @@ abstract: 'In this paper, we present TWOLAR: a two-stage pipeline for passage re
   Models and Dataset: https://huggingface.co/Dundalia).'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: TWOLAR distills the passage ranking skill of ChatGPT into a Flan-T5 reranker, which matches far larger LLM rerankers on standard search benchmarks.
 
-tags: []
+tags:
+- passage reranking
+- knowledge distillation
+- large language models
+- information retrieval
+- zero-shot evaluation
 
 # Display this page in a list of Featured pages?
 featured: false

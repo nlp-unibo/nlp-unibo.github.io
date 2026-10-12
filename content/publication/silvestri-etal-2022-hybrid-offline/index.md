@@ -34,12 +34,18 @@ publication_short: ''
 
 doi: 10.1007/978-3-031-08011-1_24
 
-abstract: ''
+abstract: 'Constrained decision problems in the real world are subject to uncertainty. If predictive information about the stochastic elements is available offline, recent works have shown that it is possible to rely on an (expensive) parameter tuning phase to improve the behavior of a simple online solver so that it roughly matches the solution quality of an anticipative approach but maintains its original efficiency. Here, we start from a state-of-the-art offline/online optimization method that relies on optimality conditions to inject knowledge of a (convex) online approach into an offline solver used for parameter tuning. We then propose to replace the offline step with (Deep) Reinforcement Learning (RL) approaches, which results in a simpler integration scheme with a higher potential for generalization. We introduce two hybrid methods that combine both learning and optimization: the first optimizes all the parameters at once, whereas the second exploits the sequential nature of the online problem via the Markov Decision Process framework. In a case study in energy management, we show the effectiveness of our hybrid approaches, w.r.t. the state-of-the-art and pure RL methods. The combination proves capable of faster convergence and naturally handles constraint satisfaction.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Reinforcement learning tunes the battery costs of a fast greedy energy manager and can beat optimality-condition tuning in similar time, without a convex solver.
 
-tags: []
+tags:
+- reinforcement learning
+- offline/online optimization
+- energy management
+- constrained optimization
+- uncertainty
+topics: [sustainability]
 
 # Display this page in a list of Featured pages?
 featured: false

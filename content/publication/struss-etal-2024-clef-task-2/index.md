@@ -42,12 +42,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'We present an overview of Task 2 of the seventh edition of the CheckThat! lab at the 2024 iteration of the Conference and Labs of the Evaluation Forum (CLEF). The task focuses on subjectivity detection in news articles and was offered in five languages: Arabic, Bulgarian, English, German, and Italian, as well as in a multilingual setting. The datasets for each language were carefully curated and annotated, comprising over 10,000 sentences from news articles. The task challenged participants to develop systems capable of distinguishing between subjective statements (reflecting personal opinions or biases) and objective ones (presenting factual information) at the sentence level. A total of 15 teams participated in the task, submitting 36 valid runs across all language tracks. The participants used a variety of approaches, with transformer-based models being the most popular choice. Strategies included fine-tuning monolingual and multilingual models, and leveraging English models with automatic translation for the non-English datasets. Some teams also explored ensembles, feature engineering, and innovative techniques such as few-shot learning and in-context learning with large language models. The evaluation was based on macro-averaged F1 score. The results varied across languages, with the best performance achieved for Italian and German, followed by English. The Arabic track proved particularly challenging, with no team surpassing an F1 score of 0.50. This task contributes to the broader goal of enhancing the reliability of automated content analysis in the context of misinformation detection and fact-checking. The paper provides detailed insights into the datasets, participant approaches, and results, offering a benchmark for the current state of subjectivity detection across multiple languages.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A shared task on telling subjective from objective news sentences in five languages, where 15 teams show what current systems achieve and where they struggle.
 
-tags: []
+tags:
+- subjectivity detection
+- shared task
+- news articles
+- multilingual
+- sentence classification
 
 # Display this page in a list of Featured pages?
 featured: false

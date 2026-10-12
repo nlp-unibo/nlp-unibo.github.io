@@ -59,7 +59,7 @@ abstract: 'The first five editions of the CheckThat! lab focused on the main tas
   multilingual and multimodal settings.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: The 2024 CheckThat! lab proposes six shared tasks in fifteen languages, from check-worthiness to adversarial robustness, to support the work of fact-checkers.
 
 tags:
 - disinformation
@@ -109,7 +109,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/cedeno-etal-2024-clef/
-topics: [fact-checking, benchmark]
+topics: [fact-checking, benchmark, multimodal]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: ecir
 ---

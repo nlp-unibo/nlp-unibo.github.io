@@ -35,12 +35,18 @@ publication_short: ''
 
 doi: 10.1007/978-3-031-42448-9_1
 
-abstract: ''
+abstract: "Fashion e-commerce platforms are becoming increasingly popular. However, scanning, rendering, and captioning fashion items are still done mostly manually. In this work, we address the task of generating a textual description of a fashion item from an image portraying it. We carry out an extensive study with several neural architectures based on InceptionV3. We consider two existing fashion image captioning datasets, FACAD and InFashAI. We also curate a novel dataset, Fashion-Cap, that contains more than 290,000 images and 40,000 corresponding captions. In our analysis, we observe significant differences between the three datasets’ captions, with Fashion-Cap having higher quality captions. To the best of our knowledge, this is the most extensive experimental study in fashion image captioning to date. Our experimental results show that our dataset is less challenging than FACAD but more than InFashAI, which confirms our insights, suggesting that it could be a valuable benchmark for this domain."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Fashion-Cap, a new dataset for writing captions of fashion product photos, tested with InceptionV3 captioners against two existing datasets of different difficulty.
 
-tags: []
+tags:
+- fashion
+- image captioning
+- dataset
+- encoder-decoder
+- attention
+- beam search
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -80,7 +86,7 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/delmoro-etal-2023-inception-fashion/
-topics: [multimodal]
+topics: [multimodal, benchmark]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: clef
 ---

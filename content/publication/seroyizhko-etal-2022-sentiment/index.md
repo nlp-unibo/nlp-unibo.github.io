@@ -53,7 +53,7 @@ abstract: Cryptocurrencies have gained enormous momentum in finance and are nowa
   techniques. We make our dataset publicly available for research.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: A Bitcoin dataset that pairs each minute of August 2021 prices with sentiment and emotion scores from Reddit, to test whether social media helps forecasting.
 
 tags:
 - sentiment analysis
@@ -61,6 +61,7 @@ tags:
 - price forecasting
 - FinNLP
 - student publication
+- emotion recognition
 
 # Display this page in a list of Featured pages?
 featured: false

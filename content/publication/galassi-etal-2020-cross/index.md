@@ -40,9 +40,15 @@ abstract: We study annotation projection in text classification problems where s
   dynamic time warping performs best.
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Annotations made by legal experts on English contracts are projected onto their German versions, even when the two versions do not match sentence by sentence.
 
-tags: []
+tags:
+- annotation projection
+- cross-lingual
+- unfair clause detection
+- dynamic time warping
+- sentence alignment
+- parallel corpus
 
 # Display this page in a list of Featured pages?
 featured: false

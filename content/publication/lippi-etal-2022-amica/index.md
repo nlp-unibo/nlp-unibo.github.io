@@ -38,12 +38,18 @@ publication_short: ''
 
 doi: 10.24963/ijcai.2022/857
 
-abstract: ''
+abstract: 'AMICA is an argument mining-based search engine, specifically designed for the analysis of scientific literature related to COVID-19. AMICA retrieves scientific papers based on matching keywords and ranks the results based on the papers’ argumentative content. An experimental evaluation conducted on a case study in collaboration with the Italian National Institute of Health shows that the AMICA ranking agrees with expert opinion, as well as, importantly, with the impartial quality criteria indicated by Cochrane Systematic Reviews.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: AMICA ranks COVID-19 papers by query relevance and by richness in claims and evidence, and its ranking agrees with expert opinion.
 
-tags: []
+tags:
+- argument mining
+- search engine
+- covid-19
+- scientific literature
+- claim detection
+- evidence detection
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -83,7 +89,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/lippi-etal-2022-amica/
-topics: [argument-mining, information-retrieval, prototype]
+topics: [argument-mining, information-retrieval, biomedical, prototype]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: ijcai-demo
 ---

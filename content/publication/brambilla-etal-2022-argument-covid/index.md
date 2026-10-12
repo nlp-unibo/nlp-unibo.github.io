@@ -60,9 +60,14 @@ abstract: "Background: The COVID-19 pandemic prompted the scientific community
   retraining of AM systems."
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: An argument mining tool scores how much COVID-19 papers argue, and these scores agree fairly to moderately with Cochrane decisions and expert reviewers.
 
-tags: []
+tags:
+- argument mining
+- covid-19
+- systematic reviews
+- scientific literature
+- inter-rater agreement
 
 # Display this page in a list of Featured pages?
 featured: false

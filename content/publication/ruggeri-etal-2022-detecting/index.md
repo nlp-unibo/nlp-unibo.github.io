@@ -31,12 +31,17 @@ publication_short: ''
 
 doi: 10.1007/s10506-021-09288-2
 
-abstract: ''
+abstract: 'Recent work has demonstrated how data-driven AI methods can leverage consumer protection by supporting the automated analysis of legal documents. However, a shortcoming of data-driven approaches is poor explainability. We posit that in this domain useful explanations of classifier outcomes can be provided by resorting to legal rationales. We thus consider several configurations of memory-augmented neural networks where rationales are given a special role in the modeling of context knowledge. Our results show that rationales not only contribute to improve the classification accuracy, but are also able to offer meaningful, natural language explanations of otherwise opaque classifier outcomes.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Memory networks read a knowledge base of expert legal rationales to detect unfair clauses in terms of service and to point to the reasons.
 
-tags: []
+tags:
+- unfair clause detection
+- terms of service
+- memory networks
+- legal rationales
+- explainability
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -14,7 +14,7 @@ authors:
 # A YAML list of notes for each author in the above `authors` list
 author_notes: []
 
-date: '2021-10-01'
+date: '2024-04-03'
 
 # Date to publish webpage (NOT necessarily Bibtex publication's date).
 publishDate: '2026-02-27T15:56:06.376606Z'
@@ -33,13 +33,16 @@ doi: ''
 abstract: Many NLP applications require models to be interpretable. However, many successful neural architectures, including transformers, still lack effective interpretation methods. A possible solution could rely on building explanations from domain knowledge, which is often available as plain, natural language text. We thus propose an extension to transformer models that makes use of external memories to store natural language explanations and use them to explain classification outputs. We conduct an experimental evaluation on two domains, legal text analysis and argument mining, to show that our approach can produce relevant explanations while retaining or even improving classification performance.
 
 # Summary. An optional shortened abstract.
-summary: A transformer extension that stores natural language explanations in an external memory and uses them to explain its predictions.
+summary: memBERT gives a transformer a memory of plain-text expert explanations, so each prediction points to the rationale behind it while keeping classification performance.
 card_summary: A transformer that stores natural language explanations in memory to explain its predictions.
 
 tags:
 - interpretability
 - legal
 - argument mining
+- memory-augmented networks
+- natural language explanations
+- transformers
 
 # Display this page in a list of Featured pages?
 featured: false

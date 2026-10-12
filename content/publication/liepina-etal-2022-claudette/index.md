@@ -35,12 +35,17 @@ publication_short: ''
 
 doi: ''
 
-abstract: ''
+abstract: 'This paper presents the latest developments of the use of memory network models in detecting and explaining unfair terms in online consumer contracts. We extend the CLAUDETTE tool for the detection of potentially unfair clauses in online Terms of Service, by providing to the users the explanations of unfairness (legal rationales) for five different categories: arbitration, unilateral change, content removal, unilateral termination, and limitation of liability.'
 
 # Summary. An optional shortened abstract.
-summary: ''
+summary: CLAUDETTE now tells consumers why a Terms of Service clause may be unfair, by linking each flagged clause to legal rationales written by experts.
 
-tags: []
+tags:
+- unfair clause detection
+- terms of service
+- memory networks
+- explainability
+- consumer protection
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -77,7 +82,7 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/liepina-etal-2022-claudette/
-topics: [legal, prototype]
+topics: [legal, interpretability, prototype]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [legal/interpretability]
 ---

@@ -26,7 +26,7 @@ url_pdf: 'https://aclanthology.org/2023.semeval-1.37.pdf'
 
 abstract: "This study aims to tackle some challenges posed by legal texts in the field of NLP. The LegalEval challenge proposes three tasks, based on Indial Legal documents: Rhetorical Roles Prediction, Legal Named Entity Recognition, and Court Judgement Prediction with Explanation. Our work focuses on the first two tasks. For the first task we present a context-aware approach to enhance sentence information. With the help of this approach, the classification model utilizing InLegalBert as a transformer achieved 81.12% Micro-F1. For the second task we present a NER approach to extract and classify entities like names of petitioner, respondent, court or statute of a given document. The model utilizing XLNet as transformer and a dependency parser on top achieved 87.43% Macro-F1."
 # Summary. An optional shortened abstract.
-summary: ''
+summary: Context-aware legal transformers label the rhetorical role of each sentence in Indian court judgments, and a BiLSTM-CRF head finds legal named entities.
 
 tags:
 - challenge
