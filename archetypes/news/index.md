@@ -9,7 +9,7 @@ summary: "TODO: Add a summary of at most two sentences."
 # Optional: shown in italics under the title, such as the journal of a call for papers.
 # venue: ""
 
-# Colored tags on the News page, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: []
 ---
 

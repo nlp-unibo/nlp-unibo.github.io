@@ -6,7 +6,7 @@ tags: ["natural language processing", "workshop", "alma-ai", "reasoning", "LLM",
 summary: "The workshop investigates LLM applications in the legal domain, with a focus on performance, explainability and reasoning." 
 
 
-# Colored tags on the homepage card, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: [legal, llm-reasoning]
 ---
 

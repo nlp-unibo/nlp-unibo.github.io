@@ -12,6 +12,7 @@ To change the design or the code of the site, read [the developers' guide](devel
 - [1. Five ideas that explain the site](#1-five-ideas-that-explain-the-site)
 - [2. What appears where](#2-what-appears-where)
 - [3. Recipes](#3-recipes)
+  - [Add images and files](#add-images-and-files)
   - [Add a publication](#add-a-publication)
   - [Add a news item](#add-a-news-item)
   - [Add or update a person](#add-or-update-a-person)
@@ -125,9 +126,9 @@ Each row says where you create the content, where the site shows it without furt
 
 | Content | Where you create it | Where it shows up automatically | What it does NOT do automatically |
 | --- | --- | --- | --- |
-| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when `categories` includes `Highlight`. The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Latest topics" of those authors, when the paper is from the last two years and is neither a workshop paper nor tagged `shared task`. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
+| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when its venue is a top venue, as described in [How the Highlights carousel chooses papers](#how-the-highlights-carousel-chooses-papers). The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Latest topics" of those authors, when the paper is from the last two years and is neither a workshop paper nor tagged `shared task`. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
 | News item | `content/news/<slug>/index.md` | The News page timeline, with its topic tags. The homepage News block, while it is among the six newest (the three newest as cards) | No page of its own: the preview shows only the title, the venue, the summary, and the links of the body. No topic tags on the homepage. Not on profile pages, even with an `authors` list. No publication entry |
-| Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
+| Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. Up to three "Latest topics" on the card and the profile, computed from their publications. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
 | Thesis | `content/theses/<year><name>/index.md` | "Work done with students" on the Work with us page, with its topics. The Theses list at `/theses/`. The profile page of the student, when the student has one | Not on the News page or the homepage. No link to the supervisors, who are not listed |
 | Research proposal | `content/proposals/<topic>/<slug>/index.md` | A card on the Work with us page, under its topic filter. Opening the card shows the whole proposal; the proposal has no page of its own | No news item. A topic folder that does not exist yet needs its own `_index.md` first |
 | Project | `content/projects/<slug>/index.md` | A card and a timeline entry on the Projects page, with scope and topic filters. The three newest projects (by `date`) in a step of the Work with us page | No page of its own: the address of the project redirects to `external_link`. No link to its publications or people |
@@ -145,7 +146,7 @@ Every recipe follows the same pattern.
 2. Change the placeholder folder name in the file name box into your slug.
 3. Replace every `TODO` text.
    The check fails while a `TODO` text is left, so you cannot publish an unfinished page by mistake.
-4. Select **Commit changes** and open a pull request, as described in [4. Publish your change](#5-publish-your-change).
+4. Select **Commit changes** and open a pull request, as described in [5. Publish your change](#5-publish-your-change).
 5. Upload images or PDFs into the same folder of your branch, as described in [Add images and files](#add-images-and-files).
 
 The fastest alternative is to copy an existing page of the same kind and edit it.
@@ -181,7 +182,8 @@ A folder holds these files:
 content/publication/rossi-etal-2026-example/
 ├── index.md       the page
 ├── cite.bib       the BibTeX record behind the Cite button
-└── featured.png   the main figure, optional
+├── card.svg       a drawn schema of the core idea, optional
+└── featured.png   the main figure from the paper, optional
 ```
 
 | Field | Required | Example | Rule |
@@ -193,17 +195,17 @@ content/publication/rossi-etal-2026-example/
 | `publication_types` | Required | `- paper-conference` | Exactly one of `article-journal` (journal), `paper-conference` (conference or workshop), `article` (preprint), or `chapter` (book chapter) |
 | `categories` | Required | `- Conference` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint` |
 | `venue_key` | Required for `Conference`, `Journal`, and `Workshop` | `acl` | The venue's key in `data/venues.yaml`. Its `name`, the full venue name with the acronym in brackets, is what every list and page shows, and its `rank` decides whether the paper enters the Highlights carousel. Add a missing venue there |
-| `publication` | Optional | `"Proceedings of ACL 2026"` | The full venue name |
+| `publication` | Optional | `"Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics"` | The exact proceedings or journal title, kept for the citation. The site shows the venue `name` from `venue_key` instead |
 | `abstract` | Optional | `"We introduce ..."` | Shown in full on the publication page |
 | `summary` | Optional | `"GCAM has annotators report ..."` | One sentence, shown under the title and on publication cards. Every highlight needs one |
 | `card_summary` | Optional | `"Annotators report guidelines, not labels."` | At most 15 words. Replaces the summary on the homepage card |
 | `card_caption` | With `card.svg` | `"The two subtasks. Schema built from Section 3 of the paper."` | One or two sentences that say what `card.svg` shows and name its source. A drawn `card.svg` is the first figure of the publication page, and this is its caption |
-| `doi` | Optional | `10.18653/v1/2024.argmining-1.7` | Without `https://doi.org/` |
+| `doi` | Optional | `10.18653/v1/2024.argmining-1.7` | Without `https://doi.org/`. A paper with a DOI shows no arXiv link anywhere on the site |
 | `url_pdf`, `url_code`, `url_dataset`, `url_project`, `url_video`, `url_slides`, `url_poster` | Optional | `https://aclanthology.org/...` | Each becomes a button. `url_project` is labeled Demo |
-| `links` | Optional | `- name: arXiv` then `  url: https://arxiv.org/abs/...` | Extra buttons, each with a `name` and a `url` |
-| `topics` | Optional | `[argument-mining, llms]` | One to three topic keys. They feed the topic filter of the Publications page |
+| `links` | Optional | `- name: arXiv` then `  url: https://arxiv.org/abs/...` | Extra buttons, each with a `name` and a `url`. An arXiv entry is hidden once the paper has a `doi` |
+| `topics` | Optional | `[argument-mining, llms]` | One to three topic keys. They feed the topic filter of the Publications page and the "Latest topics" of the lab authors |
 | `focus` | Optional | `[am/fallacies, speech/arguments]` | Research focus topics, as `<area>/<key>` of a `focus` topic in `content/research/<area>/index.md`. The paper appears in the Our focus section of each area |
-| `tags` | Optional | `- argument mining` | Keywords. Add `student publication` to list the paper under "Work done with students" |
+| `tags` | Optional | `- argument mining` | Keywords. Add `student publication` to list the paper under "Work done with students". Add `shared task` to a shared task overview or participation paper, which then does not count for "Latest topics" |
 | `award` | Optional | `Best Paper Award` | Shown with a trophy under the title in every publication list |
 | `affiliations` | Optional | `- University of Bologna` | Institution names shown under the authors |
 | `featured` | Optional | `false` | Leave it `false`: the venue rank selects the highlights |
@@ -216,21 +218,23 @@ Then add the citation file:
 
 Images:
 
+- `card.svg` is a drawn schema of the core idea of the paper, with four to seven boxes and short labels.
+  When present, it is the first figure of the publication page and the figure on every card, and `card_caption` captions it.
+  Drawing one needs some code, so ask the maintainer for it.
+- `card.png` is an optional simpler image, 1600 by 1000 pixels with large text, for cards when there is no `card.svg`.
 - `featured.png` (or `featured.jpg`) is the most representative figure of the paper.
-  It becomes the teaser of the page and the preview on every card.
-  Give every paper from a top venue both `featured.png` and a `summary`, because its Highlights card shows them.
-- `card.png` is optional.
-  Add it when `featured.png` is too detailed to read at card size: 1600 by 1000 pixels, with large text.
-  Cards then show `card.png`, and the page keeps `featured.png`.
-- `teaser.mp4` is an optional short video that replaces the teaser image on the page.
-- Write the source of the figure in `image: caption:`, such as "(Figure 1 of the paper)".
+  It is the teaser of the page and the card preview only when the folder has no `card.svg` (and no `card.png` for cards).
+  The Our focus cards of the research areas never show it, because a figure from the paper is hard to read at that size.
+- `teaser.mp4` is an optional short video that replaces the teaser figure on the page.
+- Write the source of `featured.png` in `image: caption:`, such as "(Figure 1 of the paper)".
   Reuse a figure only when its source is openly licensed, such as arXiv, the ACL Anthology, or CEUR-WS.
+- Give every paper from a top venue a `summary` and a figure, because its Highlights card shows them.
 
 What else to update:
 
 - **Acceptance news.** The homepage News block lists news items only.
   For an acceptance, [add a news item](#add-a-news-item) dated on the day of the acceptance.
-  Use the paper title as the news title, write the venue in `venue`, and tag it `paper`.
+  Use the paper title as the news title, write the venue in `venue`, tag it `paper`, and leave out `summary`.
   Link the publication page, such as `[Read more](/publication/rossi-etal-2026-example/)`.
 - **Research area.** To list the paper on a research area page, name the area and the topic in its `focus` field, such as `focus: [am/fallacies]`.
   The newest paper of a topic is shown as Current when it is dated within the last two years, and the others as Past work.
@@ -241,8 +245,8 @@ Common mistakes:
 - An author spelled in two ways, such as with and without an accent, creates two people.
   The check reports `authors term '...' conflicts with '...'`.
 - The paper is missing from the expected list because `categories` selects another one.
-- A published paper loses its arXiv link on the News timeline, because the venue version replaces it.
-  This is intended.
+- A published paper loses its arXiv link once it has a `doi`, because the venue version replaces it.
+  This is intended. Point the `url` of `cite.bib` to the DOI as well.
 - No `cite.bib` file: the check warns `missing cite.bib`, and the Cite button is missing.
 
 The body of the file can stay empty.
@@ -262,9 +266,9 @@ The title, the summary, and the links must therefore make sense on their own.
 | --- | --- | --- | --- |
 | `title` | Required | `"Paper accepted at ACL 2026"` | The headline. For an acceptance, the paper title |
 | `date` | Required | `2026-05-20` | A future date keeps the item hidden until that day |
-| `summary` | Required | `"Our paper on argument mining was accepted."` | At most two sentences |
+| `summary` | Required, except for an acceptance tagged `paper` | `"The special issue invites contributions on legal argument mining."` | At most two sentences, shown whole on the homepage card. Leave it out for an acceptance: the paper title and the venue already say it, and a summary such as "Accepted." repeats them |
 | `tags` | Optional | `- paper` | Sets the label of the preview, see below |
-| `venue` | Optional | `"Transactions of the ACL (TACL)"` | Shown in italics under the title, such as the journal of a call for papers |
+| `venue` | Optional | `"Transactions of the Association for Computational Linguistics (TACL)"` | Shown in italics under the title, such as the journal of a call for papers |
 | `topics` | Optional | `[argument-mining]` | Topic keys, preferably those of the research areas. Shown on the News page only |
 
 The tags set the label of the preview.
@@ -336,6 +340,12 @@ Social links use these icons:
 | Google Scholar | `google-scholar` | `ai` |
 
 The body below the front matter is the longer biography on the profile page.
+
+The card and the profile show up to three "Latest topics", which need no field.
+They are the most frequent `topics` of the person's publications of the last two years.
+Workshop papers, papers tagged `shared task`, and the `prototype` topic do not count.
+On a tie, the topic of more papers with the person as first author comes first.
+A person without such publications shows no Latest topics.
 
 Images: upload one square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
 Keep only one avatar file in the folder, because the site shows only the first one it finds.
@@ -631,7 +641,12 @@ Ask the maintainer to review every change, because the page sends emails to the 
   The sections are `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), and `contact` (the email form).
 - `inspiration: student-work` adds a last, unnumbered step with the work done with students.
 - Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill.
+  A field has a `type`: `text`, `textarea`, `select`, `number` (a whole number from 0, with a counter), or `month` (a month and year, written as "March 2027" in the email and never before the current month).
   A field with `when`, such as `when: {funding: I need funding from the lab}`, appears only while the named field has that value.
+  A field with `when_more`, such as `when_more: {exams: 0}`, appears only while the named number field is above that value.
+  A month field with `after` lists date rules, such as `after: [{field: start, months: 6, message: "..."}]`.
+  Each rule keeps the email closed and shows its message until the month is at least that many months after the named field (`months: 0` means not before it).
+  The Master thesis form uses them so that the degree session is at least six months after the start and not before the end of the remaining exams.
   A select field with `options: proposals` lists the research proposals.
   A text field with `options: proposals` receives the title chosen with **Choose this proposal**.
 - The form opens the visitor's email app with recipients, subject, and body filled in.

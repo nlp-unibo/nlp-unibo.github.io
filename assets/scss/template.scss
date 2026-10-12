@@ -1196,6 +1196,9 @@ $lt-slide-height: 29rem;
   gap: 1.25rem;
 }
 
+// News summaries are at most two sentences, so a news card shows its whole summary instead of three lines.
+.lt-news-card .lt-card-text { display: block; overflow: visible; -webkit-line-clamp: unset; }
+
 .lt-news-list {
   margin: 1.5rem 0 0;
   padding: 0;

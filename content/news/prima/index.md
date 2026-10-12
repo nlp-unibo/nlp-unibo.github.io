@@ -5,7 +5,7 @@ tags: ["natural language processing", "workshop", "PRIMA", "project", "legal", "
 
 summary: "The PRIMA final conference presented methods and tools for the automated analysis of privacy policies and the assessment of their lawfulness."
 
-# Colored tags on the homepage card, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: [legal, privacy, interpretability]
 ---
 

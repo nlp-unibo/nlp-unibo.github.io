@@ -21,7 +21,7 @@ authors:
   - "Reem Suwaileh"
 summary: "We describe the seventh edition of the CheckThat! lab, part of the 2024 Conference and Labs of the Evaluation Forum (CLEF)."
 
-# Colored tags on the homepage card, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: [fact-checking]
 
 # Former address in the retired Events section.

@@ -500,6 +500,9 @@ def validate_content_quality() -> None:
             checked_pages += 1
             is_draft = metadata.get("draft") is True
             for field in required_fields:
+                # An acceptance (tag `paper`) needs no summary: its title and venue already say what it is.
+                if section == "news" and field == "summary" and "paper" in [str(tag).lower() for tag in metadata.get("tags") or []]:
+                    continue
                 if metadata.get(field) in (None, "", []):
                     failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
             if section == "authors":

@@ -1,11 +1,14 @@
 {{/* News page: the title with an optional `intro`, a kind filter and year links, then every news item and every */}}
-{{/* publication, preprints included, on a vertical timeline grouped by year, newest first. Previews come from */}}
+{{/* publication, preprints included, on a vertical timeline grouped by year, newest first. An acceptance news item that repeats a publication title is skipped. Previews come from */}}
 {{/* lt/news-data.html: kind pill and date, title, venue, summary, topic tags, and link chips. News items have no page */}}
 {{/* of their own, so titles are not links; each item has an `id` for links from profile pages. Without JavaScript */}}
 {{/* every item is shown and the filter is hidden (assets/js/ltlab.js). A Back to top button follows the scroll. */}}
 {{- define "main" -}}
 {{ $pubs := where site.RegularPages "Section" "publication" }}
-{{ $items := (.RegularPages | union $pubs).ByDate.Reverse }}
+{{/* An acceptance news item whose title is also a publication title is left out: the publication already stands for it. */}}
+{{ $pubTitles := slice }}{{ range $pubs }}{{ $pubTitles = $pubTitles | append (lower .Title) }}{{ end }}
+{{ $news := slice }}{{ range .RegularPages }}{{ if not (in $pubTitles (lower .Title)) }}{{ $news = $news | append . }}{{ end }}{{ end }}
+{{ $items := ($news | union $pubs).ByDate.Reverse }}
 {{ $years := $items.GroupByDate "2006" }}
 {{ $kinds := slice }}{{ $counts := dict }}
 {{ range $items }}{{ $k := partial "lt/news-kind.html" . }}

@@ -4,9 +4,8 @@ title: "The Alignment Bottleneck in Decomposition-Based Claim Verification"
 venue: "International Joint Conference on Artificial Intelligence (IJCAI)"
 date: 2026-05-01
 tags: ["news", "IJCAI", "paper", "accepted"]
-summary: "Accepted."
 
-# Colored tags on the homepage card, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: [llm-reasoning]
 ---
 

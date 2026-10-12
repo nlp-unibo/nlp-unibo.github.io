@@ -19,7 +19,7 @@ authors:
   - "Venktesh V"
 summary: "This paper presents the eighth edition of the CheckThat! lab, part of the 2025 Conference and Labs of the Evaluation Forum (CLEF)."
 
-# Colored tags on the homepage card, from data/topics.yaml
+# Topic tags on the News page, from data/topics.yaml
 topics: [fact-checking]
 
 # Former address in the retired Events section.

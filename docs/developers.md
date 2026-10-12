@@ -134,7 +134,7 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `content/mm-argfallacy/` | Website of the MM-ArgFallacy shared task |
 | `data/themes/ltlab.toml` | Theme colours for the `[light]` and `[dark]` modes |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Inter font set, self-hosted, under the SIL Open Font License |
-| `data/topics.yaml` | Topic keys with `label`, `background`, and `text` colours |
+| `data/topics.yaml` | Topic keys with their `label` |
 | `assets/scss/template.scss` | Every site style rule, layered over the theme |
 | `assets/js/ltlab.js` | Every site behaviour, as progressive enhancement |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar and hero logo, and the favicon generated from it |
@@ -190,14 +190,14 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `news-kind.html` | A page | Returns the kind `label`, `icon`, `slug` (pill colour), and `key` (filter value), derived from tags |
 | `page-intro.html` | A page | Opening band with a screen-reader `h1` and the `intro` |
 | `person-social.html` | A profile | Labelled social icon buttons |
-| `person-topics.html` | A profile | Returns the three most frequent topics of the ten most recent publications, except `prototype` |
+| `person-topics.html` | A profile | Returns the "Latest topics": the three most frequent topics of the publications of the last two years, without workshop papers, papers tagged `shared task`, and `prototype`; ties go to the topic of more first-authored papers |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |
 | `pub-meta.html` | A publication | Returns `kind`, `venue` ("Preprint" for a preprint), `links`, `tldr`, `blog` (it has a body), and `url` (the blog, else the DOI, arXiv, PDF, or first link), shared by cards, rows, and pages |
 | `pub-row.html` | A publication | Compact list row |
 | `rule-parts.html` | Parts of a rules-view sentence | Marked spans, recursive |
 | `section-head.html` | A block | Eyebrow, title, subtitle, and "see all" link |
-| `topic-tags.html` | Topic keys | Coloured tags from `data/topics.yaml`; unknown keys are skipped |
+| `topic-tags.html` | Topic keys | Tags in one outlined neutral style (`.lt-topic`) with labels from `data/topics.yaml`; unknown keys are skipped |
 
 ### Theme copies
 
@@ -263,7 +263,7 @@ Change them together.
 | `Visual components` section of `template.scss` | `$lt-cat-light` and `$lt-cat-dark`, the four validated categorical slots used by `.lt-c1` to `.lt-c4` |
 | `Argument views` section of `template.scss` | CSS custom properties `--lt-role-1` to `--lt-role-4`, `--lt-support`, `--lt-attack`, scoped to `.lt-arg-views`, `.lt-overview`, `.lt-research-mosaic`, `.lt-tool-figure`, with a `.dark` variant |
 | `data/themes/ltlab.toml` | Theme `primary`, `link`, `link_hover`, `background`, menu colours, and `home_section_odd` / `home_section_even` band colours |
-| `data/topics.yaml` | Topic tag colours |
+| `data/topics.yaml` | Topic tag labels |
 | `layouts/_partials/lt/cover.html` | Four hard-coded gradient palettes for generated covers |
 
 The first comment of `template.scss` states that `ltlab.toml` uses the same values as the Sass palette.
@@ -667,7 +667,7 @@ Proposal pages use `## Context`, `## Objective`, and `## References` the same wa
 
 - Brand colours: change the Sass variables at the top of `template.scss` and the matching values in `data/themes/ltlab.toml`.
 - Band backgrounds: change `home_section_odd` and `home_section_even` under `[dark]` in `ltlab.toml`.
-- Topic colours: change `background` and `text` in `data/topics.yaml`; keep a 4.5:1 contrast between them.
+- Topic tags: all topics share the `.lt-topic` style in `template.scss`, so a topic has no colour of its own.
 - Research view colours: change `--lt-role-*`, `--lt-support`, and `--lt-attack` in both the light and the `.dark` blocks.
 - Fonts: put the `woff2` files in `static/fonts/<font>/`, update the `@font-face` loop at the top of `template.scss`, and set the names in `data/fonts/ltlab.toml`.
   Keep `google_fonts = ""` so pages make no request to a font provider, and record the font license.
