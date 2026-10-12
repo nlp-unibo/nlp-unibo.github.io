@@ -101,11 +101,11 @@ Two workflows live in `.github/workflows/`.
 
 | Workflow | Trigger | Steps |
 | --- | --- | --- |
-| `validate.yml`, **Validate website** (job **Validate content and build**) | Pull requests to `hugoblox-template`, manual dispatch | Set up uv, restore `.tools` and `.build/go-mod-cache` (keyed on `site.py`, `hugo.yml`, `go.mod`, `go.sum`), `uv sync --locked`, `scripts/test_site.py`, `site.py check` |
-| `hugo.yml`, **Deploy Hugo site to Pages** | Push to `hugoblox-template`, manual dispatch, daily at 04:00 UTC | Install Hugo extended `HUGO_VERSION` from the release `.deb`, `hugo --minify --baseURL <pages url>`, upload `public/`, deploy to GitHub Pages |
+| `validate.yml`, **Validate website** (job **Validate content and build**) | Pull requests to `main`, manual dispatch | Set up uv, restore `.tools` and `.build/go-mod-cache` (keyed on `site.py`, `hugo.yml`, `go.mod`, `go.sum`), `uv sync --locked`, `scripts/test_site.py`, `site.py check` |
+| `hugo.yml`, **Deploy Hugo site to Pages** | Push to `main`, manual dispatch, daily at 04:00 UTC | Install Hugo extended `HUGO_VERSION` from the release `.deb`, `hugo --minify --baseURL <pages url>`, upload `public/`, deploy to GitHub Pages |
 
 The daily run publishes pages whose future date has arrived.
-If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `hugoblox-template`.
+If a deployment does not start, open the workflow in the **Actions** tab and select **Run workflow** on `main`.
 Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.it` custom domain.
 
 ## 2. Code map
@@ -764,7 +764,7 @@ For motion work, also check the page by hand without reduced motion, and with Ja
 
 ### What CI runs
 
-On every pull request to `hugoblox-template`, **Validate content and build** runs `uv sync --locked`, `scripts/test_site.py`, and `site.py check`.
+On every pull request to `main`, **Validate content and build** runs `uv sync --locked`, `scripts/test_site.py`, and `site.py check`.
 The pull request needs that status check to merge.
 After the merge, **Deploy Hugo site to Pages** builds with `hugo --minify` and publishes.
 
@@ -852,7 +852,7 @@ uv run python scripts/site.py setup
 For each change, start from the latest version and create a branch:
 
 ```bash
-git switch hugoblox-template
+git switch main
 git pull --ff-only
 git switch -c news/acl-2026
 ```

@@ -12,6 +12,7 @@ spec.loader.exec_module(site_tools)
 EMAIL, UniqueKeyLoader, local_link_targets = site_tools.EMAIL, site_tools.UniqueKeyLoader, site_tools.local_link_targets
 category_error = site_tools.category_error
 view_errors = site_tools.view_errors
+same_keyword = site_tools.same_keyword
 
 page = Path("content/news/example/index.md")
 body = """
@@ -34,12 +35,18 @@ except yaml.YAMLError:
 else:
     raise AssertionError("repeated keys must be rejected")
 
+# The venue rank selects the Highlights, so `Highlight` is no longer a category.
 assert category_error("publication", ["Journal"]) is None
-assert category_error("publication", ["Highlight", "Journal"]) is None
+assert category_error("publication", ["Highlight", "Journal"])
 assert category_error("publication", ["Highlight"])
 assert category_error("publication", ["Journal", "Conference"])
-assert category_error("publication", ["Highlight", "Highlight", "Journal"])
 assert category_error("theses", ["Highlight", "Master thesis"])
+
+assert same_keyword("argument mining", "Argument-Mining")
+assert same_keyword("dialogue system", "dialogue systems")
+assert same_keyword("argument mining", "argument minig")
+assert not same_keyword("abductive reasoning", "deductive reasoning")
+assert not same_keyword("multilingual", "multilingualism")
 
 view = {"roles": [{"key": "clause"}], "texts": [{"segments": [{"id": "a", "role": "clause", "text": "x"}]}],
         "implicit": [{"id": "b", "role": "clause"}], "rows": [["a", "b"]], "edges": [{"from": "a", "to": "b", "relation": "support"}]}

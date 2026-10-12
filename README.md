@@ -6,7 +6,7 @@ Every page of the site is a text file in this repository.
 ## Where the site is published
 
 The site is published at <https://nlp.unibo.it/> through GitHub Pages.
-The main branch is `hugoblox-template`.
+The default branch is `main`.
 Every change reaches that branch through a pull request, which GitHub checks automatically.
 When a pull request is merged, GitHub rebuilds the site with [Hugo](https://gohugo.io/) and the Hugo Blox theme, then publishes it within a few minutes.
 The site also rebuilds every day at 04:00 UTC, so pages with a future date appear on their day.
