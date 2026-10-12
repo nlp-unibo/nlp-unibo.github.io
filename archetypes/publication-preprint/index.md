@@ -18,6 +18,7 @@ summary: ""
 card_summary: ""
 # With a drawn card.svg in the folder: what it shows and its source. card.svg is the first figure of the page.
 card_caption: ""
+# Keywords from data/tags.yaml; add a new one there in the same pull request.
 tags: []
 featured: false
 url_pdf: ""

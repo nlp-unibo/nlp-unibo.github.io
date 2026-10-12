@@ -5,10 +5,11 @@
 {{/* Highlights: the twelve newest papers of the last four years from a top venue, an ICORE A* or A conference or an */}}
 {{/* SJR Q1 journal, or a venue with `top: true`, as listed in data/venues.yaml. The counter beside the title reads */}}
 {{/* "current/total". */}}
-{{/* Papers with the same date, often a year-only date, go in rank order: A* or Q1 (or `top: true`) before A. */}}
+{{/* Papers with the same date, often a year-only date, put journals before conferences, so a journal wins the last */}}
+{{/* slot on a tie; papers of the same kind and date keep the order of the publication list. */}}
 {{ $top := slice }}{{ $since := sub now.Year 3 }}
 {{ range $pubs }}{{ $p := . }}{{ if ge .Date.Year $since }}{{ with index hugo.Data.venues (.Params.venue_key | default "none") }}{{ if or .top (in (slice "A*" "A" "Q1") .rank) }}
-  {{ $top = $top | append (dict "page" $p "key" (printf "%s-%d" ($p.Date.Format "2006-01-02") (cond (eq .rank "A") 1 2))) }}
+  {{ $top = $top | append (dict "page" $p "key" (printf "%s-%d" ($p.Date.Format "2006-01-02") (cond (in ($p.Params.categories | default slice) "Journal") 2 1))) }}
 {{ end }}{{ end }}{{ end }}{{ end }}
 {{ $highlights := slice }}{{ range first 12 (sort $top "key" "desc") }}{{ $highlights = $highlights | append .page }}{{ end }}
 <article class="lt-pubs">

@@ -135,6 +135,7 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `data/themes/ltlab.toml` | Theme colours for the `[light]` and `[dark]` modes |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Inter font set, self-hosted, under the SIL Open Font License |
 | `data/topics.yaml` | Topic keys with their `label` |
+| `data/tags.yaml` | Vocabulary of publication keywords; `scripts/site.py` rejects a missing or near-duplicate keyword (`same_keyword`) |
 | `assets/scss/template.scss` | Every site style rule, layered over the theme |
 | `assets/js/ltlab.js` | Every site behaviour, as progressive enhancement |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar and hero logo, and the favicon generated from it |
@@ -873,7 +874,7 @@ git push -u origin news/acl-2026
 ```
 
 GitHub prints a link to open the pull request.
-Continue from the pull request steps in [editors.md](editors.md#5-publish-your-change).
+Continue from the pull request steps in [editors.md](editors.md#how-every-change-works).
 
 ### Create content from the command line
 

@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import date, datetime
+import difflib
 import hashlib
 import json
 import os
@@ -54,6 +55,13 @@ CONTENT_TYPES = {
     "preprint": ("publication", "publication-preprint"),
     "proposal": ("proposals", "proposal"),
 }
+def same_keyword(first: str, second: str) -> bool:
+    """Whether two keywords differ only in case, spaces, hyphens, a final s, or a small typo."""
+    def plain(text: str) -> str:
+        return re.sub(r"[\s_-]+", "", text.lower()).removesuffix("s")
+    return plain(first) == plain(second) or difflib.SequenceMatcher(None, first.lower(), second.lower()).ratio() >= 0.92
+
+
 REQUIRED_FIELDS = {
     "authors": ("title", "first_name", "last_name", "user_groups", "build"),
     "news": ("title", "date", "summary"),
@@ -475,6 +483,12 @@ def validate_content_quality() -> None:
     term_names: dict[str, dict[str, tuple[str, Path]]] = {"authors": {}, "tags": {}, "categories": {}}
     project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
     venues = yaml.safe_load((ROOT / "data/venues.yaml").read_text(encoding="utf-8"))
+    # Publication keywords come from one vocabulary, so a tag is never spelled in two ways.
+    keywords = [str(tag) for tag in yaml.safe_load((ROOT / "data/tags.yaml").read_text(encoding="utf-8")) or []]
+    for index, keyword in enumerate(keywords):
+        for other in keywords[index + 1:]:
+            if same_keyword(keyword, other):
+                failures.append(f"data/tags.yaml: {keyword!r} and {other!r} look like the same keyword; keep one")
     # Focus topics of the research areas, as <area>/<key>, which publications name in their `focus` field.
     focus_topics = {
         f"{page.parent.name}/{topic.get('key')}"
@@ -581,6 +595,14 @@ def validate_content_quality() -> None:
                     for key in {key for key in keys if keys.count(key) > 1 or not key}:
                         failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
             if section == "publication":
+                for tag in map(str, metadata.get("tags") or []):
+                    if tag in keywords:
+                        continue
+                    match = next((keyword for keyword in keywords if same_keyword(tag, keyword)), None)
+                    if match:
+                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; use the existing {match!r}")
+                    else:
+                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; add it there if it is a new keyword")
                 for topic in metadata.get("focus") or []:
                     if topic not in focus_topics:
                         failures.append(f"{page.relative_to(ROOT)}: focus topic {topic!r} is not a <area>/<key> of content/research")

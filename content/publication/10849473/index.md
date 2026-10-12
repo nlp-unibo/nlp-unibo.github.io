@@ -40,7 +40,7 @@ abstract: 'We present ACME: A Chatbot for asylum-seeking Migrants in Europe. ACM
 # Summary. An optional shortened abstract.
 summary: ACME, a chatbot built on computational argumentation, helps asylum seekers find the highest protection they can apply for, with explanations and privacy by design.
 
-tags: [chatbot, dialogue system, immigration, privacy, abstract argumentation]
+tags: [chatbot, dialogue systems, immigration, privacy, abstract argumentation]
 
 # Display this page in a list of Featured pages?
 featured: false

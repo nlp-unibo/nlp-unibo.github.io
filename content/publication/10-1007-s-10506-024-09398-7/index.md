@@ -54,7 +54,7 @@ summary: 'With good machine translation, an English unfair-clause detector for T
 card_caption: "Three ways to obtain a German unfair clause detector from English data. After Figure 1 of the paper."
 
 tags:
-- multilingualism
+- multilingual
 - terms of service
 - unfair clause detection
 - machine translation

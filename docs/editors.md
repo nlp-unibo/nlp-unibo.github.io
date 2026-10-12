@@ -1,825 +1,484 @@
 # Editors' guide
 
-This guide explains how to add or change content on the [Language Technologies Lab website](https://nlp.unibo.it/).
-It is written for lab members who are not programmers.
-You only need a web browser and a GitHub account with write access to this repository.
-Ask the maintainer for access if you do not have it.
-
-To change the design or the code of the site, read [the developers' guide](developers.md) instead.
+How to add or change content on the [Language Technologies Lab website](https://nlp.unibo.it/), with a web browser and a GitHub account with write access.
+Each action below is a short card: the file, the steps, and what changes on the site.
+To change the design or the code, read [the developers' guide](developers.md).
 
 ## Contents
 
-- [1. Five ideas that explain the site](#1-five-ideas-that-explain-the-site)
-- [2. What appears where](#2-what-appears-where)
-- [3. Recipes](#3-recipes)
-  - [Add images and files](#add-images-and-files)
-  - [Add a publication](#add-a-publication)
-  - [Add a news item](#add-a-news-item)
-  - [Add or update a person](#add-or-update-a-person)
-  - [Add a thesis](#add-a-thesis)
-  - [Add a research proposal](#add-a-research-proposal)
-  - [Add a project](#add-a-project)
-  - [Add a tool](#add-a-tool)
-  - [Add a research area](#add-a-research-area)
-  - [Edit the homepage](#edit-the-homepage)
-  - [Edit the menu](#edit-the-menu)
-  - [Edit a page introduction](#edit-a-page-introduction)
-  - [Edit the Work with us page](#edit-the-work-with-us-page)
-- [4. Change existing content](#4-change-existing-content)
-  - [Find and edit a file](#find-and-edit-a-file)
-  - [How the Highlights carousel chooses papers](#how-the-highlights-carousel-chooses-papers)
-  - [Change the text of a page](#change-the-text-of-a-page)
-  - [Replace an image](#replace-an-image)
-  - [Reorder items](#reorder-items)
-  - [Hide or remove a page](#hide-or-remove-a-page)
-  - [Add a schema to a page](#add-a-schema-to-a-page)
-- [5. Publish your change](#5-publish-your-change)
-- [6. Publication blog pages](#6-publication-blog-pages)
+- [How every change works](#how-every-change-works)
+- [Quick map](#quick-map)
+- [Actions](#actions)
+  - Publications: [Add a publication](#add-a-publication) · [Change a publication](#change-a-publication)
+  - News: [Add a news item](#add-a-news-item) · [Announce an accepted paper](#announce-an-accepted-paper) · [Change a news item](#change-a-news-item)
+  - People: [Add or update a person](#add-or-update-a-person)
+  - Students: [Add a thesis](#add-a-thesis) · [Add a research proposal](#add-a-research-proposal)
+  - Projects and tools: [Add a project](#add-a-project) · [Add a tool](#add-a-tool)
+  - Research: [Add a research focus card](#add-a-research-focus-card) · [Add a research area](#add-a-research-area)
+  - Pages: [Edit the homepage, the menu, or a page introduction](#edit-the-homepage-the-menu-or-a-page-introduction) · [Edit the Work with us page](#edit-the-work-with-us-page)
+  - Files: [Add images and files](#add-images-and-files) · [Hide, remove, or reorder](#hide-remove-or-reorder)
+- [Site rules](#site-rules): what the site chooses by itself, and where to change each rule
+- [When the check fails](#when-the-check-fails)
+- [Publication blog pages](#publication-blog-pages)
 
-## 1. Five ideas that explain the site
+## How every change works
 
-### One folder per page
+1. **Open the file.** Use the **Start** link of an action to create a page, or open an existing file on GitHub and select the pencil icon.
+2. **Edit.** Replace every `TODO`. The check fails while one is left.
+3. **Commit.** Select **Commit changes**, then **Create a new branch for this commit and start a pull request**, with a short branch name such as `news/acl-2026`.
+4. **Open the pull request.** Select **Create pull request**, with base branch `hugoblox-template`.
+5. **Upload files** (images, PDFs) into the page folder of your branch, as in [Add images and files](#add-images-and-files).
+6. **Wait for the check.** The **Validate content and build** check runs on every commit: yellow is running, green is fine, red lists the problems (see [When the check fails](#when-the-check-fails)).
+7. **Merge.** Select **Merge pull request**, or ask the maintainer. The site updates a few minutes later at <https://nlp.unibo.it/>.
 
-Every page of the site is a folder.
-The folder holds a text file named `index.md` and the images or PDFs that only this page uses.
-For example, a news item lives in `content/news/acl-2026/index.md`.
-A person is the one exception: the file is named `_index.md`, with an underscore.
+Five rules for the front matter, the block between the two `---` lines at the top of each file:
 
-The name of the folder is the **slug**.
-A slug becomes part of the web address of the page.
-Use lowercase letters, numbers, and hyphens only, such as `acl-2026`.
-Do not rename a folder after publication, because every existing link to it would break.
-If you must move a published page, keep its old path in a list named `aliases` in its front matter, so that old links still work.
-
-### Front matter
-
-The **front matter** is the block at the top of the file, between two lines that contain only `---`.
-It stores the details of the page, one per line, as `name: value`.
-Each of these names is a **field**, such as `title` or `date`.
-The text below the second `---` is the **body** of the page.
-
-The body uses **Markdown**, a plain-text format.
-Write `**bold**` for **bold** and `*italic*` for *italic*.
-Write `## Heading` for a heading and `- item` for a list item.
-Write `[text](https://example.com/)` for a link.
-
-The front matter uses **YAML**, a format that is sensitive to layout.
-Follow these rules to avoid most errors:
-
-1. Indent with spaces, never with tabs.
-2. Keep the indentation of lists exactly as in the template.
-3. Write dates as `YYYY-MM-DD`, for example `2026-05-20`.
-4. Put double quotes around a value that contains a colon or a hash sign, for example `title: "LLMs: a survey"`.
-5. Never delete either `---` line.
-6. A line that starts with `#` is a **comment**: a note for editors that the site ignores.
-
-### Where files go
-
-Each kind of content has its own folder under `content/`.
-
-| Content | Folder |
+| Rule | Example |
 | --- | --- |
-| Publications | `content/publication/` |
-| News items | `content/news/` |
-| People | `content/authors/` |
-| Theses | `content/theses/` |
-| Research proposals | `content/proposals/<topic>/` |
-| Projects | `content/projects/` |
-| Tools | `content/tools/` |
-| Research areas | `content/research/` |
-| Homepage | `content/_index.md` |
-| Menu | `config/_default/menus.yaml` |
+| Indent with spaces, never tabs | `  - Federico Ruggeri` |
+| Dates as `YYYY-MM-DD` | `date: 2026-05-20` |
+| Quote values with `:` or `#` | `title: "LLMs: a survey"` |
+| Never delete a `---` line | |
+| `#` starts a comment for editors | `# One sentence` |
 
-Publications, projects, and theses use one `categories` value to choose the list they appear in.
-The check rejects a missing or unknown value.
+A page with `draft: true` is never published. A page with a future `date` appears on that day (the site rebuilds daily at 04:00 UTC).
+Never rename a published folder: links to it would break.
 
-| Folder | Allowed `categories` values |
-| --- | --- |
-| `content/publication/` | `Journal`, `Conference`, `Workshop`, `Preprint` |
-| `content/projects/` | `International project`, `National project` |
-| `content/theses/` | `Master thesis`, `Bachelor thesis` |
+## Quick map
 
-Several fields take **topics**: keys from `data/topics.yaml` that appear as tags.
-The keys are `legal`, `argument-mining`, `fairness`, `ethics`, `llms`, `industry`, `privacy`, `information-retrieval`, `sustainability`, `prototype`, `toolkit`, `multimodal`, `reproducibility`, `benchmark`, `speech`, `interpretability`, `llm-reasoning`, `biomedical`, `dialogue`, `knowledge-extraction`, `model-compression`, `fact-checking`, `hate-speech`, `subjectivity`, `annotation`, `sentiment`, and `education`.
-Ask the maintainer to add a new topic.
+| I want to... | File | Action |
+| --- | --- | --- |
+| Add a paper | `content/publication/<slug>/index.md` | [Add a publication](#add-a-publication) |
+| Fix a venue, add a DOI, change topics | the same file | [Change a publication](#change-a-publication) |
+| Announce something | `content/news/<slug>/index.md` | [Add a news item](#add-a-news-item) |
+| Add or update a person | `content/authors/<first-last>/_index.md` | [Add or update a person](#add-or-update-a-person) |
+| Add a thesis | `content/theses/<year><name>/index.md` | [Add a thesis](#add-a-thesis) |
+| Offer a thesis topic | `content/proposals/<topic>/<slug>/index.md` | [Add a research proposal](#add-a-research-proposal) |
+| Add a project or a tool | `content/projects/` or `content/tools/` | [Add a project](#add-a-project), [Add a tool](#add-a-tool) |
+| Add a focus topic to a research area | `content/research/<area>/index.md` | [Add a research focus card](#add-a-research-focus-card) |
+| Add a venue or change its rank | `data/venues.yaml` | [Add a publication](#add-a-publication), step 3 |
+| Add a keyword | `data/tags.yaml` | [Add a publication](#add-a-publication), step 4 |
+| Change the email forms | `content/work-with-us/index.md` | [Edit the Work with us page](#edit-the-work-with-us-page) |
 
-### Preview and review
-
-The GitHub website cannot preview the site.
-Instead, every change goes through a **pull request**: a proposal to change the site, which others can read before it takes effect.
-A pull request lives on a **branch**, a separate copy of the files where your edits wait.
-GitHub runs an automatic **check** on every pull request.
-The check reads every page and builds the whole site, and it reports each problem it finds.
-The live site does not change until the pull request is merged.
-
-### Publishing
-
-**Merging** a pull request copies your branch into the main version of the site, the branch named `hugoblox-template`.
-GitHub then rebuilds the site and publishes it at <https://nlp.unibo.it/> within a few minutes.
-A page with `draft: true` in its front matter is never published.
-A page with a future date stays hidden until that date.
-The site rebuilds every day at 04:00 UTC, so such a page appears on the morning of its date.
-
-## 2. What appears where
-
-Each row says where you create the content, where the site shows it without further work, and what you still have to do by hand.
-
-| Content | Where you create it | Where it shows up automatically | What it does NOT do automatically |
-| --- | --- | --- | --- |
-| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when its venue is a top venue, as described in [How the Highlights carousel chooses papers](#how-the-highlights-carousel-chooses-papers). The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Latest topics" of those authors, when the paper is from the last two years and is neither a workshop paper nor tagged `shared task`. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
-| News item | `content/news/<slug>/index.md` | The News page timeline, with its topic tags. The homepage News block, while it is among the six newest (the three newest as cards) | No page of its own: the preview shows only the title, the venue, the summary, and the links of the body. No topic tags on the homepage. Not on profile pages, even with an `authors` list. No publication entry |
-| Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. Up to three "Latest topics" on the card and the profile, computed from their publications. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
-| Thesis | `content/theses/<year><name>/index.md` | "Work done with students" on the Work with us page, with its topics. The Theses list at `/theses/`. The profile page of the student, when the student has one | Not on the News page or the homepage. No link to the supervisors, who are not listed |
-| Research proposal | `content/proposals/<topic>/<slug>/index.md` | A card on the Work with us page, under its topic filter. Opening the card shows the whole proposal; the proposal has no page of its own | No news item. A topic folder that does not exist yet needs its own `_index.md` first |
-| Project | `content/projects/<slug>/index.md` | A card and a timeline entry on the Projects page, with scope and topic filters. The three newest projects (by `date`) in a step of the Work with us page | No page of its own: the address of the project redirects to `external_link`. No link to its publications or people |
-| Tool | `content/tools/<slug>/index.md` | A band on the Tools page, newest `date` first. A **Paper** link chip, when `publication` names a publication folder | No page of its own: the address of the tool redirects to `external_link`. Not on the homepage. The publication page does not mention the tool |
-| Research area | `content/research/<slug>/index.md` | A card in the homepage Research block, ordered by `weight`. A band on the Research page. Its own page at `/research/<slug>/`, which lists the publications whose `focus` field names one of its topics | Publications are not matched by `topics`: only their `focus` field counts. No menu entry |
-| Homepage block | `content/_index.md` | The block texts and the number of items it shows | The News, Latest papers, and Research blocks choose their items themselves: you cannot pick items there |
-| Menu | `config/_default/menus.yaml` | The top menu on every page | A new page never adds itself to the menu |
-
-## 3. Recipes
-
-Every recipe follows the same pattern.
-
-1. Select the **Start** link of the recipe.
-   GitHub opens a new file, already named and filled with a template.
-2. Change the placeholder folder name in the file name box into your slug.
-3. Replace every `TODO` text.
-   The check fails while a `TODO` text is left, so you cannot publish an unfinished page by mistake.
-4. Select **Commit changes** and open a pull request, as described in [5. Publish your change](#5-publish-your-change).
-5. Upload images or PDFs into the same folder of your branch, as described in [Add images and files](#add-images-and-files).
-
-The fastest alternative is to copy an existing page of the same kind and edit it.
-To edit an existing page, open its file on GitHub and select the pencil icon.
-
-### Add images and files
-
-Images and PDFs live in the folder of the page that uses them.
-Upload them after you have opened the pull request, so that they land in your branch:
-
-1. On the pull request page, select your branch name, shown under the title.
-   GitHub opens the files of your branch.
-2. Open the folder of your page.
-3. Select **Add file**, then **Upload files**, and drag the files in.
-4. Choose **Commit directly to the `<your-branch>` branch**, then select **Commit changes**.
-
-Follow these rules for every file:
-
-- Keep each file at most 5 MiB.
-- Use lowercase letters, numbers, and hyphens in file names, with no spaces.
-- File names are case sensitive: `Featured.PNG` is not `featured.png`.
-- Use the exact names that a recipe asks for, such as `featured.png` or `avatar.jpg`.
-- Upload only files that you may publish, with no private data.
+## Actions
 
 ### Add a publication
 
-**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20With%20a%20drawn%20card.svg%20in%20the%20folder%3A%20what%20it%20shows%20and%20its%20source%0Acard_caption%3A%20%22%22%0A%23%20Keywords.%20Add%20student%20publication%20for%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A%23%20Research%20focus%20topics%2C%20as%20%3Carea%3E%2F%3Ckey%3E%2C%20such%20as%20am%2Ffallacies%0Afocus%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint%0Acategories%3A%0A%20%20-%20Conference%0A%23%20For%20a%20conference%20or%20a%20journal%3A%20the%20venue%20key%20in%20data%2Fvenues.yaml%2C%20whose%20rank%20selects%20the%20Highlights%0Avenue_key%3A%20%22TODO%22%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Write%20it%20only%20for%20a%20paper%20from%20a%20top%20venue%20or%20of%20the%20current%20year%3B%20without%20it%2C%20the%20title%20opens%20the%20paper.%20--%3E%0A)
+**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20With%20a%20drawn%20card.svg%20in%20the%20folder%3A%20what%20it%20shows%20and%20its%20source%0Acard_caption%3A%20%22%22%0A%23%20Keywords%20from%20data%2Ftags.yaml%3B%20add%20a%20new%20one%20there.%20student%20publication%20lists%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A%23%20Research%20focus%20topics%2C%20as%20%3Carea%3E%2F%3Ckey%3E%2C%20such%20as%20am%2Ffallacies%0Afocus%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint%0Acategories%3A%0A%20%20-%20Conference%0A%23%20For%20a%20conference%2C%20journal%2C%20or%20workshop%3A%20the%20venue%20key%20in%20data%2Fvenues.yaml%2C%20whose%20rank%20selects%20the%20Highlights%0Avenue_key%3A%20%22TODO%22%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Write%20it%20only%20for%20a%20paper%20from%20a%20top%20venue%20or%20of%20the%20current%20year%3B%20without%20it%2C%20the%20title%20opens%20the%20paper.%20--%3E%0A)
 
-Name the folder after the first author, `etal`, the year, and one keyword, such as `rossi-etal-2026-example`.
-A folder holds these files:
+**Folder:** `content/publication/<first-author>-etal-<year>-<keyword>/`, such as `rossi-etal-2026-example/`.
 
 ```text
-content/publication/rossi-etal-2026-example/
-├── index.md       the page
-├── cite.bib       the BibTeX record behind the Cite button
-├── card.svg       a drawn schema of the core idea, optional
-└── featured.png   the main figure from the paper, optional
+index.md     the page (required)
+cite.bib     the BibTeX record behind the Cite button (expected)
+card.svg     a drawn schema of the core idea (optional, ask the maintainer)
+featured.png the main figure of the paper (optional)
 ```
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `"Let Guidelines Guide You"` | The paper title, without LaTeX commands such as `\textbf` |
-| `authors` | Required | `- Federico Ruggeri` | One author per line, starting with `- `. Spell lab members exactly as the `title` of their profile, so that their name is bold and links to the profile |
-| `date` | Required | `2026-05-20` | The publication date. It orders every list and places the paper on the News timeline |
-| `publishDate` | Optional | `2026-05-20` | The day the page appears. Usually the same as `date` |
-| `publication_types` | Required | `- paper-conference` | Exactly one of `article-journal` (journal), `paper-conference` (conference or workshop), `article` (preprint), or `chapter` (book chapter) |
-| `categories` | Required | `- Conference` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint` |
-| `venue_key` | Required for `Conference`, `Journal`, and `Workshop` | `acl` | The venue's key in `data/venues.yaml`. Its `name`, the full venue name with the acronym in brackets, is what every list and page shows, and its `rank` decides whether the paper enters the Highlights carousel. Add a missing venue there |
-| `publication` | Optional | `"Proceedings of the 64th Annual Meeting of the Association for Computational Linguistics"` | The exact proceedings or journal title, kept for the citation. The site shows the venue `name` from `venue_key` instead |
-| `abstract` | Optional | `"We introduce ..."` | Shown in full on the publication page |
-| `summary` | Optional | `"GCAM has annotators report ..."` | One sentence, shown under the title and on publication cards. Every highlight needs one |
-| `card_summary` | Optional | `"Annotators report guidelines, not labels."` | At most 15 words. Replaces the summary on the homepage card |
-| `card_caption` | With `card.svg` | `"The two subtasks. Schema built from Section 3 of the paper."` | One or two sentences that say what `card.svg` shows and name its source. A drawn `card.svg` is the first figure of the publication page, and this is its caption |
-| `doi` | Optional | `10.18653/v1/2024.argmining-1.7` | Without `https://doi.org/`. A paper with a DOI shows no arXiv link anywhere on the site |
-| `url_pdf`, `url_code`, `url_dataset`, `url_project`, `url_video`, `url_slides`, `url_poster` | Optional | `https://aclanthology.org/...` | Each becomes a button. `url_project` is labeled Demo |
-| `links` | Optional | `- name: arXiv` then `  url: https://arxiv.org/abs/...` | Extra buttons, each with a `name` and a `url`. An arXiv entry is hidden once the paper has a `doi` |
-| `topics` | Optional | `[argument-mining, llms]` | One to three topic keys. They feed the topic filter of the Publications page and the "Latest topics" of the lab authors |
-| `focus` | Optional | `[am/fallacies, speech/arguments]` | Research focus topics, as `<area>/<key>` of a `focus` topic in `content/research/<area>/index.md`. The paper appears in the Our focus section of each area |
-| `tags` | Optional | `- argument mining` | Keywords. Add `student publication` to list the paper under "Work done with students". Add `shared task` to a shared task overview or participation paper, which then does not count for "Latest topics" |
-| `award` | Optional | `Best Paper Award` | Shown with a trophy under the title in every publication list |
-| `affiliations` | Optional | `- University of Bologna` | Institution names shown under the authors |
-| `featured` | Optional | `false` | Leave it `false`: the venue rank selects the highlights |
+**Steps**
 
-Then add the citation file:
+1. **Basics.** `title`, `authors` (one per line; write lab members exactly as their profile `title`), `date`.
+2. **Kind.** `categories`: one of `Journal`, `Conference`, `Workshop`, `Preprint`. `publication_types`: `article-journal`, `paper-conference` (conference or workshop), `article` (preprint), or `chapter`.
+3. **Venue and rank.** Set `venue_key` to a key of [`data/venues.yaml`](../data/venues.yaml) (required for Journal, Conference, Workshop).
+   For a new venue, add it there:
 
-1. In the folder of your publication on your branch, select **Add file**, then **Create new file**.
-2. Name it `cite.bib` and paste the complete BibTeX record.
-3. Do not add a `note` field with internal ratings, because readers download this file.
+   ```yaml
+   tacl:
+     name: "Transactions of the Association for Computational Linguistics (TACL)"  # full name (ACRONYM)
+     rank: "Q1"         # conference: ICORE class A*, A, B, C; journal: SJR best quartile Q1 to Q4; workshop: ""
+     source: SJR 2024   # the edition the rank comes from
+   ```
 
-Images:
+   - Conference rank: [ICORE portal](https://portal.core.edu.au/conf-ranks/). Journal rank: [SCImago](https://www.scimagojr.com/journalrank.php).
+   - Findings papers use their own key (such as `findings-acl`) with the rank of the main conference.
+   - The rank decides the Highlights (see [Site rules](#highlights)).
+4. **Topics and keywords.**
+   - `topics`: one to three keys from the closed list below. They are the tags shown on cards and the topic filters.
+   - `tags`: keywords from [`data/tags.yaml`](../data/tags.yaml). Reuse an existing keyword when one fits. For a genuinely new one, add it to `data/tags.yaml` in the same pull request.
+   - The check rejects a keyword missing from `data/tags.yaml`, and names the existing keyword when yours only differs in case, spaces, hyphens, a final s, or a typo.
+   - Two keywords change lists: `student publication` (listed under "Work done with students") and `shared task` (not counted in "Latest topics").
+5. **Links.** `doi` without `https://doi.org/`. Optional buttons: `url_pdf`, `url_code`, `url_dataset`, `url_project` (Demo), `url_video`, `url_slides`, `url_poster`, `links`.
+6. **Text.** `summary`: one sentence, shown under the title and on cards. `abstract`: optional.
+7. **Citation.** In the folder, select **Add file**, **Create new file**, name it `cite.bib`, and paste the BibTeX record. No internal notes.
+8. **Optional.** `focus: [<area>/<key>]` to list the paper on a research focus card ([Add a research focus card](#add-a-research-focus-card)). `award: Best Paper Award` for a trophy line.
 
-- `card.svg` is a drawn schema of the core idea of the paper, with four to seven boxes and short labels.
-  When present, it is the first figure of the publication page and the figure on every card, and `card_caption` captions it.
-  Drawing one needs some code, so ask the maintainer for it.
-- `card.png` is an optional simpler image, 1600 by 1000 pixels with large text, for cards when there is no `card.svg`.
-- `featured.png` (or `featured.jpg`) is the most representative figure of the paper.
-  It is the teaser of the page and the card preview only when the folder has no `card.svg` (and no `card.png` for cards).
-  The Our focus cards of the research areas never show it, because a figure from the paper is hard to read at that size.
-- `teaser.mp4` is an optional short video that replaces the teaser figure on the page.
-- Write the source of `featured.png` in `image: caption:`, such as "(Figure 1 of the paper)".
-  Reuse a figure only when its source is openly licensed, such as arXiv, the ACL Anthology, or CEUR-WS.
-- Give every paper from a top venue a `summary` and a figure, because its Highlights card shows them.
+Topic keys: `legal`, `argument-mining`, `fairness`, `ethics`, `llms`, `industry`, `privacy`, `information-retrieval`, `sustainability`, `prototype`, `toolkit`, `multimodal`, `reproducibility`, `benchmark`, `speech`, `interpretability`, `llm-reasoning`, `biomedical`, `dialogue`, `knowledge-extraction`, `model-compression`, `fact-checking`, `hate-speech`, `subjectivity`, `annotation`, `sentiment`, `education`.
+To add a topic, add a key with a `label` to [`data/topics.yaml`](../data/topics.yaml) and ask the maintainer to review it.
 
-What else to update:
+**Result**
 
-- **Acceptance news.** The homepage News block lists news items only.
-  For an acceptance, [add a news item](#add-a-news-item) dated on the day of the acceptance.
-  Use the paper title as the news title, write the venue in `venue`, tag it `paper`, and leave out `summary`.
-  Link the publication page, such as `[Read more](/publication/rossi-etal-2026-example/)`.
-- **Research area.** To list the paper on a research area page, name the area and the topic in its `focus` field, such as `focus: [am/fallacies]`.
-  The newest paper of a topic is shown as Current when it is dated within the last two years, and the others as Past work.
-- **Tool.** When the paper describes a tool, set `publication: <folder name>` in the tool.
+![A row of the Publications page: title, authors, venue, topics, link buttons](img/pub-list.webp)
 
-Common mistakes:
+![The header of a publication page: kind, venue and year, title, summary, authors, topics, buttons](img/pub-page.webp)
 
-- An author spelled in two ways, such as with and without an accent, creates two people.
-  The check reports `authors term '...' conflicts with '...'`.
-- The paper is missing from the expected list because `categories` selects another one.
-- A published paper loses its arXiv link once it has a `doi`, because the venue version replaces it.
-  This is intended. Point the `url` of `cite.bib` to the DOI as well.
-- No `cite.bib` file: the check warns `missing cite.bib`, and the Cite button is missing.
+| Where | When |
+| --- | --- |
+| Publications page, under its year, with filters | Always |
+| Its own page `/publication/<slug>/` | Only with a body; otherwise the title opens the DOI, arXiv, PDF, or first link |
+| Highlights carousel | Top venue, last four years, among the 12 newest ([rule](#highlights)) |
+| Homepage "Latest papers" | Among the 3 newest by `date` |
+| News page timeline, as Paper or Preprint | Always, on its `date` |
+| Profile of each lab author, and their "Latest topics" | Name spelled as the profile `title` ([rule](#latest-topics-of-people)) |
+| A research focus card | Its `focus` names that card |
+| "Work done with students" on Work with us | `tags` includes `student publication` |
 
-The body of the file can stay empty.
-A publication without a body has no page of its own: its title opens the paper, through the DOI, the arXiv page, the PDF, or the first link, in this order, and its old address redirects there.
-A preprint shows "Preprint" in place of a venue, or "arXiv preprint" when `publication` names arXiv.
-Write a body only for a highlighted paper or a paper of the current year; see [6. Publication blog pages](#6-publication-blog-pages).
+Not automatic: a news item for the acceptance ([Announce an accepted paper](#announce-an-accepted-paper)).
+
+### Change a publication
+
+Open `content/publication/<slug>/index.md` and edit the field.
+
+| Change | Edit | Consequence |
+| --- | --- | --- |
+| The paper got a DOI | Add `doi`. Point `url` in `cite.bib` to `https://doi.org/...` | Every arXiv link disappears ([rule](#venue-names-and-arxiv-links)) |
+| Preprint became a paper | `categories` to `Journal`/`Conference`/`Workshop`, add `venue_key`, `doi` | Moves to its list; may enter Highlights |
+| Wrong venue name | Fix `name` in `data/venues.yaml` | Changes every paper of that venue |
+| Different topics | `topics` | Filters, tags, and authors' Latest topics follow |
+| Show on a focus card | `focus: [am/fallacies]` | Appears on that card ([rule](#research-focus-current-and-past-work)) |
+| Better card figure | Upload `card.svg` and set `card_caption` | Replaces `featured.png` on cards and the page ([rule](#publication-figures)) |
 
 ### Add a news item
 
 **Start:** [create `content/news/short-name-2026/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/news/short-name-2026/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Headline%22%0A%23%20YYYY-MM-DD.%20A%20future%20date%20keeps%20the%20item%20hidden%20until%20that%20day.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20tag%20paper%2C%20special%20issue%2C%20shared%20task%2C%20workshop%2C%20or%20event%20sets%20the%20label.%20Otherwise%3A%20News.%0Atags%3A%0A%20%20-%20news%0Asummary%3A%20%22TODO%3A%20At%20most%20two%20sentences.%22%0A%23%20Optional%2C%20shown%20in%20italics%20under%20the%20title%2C%20such%20as%20a%20venue%20or%20a%20journal%0Avenue%3A%20%22%22%0A%23%20Keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A---%0A%0A-%20%5BTODO%3A%20Link%20text%5D%28https%3A%2F%2FTODO%29%0A)
 
-A news item has no page of its own.
-Its preview on the News page and on the homepage shows the title, the venue, the summary, and the links of its body.
-The title, the summary, and the links must therefore make sense on their own.
+**Steps**
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `"Paper accepted at ACL 2026"` | The headline. For an acceptance, the paper title |
-| `date` | Required | `2026-05-20` | A future date keeps the item hidden until that day |
-| `summary` | Required, except for an acceptance tagged `paper` | `"The special issue invites contributions on legal argument mining."` | At most two sentences, shown whole on the homepage card. Leave it out for an acceptance: the paper title and the venue already say it, and a summary such as "Accepted." repeats them |
-| `tags` | Optional | `- paper` | Sets the label of the preview, see below |
-| `venue` | Optional | `"Transactions of the Association for Computational Linguistics (TACL)"` | Shown in italics under the title, such as the journal of a call for papers |
-| `topics` | Optional | `[argument-mining]` | Topic keys, preferably those of the research areas. Shown on the News page only |
+1. `title` and `date` (a future date hides the item until that day).
+2. `summary`: at most two sentences. It is shown whole on the homepage card.
+3. `tags`: one tag sets the label (first match wins): `paper` Paper, `special issue` Call for papers, `shared task` Shared task, `workshop` Workshop, `event` Event, anything else News.
+4. Optional: `venue` (italic line under the title), `topics` (shown on the News page).
+5. Body: a list of links, each becomes a button: `- [Conference website](https://...)`. Upload a PDF to the folder and link it by name.
 
-The tags set the label of the preview.
-The first matching rule wins:
+**Result**
 
-| Tag | Label |
+![Homepage News block: three cards, then compact rows](img/home-news.webp)
+
+![News page timeline grouped by year](img/news-page.webp)
+
+- Homepage News block: the 6 newest news items, the first 3 as cards. Publications never appear there.
+- News page: every news item and every publication, newest first, with a kind filter.
+- No page of its own: title, summary, and links must make sense alone.
+
+### Announce an accepted paper
+
+Same as [Add a news item](#add-a-news-item), with:
+
+| Field | Value |
 | --- | --- |
-| `paper` | **Paper** |
-| `special issue` | **Call for papers** |
-| `shared task` | **Shared task** |
-| `workshop` | **Workshop** |
-| `event` | **Event** |
-| any other | **News** |
+| `title` | The paper title, exactly |
+| `date` | The acceptance day |
+| `venue` | The full venue name with acronym, as in `data/venues.yaml` |
+| `tags` | `[news, paper]` |
+| `summary` | Leave it out: title and venue already say it |
+| Body | `- [Paper](https://doi.org/...)` or `- [Read more](/publication/<slug>/)` |
 
-Below the front matter, write a list of links.
-Each link becomes a button on the preview.
+Consequence: the item shows on the homepage. Once the publication page exists with the same title, the News page shows only the publication, so the paper appears once.
 
-```markdown
-- [Conference website](https://2026.aclweb.org/)
-- [Programme](programme.pdf)
-```
+### Change a news item
 
-Upload a PDF, such as a programme, into the same folder and link it by its file name.
-A website with more content, such as a shared task, lives in its own section, such as `content/mm-argfallacy/2025/`, and the news item links to it.
-Ask the maintainer to set up such a section.
-
-What else to update: nothing.
-A new publication needs no news item, because it joins the News timeline by itself.
-Only an acceptance needs one.
-
-Common mistakes:
-
-- A summary longer than two sentences, which crowds the homepage card.
-- A link to a file that you did not upload, or uploaded with a different name.
-  The check reports `local link '...' does not exist`.
-- An email written as a plain address.
-  Write `[Write to us](mailto:name@unibo.it)`.
+Open `content/news/<slug>/index.md`. Edit `title`, `summary`, or the links. Changing `date` moves the item on both lists.
 
 ### Add or update a person
 
 **Start:** [create `content/authors/firstname-lastname/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/authors/firstname-lastname/_index.md&value=---%0A%23%20The%20full%20name%2C%20exactly%20as%20in%20publications.%20The%20folder%20name%20is%20this%20name%20in%20lowercase%20with%20hyphens.%0Atitle%3A%20%22TODO%3A%20Firstname%20Lastname%22%0Afirst_name%3A%20%22TODO%3A%20Firstname%22%0Alast_name%3A%20%22TODO%3A%20Lastname%22%0Asuperuser%3A%20false%0Aorganizations%3A%0A%20%20-%20name%3A%20University%20of%20Bologna%0A%20%20%20%20url%3A%20%22https%3A%2F%2Fwww.unibo.it%2F%22%0A%23%20One%20sentence%2C%20shown%20on%20the%20People%20page%0Abio%3A%20%22TODO%3A%20One%20sentence%20on%20your%20research.%22%0Ainterests%3A%0A%20%20-%20Natural%20Language%20Processing%0Asocial%3A%0A%20%20-%20icon%3A%20envelope%0A%20%20%20%20icon_pack%3A%20fas%0A%20%20%20%20link%3A%20%22mailto%3ATODO%40unibo.it%22%0Aemail%3A%20%22TODO%40unibo.it%22%0Ahighlight_name%3A%20true%0A%23%20Exactly%20one%20of%20Members%2C%20Associate%20Fellows%2C%20External%20Collaborators%2C%20Former%20Members%0Auser_groups%3A%0A%20%20-%20Members%0A%23%20Lower%20values%20appear%20first%20in%20the%20group%0Aweight%3A%20100%0A%23%20Keep%20it%3A%20only%20People%20entries%20get%20a%20profile%20page%0Abuild%3A%0A%20%20render%3A%20always%0A---%0A%0ATODO%3A%20A%20longer%20biography%2C%20in%20a%20few%20sentences.%0A)
 
-Name the folder after the full name in lowercase, with hyphens and no accents, such as `maria-rossi`.
-The folder must match the `title`: the check rejects `maria-rossi` for a profile titled `Mario Rossi`.
+**Folder:** the full name in lowercase with hyphens and no accents, matching `title`: `maria-rossi` for `Maria Rossi`.
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `Maria Rossi` | The full name exactly as in publications |
-| `first_name`, `last_name` | Required | `Maria`, `Rossi` | Used for the initials when there is no photo |
-| `build` | Required | `render: always` | Keep it as in the start link. Only People entries get a profile page; every other author name is plain text |
-| `user_groups` | Required | `- Members` | Exactly one of `Members`, `Associate Fellows`, `External Collaborators`, or `Former Members`, with this spelling. It selects the section of the People page. External collaborators are people outside the lab with whom we have active research proposals |
-| `email` | Required, except for former members | `maria.rossi@unibo.it` | Also used when a proposal names this person as a contact |
-| `weight` | Optional | `100` | Orders people within a group. Lower values appear first |
-| `bio` | Optional | `"Her research ..."` | One sentence, shown on the People page card |
-| `interests` | Optional | `- Argument Mining` | One interest per line |
-| `social` | Optional | see below | Icons with links, shown on the profile and the card |
-| `highlight_name` | Optional | `true` | Keep it `true`: it shows the person in bold in author lists |
-| `role` | Do not set | | Only the head and the deputy of the lab set it |
+**Steps**
 
-Social links use these icons:
+1. `title` (full name exactly as in publications), `first_name`, `last_name`.
+2. `user_groups`: one of `Members`, `Associate Fellows`, `External Collaborators`, `Former Members`.
+3. `email` (required except for former members; used by proposal contacts), `bio` (one sentence), `weight` (lower comes first).
+4. `social` links: University page `university`/`fas`, email `envelope`/`fas`, website `globe`/`fas`, GitHub `github`/`fab`, LinkedIn `linkedin`/`fab`, Scholar `google-scholar`/`ai`.
+5. Upload one square `avatar.jpg` (or `.png`). Without it, the initials appear.
+6. Body: the longer biography for the profile page. Do not set `role` (head and deputy only).
 
-| Link | `icon` | `icon_pack` |
-| --- | --- | --- |
-| University of Bologna page, listed first | `university` | `fas` |
-| Email, as `mailto:...` | `envelope` | `fas` |
-| Personal website | `globe` | `fas` |
-| GitHub | `github` | `fab` |
-| LinkedIn | `linkedin` | `fab` |
-| Google Scholar | `google-scholar` | `ai` |
+**Result**
 
-The body below the front matter is the longer biography on the profile page.
+![A People card: photo, name, bio, Latest topics, social icons](img/person-card.webp)
 
-The card and the profile show up to three "Latest topics", which need no field.
-They are the most frequent `topics` of the person's publications of the last two years.
-Workshop papers, papers tagged `shared task`, and the `prototype` topic do not count.
-On a tie, the topic of more papers with the person as first author comes first.
-A person without such publications shows no Latest topics.
+![A profile page: photo, name, affiliation, Latest topics, social icons, biography](img/profile.webp)
 
-Images: upload one square photo named `avatar.jpg` or `avatar.png`, at most 5 MiB.
-Keep only one avatar file in the folder, because the site shows only the first one it finds.
-Without a photo, the People page shows the initials.
+- People page card in the chosen group; profile page `/author/<folder>/` with publications and theses.
+- "Latest topics" are computed, never written ([rule](#latest-topics-of-people)).
+- The name becomes bold and linked in every author list that spells it exactly as `title`.
 
-To update a person, open `content/authors/<folder>/_index.md` and select the pencil icon.
-When a member leaves the lab, set `user_groups` to `Former Members`.
-Former members may omit `email`.
-Keep the folder, because their publications still link to it.
-
-Common mistakes:
-
-- A folder name that does not match the title.
-  The check reports `author slug must be '...'` with the right name.
-- A group spelled differently, such as `Member`.
-  The check reports `user_groups must be exactly one of ...`.
-- A name spelled differently in publications, which leaves those publications off the profile.
+**Leaves the lab:** set `user_groups: [Former Members]`. Never delete the folder.
 
 ### Add a thesis
 
 **Start:** [create `content/theses/2026firstnamelastname/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/theses/2026firstnamelastname/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Thesis%20title%22%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20Student%20Name%22%0A%23%20The%20graduation%20date%2C%20YYYY-MM-DD%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Adoi%3A%20%22%22%0Apublication_types%3A%0A%20%20-%20thesis%0Apublication%3A%20%22%22%0Apublication_short%3A%20%22%22%0Aabstract%3A%20%22%22%0Asummary%3A%20%22%22%0A%23%20For%20a%20bachelor%20thesis%2C%20write%20bachelor%20thesis%20here%20and%20Bachelor%20thesis%20in%20categories.%0Atags%3A%0A%20%20-%20master%20thesis%0A%20%20-%20student%0A%23%20The%20AMS%20Laurea%20record%2C%20which%20every%20list%20links%20to%0Aexternal_link%3A%20%22TODO%3A%20https%3A%2F%2Famslaurea.unibo.it%2Fid%2Feprint%2F...%22%0Acategories%3A%0A%20%20-%20Master%20thesis%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A---%0A)
 
-Name the folder after the year and the student's name, without hyphens, such as `2026mariarossi`.
+| Field | Value |
+| --- | --- |
+| Folder | `<year><name>`, such as `2026mariarossi` |
+| `title`, `authors`, `date` | Thesis title, student name, graduation date |
+| `categories` | `Master thesis` or `Bachelor thesis` |
+| `tags` | `master thesis` and `student` (or `bachelor thesis` and `student`) |
+| `external_link` | The AMS Laurea record (or `target: /work-with-us/#student-work` without a public record) |
+| `topics` | One to three topic keys |
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `"AI solutions for ..."` | The thesis title |
-| `authors` | Required | `- Maria Rossi` | The student's name |
-| `date` | Required | `2026-03-20` | The graduation date |
-| `publication_types` | Required | `- thesis` | Keep `thesis` |
-| `categories` | Required | `- Master thesis` | `Master thesis` or `Bachelor thesis`. It sets the kind under "Work done with students" |
-| `tags` | Optional | `- master thesis` | Keep `master thesis` and `student`, or `bachelor thesis` and `student` |
-| `external_link` | Required without `target` | `https://amslaurea.unibo.it/id/eprint/...` | The thesis record, such as its AMS Laurea page. Every list links the title there |
-| `target` | Required without `external_link` | `/work-with-us/#student-work` | Only for a thesis without a public record: the old thesis address opens this page |
-| `topics` | Optional | `[llms, legal]` | One to three topic keys. They feed the topic filter under "Work done with students" |
-| `abstract`, `summary` | Optional | | Leave them empty when you have no text |
-
-A thesis needs no image and no body. It has no page of its own: its address only redirects to `external_link`.
-
-What else to update: when the thesis led to a paper, add the paper as a publication with the tag `student publication`.
-
-Common mistakes:
-
-- A bachelor thesis left with `Master thesis` in `categories`.
-- A thesis with neither `external_link` nor `target`.
-  The build reports `redirect: ... has no target or external_link`.
-- Topic keys that do not exist.
-  The check reports `topic '...' is not defined in data/topics.yaml`.
+Result: listed under "Work done with students" on Work with us and on the student's profile. No page of its own.
+When the thesis led to a paper, add the paper with the keyword `student publication`.
 
 ### Add a research proposal
 
 **Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20on%20the%20card%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20opened%20card%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
 
-Research proposals are grouped by topic under `content/proposals/`.
-Each topic is a folder whose `_index.md` holds the topic title, its `summary`, and its description.
-The topics today are `argument-mining`, `interpretability`, `legal`, and `unstructured-knowledge`.
-In the file name box, replace `legal` with the topic folder and `short-name` with your slug.
+**Folder:** `content/proposals/<topic>/<slug>/`, with topic `argument-mining`, `interpretability`, `legal`, or `unstructured-knowledge`.
+New topic first: [create `content/proposals/new-topic/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/new-topic/_index.md&value=---%0Atitle%3A%20%22TODO%3A%20Topic%20title%22%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20topic.%22%0A---%0A%0ATODO%3A%20A%20short%20description%20of%20the%20topic%2C%20in%20a%20few%20sentences.%0A)
 
-```text
-content/proposals/legal/
-├── _index.md          the topic: title, summary, description
-├── am/index.md        one proposal
-└── unfairclauses/index.md
-```
+| Field | Rule |
+| --- | --- |
+| `title`, `date` | Proposal title, day added |
+| `summary` | One sentence of about 18 words, shown on the card |
+| `brief` | Two to four sentences, at most 70 words, shown on the opened card |
+| `contacts` | Folder names in `content/authors/`, or `{name: ..., email: ...}` for someone outside the lab |
+| Body (optional) | Two sections, `## Context` and `## Objective`, about 120 words, no references |
 
-The Work with us page lists every proposal as a card, with a filter by topic.
-On phones the cards form one row that scrolls sideways.
-Opening a card shows the contacts, **Choose this proposal**, and the body (or the `brief` when there is no body).
-The old address `/proposals/<topic>/<slug>/` redirects to the proposals step of the Work with us page.
-A reader who chooses a proposal writes to its contacts.
+**Result**
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `Argument Mining on Legal Datasets` | The proposal title |
-| `date` | Required | `2026-03-02` | The day you add it |
-| `summary` | Required | `"Mine the arguments of legal documents ..."` | One sentence of about 18 words, shown on the card |
-| `brief` | Required | `"Argumentation in legal documents ..."` | Two to four sentences, at most 70 words: the problem, the idea, and what a student would do |
-| `contacts` | Required | `- andrea-galassi` | Folder names in `content/authors/`. For a person outside the lab, write `{name: Maria Rossi, email: maria.rossi@unibo.it}` |
-| `tags` | Optional | `- legal analytics` | Plain words, not abbreviations. The Work with us page does not show them |
-| `math` | Optional | `true` | Set it when the body uses LaTeX |
+![Proposal cards on the Work with us page, with a topic filter](img/proposals.webp)
 
-The body is optional, and the opened card shows it whole, so keep it short: about 120 words of prose.
-Use exactly two `##` sections, `Context` and `Objective`, with no references.
-Define every technical term at its first use.
-
-Add one schema when it helps, built only from the proposal's own definitions and captioned as such: a drawn `svg` file in the proposal folder (see `content/proposals/interpretability/llms/`), or a `pipeline` diagram.
-On phones a schema keeps a readable size and scrolls sideways inside its own box.
-
-To add a new topic, create its `_index.md` first.
-**Start:** [create `content/proposals/new-topic/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/proposals/new-topic/_index.md&value=---%0Atitle%3A%20%22TODO%3A%20Topic%20title%22%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20topic.%22%0A---%0A%0ATODO%3A%20A%20short%20description%20of%20the%20topic%2C%20in%20a%20few%20sentences.%0A)
-A topic needs `title` and `summary`.
-
-Common mistakes:
-
-- A contact that is not a folder name, such as `Andrea Galassi` instead of `andrea-galassi`.
-  The build fails with `contact "..." is not in content/authors`.
-- A contact whose profile has no `email`, such as a former member.
-  The build fails with `author "..." has no email`.
-- A proposal saved directly in `content/proposals/` instead of inside a topic folder.
+- A card on Work with us under its topic. Opening it shows the contacts, **Choose this proposal**, and the body or brief.
+- A student who chooses it writes to its contacts.
 
 ### Add a project
 
 **Start:** [create `content/projects/acronym/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/projects/acronym/index.md&value=---%0A%23%20End%20with%20the%20acronym%20in%20brackets%3A%20it%20becomes%20the%20card%20headline.%0Atitle%3A%20%22TODO%3A%20Full%20Project%20Name%20%28ACRONYM%29%22%0A%23%20The%20project%20start%2C%20YYYY-MM-DD%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20or%20more%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%0A%20%20-%20TODO-topic%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20project.%22%0A%23%20The%20project%20website%0Aexternal_link%3A%20%22https%3A%2F%2FTODO%22%0A%23%20International%20project%20or%20National%20project%0Acategories%3A%0A%20%20-%20National%20project%0A---%0A)
 
-Projects have no page of their own, so the file needs no body.
-The card links straight to the project website.
+| Field | Rule |
+| --- | --- |
+| `title` | Ends with the acronym in brackets: `Argument Mining In Covid-19 Articles (AMICA)` |
+| `date` | Project start |
+| `summary` | One sentence |
+| `external_link` | Project website |
+| `topics` | One or more topic keys |
+| `categories` | `International project` or `National project` |
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `Argument Mining In Covid-19 Articles (AMICA)` | End with the acronym in brackets. The card shows the acronym as its headline and the rest below it |
-| `date` | Required | `2021-01-01` | The project start. It orders the cards and places the project on the timeline |
-| `summary` | Required | `"The AMICA project ..."` | One sentence, shown on the card with the start year |
-| `external_link` | Required | `http://amica.unimore.it/` | The project website, opened by the Website chip |
-| `topics` | Required | `- argument-mining` | One or more topic keys, shown as tags and used by the topic filter |
-| `categories` | Required | `- National project` | `International project` or `National project`. It sets the scope label, the timeline color, and the scope filter |
+**Result**
 
-Common mistakes:
+![A project card](img/project.webp)
 
-- A title without the acronym in brackets, which leaves the card without a short headline.
-- A `categories` value spelled differently, such as `national project`.
+![The Projects timeline](img/projects-timeline.webp)
+
+- A card and a timeline entry on Projects; the three newest also appear in a Work with us step.
 
 ### Add a tool
 
 **Start:** [create `content/tools/tool-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/tools/tool-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Tool%20name%22%0A%23%20The%20first%20public%20release%2C%20YYYY-MM-DD.%20It%20orders%20the%20Tools%20page.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20or%20more%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%0A%20%20-%20toolkit%0A%23%20Web%20service%2C%20Web%20demo%2C%20or%20Python%20library%0Akind%3A%20Python%20library%0Asummary%3A%20%22TODO%3A%20What%20the%20tool%20does%2C%20in%20at%20most%20two%20sentences.%22%0A%23%20The%20tool%20website%0Aexternal_link%3A%20%22https%3A%2F%2FTODO%22%0A%23%20Optional%3A%20remove%20the%20%23%20to%20use%20a%20line.%0A%23%20schema%3A%20schema.svg%0A%23%20caption%3A%20%22What%20the%20schematic%20shows%20and%20where%20it%20comes%20from.%22%0A%23%20demo%3A%20%22https%3A%2F%2F...%22%0A%23%20code%3A%20%22https%3A%2F%2Fgithub.com%2Fnlp-unibo%2F...%22%0A%23%20publication%3A%20folder-name-in-content-publication%0A%23%20license%3A%20MIT%0A%23%20package%3A%20pypi-name%0A---%0A)
 
-The Tools page lists only systems that readers can use today: an online service or demo, or an installable package.
-A system built only to demonstrate a paper is a prototype.
-Give its publication or thesis the `prototype` topic instead.
-Each tool is one band, with a schematic on the left and its description on the right.
-The address of the tool redirects to `external_link`.
+Only systems that readers can use today (service, demo, package). A demo built only for a paper is a prototype: give its publication the `prototype` topic instead.
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `MAMKit` | The tool name |
-| `date` | Required | `2024-08-08` | The first public release. It orders the bands, newest first, and is not displayed |
-| `summary` | Required | `"MAMKit is an open-source ..."` | At most two sentences |
-| `external_link` | Required | `https://nlp.unibo.it/mamkit/` | The tool website |
-| `topics` | Required | `[argument-mining, toolkit]` | One or more topic keys |
-| `kind` | Optional | `Python library` | Shown as a pill, such as `Web service`, `Web demo`, or `Python library` |
-| `demo` | Optional | `https://...` | A web demo, shown as a chip |
-| `code` | Optional | `https://github.com/nlp-unibo/mamkit` | The source code, shown as a chip |
-| `publication` | Optional | `mancini-etal-2024-mamkit` | The folder name of the paper under `content/publication/`, shown as a Paper chip |
-| `license` | Optional | `MIT` | The license of the public code. It shows an open-source pill |
-| `package` | Optional | `mamkit` | The PyPI name. It shows the `pip install` command |
-| `schema`, `caption` | Optional | `schema.svg` | A schematic and a caption that names its source |
+| Field | Rule |
+| --- | --- |
+| `title`, `date`, `summary` | Name, first release (orders the page), at most two sentences |
+| `external_link`, `topics` | Website, topic keys |
+| `kind` | `Web service`, `Web demo`, or `Python library` |
+| Optional | `demo`, `code`, `publication` (a publication folder name), `license`, `package` (PyPI), `schema` and `caption` |
 
-In the template, the optional fields start with `#`.
-Remove the `#` and the space after it to use a field.
+**Result**
 
-The schematic is an SVG file in the tool folder, drawn with the site's `lt-s-*` style classes so that it follows the site colors.
-Drawing one needs some code, so ask the maintainer for it, or leave `schema` out.
+![A tool band: schema on the left, description and chips on the right](img/tool.webp)
 
-Common mistakes:
+### Add a research focus card
 
-- A `publication` value that names no existing folder.
-  The build fails with `publication "..." not found`.
-- A `schema` value whose file you did not upload.
-  The build fails with `tool schema "..." not found`.
+A focus card is one lab topic inside a research area, shown in the "Our focus" carousel.
+
+**File:** `content/research/<area>/index.md` (areas: `am`, `legal`, `speech`).
+
+**Steps**
+
+1. Add an entry under `focus`:
+
+   ```yaml
+   focus:
+     - key: fallacies              # unique in this area, lowercase
+       title: "Argumentative fallacies"
+       icon: exclamation-triangle  # Font Awesome 5 solid
+       summary: "At most two sentences for the card."
+       description: "Two to four sentences for the box below the carousel."
+   ```
+
+2. In each related publication, add `focus: [am/fallacies]` (`<area>/<key>`).
+3. Give the newest paper a `card.svg` and a `summary`, because the card shows them.
+
+**Result**
+
+![A focus card: title, description, Current paper with schema, Past work](img/focus.webp)
+
+- Current: the newest linked paper of the last two years, with its schema, venue, and summary. Past work: the others, by title ([rule](#research-focus-current-and-past-work)).
+- The topic title also appears on the homepage Research card of the area.
 
 ### Add a research area
 
 **Start:** [create `content/research/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/research/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Research%20area%20name%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Atags%3A%0A%20%20-%20research%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20area.%22%0A%23%20A%20Font%20Awesome%205%20solid%20icon%20name%2C%20such%20as%20comments%20or%20balance-scale%0Aicon%3A%20comments%0A%23%20Position%20on%20the%20homepage%20and%20the%20Research%20page.%20Lower%20comes%20first.%0Aweight%3A%2010%0A%23%20At%20most%2012%20words%2C%20shown%20on%20the%20homepage%20card%0Atagline%3A%20%22TODO%3A%20Tagline%22%0A%23%20dots%2C%20graph%2C%20tokens%2C%20or%20wave%0Acover_pattern%3A%20dots%0Afields%3A%0A%20%20-%20key%3A%20first-field%0A%20%20%20%20title%3A%20%22TODO%3A%20Block%20title%22%0A%20%20%20%20icon%3A%20search%0A%20%20%20%20question%3A%20%22TODO%3A%20The%20question%20this%20family%20of%20tasks%20answers.%22%0A%20%20%20%20summary%3A%20%22TODO%3A%20One%20or%20two%20sentences.%22%0A%20%20%20%20tasks%3A%0A%20%20%20%20%20%20-%20name%3A%20%22TODO%3A%20Task%20name%22%0A%20%20%20%20%20%20%20%20text%3A%20%22TODO%3A%20Given%20an%20input%2C%20the%20task%20is%20to%20produce%20an%20output.%22%0A%23%20Publications%20join%20a%20topic%20through%20their%20own%20focus%20field.%0Afocus%3A%0A%20%20-%20key%3A%20first-topic%0A%20%20%20%20title%3A%20%22TODO%3A%20Topic%20title%22%0A%20%20%20%20icon%3A%20comments%0A%20%20%20%20summary%3A%20%22TODO%3A%20At%20most%20two%20sentences.%22%0A%20%20%20%20description%3A%20%22TODO%3A%20Two%20to%20four%20sentences%20for%20a%20reader%20outside%20the%20field.%22%0A---%0A%0A%23%23%20What%20is%20TODO%3F%0A%0ATODO%3A%20Define%20the%20research%20area%20in%20three%20or%20four%20plain%20sentences.%0A)
 
-A research area is the largest page of the site, and the homepage shows one card per area.
-Agree on a new area with the maintainer first.
-The easiest start is to copy `content/research/am/index.md` and replace its content.
+A research area is a large page with interactive examples. Agree on it with the maintainer, then copy `content/research/am/index.md` and replace its content.
 
-| Field | Required | Example | Rule |
-| --- | --- | --- | --- |
-| `title` | Required | `Argument Mining` | The area name. The page header shows it alone |
-| `date` | Required | `2026-02-27` | The day you add it |
-| `summary` | Required | `"The automatic identification ..."` | One sentence |
-| `tagline` | Optional | `"Extracting, linking, evaluating ..."` | At most 12 words, shown on the homepage card and the Research page |
-| `icon` | Optional | `network-wired` | A [Font Awesome 5](https://fontawesome.com/v5/search?m=free&s=solid) solid icon name |
-| `weight` | Optional | `1` | Orders the cards. Lower values appear first |
-| `cover_pattern` | Optional | `graph` | `dots`, `graph`, `tokens`, or `wave` |
-| `definition` | Optional | Markdown text | A short answer to "What is ...?" in a box under the title |
-| `fields` | Optional | see template | One block per family of tasks. Each `key` must be unique |
-| `focus` | Optional | see template | The lab topics. Each `key` must be unique |
+![A research area band on the Research page](img/research-band.webp)
 
-How the parts work:
+Main fields: `title`, `summary`, `tagline` (at most 12 words), `icon`, `weight` (order), `definition`, `overview` (concept blocks with schemas), `fields` (task families), `focus` (focus cards), `views` (interactive examples, copied from an existing area).
 
-- The Research page gives each area a full-width band.
-  The band starts with a mosaic of its `overview` schemas and the tagline.
-  It then shows the first line of `definition` without citations, and the `focus` topic titles.
-  The one-sentence `intro` of the Research page lives in `content/research/_index.md`.
-- Define the area in plain words, either in the body under a `## What is ...?` heading or in `definition`.
-- Optional `overview` shows concept blocks under a "Core concepts" heading, two per row.
-  Each block has an `icon`, a `title`, a short `text`, and an optional `schema` SVG file in the page folder.
-- Optional `concepts` gives the background of the examples in a few Markdown paragraphs above the views.
-  It holds the notions the examples rely on, not a list of tasks.
-  Its heading is `views_title`, "Core concepts" by default.
-- The body, the definition, the core concepts, and the views share the first section band.
-- `fields` lists the families of tasks.
-  Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.
-  Selecting a block enlarges it and opens its tasks beside it.
-- `focus` lists the lab topics, which rotate in a carousel.
-  Each topic has a card `summary` and a longer `description` for the box below the carousel.
-  Publications join a topic through their own `focus` field, such as `focus: [am/fallacies]`.
-  The newest one is Current when it is dated within the last two years, and the others are Past work.
-  The card shows the Current publication with its venue and `summary`, under its `card.svg` or `card.png` when it has one (a figure taken from the paper is never used there), and lists the titles of Past work.
-  The box lists every publication with its `summary`.
-  The topic titles appear as chips on the homepage card.
+### Edit the homepage, the menu, or a page introduction
 
-Interactive views (optional `views`) add tabs under the background, one per argument model or domain.
-They are detailed data, so copy an existing view and change its text:
+| Edit | File | What you can change |
+| --- | --- | --- |
+| Homepage | [edit `content/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/edit/hugoblox-template/content/_index.md) | Hero texts (`eyebrow`, `title`, `text`), block titles, News `count` (6) and `featured` (3), Latest papers `count` (3) |
+| Menu | [edit `config/_default/menus.yaml`](https://github.com/nlp-unibo/nlp-unibo.github.io/edit/hugoblox-template/config/_default/menus.yaml) | `name`, `url`, `weight` (lower first), `parent`. The menu must fit one line at 1280 px |
+| Page introduction | `intro` in `_index.md` of Research, Projects, Tools, News, or `content/people/index.md` | One sentence, at most 25 words |
 
-- Argument views show one argument as marked text and as a graph, side by side on wide screens and stacked on narrow ones.
-  Each view has `roles`, `segments`, `rows`, and `edges`.
-  Use `texts` instead of `segments` to show several texts side by side, such as a clause and its translation.
+![The homepage hero](img/home-hero.webp)
 
-  An `implicit` component, which the text leaves unstated, appears in a dashed box.
-  One with `kind: label` is a label assigned by the annotation, such as a category.
-  Mark [...] where text is omitted, and link the source of each example by name in its `caption`.
-  A graph view can set `graph_title` to rename its graph panel, such as Clause alignment for the cross-lingual view.
-  Copy the views of `content/research/am/index.md`.
-- A view with `type: detect` shows a document as `document` and `sections`, each with a `title` and `sentences`.
-  A marked sentence has a `category` and a `level`: 1 clearly fair, 2 potentially unfair, or 3 clearly unfair.
-  Copy the `terms` view of `content/research/legal/index.md`.
-- A view with `type: rules` also shows a document, where each clause about personal data has a `level`, a `rule`, and `parts`.
-  A part is plain `text`, or a mark with a `role` (category, specification, or subcategory) and a `type` (open or closed).
-  The view lists its annotation `rules`, each with a `level`, a number `n`, and the type that each element needs (open, closed, any, or none).
-  The check fails when the marks of a clause do not match the rule it names.
-  Copy the `privacy` view of `content/research/legal/index.md`.
-- A view with `type: voices` shows `readings` of short sentences as cue strips, beside a table of `models`.
-  Each word has `w`, a duration `dur`, an optional `pause`, a `pitch` pair from 0 to 1, and a `loud` value from 0 to 1.
-  Each reading has a `label`, a `summary`, and a `gold` answer.
-  Each model gives one of `answers` per reading.
-  Keep sentences to about four words, so that a strip fits a phone without scrolling.
-  Say in the caption that the cues and answers are constructed.
-  The check fails without readings and a `question`, on a value outside these ranges, or when a model does not give one answer per reading.
-  Copy the views of `content/research/speech/index.md`.
-
-Common mistakes:
-
-- A publication `focus` entry that names no existing topic.
-  The check reports `focus topic '...' is not a <area>/<key> of content/research`.
-- A missing or repeated `key` in `fields`, `focus`, or `views`.
-
-### Edit the homepage
-
-**Start:** [edit `content/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/edit/hugoblox-template/content/_index.md)
-
-The homepage is a list of four blocks: the hero, the Research map, the News, and the Latest papers.
-You can change the texts of each block in this file.
-They are the hero texts (`eyebrow`, `title`, `text`) and the `title` of each section.
-You can change how many items a block shows: `count` and `featured` for the News block, and `count` for Latest papers.
-The blocks choose their items themselves, so you add content through the other recipes, not here.
-
-| Block | Shows |
-| --- | --- |
-| `lt-hero` | The lab logo and the hero texts. A hero button that points to an unpublished page is hidden |
-| `lt-research` | One card per research area, ordered by `weight` |
-| `lt-news` | The newest news items (6 by default, the first 3 as cards). Publications never appear here |
-| `lt-papers` | The newest publications by `date` (3 by default), preprints included |
-
-Ask the maintainer to review every homepage change, because it affects the first page every visitor sees.
-
-### Edit the menu
-
-**Start:** [edit `config/_default/menus.yaml`](https://github.com/nlp-unibo/nlp-unibo.github.io/edit/hugoblox-template/config/_default/menus.yaml)
-
-Each menu entry has a `name`, a `url`, and a `weight`.
-Lower `weight` values appear first.
-An entry with `parent: <identifier>` appears in the dropdown of the entry with that `identifier`.
-The full menu fits on one line on screens at least 1280 pixels wide.
-After adding an entry, ask the maintainer to check that the menu still fits on one line, and shorten a label if it wraps.
-Every menu change needs review by the maintainer.
-
-### Edit a page introduction
-
-The Research, Projects, Tools, People, and News pages open with one sentence instead of their title.
-Edit it in the `intro` field of `content/research/_index.md`, `content/projects/_index.md`, `content/tools/_index.md`, `content/people/index.md`, or `content/news/_index.md`, in at most 25 words.
+Ask the maintainer to review homepage and menu changes.
 
 ### Edit the Work with us page
 
 **Start:** [edit `content/work-with-us/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/edit/hugoblox-template/content/work-with-us/index.md)
 
-The file holds the page as data.
-Ask the maintainer to review every change, because the page sends emails to the lab.
-
-- `contacts` lists the people who receive every message, as folder names in `content/authors/`, whose `email` field is used.
-  A path may set its own `contacts`.
-- `paths` has one entry per small card under "What are you looking for?".
-  The small cards move a carousel of description cards, one per path, which show the `title`, `who`, and `what`.
-  Each path has a `key`, its anchor, such as `/work-with-us/#thesis`.
-  It also has a card `label` and `summary` of at most two sentences, an `icon`, a `title`, and Markdown `who` and `what`.
-- Its `steps` appear as a numbered list when the reader clicks the centered description card or its **See the steps** pill.
-  The steps fade in as they scroll into view.
-  On wide screens, a path with more than one step also gets a side menu that links to its card and to each step.
-  Each step has a `title`, Markdown `text`, and an optional `show`.
-  The `show` field places a section in the step.
-  The sections are `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), and `contact` (the email form).
-- `inspiration: student-work` adds a last, unnumbered step with the work done with students.
-- Its `form` sets the email `subject`, which may name fields in braces such as `{proposal}`, and the `fields` to fill.
-  A field has a `type`: `text`, `textarea`, `select`, `number` (a whole number from 0, with a counter), or `month` (a month and year, written as "March 2027" in the email and never before the current month).
-  A field with `when`, such as `when: {funding: I need funding from the lab}`, appears only while the named field has that value.
-  A field with `when_more`, such as `when_more: {exams: 0}`, appears only while the named number field is above that value.
-  A month field with `after` lists date rules, such as `after: [{field: start, months: 6, message: "..."}]`.
-  Each rule keeps the email closed and shows its message until the month is at least that many months after the named field (`months: 0` means not before it).
-  The Master thesis form uses them so that the degree session is at least six months after the start and not before the end of the remaining exams.
-  A select field with `options: proposals` lists the research proposals.
-  A text field with `options: proposals` receives the title chosen with **Choose this proposal**.
-- The form opens the visitor's email app with recipients, subject, and body filled in.
-  Nothing passes through the site.
-- Without JavaScript the small cards are hidden, the description cards scroll sideways, and every path and the research proposals are visible.
-  The work done with students then stays collapsed, and each path offers a plain email link with the same subject and an empty template.
-
-## 4. Change existing content
-
-Every change to an existing page follows the same steps.
-Find the file, edit it on the GitHub website, and publish the change as in [Publish your change](#5-publish-your-change).
-
-### Find and edit a file
-
-1. Open the page on the site and note its address, for example `/publication/rossi-etal-2026-example/`.
-2. Find the matching file with the table below.
-3. On GitHub, open the file and select the pencil icon (**Edit this file**).
-4. Change the text, then select **Commit changes** and choose **Create a new branch for this commit and start a pull request**.
-
-| Page on the site | File to edit |
+| Part | Field |
 | --- | --- |
-| Homepage blocks and their titles | `content/_index.md` |
-| A publication, `/publication/<slug>/` | `content/publication/<slug>/index.md` |
-| A news item on the News page | `content/news/<slug>/index.md` |
-| A person, `/author/<name>/` | `content/authors/<name>/_index.md` |
-| A research area, `/research/<slug>/` | `content/research/<slug>/index.md` |
-| A research proposal, opened on the Work with us page | `content/proposals/<topic>/<slug>/index.md` |
-| A project or a tool | `content/projects/<slug>/index.md` or `content/tools/<slug>/index.md` |
-| The introduction of a list page, such as Publications or Tools | `_index.md` in the folder of that section |
-| The Work with us page | `content/work-with-us/index.md` |
-| The menu | `config/_default/menus.yaml` |
+| Default recipients | `contacts`: author folder names |
+| Path cards | `paths`: `key`, `label`, `summary`, `icon`, `title`, `who`, `what` |
+| Steps of a path | `steps`: `title`, `text`, optional `show`: `proposals`, `projects`, or `contact` |
+| Email form | `form`: `subject` (may use `{field}`), `fields` |
 
-A file has two parts.
-The front matter, between the two `---` lines, holds named fields such as `title` and `summary`.
-The body, after the second `---`, holds the text of the page.
-Research area pages and the Work with us page keep almost all their text in front matter fields, so edit the field that holds the sentence you want to change.
-Use the search box of GitHub (press `/` in the repository) to find a sentence when you are not sure which file holds it.
+Form field options:
 
-### How the Highlights carousel chooses papers
+| Option | Effect |
+| --- | --- |
+| `type: text`, `textarea`, `select` | Plain field, long text, list of `options` |
+| `type: number` | Counter, whole numbers from 0 |
+| `type: month` | Month and year, never before this month, written as "March 2027" |
+| `required: true` | Email button stays disabled until filled |
+| `when: {field: value}` | Shown only while another field has that value |
+| `when_more: {exams: 0}` | Shown only while a number field is above the value |
+| `after: [{field: start, months: 6, message: "..."}]` | Blocks the email and shows the message until the month is at least that many months after another (`0` = not before) |
+| `options: proposals` | Lists the research proposals |
 
-The Highlights carousel of the Publications page shows the twelve newest papers of the last four years from a top venue, with a "current/total" counter beside its title.
-A top venue is a conference ranked A* or A by ICORE, a journal in the first quartile (Q1) of the SCImago Journal Rank (SJR), or a venue that `data/venues.yaml` marks with `top: true`, such as ICASSP.
-Findings papers count as their main conference. Industry and demo tracks are separate venues without a rank, such as `ijcai-demo`.
-Each conference, journal, or workshop paper names its venue with `venue_key`. `data/venues.yaml` holds, for every venue, the `name` shown on the site and the rank with the edition it comes from.
-Write each `name` as the full venue name with its acronym in brackets, such as `Transactions of the Association for Computational Linguistics (TACL)`, or the full name alone when the venue has no established acronym. Workshops have an empty rank.
-The `publication` field keeps the exact proceedings title for the citation.
+**Result**
 
-- To add a paper from a known venue, set `venue_key` to the venue's key.
-- To add a paper from a new venue, add the venue to `data/venues.yaml` with its `name` and its rank: the ICORE class from the [CORE portal](https://portal.core.edu.au/conf-ranks/) for a conference, or the SJR best quartile from [SCImago](https://www.scimagojr.com/journalrank.php) for a journal.
-- When ICORE or SJR publish a new edition, update the ranks and the `source` values in `data/venues.yaml`.
+![The Master thesis email form](img/thesis-form.webp)
 
-A paper that leaves the carousel keeps its blog page.
+The form opens the visitor's email app; nothing passes through the site. Ask the maintainer to review changes.
 
-### Change the text of a page
+### Add images and files
 
-- **A sentence in a field:** edit the value after the field name.
-  Keep the quotes when the value has them, and keep the indentation of the line.
-- **A paragraph in a field that starts with `|`:** the text continues on the indented lines below.
-  Edit those lines and keep their indentation.
-- **The body of a page:** edit the text after the second `---` line as normal text.
-  Markdown formatting applies: `**bold**`, `*italic*`, and `[link text](https://...)`.
-- **A date:** use the form `YYYY-MM-DD`.
-  On publications and news, the date also moves the item on the News timeline.
+1. On the pull request page, select your branch name, then open the page folder.
+2. **Add file**, **Upload files**, drag the files, **Commit directly to the branch**.
 
-### Replace an image
+Rules: at most 5 MiB each, lowercase names with hyphens and no spaces, exact names (`avatar.jpg`, `featured.png`, `card.svg`), only files you may publish.
 
-Upload the new image into the same folder with the same file name, for example `featured.png`.
-GitHub replaces the old file in your branch.
-Keep the image size close to the old one, so the page layout does not change.
+### Hide, remove, or reorder
 
-### Reorder items
+| Goal | How |
+| --- | --- |
+| Hide for a while | Add `draft: true` |
+| Remove for good | Delete the whole folder in one branch; remove references to it (the check names them) |
+| Person who left | `user_groups: [Former Members]`, never delete |
+| Replace an image | Upload a file with the same name |
+| Reorder people or areas | Change `weight` (lower first) |
+| Reorder publications, news, projects, tools | Change `date` (newest first) |
 
-People and research areas are ordered by `weight`: a lower number comes first.
-Items inside a list field, such as the concept blocks of a research area, keep their order in the file.
-Publications, news items, projects, and tools are ordered by `date`, newest first.
-Change these fields to reorder items.
+## Site rules
 
-### Hide or remove a page
+The site chooses some content by itself. Each rule says what it does, where it lives, and how to change it.
+Rules in `layouts/` are code: ask the maintainer. Rules in `data/` or `content/` can be changed by editors.
 
-- **Hide a page for a while:** add the line `draft: true` to its front matter.
-  The page disappears from the site but stays in the repository.
-  Delete the line to show the page again.
-- **Remove a page for good:** delete its whole folder.
-  On GitHub, open each file of the folder and select **Delete file** from the `...` menu, all in the same branch.
-  The check fails when another page still points to the removed one.
-  For example, a tool may name it in `publication`.
-  Remove those references in the same pull request.
-- **A person who leaves the lab:** do not delete the profile, because their publications link to it.
-  Change `user_groups` to `Former Members`.
+### Highlights
 
-### Add a schema to a page
+![The Highlights carousel](img/pub-highlights.webp)
 
-A schema is a small drawing, such as the claim and premise graphs on the Argument Mining page.
-Schemas are SVG files: text files that describe shapes, which the site colors to match its style.
+| Item | Rule |
+| --- | --- |
+| Shows | The 12 newest papers of the last four calendar years from a top venue |
+| Top venue | ICORE A* or A conference, SJR Q1 journal, or `top: true` in `data/venues.yaml` |
+| Excluded | Workshops, industry and demo tracks, preprints (no rank) |
+| Tie | Same date: a journal before a conference; same kind and date: list order |
+| Change the ranks | `data/venues.yaml` (`rank`, `top`), editors |
+| Change 12, four years, the classes, the tie | `layouts/publication/section.html`, maintainer |
 
-**Change the words of an existing schema.**
-Open the SVG file in the page folder, for example `content/research/am/schema-relations.svg`.
-Each `<text ...>Claim</text>` line holds one label: change the word between `>` and `<`.
-Also update the `aria-label` on the first line, which describes the drawing for screen readers.
-Keep labels short, because a longer word may overflow its box.
+### Latest topics of people
 
-**Add a new schema to a research area.**
+| Item | Rule |
+| --- | --- |
+| Shows | Up to three topics on People cards and profiles |
+| Counts | `topics` of the person's publications of the last two years |
+| Excluded | Workshop papers, papers tagged `shared task`, the `prototype` topic |
+| Tie | The topic of more papers with the person as first author |
+| Change the topics of a paper | `topics` of the publication, editors |
+| Change the window, the exclusions, the tie | `layouts/_partials/lt/person-topics.html`, maintainer |
 
-1. Copy an existing schema of the same page, which already uses the right style classes.
-   Open it, select **Raw**, copy the text, and create a new file in the same folder, such as `schema-new.svg`.
-2. Change the labels as above.
-   Moving or adding boxes means changing the `x`, `y`, `width`, and `height` numbers; ask the maintainer when the drawing needs a new shape.
-3. Point a concept block to the file by its name, in the `overview` list of the research area:
+### Research focus: Current and Past work
 
-   ```yaml
-   overview:
-     - icon: project-diagram
-       title: Relations
-       text: "One short paragraph about the concept."
-       schema: schema-new.svg
-   ```
+| Item | Rule |
+| --- | --- |
+| Current | The newest paper whose `focus` names the card, dated within the last two years |
+| Past work | Every other linked paper |
+| Card figure | `card.svg` or `card.png` only, never a figure from the paper |
+| Change the window | `layouts/research/single.html`, maintainer |
 
-Each `overview` block shows under "Core concepts" on the research area page, and its schema also joins the mosaic of that area on the Research page.
-A tool takes one schema in its `schema` field.
-A publication blog page shows a schema with `{{< svg src="schema-new.svg" caption="What it shows." >}}` in its body.
+### Homepage blocks
 
-Draw only with the style classes that the existing schemas use, such as `lt-s-node`, `lt-s-txt`, `lt-s-arrow`, `lt-s-support`, and `lt-s-attack`.
-Never set colors in the file: the classes give the site colors.
-The full list of classes is in the developers' guide, section 5, under [`svg`](developers.md#svg).
-The build fails with `overview schema "..." not found` when a block names a file that is not in the folder.
+| Block | Shows | Change |
+| --- | --- | --- |
+| Research | One card per area, by `weight` | Area `weight` |
+| News | 6 newest news items, first 3 as cards; summaries in full | `count`, `featured` in `content/_index.md` |
+| Latest papers | 3 newest publications by `date`, preprints included | `count` in `content/_index.md` |
 
-## 5. Publish your change
+![Homepage Latest papers](img/home-papers.webp)
 
-### Open a pull request
+### News page
 
-1. Create or edit the file through a **Start** link or the pencil icon.
-2. Select **Commit changes**.
-3. Choose **Create a new branch for this commit and start a pull request**.
-   Give the branch a short name such as `news/acl-2026`.
-4. Select **Propose changes**, then **Create pull request**.
-   Make sure the base branch is `hugoblox-template`.
-5. Fill in the short template: say what the change does, and tick the boxes that apply.
-6. Add images or other files to the same branch, as described in [Add images and files](#add-images-and-files).
+| Item | Rule |
+| --- | --- |
+| Shows | Every news item and every publication, newest first, grouped by year |
+| Duplicates | An acceptance news item whose title equals a publication title is hidden |
+| Labels | From news `tags` (see [Add a news item](#add-a-news-item)); publications are Paper or Preprint |
+| Change | `layouts/news/list.html`, maintainer |
 
-To change a file again before merging, open it on your branch and edit it there.
-The check runs again after each commit.
+### Venue names and arXiv links
 
-### Read the check result
+| Item | Rule |
+| --- | --- |
+| Venue shown | `name` of `venue_key` in `data/venues.yaml`: "Full name (ACRONYM)", or the full name alone when there is no established acronym |
+| Preprint | "Preprint", or "arXiv preprint" when `publication` names arXiv |
+| arXiv link | Hidden on every list and page once the paper has a `doi` |
+| Change | Venue names: `data/venues.yaml`, editors. Link rule: `layouts/_partials/lt/pub-meta.html`, maintainer |
 
-At the bottom of the pull request, GitHub shows the **Validate content and build** check.
+### Topics and keywords
 
-- A yellow dot means the check is still running.
-  It takes a few minutes.
-- A green tick means the site builds with your change.
-- A red cross means the check found a problem.
+| | Topics | Keywords |
+| --- | --- | --- |
+| Field | `topics` | `tags` |
+| Shown | Neutral tags on cards, pages, filters | Publication page only |
+| List | Closed: `data/topics.yaml` | Vocabulary: `data/tags.yaml` |
+| New one | Add a key and `label`, maintainer review | Add it to `data/tags.yaml` in the same pull request |
+| Check | Unknown key fails | Unknown keyword fails; a near-duplicate names the existing one |
 
-To read the problem, select **Details** next to the red cross.
-Open the step **Validate content and production build**.
-Each problem is one line that starts with the file name.
+All topics share one style; a topic has no colour of its own.
 
-### Merge
+### Publication figures
 
-When the check is green, read your change once more against this list:
+| Place | First available |
+| --- | --- |
+| Publication page teaser | `teaser.mp4`, then `card.svg`, then `featured.png`, then a pattern |
+| Cards (carousels, lists) | `card.svg`, then `card.png`, then `featured.png` |
+| Research focus card | `card.svg`, then `card.png` |
 
-- [ ] The title, names, dates, venue, DOI, and links are correct.
-- [ ] Every `TODO` text is gone, and `draft: true` is removed from pages meant to be public.
-- [ ] Every image or PDF is at most 5 MiB, and its file name has no spaces.
-- [ ] No private data, credentials, internal ratings, or copyrighted files were added.
+Reuse a figure from a paper only when its source is openly licensed (arXiv, ACL Anthology, CEUR-WS), and credit it in `image: caption:`.
 
-Then select **Merge pull request**, or ask the maintainer to merge it.
-The site updates a few minutes after the merge.
-To follow the update, open the **Actions** tab and select the **Deploy Hugo site to Pages** run.
-Then check your page on <https://nlp.unibo.it/>, on a computer and on a phone.
+### Work with us forms
 
-### When the check fails
+| Form | Checks |
+| --- | --- |
+| Master thesis | Exams still to pass: whole number from 0. End of remaining exams: asked when at least one exam is left. Degree session: at least six months after the start, not before the end of the exams. The start may precede the last exam |
+| Every form | Required fields filled; recipients from the chosen proposal, else the path contacts |
+| Change | The `form` of the path in `content/work-with-us/index.md`, editors with maintainer review |
 
-The table lists the messages of the check and how to fix each one.
-`...` stands for a name or value that the message fills in.
+## When the check fails
+
+Select **Details** next to the red cross, open **Validate content and production build**, and read the lines that start with a file name.
 
 | Message | Meaning and fix |
 | --- | --- |
@@ -834,7 +493,7 @@ The table lists the messages of the check and how to fix each one.
 | `author slug must be '...'` | A person's folder name does not match their `title`. Create the folder with the name the message shows |
 | `authors term '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
 | `tags term '...' conflicts with '...'` | The same tag is written in two ways, for example `semeval` and `SemEval`. Use the spelling of the existing tag |
-| `topic '...' is not defined in data/topics.yaml` | Use a topic key from the list in [Where files go](#where-files-go) |
+| `topic '...' is not defined in data/topics.yaml` | Use a key from `data/topics.yaml`, listed in [Add a publication](#add-a-publication) |
 | `email link '...' must start with mailto:` | Write email links as `[Name](mailto:name@unibo.it)` |
 | `local link '...' does not exist` | A link points to a missing file. Check the spelling and capitals, and upload the file to the page folder |
 | `invalid slug '...'` | The folder name contains capitals, spaces, or other characters. Use lowercase letters, numbers, and hyphens only |
@@ -854,61 +513,25 @@ The table lists the messages of the check and how to fix each one.
 | `contact "..." is not in content/authors` | A proposal or the Work with us page names a contact folder that does not exist. Fix the folder name |
 | `author "..." has no email` | A contact's profile has no `email`. Add it, or choose another contact |
 | `contact ... needs a name and an email` | A contact outside the lab needs both `name` and `email` |
+| `tag '...' is not in data/tags.yaml; use the existing '...'` | The keyword is a variant of an existing one. Use the existing keyword |
+| `tag '...' is not in data/tags.yaml; add it there if it is a new keyword` | Add the keyword to `data/tags.yaml`, or pick an existing one |
+| `data/tags.yaml: '...' and '...' look like the same keyword` | Keep one of the two in `data/tags.yaml` and in the publications |
 
-Two messages are only warnings, and the check still passes:
+Warnings (the check still passes): `future publication date ...` (hidden until that date), `missing cite.bib` (no Cite button).
 
-| Warning | Meaning |
+No message, but missing: `draft: true` left, a future date, a wrong `categories` value, a file name that differs in capitals, or the deployment still running (wait, then reload without cache).
+When stuck, comment on the pull request and ask the maintainer.
+
+## Publication blog pages
+
+A publication may have a body: a page that explains the paper to a reader outside the field.
+
+| Item | Rule |
 | --- | --- |
-| `future publication date ...` | The page is valid but stays hidden until its date |
-| `missing cite.bib` | The publication has no BibTeX file, so its Cite button is missing. Add `cite.bib` |
+| For | Papers in the Highlights or shown as Current on a research focus card. Others link to the DOI or arXiv record, though anyone may still write a body |
+| Sections | `## Research setting`, `## Motivation`, `## Approach`, `## Results`, `## Takeaways` |
+| Teaser | `card.svg` with `card_caption` |
+| Components | `figure`, `svg`, `gap`, `pipeline`, `stages`, `numbers`, `bars`, `annotate`, `takeaways` (examples in `archetypes/`) |
+| Rules | Every statement from the paper; no citations; no number before its context |
 
-Some problems produce no message:
-
-- A page is missing from the site when it still has `draft: true`, when its date is in the future, or when it sits in the wrong folder.
-- A publication is missing from a list when its `categories` value selects another list.
-- An image is missing when the file name in the text differs from the uploaded file, including capitals.
-- A change is not visible while the deployment is still running.
-  Wait a few minutes, then reload the page without the browser cache.
-
-When you cannot fix a failure, write a comment on the pull request and ask the maintainer.
-
-## 6. Publication blog pages
-
-A publication can have a long body: a page that tells the story of the paper, like the project pages that research groups publish.
-Blog pages are reserved for highlighted papers, those from a top venue, and papers of the current year, such as `content/publication/ruggeri-et-al-2026-gcam/`; whoever adds such a publication decides whether to write one.
-Such a page explains the paper to a reader outside the field, in five sections: **Research setting**, **Motivation**, **Approach**, **Results**, and **Takeaways**.
-It uses visual components such as figures, method diagrams, and result charts.
-
-Writing one follows a brief from the maintainer, which sets the structure and the style of every page.
-Ask the maintainer for it before you start.
-You may leave the body empty: the title then opens the paper, and you or someone else can add the long page later.
-
-The page answers four questions for a reader outside the field:
-
-1. What is the paper about?
-2. Which research topics does it cover?
-3. Why was the work needed, and what did it aim for?
-4. What did it find, and what should a reader take away?
-
-Base every statement on the paper, and leave the details to the paper itself.
-Keep the five sections in every page, so that all pages share one structure.
-
-For reference, the body can use these components.
-Each component except `figure` and `svg` takes YAML between its opening and closing tags.
-The publication templates in `archetypes/` show an example of each one.
-
-| Component | Shows |
-| --- | --- |
-| `figure` | A figure from the paper, saved in the page folder. Reuse a figure only when its source is openly licensed, such as arXiv, the ACL Anthology, or CEUR-WS |
-| `svg` | A schema drawn for the page as an SVG file, which follows the site colors |
-| `gap` | A table that compares the paper with related work, with one row marked `ours: true` |
-| `pipeline` | A method diagram with three to five steps, with optional parallel branches inside a step |
-| `stages` | An interactive diagram with one tab per stage, which shows whether each component is optimized, trained, or frozen |
-| `numbers` | Two to four headline numbers, placed in **Results** after the text that explains them |
-| `bars` | An interactive bar chart of one metric, with optional standard deviations and a table view |
-| `annotate` | An annotated text example with up to four labels, which readers can filter |
-| `takeaways` | Three numbered takeaway cards |
-
-The page is self-contained, so its text cites no other publication.
-Never show a number or a term before the text has given its context.
-Each `##` heading also appears in the section menu below the teaser.
+Ask the maintainer for the writing brief before you start. Without a body, the title opens the paper.
