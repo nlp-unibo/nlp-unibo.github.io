@@ -125,14 +125,14 @@ Each row says where you create the content, where the site shows it without furt
 
 | Content | Where you create it | Where it shows up automatically | What it does NOT do automatically |
 | --- | --- | --- | --- |
-| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when `categories` includes `Highlight`. The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Works on" topics of those authors. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when one of its `focus` items cites the folder name in `cite`. No tool: the Tools page links the paper only when a tool names it in `publication` |
+| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when `categories` includes `Highlight`. The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Works on" topics of those authors. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
 | News item | `content/news/<slug>/index.md` | The News page timeline, with its topic tags. The homepage News block, while it is among the six newest (the three newest as cards) | No page of its own: the preview shows only the title, the venue, the summary, and the links of the body. No topic tags on the homepage. Not on profile pages, even with an `authors` list. No publication entry |
 | Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
 | Thesis | `content/theses/<year><name>/index.md` | "Work done with students" on the Work with us page, with its topics. The Theses list at `/theses/`. The profile page of the student, when the student has one | Not on the News page or the homepage. No link to the supervisors, who are not listed |
 | Research proposal | `content/proposals/<topic>/<slug>/index.md` | A card on the Work with us page, under its topic filter. Opening the card shows the whole proposal; the proposal has no page of its own | No news item. A topic folder that does not exist yet needs its own `_index.md` first |
 | Project | `content/projects/<slug>/index.md` | A card and a timeline entry on the Projects page, with scope and topic filters. The three newest projects (by `date`) in a step of the Work with us page | No page of its own: the address of the project redirects to `external_link`. No link to its publications or people |
 | Tool | `content/tools/<slug>/index.md` | A band on the Tools page, newest `date` first. A **Paper** link chip, when `publication` names a publication folder | No page of its own: the address of the tool redirects to `external_link`. Not on the homepage. The publication page does not mention the tool |
-| Research area | `content/research/<slug>/index.md` | A card in the homepage Research block, ordered by `weight`. A band on the Research page. Its own page at `/research/<slug>/`, which lists the publications cited in `focus` | No publications are collected by topic: only the folder names in `cite` appear. No menu entry |
+| Research area | `content/research/<slug>/index.md` | A card in the homepage Research block, ordered by `weight`. A band on the Research page. Its own page at `/research/<slug>/`, which lists the publications whose `focus` field names one of its topics | Publications are not matched by `topics`: only their `focus` field counts. No menu entry |
 | Homepage block | `content/_index.md` | The block texts and the number of items it shows | The News, Latest papers, and Research blocks choose their items themselves: you cannot pick items there |
 | Menu | `config/_default/menus.yaml` | The top menu on every page | A new page never adds itself to the menu |
 
@@ -172,7 +172,7 @@ Follow these rules for every file:
 
 ### Add a publication
 
-**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20Keywords.%20Add%20student%20publication%20for%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint%0Acategories%3A%0A%20%20-%20Conference%0A%23%20For%20a%20conference%20or%20a%20journal%3A%20the%20venue%20key%20in%20data%2Fvenues.yaml%2C%20whose%20rank%20selects%20the%20Highlights%0Avenue_key%3A%20%22TODO%22%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Write%20it%20only%20for%20a%20paper%20from%20a%20top%20venue%20or%20of%20the%20current%20year%3B%20without%20it%2C%20the%20title%20opens%20the%20paper.%20--%3E%0A)
+**Start:** [create `content/publication/surname-etal-2026-keyword/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/publication/surname-etal-2026-keyword/index.md&value=---%0A%23%20Replace%20every%20TODO.%20The%20check%20fails%20while%20one%20is%20left.%0Atitle%3A%20%22TODO%3A%20Paper%20title%22%0A%23%20One%20author%20per%20line.%20Write%20each%20lab%20member%20exactly%20as%20the%20title%20of%20their%20profile.%0Aauthors%3A%0A%20%20-%20%22TODO%3A%20First%20Author%22%0A%20%20-%20%22TODO%3A%20Second%20Author%22%0Aauthor_notes%3A%20%5B%5D%0A%23%20The%20publication%20date%2C%20as%20YYYY-MM-DD.%20It%20places%20the%20paper%20on%20the%20News%20timeline.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20day%20the%20page%20appears%20on%20the%20site.%20Usually%20the%20same%20as%20date.%0ApublishDate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20article-journal%2C%20paper-conference%2C%20article%20%28preprint%29%2C%20or%20chapter%0Apublication_types%3A%0A%20%20-%20paper-conference%0Apublication%3A%20%22TODO%3A%20Full%20venue%20name%22%0Apublication_short%3A%20%22%22%0A%23%20Without%20https%3A%2F%2Fdoi.org%2F%0Adoi%3A%20%22%22%0Aabstract%3A%20%22TODO%3A%20Abstract%22%0A%23%20One%20sentence%2C%20shown%20under%20the%20title%20and%20on%20publication%20cards%0Asummary%3A%20%22TODO%3A%20One%20sentence%22%0A%23%20Optional%2C%20at%20most%2015%20words%2C%20for%20the%20homepage%20card%0Acard_summary%3A%20%22%22%0A%23%20Keywords.%20Add%20student%20publication%20for%20work%20done%20with%20students.%0Atags%3A%20%5B%5D%0A%23%20One%20to%20three%20keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A%23%20Research%20focus%20topics%2C%20as%20%3Carea%3E%2F%3Ckey%3E%2C%20such%20as%20am%2Ffallacies%0Afocus%3A%20%5B%5D%0Afeatured%3A%20false%0Aurl_pdf%3A%20%22%22%0Aurl_code%3A%20%22%22%0Aurl_dataset%3A%20%22%22%0Aurl_poster%3A%20%22%22%0Aurl_project%3A%20%22%22%0Aurl_slides%3A%20%22%22%0Aurl_video%3A%20%22%22%0Aimage%3A%0A%20%20caption%3A%20%22%22%0A%20%20focal_point%3A%20%22%22%0A%20%20preview_only%3A%20false%0Aprojects%3A%20%5B%5D%0A%23%20Exactly%20one%20of%20Journal%2C%20Conference%2C%20Workshop%2C%20Preprint%0Acategories%3A%0A%20%20-%20Conference%0A%23%20For%20a%20conference%20or%20a%20journal%3A%20the%20venue%20key%20in%20data%2Fvenues.yaml%2C%20whose%20rank%20selects%20the%20Highlights%0Avenue_key%3A%20%22TODO%22%0Aaffiliations%3A%20%5B%5D%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Write%20it%20only%20for%20a%20paper%20from%20a%20top%20venue%20or%20of%20the%20current%20year%3B%20without%20it%2C%20the%20title%20opens%20the%20paper.%20--%3E%0A)
 
 Name the folder after the first author, `etal`, the year, and one keyword, such as `rossi-etal-2026-example`.
 A folder holds these files:
@@ -201,6 +201,7 @@ content/publication/rossi-etal-2026-example/
 | `url_pdf`, `url_code`, `url_dataset`, `url_project`, `url_video`, `url_slides`, `url_poster` | Optional | `https://aclanthology.org/...` | Each becomes a button. `url_project` is labeled Demo |
 | `links` | Optional | `- name: arXiv` then `  url: https://arxiv.org/abs/...` | Extra buttons, each with a `name` and a `url` |
 | `topics` | Optional | `[argument-mining, llms]` | One to three topic keys. They feed the topic filter of the Publications page |
+| `focus` | Optional | `[am/fallacies, speech/arguments]` | Research focus topics, as `<area>/<key>` of a `focus` topic in `content/research/<area>/index.md`. The paper appears in the Our focus section of each area |
 | `tags` | Optional | `- argument mining` | Keywords. Add `student publication` to list the paper under "Work done with students" |
 | `award` | Optional | `Best Paper Award` | Shown with a trophy under the title in every publication list |
 | `affiliations` | Optional | `- University of Bologna` | Institution names shown under the authors |
@@ -230,7 +231,8 @@ What else to update:
   For an acceptance, [add a news item](#add-a-news-item) dated on the day of the acceptance.
   Use the paper title as the news title, write the venue in `venue`, and tag it `paper`.
   Link the publication page, such as `[Read more](/publication/rossi-etal-2026-example/)`.
-- **Research area.** To list the paper on a research area page, add its folder name to the `cite` list of a `focus` item in `content/research/<area>/index.md`.
+- **Research area.** To list the paper on a research area page, name the area and the topic in its `focus` field, such as `focus: [am/fallacies]`.
+  The newest paper of a topic is shown as Current when it is dated within the last two years, and the others as Past work.
 - **Tool.** When the paper describes a tool, set `publication: <folder name>` in the tool.
 
 Common mistakes:
@@ -494,7 +496,7 @@ Common mistakes:
 
 ### Add a research area
 
-**Start:** [create `content/research/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/research/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Research%20area%20name%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Atags%3A%0A%20%20-%20research%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20area.%22%0A%23%20A%20Font%20Awesome%205%20solid%20icon%20name%2C%20such%20as%20comments%20or%20balance-scale%0Aicon%3A%20comments%0A%23%20Position%20on%20the%20homepage%20and%20the%20Research%20page.%20Lower%20comes%20first.%0Aweight%3A%2010%0A%23%20At%20most%2012%20words%2C%20shown%20on%20the%20homepage%20card%0Atagline%3A%20%22TODO%3A%20Tagline%22%0A%23%20dots%2C%20graph%2C%20tokens%2C%20or%20wave%0Acover_pattern%3A%20dots%0Afields%3A%0A%20%20-%20key%3A%20first-field%0A%20%20%20%20title%3A%20%22TODO%3A%20Block%20title%22%0A%20%20%20%20icon%3A%20search%0A%20%20%20%20question%3A%20%22TODO%3A%20The%20question%20this%20family%20of%20tasks%20answers.%22%0A%20%20%20%20summary%3A%20%22TODO%3A%20One%20or%20two%20sentences.%22%0A%20%20%20%20tasks%3A%0A%20%20%20%20%20%20-%20name%3A%20%22TODO%3A%20Task%20name%22%0A%20%20%20%20%20%20%20%20text%3A%20%22TODO%3A%20Given%20an%20input%2C%20the%20task%20is%20to%20produce%20an%20output.%22%0A%23%20status%3A%20done%20%28Explored%29%2C%20now%20%28Current%29%2C%20or%20next%20%28Future%29.%20cite%3A%20publication%20folder%20names.%0Afocus%3A%0A%20%20-%20key%3A%20first-topic%0A%20%20%20%20title%3A%20%22TODO%3A%20Topic%20title%22%0A%20%20%20%20icon%3A%20comments%0A%20%20%20%20summary%3A%20%22TODO%3A%20At%20most%20two%20sentences.%22%0A%20%20%20%20description%3A%20%22TODO%3A%20Two%20to%20four%20sentences%20for%20a%20reader%20outside%20the%20field.%22%0A%20%20%20%20items%3A%0A%20%20%20%20%20%20-%20status%3A%20done%0A%20%20%20%20%20%20%20%20text%3A%20%22TODO%3A%20Short%20bullet%20of%20at%20most%2012%20words.%22%0A%20%20%20%20%20%20%20%20detail%3A%20%22TODO%3A%20Two%20or%20three%20sentences%20on%20what%20was%20done.%22%0A%20%20%20%20%20%20%20%20cite%3A%20%5B%5D%0A---%0A%0A%23%23%20What%20is%20TODO%3F%0A%0ATODO%3A%20Define%20the%20research%20area%20in%20three%20or%20four%20plain%20sentences.%0A)
+**Start:** [create `content/research/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/research/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Research%20area%20name%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0Atags%3A%0A%20%20-%20research%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20area.%22%0A%23%20A%20Font%20Awesome%205%20solid%20icon%20name%2C%20such%20as%20comments%20or%20balance-scale%0Aicon%3A%20comments%0A%23%20Position%20on%20the%20homepage%20and%20the%20Research%20page.%20Lower%20comes%20first.%0Aweight%3A%2010%0A%23%20At%20most%2012%20words%2C%20shown%20on%20the%20homepage%20card%0Atagline%3A%20%22TODO%3A%20Tagline%22%0A%23%20dots%2C%20graph%2C%20tokens%2C%20or%20wave%0Acover_pattern%3A%20dots%0Afields%3A%0A%20%20-%20key%3A%20first-field%0A%20%20%20%20title%3A%20%22TODO%3A%20Block%20title%22%0A%20%20%20%20icon%3A%20search%0A%20%20%20%20question%3A%20%22TODO%3A%20The%20question%20this%20family%20of%20tasks%20answers.%22%0A%20%20%20%20summary%3A%20%22TODO%3A%20One%20or%20two%20sentences.%22%0A%20%20%20%20tasks%3A%0A%20%20%20%20%20%20-%20name%3A%20%22TODO%3A%20Task%20name%22%0A%20%20%20%20%20%20%20%20text%3A%20%22TODO%3A%20Given%20an%20input%2C%20the%20task%20is%20to%20produce%20an%20output.%22%0A%23%20Publications%20join%20a%20topic%20through%20their%20own%20focus%20field.%0Afocus%3A%0A%20%20-%20key%3A%20first-topic%0A%20%20%20%20title%3A%20%22TODO%3A%20Topic%20title%22%0A%20%20%20%20icon%3A%20comments%0A%20%20%20%20summary%3A%20%22TODO%3A%20At%20most%20two%20sentences.%22%0A%20%20%20%20description%3A%20%22TODO%3A%20Two%20to%20four%20sentences%20for%20a%20reader%20outside%20the%20field.%22%0A---%0A%0A%23%23%20What%20is%20TODO%3F%0A%0ATODO%3A%20Define%20the%20research%20area%20in%20three%20or%20four%20plain%20sentences.%0A)
 
 A research area is the largest page of the site, and the homepage shows one card per area.
 Agree on a new area with the maintainer first.
@@ -511,13 +513,13 @@ The easiest start is to copy `content/research/am/index.md` and replace its cont
 | `cover_pattern` | Optional | `graph` | `dots`, `graph`, `tokens`, or `wave` |
 | `definition` | Optional | Markdown text | A short answer to "What is ...?" in a box under the title |
 | `fields` | Optional | see template | One block per family of tasks. Each `key` must be unique |
-| `focus` | Optional | see template | The lab topics, with `items` of status `done`, `now`, or `next`. Each `key` must be unique |
+| `focus` | Optional | see template | The lab topics. Each `key` must be unique |
 
 How the parts work:
 
 - The Research page gives each area a full-width band.
   The band starts with a mosaic of its `overview` schemas and the tagline.
-  It then shows the first line of `definition` without citations, the `focus` topic titles, and the number of focus items by status.
+  It then shows the first line of `definition` without citations, and the `focus` topic titles.
   The one-sentence `intro` of the Research page lives in `content/research/_index.md`.
 - Define the area in plain words, either in the body under a `## What is ...?` heading or in `definition`.
 - Optional `overview` shows concept blocks under a "Core concepts" heading, two per row.
@@ -530,9 +532,11 @@ How the parts work:
   Each block has a `title`, an `icon`, a `question`, a `summary`, and `tasks` that state their input and expected output.
   Selecting a block enlarges it and opens its tasks beside it.
 - `focus` lists the lab topics, which rotate in a carousel.
-  Each topic has a card `summary`, a longer `description`, and `items` marked `done` (Explored), `now` (Current), or `next` (Future).
-  An item has a short `text` for the card and a `detail` for the box below the carousel.
-  An Explored item cites publications in `cite` by folder name, and the box lists them on the right.
+  Each topic has a card `summary` and a longer `description` for the box below the carousel.
+  Publications join a topic through their own `focus` field, such as `focus: [am/fallacies]`.
+  The newest one is Current when it is dated within the last two years, and the others are Past work.
+  The card shows the Current publication with its venue and `summary`, under its `card.svg` or `card.png` when it has one (a figure taken from the paper is never used there), and lists the titles of Past work.
+  The box lists every publication with its `summary`.
   The topic titles appear as chips on the homepage card.
 
 Interactive views (optional `views`) add tabs under the background, one per argument model or domain.
@@ -566,10 +570,9 @@ They are detailed data, so copy an existing view and change its text:
 
 Common mistakes:
 
-- A `cite` entry that names no existing publication folder.
-  The check reports `focus item cites unknown publication '...'`.
+- A publication `focus` entry that names no existing topic.
+  The check reports `focus topic '...' is not a <area>/<key> of content/research`.
 - A missing or repeated `key` in `fields`, `focus`, or `views`.
-- A focus `status` other than `done`, `now`, or `next`.
 
 ### Edit the homepage
 
@@ -711,7 +714,7 @@ Change these fields to reorder items.
 - **Remove a page for good:** delete its whole folder.
   On GitHub, open each file of the folder and select **Delete file** from the `...` menu, all in the same branch.
   The check fails when another page still points to the removed one.
-  For example, a research area may cite a deleted publication in `cite`, or a tool may name it in `publication`.
+  For example, a tool may name it in `publication`.
   Remove those references in the same pull request.
 - **A person who leaves the lab:** do not delete the profile, because their publications link to it.
   Change `user_groups` to `Former Members`.
@@ -826,8 +829,7 @@ The table lists the messages of the check and how to fix each one.
 | `repeated key ...` | The same field appears twice in the front matter. Keep one of them |
 | A YAML error with a line number | The front matter layout is broken. Check tabs, indentation, quotes, and both `---` lines near that line |
 | `fields key '...' is missing or repeated` (also `focus` and `views`) | Give every block of a research area its own `key` |
-| `focus item status must be done, now, or next` | Fix the `status` of a focus item |
-| `focus item cites unknown publication '...'` | The `cite` list names a folder that does not exist in `content/publication/`. Fix the folder name |
+| `focus topic '...' is not a <area>/<key> of content/research` | A publication `focus` entry names a missing area or topic key. Fix it to match a `key` under `focus` in `content/research/<area>/index.md` |
 | `view '...': ...` | An interactive view of a research area is inconsistent. Compare it with the view you copied, or ask the maintainer |
 | `publication "..." not found for ...` | A tool names a missing publication folder in `publication`. Fix the folder name |
 | `tool schema "..." not found in ...` | A tool names a schematic file you did not upload. Upload it, or remove `schema` |

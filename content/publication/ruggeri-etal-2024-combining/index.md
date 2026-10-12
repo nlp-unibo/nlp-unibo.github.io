@@ -80,4 +80,6 @@ categories:
 aliases:
   - /publication_preprints/ruggeri-etal-2024-combining/
 topics: [interpretability, legal, argument-mining]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/interpretability, legal/interpretability]
 ---

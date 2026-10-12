@@ -51,7 +51,7 @@ tags:
 featured: false
 
 # Links
-url_pdf: ''
+url_pdf: 'https://ceur-ws.org/Vol-4089/paper2.pdf'
 url_code: ''
 url_dataset: ''
 url_poster: ''
@@ -83,6 +83,8 @@ categories:
 aliases:
   - /publication_workshops/alfieri-2025-dynamic/
 topics: [argument-mining, legal, llms]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/argumentation]
 ---
 
 ## Research setting

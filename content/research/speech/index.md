@@ -231,104 +231,32 @@ fields:
   - name: Lyrics matching
     text: "Given the audio of a song, the task is to find songs with similar lyrics in a collection, working from the audio rather than from written lyrics."
 
-# Our focus: the lab's topics, each with a summary, a definition paragraph, and items that are done, now, or next.
-# Done items cite lab publications by their folder name in content/publication.
+# Our focus: the lab topics, shown as a rotating carousel and, below it, one detail box per topic.
+# Publications join a topic through their own `focus` field, such as `focus: [speech/<key>]`.
 focus:
 - key: arguments
   title: Arguments in speech
   icon: comments
   summary: "We study whether the voice of a speaker helps a machine find and classify arguments. Our data come from televised political debates."
   description: "Argument mining extracts arguments and their relations from natural language. In a political debate the arguments are spoken, so a model can use the transcript, the audio, or both. A claim is the conclusion of an argument, and a fallacy is a deceptive, misleading, or generally invalid argument. We ask whether audio features improve the detection of claims and the classification of fallacies."
-  items:
-  - status: done
-    text: Claim detection from the text and audio of a political debate.
-    detail: "We build a corpus from the UK leaders' debate of 2 April 2015, with 386 audio samples of three candidates labelled as containing a claim or not. Adding audio features (MFCCs) to text features improves the F1 score by around 5% for every candidate, except one when the text comes from a speech recognizer."
-    cite:
-    - lippi-torroni-2016
-  - status: done
-    text: Fallacy classification with text and audio.
-    detail: "We release MM-USED-fallacy, the first corpus for multimodal fallacy classification, with 1891 text-audio pairs from 28 US presidential debates. Adding the audio to a text model improves the macro F1 score by up to 8 points for BERT and RoBERTa, while audio-only models are weak."
-    cite:
-    - mancini-etal-2024-multimodal
-  - status: done
-    text: A shared task on multimodal fallacy detection.
-    detail: "MM-ArgFallacy2025 asks systems to detect and classify fallacies in sentences of US presidential debates, from the text, the audio, or both. A new test set comes from two debates of 2024. Five teams took part, and text-only systems performed best."
-    cite:
-    - mancini-etal-2025-overview
-  - status: next
-    text: Annotating fallacies while listening to the audio.
-    detail: "Existing annotations were made on transcripts and only later extended to the audio. We plan annotations made with access to the audio, so that labels can reflect how an argument is spoken."
 - key: modalities
   title: Text and audio together
   icon: layer-group
   summary: "We compare models that read, listen, or do both, and we release tools that make these comparisons reproducible."
   description: "A multimodal model combines several modalities, for example by joining an encoding of the text and an encoding of the audio before a classifier. Comparing text-only, audio-only, and text-audio settings shows what each modality adds. We ask how to encode the audio and how to fuse it with the text."
-  items:
-  - status: done
-    text: Multimodal argument mining in political debates.
-    detail: "We release MM-USElecDeb60to16, in which the transcripts of US presidential debates are aligned to their audio sentence by sentence. Embedding-based audio encodings such as Wav2vec generally beat spectral features, and text with audio is better than or on par with text alone, with small gains."
-    cite:
-    - mancini-etal-2022-multimodal
-  - status: done
-    text: MAMKit, a toolkit for multimodal argument mining.
-    detail: "MAMKit is an open PyTorch toolkit that gathers 4 datasets and 6 model architectures behind one interface. Its benchmark finds that the audio helps on some tasks and not on others, possibly because the annotations were first made on transcripts."
-    cite:
-    - mancini-etal-2024-mamkit
-  - status: next
-    text: Attention-based fusion of text and audio.
-    detail: "Combining the two modalities is not trivial, since some models end up relying on one modality only. We plan to study fusion methods based on attention."
 - key: health
   title: Speech and health
   icon: heartbeat
   summary: "We study speech as a signal of mental health and neurological disorders, and how speech datasets in this domain are collected and documented."
   description: "Mental health and neurological disorders, such as depression and Parkinson's disease, can change how a person speaks. Speech datasets in this domain come from vulnerable people, and their limitations and biases affect how far the models built on them can be trusted. We ask how to document these datasets responsibly and which modalities help detection."
-  items:
-  - status: done
-    text: Responsible speech datasets for mental health.
-    detail: "We define a checklist for speech datasets on mental health and neurological disorders, covering informed consent, data security, privacy, accountability, fairness, data quality, and discourse genre. Checking 36 dataset papers against it shows that data security, privacy, and maintainability are rarely reported."
-    cite:
-    - mancini-etal-2025-promoting-datasets
-  - status: done
-    text: Depression detection from speech, text, and EEG.
-    detail: "On the MODMA dataset, speech is the most informative single modality. Combining speech, text, and EEG gives the best macro F1 score, 0.864. With 38 subjects, no difference between configurations is statistically significant."
-    cite:
-    - nurfidausi-2025-trideptrimodalcomparativestudy
-  - status: now
-    text: Interpretable speech models for clinical data.
-    detail: "We evaluate interpretable speech techniques on clinical data, such as speech from people with depression."
 - key: explanations
   title: Explaining audio models
   icon: search
   summary: "We study how to explain the decisions of audio classifiers in a form that people can check, including by listening."
   description: "Neural networks are typically black boxes, whose decision mechanisms are opaque. Post-hoc explanation methods explain a model after training, such as a saliency map that marks the parts of the input a model relied on. An explanation is faithful when it reflects what the model actually used. We ask how to make explanations faithful and useful for people, including domain experts."
-  items:
-  - status: done
-    text: "LMAC-TD: explanations that can be heard."
-    detail: "LMAC-TD trains a decoder that produces explanations directly as audio waveforms, building on Listenable Maps for Audio Classifiers (L-MAC). In a user study with 19 participants, its explanations receive higher mean opinion scores, the average quality ratings of listeners, than those of the baselines. Their faithfulness is better than or comparable to that of L-MAC."
-    cite:
-    - "10890448"
-  - status: done
-    text: Explanations for Parkinson's disease detection from speech.
-    detail: "We evaluate several explanation methods for models that detect Parkinson's disease from speech, measuring the faithfulness of their saliency maps and of their unions and intersections. The explanations agree with the classifier but often fail to give useful information to domain experts."
-    cite:
-    - mancini-2025-investigating
-  - status: now
-    text: Discrete audio tokens to analyse audio inputs.
-    detail: "Discrete audio tokens represent the audio signal as a sequence of units from a finite vocabulary, for instance by quantizing the embeddings of a pretrained model. We study them as interpretable features to better analyse audio inputs."
 - key: applications
   title: Speech in applications
   icon: bus
   summary: "We apply speech technologies to safety on public transport and to music retrieval."
   description: "Outside the lab, speech comes with noise, several voices, and limited hardware. Speech emotion recognition labels a recording with an emotion, such as anger or calm. Lyrics matching finds songs whose lyrics are similar in theme, meaning, or structure. We ask how speech models hold up in these settings."
-  items:
-  - status: done
-    text: Detecting disruptive situations on public transport.
-    detail: "We frame the detection of disruptive situations, such as people fighting or screaming, as speech emotion recognition, with anger, sadness, fear, and disgust as disruptive emotions. Small models for edge devices reach an F1 score above 0.90 on the disruptive class. A model trained with added transport noise loses at most 4 F1 points on noisy recordings."
-    cite:
-    - mancini-etal-2024-disruptive
-  - status: done
-    text: "WEALY: lyrics matching with Whisper embeddings."
-    detail: "WEALY is a fully reproducible pipeline that uses the decoder embeddings of Whisper to match songs by their lyrics from the audio. It performs comparably to state-of-the-art methods that lack reproducibility. Combined with an audio content model, it also improves the identification of different versions of a song."
-    cite:
-    - mancini-2026-leveragingwhisperembeddingsaudiobased
 ---

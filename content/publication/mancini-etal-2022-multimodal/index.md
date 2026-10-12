@@ -78,4 +78,6 @@ categories:
 aliases:
   - /publication_workshops/mancini-etal-2022-multimodal/
 topics: [argument-mining, multimodal]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/multimodality, speech/modalities]
 ---

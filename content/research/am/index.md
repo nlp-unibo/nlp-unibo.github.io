@@ -244,104 +244,31 @@ fields:
         text: Argumentative prompts elicit LLM reasoning, and dedicated benchmarks evaluate it. Computational argumentation, a formal way of modelling arguments and their conflicts, can verify it.
 
 # Our focus: the lab topics, shown as a rotating carousel and, below it, one detail box per topic.
-# `status` is done (Explored), now (Current), or next (Future).
-# `text` is the bullet on the card, and `detail` explains it in the detail box.
-# `cite` lists publication folder names; Explored objectives show them on the right of the detail box.
+# Publications join a topic through their own `focus` field, such as `focus: [am/<key>]`.
 focus:
   - key: fallacies
     title: Argumentative fallacies
     icon: exclamation-triangle
     summary: "We study how machines can spot and name fallacies, which are flaws or errors in reasoning that can make an argument seem convincing. Spotting them takes careful reasoning, so they are a hard test for language models."
     description: "A fallacy is a flaw or error in reasoning. Examples are attacking the speaker instead of the claim (ad hominem) and warning that one small step leads to disaster (slippery slope). Fallacy detection asks whether a passage contains a fallacy, and fallacy classification asks which type it is. In political debates, how something is said can matter as much as what is said. We ask whether models can recognize fallacies from both the words and the voice of a speaker, and what reasoning each type of fallacy requires."
-    items:
-      - status: done
-        text: "The first corpus of fallacies in debate audio and text."
-        detail: "We release the first corpus for classifying fallacies from both the transcript and the audio of political debates. Our experiments show that adding the audio leads to better classification. This suggests that fallacies carry cues in tone and delivery that text alone misses."
-        cite: [mancini-etal-2024-multimodal]
-      - status: done
-        text: "A shared task on multimodal fallacy detection."
-        detail: "We organized MM-ArgFallacy2025, a shared task on detecting and classifying six fallacy types in U.S. presidential debates from text, audio, or both. Five teams took part. Text-only systems performed best, audio-only systems improved over previous work, and combining the two gave limited gains. The task sets baselines for future work on multimodal fallacy analysis."
-        cite: [mancini-etal-2025-overview]
-      - status: next
-        text: "Linking each fallacy type to the reasoning it requires."
-        detail: "We plan to describe which reasoning steps a reader needs to recognize each type of fallacy. This can show where models fail and why some fallacy types are harder than others."
   - key: multimodality
     title: Multimodality
     icon: layer-group
     summary: "Arguments are often spoken, not written. We study whether the sound of a voice helps a computer find and classify arguments better than the words alone."
     description: "Multimodality means using more than one kind of input, here the text of what people say and the audio of how they say it. Audio carries paralinguistic cues, such as tone, pitch, and pauses, that a written transcript loses. We ask whether these cues help with argument mining tasks, and for which tasks they help."
-    items:
-      - status: done
-        text: "Claim detection from the text and audio of political debates."
-        detail: "A claim is the statement an argument tries to support. We build a classifier that combines features from text and speech to detect claims in political debates, using an original dataset built from the 2015 UK political elections debate. We then release MM-USElecDeb60to16, the largest multimodal argument mining corpus to date, with 26,791 sentences from U.S. presidential debates aligned with their audio. Across three corpora, embedding-based audio encodings work better than feature-based ones."
-        cite: [lippi-torroni-2016, mancini-etal-2022-multimodal]
-      - status: done
-        text: "Fallacy classification that listens to the speaker."
-        detail: "A fallacy is a flaw or error in reasoning, such as an attack on the person instead of the point. We release the first corpus for multimodal fallacy classification in political debates. Our experiments show that adding audio to text improves classification performance."
-        cite: [mancini-etal-2024-multimodal]
-      - status: done
-        text: "An open toolkit for multimodal argument mining."
-        detail: "MAMKit is a public PyTorch toolkit that gathers datasets and models in one place, so that results are easy to reproduce and compare. It includes new baselines for encoding and combining text and audio. Our first results with it suggest that progress needs new annotation processes that capture auditory cues."
-        cite: [mancini-etal-2024-mamkit]
-      - status: done
-        text: "A shared task on fallacies in text, audio, and both."
-        detail: "We organized MM-ArgFallacy2025, a shared task in which teams detect and classify fallacies in U.S. presidential debates from text only, audio only, or both. Text-only systems perform best, audio-only systems improve over previous work, and combining the two gives limited gains."
-        cite: [mancini-etal-2025-overview]
-      - status: now
-        text: "Measuring what audio adds to text, task by task."
-        detail: "We compare text-only, audio-only, and combined models on the same argument mining tasks. The goal is to tell apart the tasks where audio helps from those where text is enough."
   - key: dialogues
     title: Dialogues
     icon: comments
     summary: "We study dialogue systems that exchange arguments with people. Such systems can explain their answers, which matters when users need to trust the information they receive."
     description: "A dialogue system is a computer program that talks with a person, such as a chatbot. An argumentative dialogue is a conversation in which the speakers give reasons for their claims and question the reasons of others. We ask how a dialogue system can reason with arguments, explain its answers, and discuss a topic the way people do."
-    items:
-      - status: done
-        text: "Dialogue systems that reason with arguments."
-        detail: "We propose a dialogue system architecture that uses computational argumentation, a formal way of modeling arguments and their conflicts, to reason and give consistent, explainable answers. A later version manages user data according to the principles of data minimization, purpose limitation, and integrity. It also motivates its responses to users. We illustrate both systems with a COVID-19 vaccine information case study and evaluate the privacy-preserving version empirically."
-        cite: [10-1007-978-3-030-89391-0-27, fazzinga-2022200113]
-      - status: done
-        text: "A dataset of argumentative dialogues on scientific papers."
-        detail: "We introduce ArgSciChat, a dataset of 41 dialogues between scientists on 20 NLP papers, with both exploratory and argumentative questions and answers. A pre-trained dialogue agent performs poorly on it. This result motivates dialogue agents that can reason and argue about their answers."
-        cite: [ruggeri-etal-2023-dataset]
-      - status: next
-        text: "From argumentative dialogue benchmarks to tools people use."
-        detail: "We plan to move from building benchmarks, which are shared datasets for testing systems, to building argumentative dialogue tools that people use in practice."
   - key: interpretability
     title: Interpretability
     icon: eye
     summary: "We build models that show why they make a decision. This helps people check a prediction and learn which parts of a text make an argument."
     description: "A model is interpretable when people can understand why it gives a certain output. One common form is an explanation, a piece of evidence that justifies a prediction. An explanation can be a sentence of background knowledge or a highlight, a span of the input text. We ask how models for argument analysis can explain their own decisions without losing accuracy. We also ask what these explanations tell us about the data."
-    items:
-      - status: done
-        text: "Models that explain their output with natural language knowledge."
-        detail: "We extend transformer models, a common type of neural network for text, with an external memory that stores explanations written in plain language. The model uses these stored texts to explain each classification it makes. Tests on legal texts and on argument mining show that the explanations are relevant and that classification performance is maintained or improved."
-        cite: [ruggeri-etal-2024-combining]
-      - status: done
-        text: "Highlights that justify a prediction, learned end to end."
-        detail: "In selective rationalization, one module picks highlights from the text and a second module predicts a label from those highlights alone. Training the two modules together often fails because one module dominates the other, a problem called interlocking. We present GenSPP, which avoids interlocking by training the two modules disjointly with genetic-based search. It requires no additional heuristics, sampling, or regularization."
-        cite: [ruggeri-signorelli-2025-interlocking]
-      - status: now
-        text: "Finding the textual patterns behind each argument component."
-        detail: "Argument components are the parts of an argument, such as a claim or a premise that supports it. We use local explanations, which justify one prediction at a time, to find which words and patterns typically mark each component."
   - key: reasoning
     title: Reasoning in LLMs
     icon: brain
     summary: "We use argumentation to test how large language models reason. This matters because these models now answer questions and judge content, yet their reasoning often fails in ways that are hard to see."
     description: "Large language models (LLMs) are AI systems trained on large amounts of text to read and write language. Reasoning is the ability to move from given information to a conclusion through steps that someone else can check. Argumentation studies exactly these steps: the claims people make, the reasons they give, and the links between them. We ask whether argumentation can serve as a tool to assess, and later improve, the reasoning of LLMs."
-    items:
-      - status: done
-        text: Reconstructing the implied reasoning behind misogynistic messages.
-        detail: "We frame misogyny detection as an argumentative reasoning task, where the model must generate the missing link between a message and the misogynistic meaning it implies. We build prompts in Italian and English on top of argumentation theory. LLMs fall short on this task and mostly rely on common stereotypes about women rather than on inductive reasoning, which means drawing general conclusions from specific cases."
-        cite: [muti-etal-2024-language]
-      - status: done
-        text: Breaking claim verification into atomic reasoning types.
-        detail: "We propose a framework that splits a claim and its evidence into the basic reasoning steps needed to verify it. With this framework we build RECV, a benchmark of real-world claims that tests deductive reasoning (conclusions that follow necessarily) and abductive reasoning (inferring the most plausible explanation). LLMs handle deductive problems but consistently fail on abductive ones, and asking them to explain their answers does not always help."
-        cite: [dougrez-lewis-etal-2025-assessing]
-      - status: now
-        text: Using argument mining tasks to probe how LLMs reason.
-        detail: "Argument mining is the automatic identification of arguments and their components in text and speech. We use its tasks as tests that show where LLM reasoning holds and where it breaks."
-      - status: next
-        text: Benchmarks centered on argumentation to evaluate LLM reasoning.
-        detail: "We plan to build evaluation benchmarks in which each test item is an argumentative problem. This would let us measure reasoning skills directly instead of only final answers."
 ---

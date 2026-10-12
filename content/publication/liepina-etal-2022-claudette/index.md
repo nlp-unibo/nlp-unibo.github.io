@@ -78,4 +78,6 @@ categories:
 aliases:
   - /publication_workshops/liepina-etal-2022-claudette/
 topics: [legal, prototype]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/interpretability]
 ---

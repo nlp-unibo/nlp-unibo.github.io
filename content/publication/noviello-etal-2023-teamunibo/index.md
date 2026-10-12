@@ -43,5 +43,7 @@ categories:
 aliases:
   - /publication_workshops/noviello-etal-2023-teamunibo/
 topics: [legal, knowledge-extraction]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/decisions]
 ---
 

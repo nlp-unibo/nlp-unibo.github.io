@@ -1,10 +1,8 @@
 {{/* Research section page: the title with an optional `intro`, then one full-width band per research area, by weight. */}}
 {{/* Each band shows a mosaic of the area's `overview` schemas on the left, an accent rule, and a summary on the right: */}}
-{{/* the `tagline`, the first line of the `definition` without its citations, the `focus` topic titles, and the number of */}}
-{{/* focus items by status. On phones the summary comes first and the mosaic below it. */}}
+{{/* the `tagline`, the first line of the `definition` without its citations, the `focus` topic titles. On phones the summary comes first and the mosaic below it. */}}
 {{/* The title link covers the whole band. */}}
 {{- define "main" -}}
-{{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
 <article class="lt-proj">
   {{ partial "lt/page-intro.html" . }}
   {{ range .RegularPages.ByWeight }}
@@ -28,12 +26,6 @@
         {{ with .Params.focus }}
         <p class="lt-research-label">We study</p>
         <ul class="lt-area-topics">{{ range . }}<li>{{ .title }}</li>{{ end }}</ul>
-        {{ $count := dict }}{{ range . }}{{ range .items }}{{ $count = merge $count (dict .status (add (index $count .status | default 0) 1)) }}{{ end }}{{ end }}
-        <p class="lt-research-status">
-          {{- range $k := slice "done" "now" "next" }}{{ with index $count $k }}{{ $s := index $status $k }}
-          <span class="lt-status is-{{ $k }}"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ . }} {{ $s.label }}</span>
-          {{- end }}{{ end }}
-        </p>
         {{ end }}
         <span class="lt-btn lt-btn-primary lt-research-more" aria-hidden="true">Explore <i class="fas fa-arrow-right"></i></span>
       </div>

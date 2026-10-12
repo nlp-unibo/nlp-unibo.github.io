@@ -2,11 +2,15 @@
 {{/* 1. The introduction, in one band: the body, a `definition`, the `overview` blocks under "Core concepts", and `views` of one argument */}}
 {{/*    under different argument models and domains, with the text beside its argument graph on wide screens, above it on narrow ones. */}}
 {{/* 2. `fields`: blocks for the research areas; selecting a block enlarges it and opens its tasks beside it. */}}
-{{/* 3. `focus`: a rotating carousel of the lab topics, each with Explored, Current, and Future objectives. */}}
-{{/* 4. Below the carousel, one detail box per topic; Explored objectives list their publications on the right. */}}
+{{/* 3. `focus`: a rotating carousel of the lab topics. A publication joins a topic with `focus: [<area>/<key>]` in its */}}
+{{/*    front matter. The newest one is Current when dated within the last two years; the others are Past work. */}}
+{{/* 4. Below the carousel, one detail box per topic: each publication with its summary on the left and its citation on the right. */}}
 {{/* assets/js/ltlab.js opens one area and one detail box at a time; without JavaScript every panel and box is visible. */}}
 {{- define "main" -}}
-{{ $status := dict "done" (dict "label" "Explored" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") "next" (dict "label" "Future" "icon" "fas fa-arrow-right") }}
+{{ $status := dict "done" (dict "label" "Past work" "icon" "fas fa-check") "now" (dict "label" "Current" "icon" "fas fa-circle") }}
+{{ $area := .File.ContentBaseName }}
+{{ $pubs := where site.RegularPages "Section" "publication" }}
+{{ $recent := now.AddDate -2 0 0 }}
 <article class="lt-proj">
   {{/* Each section sits in a full-width band; bands alternate their background, as on the homepage. */}}
   {{/* The header shows the title only: the `tagline` is for the homepage research card. */}}
@@ -367,7 +371,14 @@
   {{ end }}
 
   {{ with .Params.focus }}
-  {{ $topics := . }}
+  {{/* Each topic gains `now` (the Current publication, if any) and `done` (the others), both newest first. */}}
+  {{ $topics := slice }}
+  {{ range . }}
+    {{ $papers := (where $pubs "Params.focus" "intersect" (slice (printf "%s/%s" $area .key))).ByDate.Reverse }}
+    {{ $now := slice }}{{ $done := $papers }}
+    {{ with $papers }}{{ if (index . 0).Date.After $recent }}{{ $now = first 1 . }}{{ $done = after 1 . }}{{ end }}{{ end }}
+    {{ $topics = $topics | append (merge . (dict "now" $now "done" $done)) }}
+  {{ end }}
   <div class="lt-band">
   <section class="lt-focus" aria-labelledby="focus-title">
     <h2 id="focus-title">Our focus</h2>
@@ -378,13 +389,25 @@
           <h3 class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}<a class="lt-stretch" href="#topic-{{ .key }}" data-lt-topic="{{ .key }}">{{ .title }}</a></h3>
           <p class="lt-focus-summary">{{ .summary }}</p>
           <div class="lt-focus-lanes">
-            {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
-            {{ with where $topic.items "status" $k }}
-            <div class="lt-focus-lane is-{{ $k }}">
+            {{/* Current: the newest publication, with its title, venue and year, and summary, under its drawn card figure */}}
+            {{/* when it has one. A figure taken from the paper is skipped, since it is rarely readable at this size. */}}
+            {{ range $topic.now }}{{ $meta := partial "lt/pub-meta.html" . }}{{ $s := index $status "now" }}
+            <div class="lt-focus-lane is-now">
               <h4 class="lt-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
-              <ul>{{ range . }}<li>{{ .text }}</li>{{ end }}</ul>
+              <div class="lt-focus-spot">
+                {{ with trim (partial "lt/pub-media.html" (dict "page" . "cardOnly" true)) " \n" }}<div class="lt-slide-media">{{ . | safeHTML }}</div>{{ end }}
+                <p class="lt-focus-spot-title">{{ .Title }}</p>
+                <p class="lt-focus-spot-venue">{{ with $meta.venue }}{{ . }} · {{ end }}{{ .Date.Year }}</p>
+                {{ with .Params.summary | default $meta.tldr }}<p>{{ . }}</p>{{ end }}
+              </div>
             </div>
             {{ end }}
+            {{/* Past work: the title of each publication; the detail box gives the summaries. */}}
+            {{ with $topic.done }}{{ $s := index $status "done" }}
+            <div class="lt-focus-lane is-done">
+              <h4 class="lt-status"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
+              <ul>{{ range . }}<li>{{ .Title }}</li>{{ end }}</ul>
+            </div>
             {{ end }}
           </div>
           <span class="lt-focus-more">Read more <i class="fas fa-arrow-down" aria-hidden="true"></i></span>
@@ -407,25 +430,21 @@
       <section class="lt-topic-box" id="topic-{{ .key }}" data-lt-topic="{{ .key }}" aria-labelledby="topic-{{ .key }}-title" tabindex="-1">
         <h3 id="topic-{{ .key }}-title" class="lt-area-title">{{ with .icon }}<span class="lt-area-icon"><i class="fas fa-{{ . }}" aria-hidden="true"></i></span>{{ end }}{{ .title }}</h3>
         <div class="lt-topic-description">{{ .description | markdownify }}</div>
-        {{ range slice "done" "now" "next" }}{{ $k := . }}{{ $s := index $status $k }}
-        {{ with where $topic.items "status" $k }}
+        {{ range slice "now" "done" }}{{ $k := . }}{{ $s := index $status $k }}
+        {{ with index $topic $k }}
         <h4 class="lt-status is-{{ $k }}"><i class="{{ $s.icon }}" aria-hidden="true"></i> {{ $s.label }}</h4>
         <ul class="lt-topic-items">
           {{ range . }}
+          {{ $url := (partial "lt/pub-meta.html" .).url }}
+          {{ $authors := .Params.authors | default slice }}{{ $title := .Title }}
           <li class="lt-topic-item is-{{ $k }}">
+            {{/* Left: the publication `summary`, or its abstract cut to 280 characters. Right: the citation. */}}
             <div class="lt-topic-text">
-              <p class="lt-topic-item-title">{{ .text }}</p>
-              {{ with .detail }}<p>{{ . }}</p>{{ end }}
+              <p>{{ with .Params.summary }}{{ . }}{{ else }}{{ .Params.abstract | plainify | truncate 280 }}{{ end }}</p>
             </div>
-            {{ with .cite }}
-            <ul class="lt-topic-pubs" aria-label="Publications">
-              {{ range . }}{{ with site.GetPage (printf "/publication/%v" .) }}
-              {{ $authors := .Params.authors | default slice }}
-              {{ $url := (partial "lt/pub-meta.html" .).url }}
-              <li>{{ if $url }}<a href="{{ $url }}">{{ .Title }}</a>{{ else }}{{ .Title }}{{ end }}<span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
-              {{ end }}{{ end }}
+            <ul class="lt-topic-pubs" aria-label="Publication">
+              <li>{{ with $url }}<a href="{{ . }}">{{ $title }}</a>{{ else }}{{ $title }}{{ end }}<span>{{ delimit (first 2 $authors) ", " }}{{ if gt (len $authors) 2 }}, et al.{{ end }} · {{ .Date.Year }}</span></li>
             </ul>
-            {{ end }}
           </li>
           {{ end }}
         </ul>

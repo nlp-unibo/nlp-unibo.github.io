@@ -89,6 +89,8 @@ aliases:
 topics: [speech, biomedical, ethics]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: jair
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [speech/health]
 ---
 
 ## Research setting

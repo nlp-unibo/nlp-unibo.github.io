@@ -104,6 +104,8 @@ aliases:
 topics: [privacy, legal, llms]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: ecai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---
 
 ## Research setting

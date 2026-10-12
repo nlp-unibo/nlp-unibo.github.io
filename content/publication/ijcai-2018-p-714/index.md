@@ -82,4 +82,6 @@ aliases:
   - /publication_conferences/ijcai-2018-p-714/
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: ijcai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/unfairness]
 ---

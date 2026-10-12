@@ -97,6 +97,8 @@ aliases:
   - /publication_conferences/ruggeri-signorelli-2025-interlocking/
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: acl
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/interpretability]
 ---
 
 ## Research setting

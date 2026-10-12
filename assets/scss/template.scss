@@ -903,6 +903,8 @@ img.lt-cover {
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
+  // Set explicitly: a horizontal overflow alone makes the vertical one auto, and the card shadows then scroll.
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
@@ -3652,7 +3654,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   .lt-field-back { color: $lt-sky; }
 }
 
-// Status labels: Explored (blue check), Current (orange dot), Future (grey arrow).
+// Status labels: Past work (blue check) and Current (orange dot).
 .lt-status {
   margin: 0 0 0.4rem;
   font-size: 0.72rem;
@@ -3664,13 +3666,11 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
   .is-done > &, &.is-done { color: $lt-blue; }
   .is-now > &, &.is-now { color: #9a5600; }
-  .is-next > &, &.is-next { color: $lt-muted; }
 }
 
 .dark {
   .is-done > .lt-status, .lt-status.is-done { color: $lt-sky; }
   .is-now > .lt-status, .lt-status.is-now { color: #f5c46b; }
-  .is-next > .lt-status, .lt-status.is-next { color: $lt-dark-muted; }
 }
 
 // Focus cards in the carousel; a selected card keeps a blue border.
@@ -3759,6 +3759,29 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   }
 }
 
+// The Current publication on a focus card: its figure in a 16:10 frame, then its title, venue and year, and summary.
+.lt-focus-spot {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: $lt-ink;
+
+  .lt-slide-media {
+    aspect-ratio: 16 / 10;
+    margin-bottom: 0.6rem;
+    border: 1px solid $lt-border;
+    border-radius: 10px;
+
+    // A drawn schema sets its own height on phones, as in the paper carousels, so the frame does not crop it.
+    &:has(.lt-card-schema) { @media (max-width: 767.98px) { aspect-ratio: auto; } }
+  }
+
+  p { margin: 0 0 0.3rem; }
+}
+
+.lt-focus-spot-title { font-weight: 700; color: $lt-navy; }
+
+.lt-focus-spot-venue { font-style: italic; color: $lt-muted; }
+
 .lt-focus-more {
   margin-top: auto;
   font-size: 0.88rem;
@@ -3768,7 +3791,10 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
 .dark {
   .lt-focus-card.is-selected { border-color: $lt-sky; }
-  .lt-focus-summary, .lt-focus-lanes ul { color: #c9d6e3; }
+  .lt-focus-summary, .lt-focus-lanes ul, .lt-focus-spot { color: #c9d6e3; }
+  .lt-focus-spot .lt-slide-media { border-color: $lt-dark-border; }
+  .lt-focus-spot-title { color: #f1f5fa; }
+  .lt-focus-spot-venue { color: $lt-dark-muted; }
   .lt-focus-more { color: $lt-sky; }
 }
 
@@ -3844,7 +3870,6 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
   &.is-done { border-left-color: $lt-blue; }
   &.is-now { border-left-color: $lt-orange; }
-  &.is-next { border-left-style: dashed; border-left-color: $lt-muted; }
 
   &:has(.lt-topic-pubs) {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -3898,7 +3923,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   .lt-topic-text .lt-topic-item-title { color: #f1f5fa; }
   .lt-topic-item { background: rgba(255, 255, 255, 0.04); border-left-color: $lt-dark-border; }
   .lt-topic-item.is-done { border-left-color: $lt-sky; }
-  .lt-topic-item.is-next { border-left-color: $lt-dark-muted; }
+  .lt-topic-item.is-now { border-left-color: $lt-orange; }
   .lt-topic-pubs span { color: $lt-dark-muted; }
 }
 
@@ -3919,7 +3944,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
   &:nth-of-type(even) { background: rgb(246, 248, 251); }
 
-  > .lt-overview-section, > .lt-arg-views, > .lt-fields, > .lt-focus { margin-block: 0; }
+  > .lt-overview-section, > .lt-arg-views, > .lt-fields, > .lt-focus, > .lt-pubs-compact { margin-block: 0; }
 
   // The introduction band stacks several sections: each one after the first keeps a gap above it.
   > * + .lt-overview-section, > * + .lt-arg-views { margin-top: 3rem; }
@@ -4018,14 +4043,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 
 .lt-research-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
 
-.lt-research-status {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.2rem;
-  margin: 1rem 0 1.4rem;
-
-  .lt-status { margin: 0; }
-}
+.lt-research-more { margin-top: 1.4rem; }
 
 .lt-research-more i { transition: transform 0.2s ease; }
 

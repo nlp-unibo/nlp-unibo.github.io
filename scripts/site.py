@@ -475,6 +475,12 @@ def validate_content_quality() -> None:
     term_names: dict[str, dict[str, tuple[str, Path]]] = {"authors": {}, "tags": {}, "categories": {}}
     project_topics = yaml.safe_load((ROOT / "data/topics.yaml").read_text(encoding="utf-8"))
     venues = yaml.safe_load((ROOT / "data/venues.yaml").read_text(encoding="utf-8"))
+    # Focus topics of the research areas, as <area>/<key>, which publications name in their `focus` field.
+    focus_topics = {
+        f"{page.parent.name}/{topic.get('key')}"
+        for page in (content_root / "research").glob("*/index.md")
+        for topic in read_page(page)[0].get("focus") or []
+    }
     for key, topic in project_topics.items():
         if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
             failures.append(f"data/topics.yaml: topic {key!r} needs label, background, and text")
@@ -563,19 +569,17 @@ def validate_content_quality() -> None:
                     failures.append(
                         f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
                     )
-            # Research area views, fields, and focus topics need unique keys; focus items need a known status,
-            # and their citations must name existing publications.
-            for name in ("views", "fields", "focus"):
-                keys = [entry.get("key") for entry in metadata.get(name) or []]
-                for key in {key for key in keys if keys.count(key) > 1 or not key}:
-                    failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
-            for topic in metadata.get("focus") or []:
-                for item in topic.get("items") or []:
-                    if item.get("status") not in {"done", "now", "next"}:
-                        failures.append(f"{page.relative_to(ROOT)}: focus item status must be done, now, or next")
-                    for slug in item.get("cite") or []:
-                        if not (content_root / "publication" / str(slug) / "index.md").exists():
-                            failures.append(f"{page.relative_to(ROOT)}: focus item cites unknown publication {slug!r}")
+            # Research area views, fields, and focus topics need unique keys, and a publication may join only
+            # existing focus topics.
+            if section == "research":
+                for name in ("views", "fields", "focus"):
+                    keys = [entry.get("key") for entry in metadata.get(name) or []]
+                    for key in {key for key in keys if keys.count(key) > 1 or not key}:
+                        failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
+            if section == "publication":
+                for topic in metadata.get("focus") or []:
+                    if topic not in focus_topics:
+                        failures.append(f"{page.relative_to(ROOT)}: focus topic {topic!r} is not a <area>/<key> of content/research")
             for view in metadata.get("views") or []:
                 failures += [f"{page.relative_to(ROOT)}: view {view.get('key')!r}: {error}" for error in view_errors(view)]
             for topic in metadata.get("topics") or []:

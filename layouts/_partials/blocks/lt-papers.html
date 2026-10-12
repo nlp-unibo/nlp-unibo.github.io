@@ -1,12 +1,13 @@
 {{/* Latest papers, preprints and published papers alike, as a carousel of wide cards. `content.category` */}}
 {{/* optionally keeps one category only (for example "Preprint"). */}}
-{{/* The track scrolls without JavaScript; assets/js/ltlab.js reveals the dots and arrows. */}}
+{{/* The track scrolls without JavaScript; assets/js/ltlab.js reveals the dots and arrows. The current card is centered, */}}
+{{/* so both neighbours peek in. */}}
 {{ $block := .wcBlock }}
 {{ $pubs := where site.RegularPages "Section" "publication" }}
 {{ with $block.content.category }}{{ $pubs = where $pubs ".Params.categories" "intersect" (slice .) }}{{ end }}
 {{ $pubs = first ($block.content.count | default 3) $pubs.ByDate.Reverse }}
 {{ partial "lt/section-head.html" $block }}
-<div class="lt-carousel" data-lt-carousel>
+<div class="lt-carousel is-centered" data-lt-carousel>
   <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Latest papers">
     {{ range $pubs }}{{ partial "lt/pub-card.html" (dict "page" . "kind" true) }}{{ end }}
   </div>

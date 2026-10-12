@@ -82,6 +82,8 @@ categories:
 aliases:
   - /publication_conferences/mancini-2025-investigating/
 topics: [interpretability, speech, biomedical]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [speech/explanations]
 ---
 
 ## Research setting

@@ -101,6 +101,8 @@ categories:
 aliases:
   - /publication_workshops/mancini-etal-2025-overview/
 topics: [argument-mining, multimodal, speech, benchmark]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/fallacies, am/multimodality, speech/arguments]
 ---
 
 ## Research setting

@@ -1294,7 +1294,8 @@
     // An arrow moves one slide per click; the second click of a double click is ignored, so it does not skip a slide.
     if (previous) previous.addEventListener("click", (event) => { if (event.detail < 2) go(current - 1); });
     if (next) next.addEventListener("click", (event) => { if (event.detail < 2) go(current + 1); });
-    track.addEventListener("scroll", () => { update(); wait(); }, { passive: true });
+    // Focusing a link can still shift the track vertically by the height of the card shadows; undo it.
+    track.addEventListener("scroll", () => { if (track.scrollTop) track.scrollTop = 0; update(); wait(); }, { passive: true });
     // With the script the track does not scroll freely, so a vertical page scroll can never shift it.
     // A horizontal swipe, a horizontal wheel or trackpad gesture, or an arrow key moves one slide.
     let swipe = null;

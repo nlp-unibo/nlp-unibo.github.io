@@ -1,0 +1,15 @@
+{{/* Figure of a publication at card size: a drawn `card.svg` schema, inline so its classes follow the light and dark */}}
+{{/* themes, or a simpler `card` image made readable at card size, or else the `featured` teaser figure. Empty when */}}
+{{/* the publication has none. Input: the publication page, or a dict with `page` and `cardOnly: true` to skip the */}}
+{{/* teaser figure, which comes from the paper and is often unreadable at a small size. */}}
+{{ $page := . }}{{ $cardOnly := false }}
+{{ if reflect.IsMap . }}{{ $page = .page }}{{ $cardOnly = .cardOnly }}{{ end }}
+{{ with $page }}
+{{ $images := .Resources.ByType "image" }}
+{{ with .Resources.Get "card.svg" }}
+  <div class="lt-svg lt-card-schema">{{ .Content | safeHTML }}</div>
+{{ else with or ($images.GetMatch "card.*") (cond $cardOnly nil ($images.GetMatch "*featured*")) }}
+  {{ $img := .Fit "1000x700 webp" }}
+  <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
+{{ end }}
+{{ end }}

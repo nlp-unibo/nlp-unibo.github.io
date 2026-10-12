@@ -8,16 +8,8 @@
 {{ $authors := .Params.authors | default slice }}
 <article class="lt-card lt-link-card lt-slide">
   <div class="lt-slide-media">
-    {{/* A drawn `card.svg` schema, inline so its classes follow the light and dark themes, or a simpler `card` image, */}}
-    {{/* readable at card size, replaces the `featured` teaser figure when present. */}}
-    {{ with .Resources.Get "card.svg" }}
-      <div class="lt-svg lt-card-schema">{{ .Content | safeHTML }}</div>
-    {{ else with or ((.Resources.ByType "image").GetMatch "card.*") ((.Resources.ByType "image").GetMatch "*featured*") }}
-      {{ $img := .Fit "1000x700 webp" }}
-      <img class="lt-cover" src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="" loading="lazy">
-    {{ else }}
-      {{ partial "lt/cover.html" (dict "seed" .Title "tall" true) }}
-    {{ end }}
+    {{/* The figure of lt/pub-media.html, or generated cover art when the publication has none. */}}
+    {{ with trim (partial "lt/pub-media.html" .) " \n" }}{{ . | safeHTML }}{{ else }}{{ partial "lt/cover.html" (dict "seed" $page.Title "tall" true) }}{{ end }}
   </div>
   <div class="lt-slide-body">
     <h3 class="lt-slide-title">{{ with $meta.url }}<a class="lt-stretch" href="{{ . }}"{{ if not $meta.blog }} target="_blank" rel="noopener"{{ end }}>{{ $page.Title }}</a>{{ else }}{{ .Title }}{{ end }}</h3>

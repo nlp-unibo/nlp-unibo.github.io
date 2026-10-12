@@ -92,6 +92,8 @@ aliases:
 topics: [llm-reasoning, llms, argument-mining]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: emnlp
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/reasoning]
 ---
 
 ## Research setting

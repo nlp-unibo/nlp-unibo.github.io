@@ -77,4 +77,6 @@ aliases:
 topics: [argument-mining, speech, multimodal]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: aaai
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [am/multimodality, speech/arguments]
 ---

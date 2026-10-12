@@ -85,6 +85,8 @@ categories:
   - Preprint
 aliases:
   - /publication_preprints/nurfidausi-2025-trideptrimodalcomparativestudy/
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [speech/health]
 ---
 
 ## Research setting

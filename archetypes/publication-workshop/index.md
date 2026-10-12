@@ -37,6 +37,8 @@ categories:
 affiliations: []
 # Research topics as keys of data/topics.yaml, shown as colored tags
 topics: []
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md, such as am/fallacies
+focus: []
 ---
 
 <!--

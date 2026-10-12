@@ -91,4 +91,6 @@ categories:
 aliases:
   - /publication_conferences/percin-etal-2022-combining/
 topics: [legal]
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [legal/decisions]
 ---

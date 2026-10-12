@@ -90,6 +90,8 @@ aliases:
 topics: [interpretability, speech]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: icassp
+# Research focus topics, as <area>/<key> of content/research/<area>/index.md
+focus: [speech/explanations]
 ---
 
 ## Research setting

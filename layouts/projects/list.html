@@ -1,7 +1,8 @@
-{{/* Projects page: the title with an optional `intro`, a timeline of start years, newest first, then every project */}}
+{{/* Projects page: the title with an optional `intro`, a Timeline section of start years, newest first, then every project */}}
 {{/* as a card, with a scope filter and a topic filter (assets/js/ltlab.js). The acronym in brackets at the end of a */}}
 {{/* title becomes the card headline, and the rest of the title its subtitle. Cards link only to the project website */}}
-{{/* in `external_link`. Without JavaScript every card is shown and the filters are hidden. */}}
+{{/* in `external_link`. A Back to top button follows the scroll. Without JavaScript every card is shown and the filters */}}
+{{/* are hidden. */}}
 {{- define "main" -}}
 {{ $projects := sort .RegularPages "Date" "desc" }}
 {{ $scopes := slice (dict "key" "International project" "label" "International" "icon" "fas fa-globe-europe") (dict "key" "National project" "label" "National" "icon" "fas fa-flag") }}
@@ -16,29 +17,32 @@
   <div class="lt-band">
     {{ with $projects }}
     {{ $first := (index (last 1 .) 0).Date.Year }}{{ $lastYear := (index . 0).Date.Year }}
-    <figure class="lt-pubs-section lt-timeline">
-      <ol class="lt-timeline-years">
-        {{ range seq $lastYear $first }}{{ $year := . }}
-        <li>
-          <span class="lt-timeline-year">{{ $year }}</span>
-          <ul>
-            {{ range $projects }}{{ if eq .Date.Year $year }}{{ $p := index $info .File.ContentBaseName }}
-            <li><a class="lt-timeline-item is-{{ urlize $p.scope.key }}" href="#project-{{ .File.ContentBaseName }}"><i class="{{ $p.scope.icon }}" aria-hidden="true"></i> {{ $p.acronym }}<span class="sr-only">, {{ $p.scope.label }}</span></a></li>
-            {{ end }}{{ end }}
-          </ul>
-        </li>
-        {{ end }}
-      </ol>
-      <figcaption>
-        Start year of each project.
-        {{ range $scopes }}<span class="lt-timeline-key is-{{ urlize .key }}"><i class="{{ .icon }}" aria-hidden="true"></i> {{ .label }}</span>{{ end }}
-      </figcaption>
-    </figure>
+    <section class="lt-pubs-section lt-pubs-compact" aria-labelledby="timeline-title">
+      <h2 class="lt-paths-title" id="timeline-title">Timeline</h2>
+      <figure class="lt-timeline">
+        <ol class="lt-timeline-years">
+          {{ range seq $lastYear $first }}{{ $year := . }}
+          <li>
+            <span class="lt-timeline-year">{{ $year }}</span>
+            <ul>
+              {{ range $projects }}{{ if eq .Date.Year $year }}{{ $p := index $info .File.ContentBaseName }}
+              <li><a class="lt-timeline-item is-{{ urlize $p.scope.key }}" href="#project-{{ .File.ContentBaseName }}"><i class="{{ $p.scope.icon }}" aria-hidden="true"></i> {{ $p.acronym }}<span class="sr-only">, {{ $p.scope.label }}</span></a></li>
+              {{ end }}{{ end }}
+            </ul>
+          </li>
+          {{ end }}
+        </ol>
+        <figcaption>
+          Start year of each project.
+          {{ range $scopes }}<span class="lt-timeline-key is-{{ urlize .key }}"><i class="{{ .icon }}" aria-hidden="true"></i> {{ .label }}</span>{{ end }}
+        </figcaption>
+      </figure>
+    </section>
     {{ end }}
   </div>
 
   <div class="lt-band">
-    <section class="lt-pubs-section" aria-labelledby="all-title" data-lt-filter-scope>
+    <section class="lt-pubs-section lt-pubs-compact" aria-labelledby="all-title" data-lt-filter-scope>
       <h2 class="lt-paths-title" id="all-title">All projects</h2>
       <div class="lt-filter" role="group" aria-label="Show projects by scope" data-lt-filter-group>
         <button type="button" aria-pressed="true" data-lt-filter="">All projects</button>
@@ -68,7 +72,7 @@
         </article>
         {{ end }}
       </div>
-      <a class="lt-pubs-top" href="#all-title"><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to the filters</a>
+      <a class="lt-to-top" href="#top" data-lt-to-top="#all-title"><i class="fas fa-arrow-up" aria-hidden="true"></i><span>Back to top</span></a>
     </section>
   </div>
 </article>

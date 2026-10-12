@@ -30,19 +30,13 @@ fields:
         text: "TODO: Given <input>, the task is to <output>."
 
 # Our focus: the lab topics, shown as a rotating carousel and one detail box per topic.
-# `status` is done (Explored), now (Current), or next (Future); `text` is the card bullet and `detail` explains it.
-# `cite` lists publication folder names, shown on the right of Explored objectives.
+# Publications join a topic through their own `focus` field, such as `focus: [<this folder>/first-topic]`.
 focus:
   - key: first-topic
     title: "TODO: Topic title"
     icon: comments
     summary: "TODO: Card text of at most two sentences."
     description: "TODO: Two to four sentences that define the topic for a reader outside the field."
-    items:
-      - status: done
-        text: "TODO: Short bullet of at most 12 words."
-        detail: "TODO: Two or three sentences on what was done and what it shows."
-        cite: []
 ---
 
 ## What is TODO?

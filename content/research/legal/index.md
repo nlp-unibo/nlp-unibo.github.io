@@ -329,183 +329,31 @@ fields:
     text: "Given a shared set of legal tasks written by experts, the task is to measure how well LLMs reason about law with few examples."
 
 # Our focus: the lab topics, shown as a rotating carousel and, below it, one detail box per topic.
-# `status` is done (Explored), now (Current), or next (Future).
-# `text` is the bullet on the card, and `detail` explains it in the detail box.
-# `cite` lists publication folder names; Explored objectives show them on the right of the detail box.
+# Publications join a topic through their own `focus` field, such as `focus: [legal/<key>]`.
 focus:
 - key: argumentation
   title: Legal argumentation
   icon: sitemap
   summary: "We study how machines can find and classify the arguments that courts write in their decisions. This gives structured access to the reasoning behind a judgment."
   description: "Argument mining is the automatic detection of arguments and their parts in text. In a court decision, a premise is a reason, and a conclusion is the point the court reaches from it. Premises can be legal, such as a rule or a precedent, or factual, such as an event in the case. An argument scheme is the pattern of reasoning that a legal premise follows, such as reasoning from a precedent. We ask whether models can recover these parts and their links, and whether similar decisions share similar arguments."
-  items:
-  - status: done
-    text: Demosthenes, a corpus of arguments in EU court decisions.
-    detail: "We present Demosthenes, a corpus of 40 decisions of the Court of Justice of the European Union on fiscal state aid. The annotation marks argument components, their types, and their argument schemes on three levels. We define four classification tasks and test language models and traditional classifiers on them."
-    cite:
-    - grundler-etal-2022-cjeu-arguments
-  - status: done
-    text: Predicting the links between legal arguments.
-    detail: "Argument structure prediction finds the relations between arguments or their parts. We add a new annotation layer of links to Demosthenes, with types such as support, rebuttal, and undercut. In our experiments, an ensemble of residual networks gives the best results."
-    cite:
-    - 10-1145-3594536-3595174
-  - status: done
-    text: A challenge on arguments in Italian tax decisions.
-    detail: "AMELIA is a challenge with three classification tasks on 225 Italian decisions on Value Added Tax. The tasks label each component as premise or conclusion, each premise as legal or factual, and each legal premise by its argument scheme. Since the classes are highly unbalanced, evaluation uses the macro F1 score."
-    cite:
-    - grundler-etal-2024-amelia
-  - status: done
-    text: Choosing examples for LLMs by similarity to the input.
-    detail: "Large language models (LLMs) can perform a task from a few examples given in the prompt, called demonstrations. We compare dynamic selection, which picks new demonstrations for each input, with fixed demonstrations chosen by experts or by the LLM. Over 34 configurations and 3 tasks, dynamic selection performs better, which suggests that similarity is an important criterion."
-    cite:
-    - alfieri-2025-dynamic
-  - status: now
-    text: Legal argument mining with LLMs in Italian and English.
-    detail: "We compare LLMs and fine-tuned models on the argument mining tasks of Demosthenes and AMELIA. The goal is to see which tasks LLMs handle and where expert-annotated training data is still needed."
-  - status: next
-    text: Do similar decisions convey similar legal arguments?
-    detail: "We plan to measure whether decisions that are similar in content also share premises and argument schemes. This could support the retrieval of relevant arguments and counterarguments for legal practitioners."
-- key: prediction
-  title: Outcome prediction
-  icon: gavel
-  summary: "We study whether the text of a decision can tell a model how a court ruled. We also ask which parts of the text carry that information."
-  description: "Outcome prediction, also called judgment prediction, is the automatic prediction of the decision of a court. Here the input is the text of a judicial decision and the output is whether a request is upheld or rejected. A request is upheld when the court accepts it, and rejected when the court refuses it. We ask which parts of a decision, such as the claims and arguments of the parties, are most informative for this task."
-  items:
-  - status: done
-    text: Predicting outcomes of Italian tax decisions.
-    detail: "We present a new corpus of 226 annotated decisions on Value Added Tax by Italian Regional Tax Commissions. We predict whether each request is upheld or rejected in the final decision. We test traditional classifiers with TF-IDF and Sentence-BERT representations to find which parts of a decision are most informative."
-    cite:
-    - galli-etal-2022-outcomes
-  - status: now
-    text: Predicting outcomes from what the parties submit.
-    detail: "Our current predictions use the narrative that the court writes. We aim to add the submissions of the parties, which are available before the decision and bring the task closer to a realistic prediction setting."
-  - status: next
-    text: Neural models and legal embeddings for outcome prediction.
-    detail: "We plan to test more advanced neural architectures and embeddings trained on legal text. We also plan to balance the classes with oversampling or data augmentation."
 - key: interpretability
   title: Interpretability
   icon: lightbulb
   summary: "We build models that explain their decisions with the reasons a legal expert would give. This can help users check a prediction and decide whether to trust the tool."
   description: "A model is interpretable when people can understand why it gives a certain output. A legal rationale is a short justification, written by legal experts, of why a clause is unfair. A memory-augmented neural network stores such texts in an external memory and uses them while it classifies. We ask whether rationales can explain predictions to users without lowering accuracy."
-  items:
-  - status: done
-    text: "Memory-augmented neural networks that explain unfairness with legal rationales."
-    detail: "We link the unfair clauses of a corpus of terms of service to a knowledge base of legal rationales. Memory-augmented neural networks use these rationales as context knowledge. The rationales improve classification accuracy and offer natural language explanations of otherwise opaque outcomes."
-    cite:
-    - lagioia-etal-2019-detecting
-    - ruggeri-etal-2022-detecting
-  - status: done
-    text: "Explanations of unfairness for consumers in the CLAUDETTE tool."
-    detail: "We extend CLAUDETTE, a tool that detects potentially unfair clauses in online terms of service. The tool now shows users the legal rationales of unfairness for five categories. These are arbitration, unilateral change, content removal, unilateral termination, and limitation of liability."
-    cite:
-    - liepina-etal-2022-claudette
-  - status: done
-    text: "Transformers that explain their output with stored explanations."
-    detail: "We extend transformer models with external memories that store explanations in natural language. The model uses them to explain its classification outputs. Tests on legal text analysis and argument mining show relevant explanations, with classification performance kept or improved."
-    cite:
-    - ruggeri-etal-2024-combining
-  - status: now
-    text: Retrieving legal rationales to guide LLMs.
-    detail: "Retrieval-augmented generation lets an LLM read relevant documents before it answers. We study this approach with legal rationales as the external knowledge base for unfair clause detection."
-  - status: next
-    text: Explanations of unfairness in several languages.
-    detail: "We plan to attach legal rationales as explanations of unfairness in a multilingual setting. This would bring explanations to consumers who read terms of service in languages other than English."
 - key: unfairness
   title: Unfair clause detection
   icon: file-contract
   summary: "We build systems that find clauses in online contracts and privacy policies that may harm consumers. Few people read these documents, so automatic tools can help consumers and lawyers."
   description: "Terms of service are the contracts that govern the relation between an online platform and its users. A clause is potentially unfair when it may break consumer protection law, for instance by letting the provider change the contract alone. Unfair clause detection finds such clauses, and unfairness category classification assigns each one to a category. We ask how well machine learning, from traditional classifiers to LLMs, performs on this task and on related checks of privacy policies."
-  items:
-  - status: done
-    text: CLAUDETTE, a detector of potentially unfair clauses.
-    detail: "We annotate a corpus of 50 online terms of service with eight categories of potentially unfair clauses. We train classifiers that detect these clauses and assign them to categories. A public web server, CLAUDETTE, lets users submit a document and inspect the output."
-    cite:
-    - lippi-2019-claudette
-  - status: done
-    text: Checking privacy policies against the GDPR.
-    detail: "The General Data Protection Regulation (GDPR) is the EU law on personal data. We define a methodology to assess privacy policies under its provisions, and we analyse the policies of 14 online platforms and services. The resulting annotated corpus can support machine learning systems that check compliance and adequacy."
-    cite:
-    - contissa-2018-automated
-  - status: done
-    text: Comparing LLMs with fine-tuned models on unfair clauses.
-    detail: "We compare several prompt strategies on five small LLMs and two larger LLMs against fine-tuned BERT-based models. Small LLMs fall short of satisfactory performance on this task. At this stage, BERT-based models remain superior for detecting and classifying unfair clauses."
-    cite:
-    - 2025worth
-  - status: done
-    text: Detecting vague clauses in Italian privacy policies.
-    detail: "A clause is vague when it is insufficiently informative about the personal data it concerns. We detect vague clauses in Italian privacy policies and compare BERT-based models, LLMs, and cross-lingual transfer."
-    cite:
-    - grundler-2025-detecting
-  - status: now
-    text: Fine-tuning LLMs on legal contracts.
-    detail: "We test parameter-efficient fine-tuning, which trains only a small part of an LLM, on our data and on other legal corpora. The goal is to close the gap between LLMs and fine-tuned BERT-based models."
-  - status: next
-    text: Keeping annotations up to date when the law changes.
-    detail: "We plan to refine annotation guidelines and labels automatically when the legislation changes. Memory-augmented neural networks and retrieval-augmented generation are possible ways to do this."
-- key: summarization
-  title: Summarization
-  icon: align-left
-  summary: "We ask whether machines can summarize legal documents by following given guidelines. We also ask whether these summaries are useful to legal experts."
-  description: "Summarization is the automatic production of a shorter text that keeps the main content of a longer one. Guided summarization follows instructions on what the summary must contain, such as the outcome of a case or its key arguments. Legal documents are long, and experts need summaries they can rely on. We ask how to produce such summaries and how to evaluate them with legal experts."
-  items:
-  - status: now
-    text: Summaries of court decisions guided by their arguments.
-    detail: "We study whether the argumentative structure of a decision, such as its premises and conclusions, can guide what a summary keeps."
-  - status: next
-    text: Asking legal experts whether summaries are useful.
-    detail: "We plan to evaluate generated summaries with legal experts, using explicit criteria for each quality of a summary. This would show whether summaries help in practice and not only on automatic metrics."
 - key: crosslinguality
   title: Cross-linguality
   icon: globe-europe
   summary: "We study how to move legal annotations and models from one language to another. In the European Union, the same document often exists in several languages."
   description: "Cross-linguality is the use of data or models in one language to solve a task in another language. Annotation projection copies the labels of a document onto its version in another language. The two versions are often not exact translations, so sentences do not match one to one. We ask whether projection or machine translation can replace the costly annotation of a new corpus for each language."
-  items:
-  - status: done
-    text: Projecting labels between English and German documents.
-    detail: "We present the first English-German parallel corpus for unfair clause detection in privacy policies and terms of service. The corpus is asymmetric, so the two versions do not match sentence by sentence. Among language-agnostic projection methods, word embeddings combined with dynamic time warping perform best."
-    cite:
-    - galassi-etal-2020-cross
-  - status: done
-    text: Unfair clause detection in four languages.
-    detail: "We extend our corpus to 50 contracts in each of English, German, Italian, and Polish. We compare new corpora per language, projected annotations, translated training documents, and translation at prediction time. Building a new annotated corpus for each language can often be avoided with no significant loss in performance."
-    cite:
-    - 10-1007-s-10506-024-09398-7
-  - status: done
-    text: LEXTREME, a multilingual benchmark for legal NLP.
-    detail: "LEXTREME gathers 11 datasets covering 24 languages, including a corpus of terms of service in four languages from the CLAUDETTE project. Two aggregate scores compare models across datasets and across languages. Even the best baseline achieves only modest results, so the benchmark leaves ample room for improvement."
-    cite:
-    - niklaus-etal-2023-lextreme
-  - status: now
-    text: Multilingual embeddings for clause detection.
-    detail: "Multilingual embeddings place texts in different languages in one shared space. We use them to capture relations across language versions of the same contract."
-  - status: next
-    text: LLMs on multilingual legal corpora.
-    detail: "We plan to test LLMs on the multilingual CLAUDETTE corpora. This would show whether LLMs reduce the need for translation or projection."
 - key: decisions
   title: Reading court decisions
   icon: file-alt
   summary: "We study how machines can find the parts and key statements of a court decision. Legal experts are few and costly, so we also study how to build training data with less of their time."
   description: "A court decision has functional parts, such as the facts, the arguments of the parties, and the ruling. Rhetorical role prediction labels each sentence with the part it belongs to. Legal named entity recognition finds names such as the petitioner, the court, or the statute. Some sentences state general principles that later decisions cite. In decisions of the Court of Justice of the European Union, these sentences are called judicial interpretative formulas. We ask how to find these elements and how to train models when labelled data are scarce."
-  items:
-  - status: done
-    text: "Rhetorical roles and legal entities in Indian court decisions."
-    detail: "We take part in the LegalEval shared task on Indian legal documents. A context-aware model adds information from nearby sentences and reaches 81.12% micro-F1 on rhetorical role prediction. For legal named entity recognition, a model based on XLNet with a dependency parser reaches 87.43% macro-F1."
-    cite:
-    - noviello-etal-2023-teamunibo
-  - status: done
-    text: "Data augmentation for sentences that state principles of law."
-    detail: "Data augmentation creates new training examples from existing ones. We replace words with candidates from WordNet, a lexical database, and pick the one closest in GloVe word embeddings. On decisions of the Court of Justice of the European Union, legal experts judge this method more robust than the alternatives."
-    cite:
-    - percin-etal-2022-combining
-  - status: done
-    text: Extracting interpretative formulas from EU tax decisions.
-    detail: "Judicial interpretative formulas are general statements of the Court of Justice of the European Union that later decisions cite. We define annotation guidelines, and experts label 21 decisions on VAT. LLMs label 80 more decisions for training. BERT-based models trained on this data perform comparably to LLMs."
-    cite:
-    - grundler-2025-automated
-  - status: now
-    text: Balancing scarce legal datasets.
-    detail: "Many of our legal datasets have highly unbalanced classes. We study oversampling and data augmentation to give models enough examples of rare classes."
-  - status: next
-    text: Rhetorical roles in EU and Italian decisions.
-    detail: "We plan to label the functional parts of EU and Italian decisions. These parts could then guide argument mining, outcome prediction, and summarization."
 ---

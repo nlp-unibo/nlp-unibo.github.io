@@ -905,7 +905,7 @@ The Publications page (`layouts/publication/section.html`) starts with the Highl
 Every publication follows, newest first and grouped by year, with a search box, a filter by type, and a filter by topic.
 The topic counts follow the chosen type and the search, and a topic without matches is hidden.
 
-The research page (`layouts/research/list.html`) gives each area a full-width band: a mosaic of its `overview` schemas, then the tagline, the first line of `definition` (citations dropped), the `focus` topic titles, and the number of focus items by status. Its one-sentence `intro` lives in `content/research/_index.md`.
+The research page (`layouts/research/list.html`) gives each area a full-width band: a mosaic of its `overview` schemas, then the tagline, the first line of `definition` (citations dropped), and the `focus` topic titles. Its one-sentence `intro` lives in `content/research/_index.md`.
 
 The schemas of `content/research/am/` add `lt-s-node` boxes with a `lt-role-N` class, `lt-s-implicit` for dashed borders, and `lt-s-support` or `lt-s-attack` on edges.
 
@@ -920,6 +920,7 @@ The view lists its annotation `rules`, each with a `level`, a number `n`, and th
 The rules follow in the same columns. Detect opens the matrix, marks the clauses in the text, and fills their rows; Classify lights the rule with the same pattern as each row and adds its rule ID (such as L2 · R1) beside the clause ID.
 Each word has `w`, a duration `dur` and an optional `pause` after it (seconds), a `pitch` pair (start and end, 0 to 1), and a `loud` value (0 to 1); each reading has a `label`, a `summary` of its cues in words, and a `gold` answer (`gold_label` names that row, Annotators by default), and the strip shows the speaking rate.
 Each model lists what it `hears` and one of `answers` per reading. The readings appear one after the other as plain text; Listen takes them in order, spreading the words on the time grid, opening the pitch and loudness rows, and drawing the cues word by word, and Classify shows the answers.
+Each topic collects the publications whose `focus` field names `<area>/<key>`, newest first; the newest is Current when dated within two years of the build, so a rebuild can move it to Past work.
 The topics rotate in a carousel; the current dot fills until the next topic, and the rotation holds under the pointer, under keyboard focus, and while a detail box is open.
 
 The homepage is defined in `content/_index.md` as a list of blocks: the hero, the research map, the latest news, and the latest papers.
