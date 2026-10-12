@@ -83,5 +83,7 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/ruggeri-etal-2023-definition-prescriptive/
-topics: [fact-checking]
+topics: [subjectivity, annotation, fact-checking]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: text2story
 ---

@@ -87,6 +87,8 @@ aliases:
 topics: [argument-mining, legal, llms]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [legal/argumentation]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: amelr
 ---
 
 ## Research setting

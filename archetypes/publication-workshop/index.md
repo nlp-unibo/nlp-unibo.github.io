@@ -10,6 +10,8 @@ publication_types:
   - paper-conference
 publication: "TODO: Workshop proceedings"
 publication_short: ""
+# Key of the venue in data/venues.yaml, whose name every list shows; add the workshop there when it is missing
+venue_key: "TODO"
 doi: ""
 abstract: "TODO: Add abstract."
 # One sentence shown under the title of the publication page and on publication cards

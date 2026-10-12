@@ -161,7 +161,8 @@ h1, h2, h3, h4, h5, h6,
   color: #f5c46b;
 }
 
-// Topic tags on project and tool cards; labels and colors live in data/topics.yaml
+// Topic tags on cards and pages; labels live in data/topics.yaml. One outlined neutral style for every topic, so the
+// tags never clash with the palette and never compete with the filled pills that name a kind or a role.
 .lt-topics {
   display: flex;
   flex-wrap: wrap;
@@ -170,14 +171,16 @@ h1, h2, h3, h4, h5, h6,
 }
 
 .lt-topic {
-  padding: 0.12rem 0.55rem;
+  padding: 0.08rem 0.55rem;
+  border: 1px solid rgba($lt-muted, 0.45);
   border-radius: 999px;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  color: $lt-muted;
+  font-size: 0.75rem;
+  font-weight: 600;
   line-height: 1.5;
-  text-transform: uppercase;
 }
+
+.dark .lt-topic { border-color: rgba(255, 255, 255, 0.24); color: #c9d6e3; }
 
 // Kind badges in the Latest list of profile pages, set by layouts/authors/list.html
 .lt-kind {
@@ -1086,6 +1089,7 @@ $lt-slide-height: 29rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 0.8rem;
   margin-top: 1.2rem;
 
   &[hidden] {
@@ -1095,6 +1099,9 @@ $lt-slide-height: 29rem;
 
 .lt-carousel-dots {
   display: flex;
+  // Twelve Highlights dots are wider than a phone: they wrap instead of pushing the arrows off the page.
+  flex-wrap: wrap;
+  min-width: 0;
 
   // Each dot keeps a 24px target around its small visible mark.
   button {
@@ -1144,6 +1151,7 @@ $lt-slide-height: 29rem;
 .lt-carousel-arrows {
   display: flex;
   gap: 0.5rem;
+  flex-shrink: 0;
 
   button {
     width: 2.6rem;
@@ -4574,8 +4582,6 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     button { flex: none; }
   }
 }
-
-.lt-filter-swatch { display: inline-block; width: 0.6rem; height: 0.6rem; margin-right: 0.35rem; border-radius: 50%; box-shadow: 0 0 0 1px rgba($lt-muted, 0.5); vertical-align: 0.05em; }
 
 .lt-work-count { margin: -0.4rem 0 1rem; font-size: 0.85rem; color: $lt-muted; }
 

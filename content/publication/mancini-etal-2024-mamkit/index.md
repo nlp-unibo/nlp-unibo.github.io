@@ -98,6 +98,8 @@ aliases:
 topics: [argument-mining, multimodal, toolkit, speech]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [am/multimodality, speech/modalities]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: argmining
 ---
 
 ## Research setting

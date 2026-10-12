@@ -101,7 +101,7 @@ categories:
   - Journal
 aliases:
   - /publication_journals/mancini-etal-2024-disruptive/
-topics: [speech, fairness]
+topics: [speech, sentiment]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: iswa
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md

@@ -55,9 +55,7 @@ tags:
 - explainable AI
 - hate speech
 
-topics:
-- interpretability
-- benchmark
+topics: [interpretability]
 
 # Display this page in a list of Featured pages?
 featured: false

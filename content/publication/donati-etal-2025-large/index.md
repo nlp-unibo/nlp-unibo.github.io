@@ -98,6 +98,8 @@ categories:
 aliases:
   - /publication_workshops/donati-etal-2025-large/
 topics: [llms, benchmark, industry]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: luhme
 ---
 
 ## Research setting

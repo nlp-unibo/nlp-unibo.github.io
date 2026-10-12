@@ -41,7 +41,7 @@ abstract: "Two years after its entry into force, the EU General Data Protection 
 # Summary. An optional shortened abstract.
 summary: "A new methodology and annotated corpus let machine learning systems check the compliance and adequacy of privacy policies under the GDPR."
 
-tags: []
+tags: [privacy policies, gdpr, corpus, compliance checking]
 
 # Display this page in a list of Featured pages?
 featured: false

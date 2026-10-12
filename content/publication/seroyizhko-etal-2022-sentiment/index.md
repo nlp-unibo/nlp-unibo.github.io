@@ -101,5 +101,7 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/seroyizhko-etal-2022-sentiment/
-topics: [benchmark]
+topics: [sentiment, benchmark]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: finnlp
 ---

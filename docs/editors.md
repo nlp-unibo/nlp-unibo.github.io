@@ -98,8 +98,8 @@ The check rejects a missing or unknown value.
 | `content/projects/` | `International project`, `National project` |
 | `content/theses/` | `Master thesis`, `Bachelor thesis` |
 
-Several fields take **topics**: keys from `data/topics.yaml` that appear as colored tags.
-The keys are `legal`, `argument-mining`, `fairness`, `ethics`, `llms`, `industry`, `privacy`, `information-retrieval`, `sustainability`, `prototype`, `toolkit`, `multimodal`, `reproducibility`, `benchmark`, `speech`, `interpretability`, `llm-reasoning`, `biomedical`, `dialogue`, `knowledge-extraction`, `model-compression`, and `fact-checking`.
+Several fields take **topics**: keys from `data/topics.yaml` that appear as tags.
+The keys are `legal`, `argument-mining`, `fairness`, `ethics`, `llms`, `industry`, `privacy`, `information-retrieval`, `sustainability`, `prototype`, `toolkit`, `multimodal`, `reproducibility`, `benchmark`, `speech`, `interpretability`, `llm-reasoning`, `biomedical`, `dialogue`, `knowledge-extraction`, `model-compression`, `fact-checking`, `hate-speech`, `subjectivity`, `annotation`, `sentiment`, and `education`.
 Ask the maintainer to add a new topic.
 
 ### Preview and review
@@ -125,7 +125,7 @@ Each row says where you create the content, where the site shows it without furt
 
 | Content | Where you create it | Where it shows up automatically | What it does NOT do automatically |
 | --- | --- | --- | --- |
-| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when `categories` includes `Highlight`. The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Works on" topics of those authors. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
+| Publication | `content/publication/<slug>/index.md` | Its own page at `/publication/<slug>/`. The Publications page, grouped by year, with type and topic filters. The Highlights carousel of the Publications page, when `categories` includes `Highlight`. The News page timeline, as a **Paper** or **Preprint** item on its `date`. The homepage "Latest papers" block, while it is among the three newest by `date`. The profile page of each lab author named in `authors`. The "Latest topics" of those authors, when the paper is from the last two years and is neither a workshop paper nor tagged `shared task`. "Work done with students" on the Work with us page, when `tags` includes `student publication` | No news item: the homepage News block lists news items only, so an acceptance needs a news item that you write. No research area: an area lists the paper only when its `focus` field names one of the area topics. No tool: the Tools page links the paper only when a tool names it in `publication` |
 | News item | `content/news/<slug>/index.md` | The News page timeline, with its topic tags. The homepage News block, while it is among the six newest (the three newest as cards) | No page of its own: the preview shows only the title, the venue, the summary, and the links of the body. No topic tags on the homepage. Not on profile pages, even with an `authors` list. No publication entry |
 | Person | `content/authors/<first-last>/_index.md` | The People page, in the group set by `user_groups`, ordered by `weight`. A profile page at `/author/<first-last>/`, with their publications and theses. Their name in bold, linked to the profile, in every author list that spells it exactly as `title` | No change to publications: a publication joins the profile only when its `authors` list spells the name exactly as the profile `title`. No menu entry |
 | Thesis | `content/theses/<year><name>/index.md` | "Work done with students" on the Work with us page, with its topics. The Theses list at `/theses/`. The profile page of the student, when the student has one | Not on the News page or the homepage. No link to the supervisors, who are not listed |
@@ -192,7 +192,7 @@ content/publication/rossi-etal-2026-example/
 | `publishDate` | Optional | `2026-05-20` | The day the page appears. Usually the same as `date` |
 | `publication_types` | Required | `- paper-conference` | Exactly one of `article-journal` (journal), `paper-conference` (conference or workshop), `article` (preprint), or `chapter` (book chapter) |
 | `categories` | Required | `- Conference` | Exactly one of `Journal`, `Conference`, `Workshop`, or `Preprint` |
-| `venue_key` | Required for `Conference` and `Journal` | `acl` | The venue's key in `data/venues.yaml`. Its `rank` decides whether the paper enters the Highlights carousel. Add a missing venue there with its rank and source |
+| `venue_key` | Required for `Conference`, `Journal`, and `Workshop` | `acl` | The venue's key in `data/venues.yaml`. Its `name`, the full venue name with the acronym in brackets, is what every list and page shows, and its `rank` decides whether the paper enters the Highlights carousel. Add a missing venue there |
 | `publication` | Optional | `"Proceedings of ACL 2026"` | The full venue name |
 | `abstract` | Optional | `"We introduce ..."` | Shown in full on the publication page |
 | `summary` | Optional | `"GCAM has annotators report ..."` | One sentence, shown under the title and on publication cards. Every highlight needs one |
@@ -675,10 +675,12 @@ Use the search box of GitHub (press `/` in the repository) to find a sentence wh
 The Highlights carousel of the Publications page shows the twelve newest papers of the last four years from a top venue, with a "current/total" counter beside its title.
 A top venue is a conference ranked A* or A by ICORE, a journal in the first quartile (Q1) of the SCImago Journal Rank (SJR), or a venue that `data/venues.yaml` marks with `top: true`, such as ICASSP.
 Findings papers count as their main conference. Industry and demo tracks are separate venues without a rank, such as `ijcai-demo`.
-Each conference or journal paper names its venue with `venue_key`, and `data/venues.yaml` holds the rank of every venue with the edition it comes from.
+Each conference, journal, or workshop paper names its venue with `venue_key`. `data/venues.yaml` holds, for every venue, the `name` shown on the site and the rank with the edition it comes from.
+Write each `name` as the full venue name with its acronym in brackets, such as `Transactions of the Association for Computational Linguistics (TACL)`, or the full name alone when the venue has no established acronym. Workshops have an empty rank.
+The `publication` field keeps the exact proceedings title for the citation.
 
 - To add a paper from a known venue, set `venue_key` to the venue's key.
-- To add a paper from a new venue, add the venue to `data/venues.yaml` with its rank: the ICORE class from the [CORE portal](https://portal.core.edu.au/conf-ranks/) for a conference, or the SJR best quartile from [SCImago](https://www.scimagojr.com/journalrank.php) for a journal.
+- To add a paper from a new venue, add the venue to `data/venues.yaml` with its `name` and its rank: the ICORE class from the [CORE portal](https://portal.core.edu.au/conf-ranks/) for a conference, or the SJR best quartile from [SCImago](https://www.scimagojr.com/journalrank.php) for a journal.
 - When ICORE or SJR publish a new edition, update the ranks and the `source` values in `data/venues.yaml`.
 
 A paper that leaves the carousel keeps its blog page.

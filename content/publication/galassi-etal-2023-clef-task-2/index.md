@@ -92,5 +92,7 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/galassi-etal-2023-clef-task-2/
-topics: [fact-checking, benchmark]
+topics: [subjectivity, fact-checking, benchmark]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: clef-wn
 ---

@@ -28,13 +28,7 @@ abstract: "This study aims to tackle some challenges posed by legal texts in the
 # Summary. An optional shortened abstract.
 summary: Context-aware legal transformers label the rhetorical role of each sentence in Indian court judgments, and a BiLSTM-CRF head finds legal named entities.
 
-tags:
-- challenge
-- SemEval
-- NER
-- legal
-- rhetorical roles
-- student publication
+tags: [challenge, SemEval, NER, legal, rhetorical roles, student publication, shared task]
 
 featured: false
 
@@ -45,5 +39,7 @@ aliases:
 topics: [legal, knowledge-extraction]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [legal/decisions]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: semeval
 ---
 

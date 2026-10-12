@@ -39,7 +39,7 @@ abstract: Dialogue systems are widely used in AI to support timely and interacti
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [dialogue systems, computational argumentation, explainable AI, covid-19]
 
 # Display this page in a list of Featured pages?
 featured: false

@@ -36,18 +36,7 @@ abstract: 'Attention is an increasingly popular mechanism used in a wide range o
 summary: 'A unified model and the first taxonomy of attention in natural language processing, charting a fast-growing literature along four dimensions and its open challenges.'
 card_caption: "The core attention model, with the four dimensions of the taxonomy: input representation, compatibility function, distribution function, and multiplicity. Schema built from Sections II-B and IV of the paper."
 
-tags:
-- task analysis
-- computer architecture
-- visualization
-- neural networks
-- natural language processing
-- taxonomy
-- computational modeling
-- natural language processing (NLP)
-- neural attention
-- review
-- survey
+tags: [neural attention, natural language processing, taxonomy, survey]
 
 topics:
 - interpretability

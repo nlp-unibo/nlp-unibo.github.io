@@ -45,7 +45,7 @@ tags:
 - prescriptive paradigm
 - text classification
 - inter-annotator agreement
-topics: [reproducibility, interpretability, llms]
+topics: [annotation, interpretability, llms]
 
 # Display this page in a list of Featured pages?
 featured: false

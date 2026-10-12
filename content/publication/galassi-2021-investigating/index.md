@@ -35,7 +35,7 @@ abstract: "We present an application of neural-symbolic learning to the task of 
 # Summary. An optional shortened abstract.
 summary: "Logic Tensor Networks train argument mining models to fit the data and satisfy domain rules, which improves classification, rule compliance, and robustness on scientific abstracts."
 
-tags: []
+tags: [argument mining, neural-symbolic learning, logic tensor networks, scientific abstracts]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -75,4 +75,6 @@ aliases:
 topics: [argument-mining]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [am/reasoning]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: starai
 ---

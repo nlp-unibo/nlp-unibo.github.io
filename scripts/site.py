@@ -482,8 +482,8 @@ def validate_content_quality() -> None:
         for topic in read_page(page)[0].get("focus") or []
     }
     for key, topic in project_topics.items():
-        if not isinstance(topic, dict) or not all(topic.get(field) for field in ("label", "background", "text")):
-            failures.append(f"data/topics.yaml: topic {key!r} needs label, background, and text")
+        if not isinstance(topic, dict) or not topic.get("label"):
+            failures.append(f"data/topics.yaml: topic {key!r} needs a label")
 
     for section in REQUIRED_FIELDS:
         for stray in sorted((content_root / section).glob("*.md")):
@@ -558,8 +558,9 @@ def validate_content_quality() -> None:
 
             if section == "publication" and not bib.exists():
                 warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
-            # A conference or journal paper names its venue in data/venues.yaml, whose rank selects the Highlights.
-            if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal"}:
+            # A conference, journal, or workshop paper names its venue in data/venues.yaml, whose name every list shows
+            # and whose rank selects the Highlights.
+            if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal", "Workshop"}:
                 if metadata.get("venue_key") not in venues:
                     failures.append(f"{page.relative_to(ROOT)}: venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
             if section in {"publication", "theses"} and not is_draft:

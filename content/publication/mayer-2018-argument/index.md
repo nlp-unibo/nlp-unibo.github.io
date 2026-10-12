@@ -37,7 +37,7 @@ abstract: ''
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [argument mining, clinical trials]
 
 # Display this page in a list of Featured pages?
 featured: false

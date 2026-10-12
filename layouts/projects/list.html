@@ -53,7 +53,7 @@
       {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
       <div class="lt-filter lt-filter-topics" role="group" aria-label="Show projects by topic" data-lt-filter-group data-lt-filter-key="ltTopics">
         <button type="button" aria-pressed="true" data-lt-filter="">All topics</button>
-        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}"><span class="lt-filter-swatch" style="{{ printf "background:%s" .background | safeCSS }}" aria-hidden="true"></span>{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
+        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}">{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
       </div>
       <p class="lt-work-count" aria-live="polite" data-lt-count></p>
       <div class="lt-project-grid">

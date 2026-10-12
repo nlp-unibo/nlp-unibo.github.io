@@ -57,7 +57,7 @@ tags:
 - offensive language
 - discourse analysis
 - cooperative principle
-topics: [dialogue]
+topics: [hate-speech, dialogue]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -97,6 +97,8 @@ categories:
   - Workshop
 aliases:
   - /publication_workshops/korre-etal-2024-grice/
+# Key in data/venues.yaml, whose name every list shows
+venue_key: luhme
 ---
 
 ## Research setting

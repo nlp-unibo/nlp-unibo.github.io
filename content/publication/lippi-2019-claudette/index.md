@@ -40,7 +40,7 @@ abstract: "Terms of service of on-line platforms too often contain clauses that 
 # Summary. An optional shortened abstract.
 summary: "CLAUDETTE uses machine learning to detect potentially unfair clauses in online terms of service, and could serve lawyers and consumers alike."
 
-tags: []
+tags: [unfair clause detection, terms of service, consumer protection, machine learning]
 
 # Display this page in a list of Featured pages?
 featured: false

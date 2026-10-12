@@ -190,7 +190,7 @@
       {{ $used := slice }}{{ range $key, $n := $counts }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}
       <div class="lt-filter lt-filter-topics" role="group" aria-label="Show work by topic" data-lt-filter-group data-lt-filter-key="ltTopics">
         <button type="button" aria-pressed="true" data-lt-filter="">All topics</button>
-        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}"><span class="lt-filter-swatch" style="{{ printf "background:%s" .background | safeCSS }}" aria-hidden="true"></span>{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
+        {{ range sort $used "n" "desc" }}{{ $u := . }}{{ with index hugo.Data.topics .key }}<button type="button" aria-pressed="false" data-lt-filter="{{ $u.key }}">{{ .label }} ({{ $u.n }})</button>{{ end }}{{ end }}
       </div>
       <p class="lt-work-count" aria-live="polite" data-lt-count></p>
       {{ range .ByDate.Reverse.GroupByDate "2006" }}
@@ -203,7 +203,7 @@
             <span class="lt-pill lt-pill-{{ index $kinds $kind }}">{{ $kind }}</span>
             {{ $link := partial "lt/item-link.html" . }}
             {{ if $link }}<a href="{{ $link }}"{{ if .Params.external_link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>{{ else }}<span class="lt-work-title">{{ .Title }}</span>{{ end }}
-            <span class="lt-work-by">{{ if eq .Section "theses" }}{{ delimit .Params.authors ", " }}{{ else }}{{ .Params.publication | markdownify | plainify }}{{ end }}</span>
+            <span class="lt-work-by">{{ if eq .Section "theses" }}{{ delimit .Params.authors ", " }}{{ else }}{{ (partial "lt/pub-meta.html" .).venue }}{{ end }}</span>
             {{ with .Params.topics }}<span class="lt-work-topics">{{ partial "lt/topic-tags.html" . }}</span>{{ end }}
           </li>
           {{ end }}

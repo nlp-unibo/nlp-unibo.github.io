@@ -85,4 +85,6 @@ aliases:
 topics: [legal, interpretability, prototype]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [legal/interpretability]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: nllp
 ---

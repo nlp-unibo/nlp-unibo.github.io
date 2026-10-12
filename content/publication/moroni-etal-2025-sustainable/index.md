@@ -89,7 +89,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/moroni-etal-2025-sustainable/
-topics: [llms, benchmark, sustainability]
+topics: [llms, benchmark]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: clic-it
 ---

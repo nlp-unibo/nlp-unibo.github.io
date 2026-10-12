@@ -85,6 +85,8 @@ aliases:
 topics: [interpretability, speech, biomedical]
 # Research focus topics, as <area>/<key> of content/research/<area>/index.md
 focus: [speech/explanations]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: icasspw
 ---
 
 ## Research setting

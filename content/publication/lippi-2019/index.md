@@ -41,7 +41,7 @@ abstract: Technology companies have quickly become powerful with their access to
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [consumer protection, consumer law, position paper]
 
 # Display this page in a list of Featured pages?
 featured: false

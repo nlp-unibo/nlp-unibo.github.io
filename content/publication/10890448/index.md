@@ -39,20 +39,7 @@ summary: LMAC-TD explains an audio classifier with a listenable clip decoded dir
 # Caption of card.svg, the teaser of the page
 card_caption: "LMAC-TD decodes a listenable explanation of a frozen audio classifier directly as a waveform. Schema drawn from the paper."
 
-tags:
-- measurement
-- source separation
-- neural networks
-- transformers
-- acoustics
-- decoding
-- time-domain analysis
-- speech processing
-- neural network explanations
-- explainable deep learning
-- interpretability
-- audio classification
-- listenable explanations
+tags: [explainable deep learning, audio classification, listenable explanations, source separation, time-domain analysis]
 
 # Display this page in a list of Featured pages?
 featured: false

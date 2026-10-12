@@ -40,7 +40,7 @@ abstract: ''
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [subjectivity detection, corpus, italian, newspapers]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -80,7 +80,7 @@ categories:
   - Conference
 aliases:
   - /publication_workshops/antici-etal-2021-subjectivita/
-topics: [fact-checking, benchmark]
+topics: [subjectivity, fact-checking, benchmark]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: clef
 ---

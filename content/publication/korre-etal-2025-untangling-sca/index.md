@@ -97,7 +97,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/korre-etal-2025-untangling-sca/
-topics: [benchmark, llms]
+topics: [hate-speech, benchmark, llms]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: findings-naacl
 ---

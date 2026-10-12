@@ -101,7 +101,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/donati-etal-2024-generation/
-topics: [llms, industry]
+topics: [llms, education, industry]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: clic-it
 ---

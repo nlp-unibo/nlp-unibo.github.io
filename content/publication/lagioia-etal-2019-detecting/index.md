@@ -40,7 +40,7 @@ abstract: "Consumer contracts often contain unfair clauses, in apparent violatio
 # Summary. An optional shortened abstract.
 summary: "Linking unfair clauses in Terms of Service to a knowledge base of rationales may let memory networks explain their outputs and detect unfair clauses better."
 
-tags: []
+tags: [unfair clause detection, terms of service, memory networks, legal rationales]
 
 # Display this page in a list of Featured pages?
 featured: false

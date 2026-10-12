@@ -1,6 +1,6 @@
 {{/* People page: the title, then one band per group of `user_groups` in content/authors, ordered by `weight`. */}}
 {{/* Members, associate fellows, and external collaborators are cards that open the profile page: photo, name, lab */}}
-{{/* role, affiliation for associate fellows and external collaborators, the `bio` sentence, up to three "Works on" */}}
+{{/* role, affiliation for associate fellows and external collaborators, the `bio` sentence, up to three "Latest topics" */}}
 {{/* topics (lt/person-topics.html), and the social links. A group may carry a `caption` under its title. Former */}}
 {{/* members are compact rows. */}}
 {{- define "main" -}}
@@ -45,7 +45,7 @@
               </div>
             </div>
             {{ with .Params.bio }}<p class="lt-person-bio">{{ . | markdownify }}</p>{{ end }}
-            {{ with $topics }}<p class="lt-research-label">Works on</p>{{ partial "lt/topic-tags.html" . }}{{ end }}
+            {{ with $topics }}<p class="lt-research-label">Latest topics</p>{{ partial "lt/topic-tags.html" . }}{{ end }}
             {{ partial "lt/person-social.html" . }}
           </div>
         </article>

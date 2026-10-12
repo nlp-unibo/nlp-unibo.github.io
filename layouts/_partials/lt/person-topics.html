@@ -1,8 +1,17 @@
-{{/* Topic keys a person works on: the three most frequent `topics` of their ten most recent publications, except */}}
-{{/* `prototype`, which marks a kind of work rather than a topic. They follow the publications, so they need no upkeep. */}}
-{{/* Input: the profile page. */}}
+{{/* Latest topics of a person: the three most frequent `topics` of their publications of the last two years, except */}}
+{{/* workshop papers, papers tagged `shared task`, and the `prototype` topic, which marks a kind of work rather than a */}}
+{{/* topic. On a tie, the topic of more papers with the person as first author comes first. They follow the */}}
+{{/* publications, so they need no upkeep. Input: the profile page. */}}
+{{ $person := . }}
 {{ $topics := slice }}
-{{ $counts := dict }}{{ range first 10 (where .Pages "Section" "publication").ByDate.Reverse }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
-{{ $used := slice }}{{ range $key, $n := $counts }}{{ if ne $key "prototype" }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}{{ end }}
+{{ $since := now.AddDate -2 0 0 }}
+{{ $scores := dict }}
+{{ range where (where .Pages "Section" "publication") "Date" "ge" $since }}
+  {{ if not (or (in (.Params.categories | default slice) "Workshop") (in (apply (.Params.tags | default slice) "lower" ".") "shared task")) }}
+    {{ $first := 0 }}{{ with index (.GetTerms "authors") 0 }}{{ if eq .RelPermalink $person.RelPermalink }}{{ $first = 1 }}{{ end }}{{ end }}
+    {{ range .Params.topics }}{{ $scores = merge $scores (dict . (add (index $scores . | default 0) 100 $first)) }}{{ end }}
+  {{ end }}
+{{ end }}
+{{ $used := slice }}{{ range $key, $n := $scores }}{{ if ne $key "prototype" }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}{{ end }}
 {{ range first 3 (sort $used "n" "desc") }}{{ $topics = $topics | append .key }}{{ end }}
 {{ return $topics }}

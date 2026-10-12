@@ -14,7 +14,7 @@
         <p class="lt-meta">{{ with .Params.role }}<span class="lt-pill">{{ . }}</span>{{ end }}{{ with .Params.organizations }}<span>{{ (index . 0).name }}</span>{{ end }}</p>
         {{ end }}
         {{/* Only lab profiles show topics: for a co-author they would come from their papers with the lab alone. */}}
-        {{ if .File }}{{ with partial "lt/person-topics.html" . }}<p class="lt-research-label">Works on</p>{{ partial "lt/topic-tags.html" . }}{{ end }}{{ end }}
+        {{ if .File }}{{ with partial "lt/person-topics.html" . }}<p class="lt-research-label">Latest topics</p>{{ partial "lt/topic-tags.html" . }}{{ end }}{{ end }}
         {{ partial "lt/person-social.html" . }}
       </div>
     </header>

@@ -35,20 +35,7 @@ abstract: ''
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags:
-- task analysis
-- computer architecture
-- bit error rate
-- multitasking
-- residual neural networks
-- computational modeling
-- annotations
-- argument mining
-- residual networks
-- neural attention
-- multi-task learning
-- ensemble learning
-- natural language processing
+tags: [argument mining, residual networks, neural attention, multi-task learning, ensemble learning]
 
 # Display this page in a list of Featured pages?
 featured: false

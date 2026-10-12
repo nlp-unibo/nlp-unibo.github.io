@@ -41,7 +41,7 @@ abstract: Argument mining has recently become a hot topic, attracting the intere
 # Summary. An optional shortened abstract.
 summary: ''
 
-tags: []
+tags: [argument mining, machine learning, position paper]
 
 # Display this page in a list of Featured pages?
 featured: false
@@ -79,4 +79,6 @@ categories:
 aliases:
   - /publication_workshops/10-1007-978-3-319-28460-6-10/
 topics: [argument-mining]
+# Key in data/venues.yaml, whose name every list shows
+venue_key: tafa
 ---

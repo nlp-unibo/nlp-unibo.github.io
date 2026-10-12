@@ -1,93 +1,59 @@
-# Topics shown as colored tags on publication pages and research map panels.
+# Topics shown as tags on cards, pages, and filters, all in one neutral style.
 # A page lists keys from this file in its `topics` field.
-# Change a label or a color here to update every card that uses it.
+# Change a label here to update every card that uses it.
 legal:
   label: Legal
-  background: '#105080'
-  text: '#ffffff'
 argument-mining:
   label: Argument mining
-  background: '#f09010'
-  text: '#003060'
 fairness:
   label: Fairness
-  background: '#25734a'
-  text: '#ffffff'
 ethics:
   label: Ethics
-  background: '#7b4fa0'
-  text: '#ffffff'
 llms:
   label: LLMs
-  background: '#60c0e0'
-  text: '#003060'
 industry:
   label: Industry
-  background: '#5b6b7d'
-  text: '#ffffff'
 privacy:
   label: Privacy
-  background: '#c0392b'
-  text: '#ffffff'
 information-retrieval:
   label: Information retrieval
-  background: '#0b6e70'
-  text: '#ffffff'
 sustainability:
   label: Sustainability
-  background: '#9bc53d'
-  text: '#1f3a10'
 # `prototype` marks a publication or thesis that presents a system built to demonstrate its method, which may no
 # longer be available. A system that readers can use today goes on the Tools page instead, without this topic.
 prototype:
   label: Prototype
-  background: '#2b2f36'
-  text: '#ffffff'
 toolkit:
   label: Toolkit
-  background: '#9a5518'
-  text: '#ffffff'
 multimodal:
   label: Multimodal
-  background: '#d6336c'
-  text: '#ffffff'
 reproducibility:
   label: Reproducibility
-  background: '#e6ebf1'
-  text: '#33475b'
 benchmark:
   label: Benchmark
-  background: '#3f51b5'
-  text: '#ffffff'
 speech:
   label: Speech
-  background: '#0f766e'
-  text: '#ffffff'
 interpretability:
   label: Interpretability
-  background: '#003060'
-  text: '#ffffff'
 llm-reasoning:
   label: LLM reasoning
-  background: '#9d174d'
-  text: '#ffffff'
 biomedical:
   label: Biomedical
-  background: '#f2c94c'
-  text: '#3a2c00'
 dialogue:
   label: Dialogue
-  background: '#a78bfa'
-  text: '#1e1b4b'
 knowledge-extraction:
   label: Knowledge extraction
-  background: '#ff8a65'
-  text: '#3b1205'
 model-compression:
   label: Model compression
-  background: '#4d7c0f'
-  text: '#ffffff'
 fact-checking:
   label: Fact-checking
-  background: '#14b8a6'
-  text: '#003060'
+hate-speech:
+  label: Hate speech
+subjectivity:
+  label: Subjectivity
+annotation:
+  label: Data annotation
+sentiment:
+  label: Sentiment and emotion
+education:
+  label: Education

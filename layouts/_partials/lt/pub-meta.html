@@ -1,10 +1,13 @@
 {{/* Display data of a publication, shared by its card and its page. Input: the publication page. */}}
 {{/* `url` is where a title links: the publication page when it has a body (its blog), else the DOI, the arXiv page, */}}
 {{/* the PDF, or the first link, in this order; empty when there is none. A preprint's venue reads "Preprint", or */}}
-{{/* "arXiv preprint" when the venue field names arXiv. */}}
+{{/* "arXiv preprint" when the venue field names arXiv. A paper with a `venue_key` shows that venue's `name` in */}}
+{{/* data/venues.yaml, the full name with the acronym in brackets, so every list writes a venue the same way. A paper */}}
+{{/* with a DOI shows no arXiv link. */}}
 {{- $kinds := slice "Journal" "Conference" "Workshop" "Preprint" -}}
 {{- $kind := index (intersect $kinds (.Params.categories | default slice) | default (slice "Publication")) 0 -}}
 {{- $venue := .Params.publication_short | default .Params.publication | default "" | markdownify | plainify | htmlUnescape -}}
+{{- with index hugo.Data.venues (.Params.venue_key | default "none") }}{{ $venue = .name }}{{ end -}}
 {{- if eq $kind "Preprint" }}{{ $venue = cond (eq $venue "") "Preprint" (printf "%s preprint" $venue) }}{{ end -}}
 {{- $links := slice -}}
 {{- $arxiv := "" -}}
@@ -14,6 +17,7 @@
 {{- with .Params.url_pdf }}{{ $links = $links | append (dict "name" "Paper" "url" (. | relURL) "icon" "fas fa-file-pdf") }}{{ end -}}
 {{- with .Params.doi }}{{ $links = $links | append (dict "name" "DOI" "url" (printf "https://doi.org/%s" .) "icon" "ai ai-doi") }}{{ end -}}
 {{- with .Params.url_code }}{{ $links = $links | append (dict "name" "Code" "url" . "icon" "fab fa-github") }}{{ end -}}
+{{- if .Params.doi }}{{ $arxiv = "" }}{{ end -}}
 {{- with $arxiv }}{{ $links = $links | append (dict "name" "arXiv" "url" (printf "https://arxiv.org/abs/%s" .) "icon" "ai ai-arxiv") }}{{ end -}}
 {{- with .Params.url_dataset }}{{ $links = $links | append (dict "name" "Dataset" "url" . "icon" "fas fa-database") }}{{ end -}}
 {{- with .Params.url_project }}{{ $links = $links | append (dict "name" "Demo" "url" . "icon" "fas fa-play-circle") }}{{ end -}}
@@ -21,7 +25,7 @@
 {{- with .Params.url_slides }}{{ $links = $links | append (dict "name" "Slides" "url" (. | relURL) "icon" "fas fa-chalkboard") }}{{ end -}}
 {{- with .Params.url_poster }}{{ $links = $links | append (dict "name" "Poster" "url" (. | relURL) "icon" "fas fa-image") }}{{ end -}}
 {{- range .Params.links -}}
-  {{- if not (and $arxiv (strings.Contains .url "arxiv.org")) }}{{ $links = $links | append (dict "name" (cond (eq .name "URL") "Paper" .name) "url" .url "icon" "fas fa-link") }}{{ end -}}
+  {{- if not (and (or $arxiv $.Params.doi) (strings.Contains .url "arxiv.org")) }}{{ $links = $links | append (dict "name" (cond (eq .name "URL") "Paper" .name) "url" .url "icon" "fas fa-link") }}{{ end -}}
 {{- end -}}
 {{- $tldr := .Params.card_summary | default .Params.summary | default "" -}}
 {{- if and (not $tldr) .Params.abstract }}{{ $tldr = .Params.abstract | plainify | truncate 170 }}{{ end -}}

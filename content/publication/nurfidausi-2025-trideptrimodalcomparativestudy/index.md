@@ -39,7 +39,7 @@ summary: A fair, reproducible benchmark of EEG, speech, and interview text for d
 card_caption: "EEG, speech, and text pipelines fused at the decision level for depression detection. After Figure 1 of the paper."
 card_summary: A reproducible benchmark showing that combining EEG, speech, and text improves depression detection.
 
-topics: [multimodal, speech, benchmark, reproducibility]
+topics: [biomedical, multimodal, speech, benchmark]
 
 tags:
 - speech

@@ -49,7 +49,7 @@ tags:
 - tablut
 - higher education
 
-topics: []
+topics: [education]
 
 # Display this page in a list of Featured pages?
 featured: false
