@@ -30,6 +30,7 @@ url_pdf: 'https://dl.acm.org/doi/pdf/10.1145/3769126.3769218'
 abstract: 'Unfair clause detection is an extremely useful AI application for consumer protection. Artificial intelligence has recently been successful in building systems capable to automatically detect unfair clauses in Terms of Service, and also to identify their unfairness categories. Since Large Language Models (LLMs) are nowadays bringing a revolution to the field of artificial intelligence, and in particular to natural language processing and understanding, in this paper we compare several different prompt strategies for LLMs with more traditional BERT-based fine-tuned models. Our extensive experimental evaluation aims to investigate whether it is worth using LLMs also for this challenging domain-specific task.'
 # Summary. An optional shortened abstract.
 summary: 'Seven large language models, prompted in three ways, face fine-tuned classifiers at spotting unfair clauses in Terms of Service, and the fine-tuned classifiers still win.'
+card_caption: "Each Terms of Service sentence goes to prompted LLMs with three prompt strategies and to fine-tuned baselines, with the best test macro-F1 of each. Schema built from Sections 4 and 5 and Tables 3 and 4 of the paper."
 
 image:
   caption: 'Illustrative schema built from the paper''s definitions: Terms of Service sentences classified into nine unfairness categories by prompted large language models (three prompt strategies) and by supervised baselines.'

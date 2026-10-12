@@ -41,6 +41,8 @@ abstract: 'This paper addresses the extraction of Judicial Interpretative Formul
 
 # Summary. An optional shortened abstract.
 summary: "A pipeline trains small classifiers on LLM-labelled EU tax rulings to find the Court's interpretative paragraphs, matching the LLM on expert-labelled test data."
+# Caption of card.svg, the teaser of the page
+card_caption: "Expert and LLM labels on 101 CJEU rulings evaluate and train a paragraph classifier for Judicial Interpretative Formulas. Schema built from Sections 2 and 3 of the paper."
 
 tags:
 - judicial interpretative formulas

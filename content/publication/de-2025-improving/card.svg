@@ -1,0 +1,25 @@
+<svg viewBox="0 0 360 212" role="img" aria-labelledby="de-2025-improving-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="de-2025-improving-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="de-2025-improving-card-title">Built from the Method and Results sections of the paper. In parallel with the lessons of an AI course, students in teams of at most 4 people build an AI player for Tablut, an asymmetric board game on a 9 x 9 board. The players meet in a tournament of round-robin groups followed by a final. Students then answer an anonymous questionnaire on a Likert scale from 1 to 5. Over 6 semesters, 244 students took part and 166 answers were collected.</title>
+  <text class="lt-s-sub" x="8" y="18">PROJECT IN PARALLEL WITH LESSONS</text>
+  <rect class="lt-s-tok" x="8" y="28" width="164" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="90" y="48">Tablut game</text>
+  <text class="lt-s-txt lt-s-small" x="90" y="66">9 x 9, asymmetric</text>
+  <path class="lt-s-arrow" marker-end="url(#de-2025-improving-card-arrow)" d="M174 51 H184"/>
+  <rect class="lt-s-box lt-s-sel" x="188" y="28" width="164" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="48">Build AI player</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="66">teams of up to 4</text>
+  <path class="lt-s-arrow" marker-end="url(#de-2025-improving-card-arrow)" d="M270 76 V94"/>
+  <rect class="lt-s-box lt-s-pred" x="188" y="98" width="164" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="118">Tournament</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="136">round-robin, final</text>
+  <path class="lt-s-arrow" marker-end="url(#de-2025-improving-card-arrow)" d="M186 121 H176"/>
+  <rect class="lt-s-tok" x="8" y="98" width="164" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="90" y="118">Questionnaire</text>
+  <text class="lt-s-txt lt-s-small" x="90" y="136">Likert scale, 1 to 5</text>
+  <path class="lt-s-arrow" marker-end="url(#de-2025-improving-card-arrow)" d="M90 146 V164"/>
+  <rect class="lt-s-label" x="20" y="168" width="140" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="90" y="188">166 answers</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="179">from 244 students</text>
+  <text class="lt-s-txt lt-s-small" x="270" y="197">over 6 semesters</text>
+</svg>

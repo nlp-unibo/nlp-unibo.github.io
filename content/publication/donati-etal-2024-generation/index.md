@@ -53,6 +53,7 @@ abstract: English grammar Multiple-Choice Cloze (MCC) exercises are crucial for 
 
 # Summary. An optional shortened abstract.
 summary: A fine-tuned Llama 3 writes English grammar multiple-choice exercises without predefined constraints, and a rule-based check of their structure agrees with a human expert.
+card_caption: "A fine-tuned Llama 3 writes a grammar exercise for a given topic, and a rule-based check tests its structure. Schema built from Sections 4 to 9 of the paper."
 
 tags:
 - large language models

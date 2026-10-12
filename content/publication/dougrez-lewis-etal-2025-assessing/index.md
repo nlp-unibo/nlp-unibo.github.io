@@ -51,6 +51,8 @@ abstract: Although LLMs have shown great performance on Mathematics and Coding r
 
 # Summary. An optional shortened abstract.
 summary: RECV, a benchmark of real-world claims labeled by reasoning type, shows that LLMs verify claims by deduction well but fail when abduction is needed.
+# Caption of card.svg, the teaser of the page
+card_caption: "A claim with its evidence needs deduction or abduction to reach a verdict. After Figure 1 of the paper."
 
 tags:
 - claim verification

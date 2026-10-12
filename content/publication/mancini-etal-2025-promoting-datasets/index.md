@@ -38,6 +38,8 @@ abstract: 'Current research in machine learning and artificial intelligence is l
 
 # Summary. An optional shortened abstract.
 summary: 'A checklist for responsible speech datasets on mental health and neurological disorders shows that 36 dataset papers rarely report privacy and security measures.'
+# Caption of card.svg, the teaser of the page
+card_caption: "Seven desiderata for responsible speech datasets become a checklist used to survey 36 dataset papers. Schema drawn from the paper."
 
 tags:
 - speech datasets

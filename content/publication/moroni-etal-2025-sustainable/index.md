@@ -42,6 +42,7 @@ abstract: 'The evaluation of large language models for Italian faces unique chal
 
 # Summary. An optional shortened abstract.
 summary: 'A community roadmap for evaluating Italian LLMs: what to test, how to test it, where to find data, and how to keep benchmarking sustainable.'
+card_caption: "The four questions that organize the paper: what to test, how to test, where to get the data, and how to keep benchmarking sustainable. Schema built from the Introduction and Sections 2 to 5 of the paper."
 
 tags:
 - benchmarking

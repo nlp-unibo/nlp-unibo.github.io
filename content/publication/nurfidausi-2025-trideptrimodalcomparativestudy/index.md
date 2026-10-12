@@ -35,6 +35,8 @@ abstract: Depression is a widespread mental health disorder, yet its automatic d
 
 # Summary. An optional shortened abstract.
 summary: A fair, reproducible benchmark of EEG, speech, and interview text for depression detection, showing that fusing all three signals works best.
+# Caption of card.svg, the teaser of the page
+card_caption: "EEG, speech, and text pipelines fused at the decision level for depression detection. After Figure 1 of the paper."
 card_summary: A reproducible benchmark showing that combining EEG, speech, and text improves depression detection.
 
 topics: [multimodal, speech, benchmark, reproducibility]

@@ -60,6 +60,7 @@ abstract: >-
 
 # Summary. An optional shortened abstract.
 summary: CheckThat! 2025 ran four shared tasks that help fact-checkers, from subjectivity detection to numerical claim verification, with 83 teams and more than 20 languages.
+card_caption: "The four core stages of the verification pipeline and the 2025 tasks that support each stage. Schema redrawn after Figure 1 of the paper."
 
 tags:
 - CLEF

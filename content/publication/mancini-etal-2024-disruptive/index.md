@@ -52,6 +52,8 @@ abstract: Disruptive situations are emotionally-charged events diverging from or
 
 # Summary. An optional shortened abstract.
 summary: Detecting disruptive situations on public transport by recognizing anger, fear, sadness, and disgust in speech, with small models that stay accurate in noise.
+# Caption of card.svg, the teaser of the page
+card_caption: "Speech features of a passenger recording, with train noise added during training, feed a classifier that flags disruptive situations. Schema drawn from the paper."
 
 tags:
 - speech emotion recognition

@@ -42,6 +42,7 @@ abstract: Argumentation mining is a recent challenge concerning the automatic ex
 
 # Summary. An optional shortened abstract.
 summary: 'MARGOT, the first online argumentation mining system, marks the claims and evidence in any text without being told its topic.'
+card_caption: "The MARGOT pipeline, from a plain text query to an HTML page with claims and evidence highlighted. Schema built after Figure 1 and Section 4 of the paper."
 
 tags:
 - argumentation mining

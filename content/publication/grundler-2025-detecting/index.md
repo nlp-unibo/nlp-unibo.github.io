@@ -55,6 +55,8 @@ abstract: "Privacy policies often fall short of providing a comprehensive accoun
 
 # Summary. An optional shortened abstract.
 summary: A new corpus of 30 Italian privacy policies shows that BERT models beat LLMs at flagging vague data clauses and that resources transfer across languages.
+# Caption of card.svg, the teaser of the page
+card_caption: "An annotated privacy policy clause and the rule that labels it vague, with data transfer between English and Italian corpora. Schema drawn from the paper."
 
 tags:
 - privacy policies

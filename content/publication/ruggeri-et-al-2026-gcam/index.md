@@ -36,6 +36,8 @@ doi: 10.1162/tacl.a.804
 abstract: We introduce Guideline-Centered Annotation Methodology (GCAM), a novel methodology designed to report the annotation guidelines associated with each data instance. GCAM addresses four key limitations of the standard application of the prescriptive annotation methodology by reducing the information loss during annotation, ensuring adherence to guidelines, and enabling the efficient reuse of annotated data across multiple tasks that rely on the same guidelines. We evaluate GCAM with a focus on text classification tasks through (i) a human annotation study and (ii) an experimental evaluation with several machine learning models. Our results highlight the advantages of GCAM from multiple perspectives, guaranteeing a transparent evaluation of the successful application of the prescriptive paradigm and enabling a fine-grained model error analysis.
 # Summary. An optional shortened abstract.
 summary: GCAM has annotators report which guidelines apply to each text instead of a label, so adherence becomes checkable and one annotation serves many tasks.
+# Caption of card.svg, the teaser of the page
+card_caption: "In SAM annotators map texts to classes; in GCAM they map texts to guidelines, and a fixed mapping gives the class. After Figure 1 of the paper."
 
 tags:
 - data annotation

@@ -1,0 +1,29 @@
+<svg viewBox="0 0 360 272" role="img" aria-labelledby="antici-et-al-2024-subjectivity-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="antici-et-al-2024-subjectivity-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="antici-et-al-2024-subjectivity-card-title">Built from Sections 2 and 3 of the paper. Annotators see each sentence from English news articles alone, with no article context. The annotation has three stages: two annotators label the sentence, the pair discusses ambiguous sentences to reach an agreement, and a third annotator labels the sentences where the two still disagree. The result is the NewsSD-ENG corpus, with 638 objective and 411 subjective sentences.</title>
+  <text class="lt-s-sub" x="8" y="18">ENGLISH NEWS SENTENCE</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="34" rx="8"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="48">One sentence, no context</text>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M180 64 V80"/>
+  <text class="lt-s-sub" x="8" y="96">THREE-STAGE ANNOTATION</text>
+  <rect class="lt-s-tok" x="8" y="104" width="106" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="61" y="124">Label</text>
+  <text class="lt-s-txt lt-s-small" x="61" y="142">2 annotators</text>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M116 127 H125"/>
+  <rect class="lt-s-box lt-s-sel" x="127" y="104" width="106" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="124">Discuss</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="142">ambiguous</text>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M235 127 H244"/>
+  <rect class="lt-s-tok" x="246" y="104" width="106" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="299" y="124">Tie-break</text>
+  <text class="lt-s-txt lt-s-small" x="299" y="142">3rd annotator</text>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M180 154 V172"/>
+  <rect class="lt-s-box lt-s-pred" x="60" y="176" width="240" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="199">NewsSD-ENG corpus</text>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M100 216 V230"/>
+  <path class="lt-s-arrow" marker-end="url(#antici-et-al-2024-subjectivity-card-arrow)" d="M260 216 V230"/>
+  <rect class="lt-s-label" x="30" y="234" width="140" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="100" y="254">638 objective</text>
+  <rect class="lt-s-label" x="190" y="234" width="140" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="260" y="254">411 subjective</text>
+</svg>

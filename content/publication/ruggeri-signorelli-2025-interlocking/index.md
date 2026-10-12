@@ -44,6 +44,8 @@ abstract: A popular end-to-end architecture for selective rationalization is the
 
 # Summary. An optional shortened abstract.
 summary: GenSPP trains the generator and predictor of a self-explaining text classifier separately with genetic search, removing interlocking and producing more accurate highlights.
+# Caption of card.svg, the teaser of the page
+card_caption: "Select-then-predict, and GenSPP, which searches generators with a genetic algorithm so that interlocking cannot arise. Schema drawn from the paper."
 
 tags:
 - selective rationalization

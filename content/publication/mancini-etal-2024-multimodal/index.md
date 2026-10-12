@@ -42,6 +42,8 @@ abstract: Recent advances in NLP suggest that some tasks, such as argument detec
 
 # Summary. An optional shortened abstract.
 summary: Releases the first corpus pairing political debate text with audio for classifying six fallacy types, and shows that adding audio improves classification for several models.
+# Caption of card.svg, the teaser of the page
+card_caption: "Text and audio modules encode a debate passage, and a classifier predicts its fallacy category. After Figure 1 of the paper."
 
 tags:
 - multimodal argument mining

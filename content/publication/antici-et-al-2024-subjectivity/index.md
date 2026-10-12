@@ -48,6 +48,7 @@ abstract: We develop novel annotation guidelines for sentence-level subjectivity
 
 # Summary. An optional shortened abstract.
 summary: NewsSD-ENG is an English news corpus for sentence-level subjectivity detection, labeled with guidelines that rely on no language-specific tools.
+card_caption: "How NewsSD-ENG was annotated: each isolated news sentence is labeled by two annotators, discussed when ambiguous, and given to a third annotator if the pair still disagrees. Schema built from Sections 2 and 3 of the paper."
 
 tags:
 - subjectivity detection

@@ -48,6 +48,8 @@ abstract: 'Hate speech relies heavily on cultural influences, leading to varying
 
 # Summary. An optional shortened abstract.
 summary: HateDefCon breaks 493 hate speech definitions from five domains into semantic components and shows LLM hate speech detection changes with the definition in the prompt.
+# Caption of card.svg, the teaser of the page
+card_caption: "HateDefCon splits hate speech definitions into semantic components, and an LLM applies a definition to a post. Schema drawn from the paper."
 
 tags:
 - hate speech

@@ -48,6 +48,7 @@ abstract: 'This challenge consists of three classification tasks, in the context
 
 # Summary. An optional shortened abstract.
 summary: AMELIA tests whether language models can classify legal arguments in Italian, with three tasks built on 225 expert-annotated decisions on Value Added Tax.
+card_caption: "The three AMELIA tasks applied in sequence to an argument component, with the labels of an example from the dataset. Schema built from Section 2 and Appendix A of the paper."
 
 tags:
 - argument mining

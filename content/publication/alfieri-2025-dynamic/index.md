@@ -38,6 +38,8 @@ abstract: 'The selection of demonstrations for few-shot learning plays a pivotal
 
 # Summary. An optional shortened abstract.
 summary: Choosing few-shot examples per query by similarity lets LLMs mine legal arguments in EU court rulings as well as or better than expert-chosen examples.
+# Caption of card.svg, the teaser of the page
+card_caption: "Dynamic graph-based selection of demonstrations for each query. Schema built from Section 4.1 of the paper."
 
 tags:
 - student publication

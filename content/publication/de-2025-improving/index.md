@@ -40,6 +40,7 @@ abstract: "Traditional university lessons do not provide students with the oppor
 
 # Summary. An optional shortened abstract.
 summary: Over three years, 244 master students built AI players for the board game Tablut, and they report gains in AI knowledge, motivation, and teamwork.
+card_caption: "How the project runs, from building a Tablut player to the tournament and the student questionnaire. Schema built from the Method and Results sections of the paper."
 
 tags:
 - project-based learning

@@ -49,6 +49,7 @@ abstract: 'Natural Language Processing (NLP) can provide tools for analyzing spe
 
 # Summary. An optional shortened abstract.
 summary: 'Four Gricean Maxims become NLP metrics: offensive Reddit comments break them about as often as safe ones, except through profanity and untruthful claims.'
+card_caption: "Each Gricean Maxim becomes an NLP metric that compares offensive and safe Reddit turns and selects examples for a close reading. Schema built from Sections 4 and 5 and Figure 5 of the paper."
 
 tags:
 - gricean maxims

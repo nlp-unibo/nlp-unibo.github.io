@@ -50,6 +50,7 @@ abstract: "This paper investigates whether Large Language Models (LLMs) can effe
 
 # Summary. An optional shortened abstract.
 summary: Twenty-four language models score Italian news summaries against an editorial rubric, and most of them rate the summaries higher than a human expert does.
+card_caption: "An LLM judge scores each summary with a rubric prompt, and its scores are compared with those of a human expert. Schema built from Sections 3 and 4 of the paper."
 
 tags:
 - LLM judges

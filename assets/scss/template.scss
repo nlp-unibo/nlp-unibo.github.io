@@ -1388,6 +1388,19 @@ $lt-slide-height: 29rem;
   color: $lt-muted;
 }
 
+// A drawn card schema keeps a moderate width, since its viewBox is small and its text would otherwise grow large.
+.lt-proj-teaser-schema {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.2rem;
+  border: 1px solid $lt-border;
+  border-radius: 16px;
+
+  svg { display: block; width: 100%; height: auto; }
+}
+
+.dark .lt-proj-teaser-schema { border-color: $lt-dark-border; }
+
 .lt-proj-teaser {
   max-width: 1000px;
   margin: 0 auto;
@@ -2443,7 +2456,8 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 .lt-overview,
 .lt-research-mosaic,
 .lt-tool-figure,
-.lt-card-schema {
+.lt-card-schema,
+.lt-proj-teaser-schema {
   --lt-role-1: #1f6fb2;
   --lt-role-2: #c26a00;
   --lt-role-3: #0f8a7a;
@@ -2454,7 +2468,8 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 .dark .lt-overview,
 .dark .lt-research-mosaic,
 .dark .lt-tool-figure,
-.dark .lt-card-schema {
+.dark .lt-card-schema,
+.dark .lt-proj-teaser-schema {
   --lt-role-1: #3f8fd6;
   --lt-role-2: #c97a14;
   --lt-role-3: #13917d;

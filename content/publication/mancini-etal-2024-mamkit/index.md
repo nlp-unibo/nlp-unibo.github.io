@@ -47,6 +47,7 @@ abstract: Multimodal Argument Mining (MAM) is a recent area of research aiming t
 
 # Summary. An optional shortened abstract.
 summary: MAMKit is an open PyTorch toolkit that puts multimodal argument mining datasets and models behind one interface, so results become easy to reproduce.
+card_caption: "The five packages of MAMKit and how they work together to load datasets, build models, and run benchmarks. After Figure 1 and Section 3.1 of the paper."
 
 tags:
 - toolkit

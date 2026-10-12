@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 324" role="img" aria-labelledby="muti-et-al-2024-pejorativity-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="pej-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="muti-et-al-2024-pejorativity-card-title">After Figure 1 and Section 5 of the paper. The input is a tweet that contains a word from the lexicon of possibly pejorative epithets. In step 1, model_pej decides whether the word is used in a pejorative or a neutral way. In step 2, this answer is injected into the tweet in one of two ways: CONCAT appends the label at the end of the tweet, and SUBST replaces the word with its anchor, a word with a single meaning. model_mis then classifies the enriched tweet as misogynous or not.</title>
+  <text class="lt-s-sub" x="8" y="18">INPUT</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="49">Tweet + lexicon word</text>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M180 64 V100"/>
+  <rect class="lt-s-node lt-role-1" x="8" y="76" width="344" height="84" rx="14"/>
+  <text class="lt-s-sub" x="18" y="94">STEP 1</text>
+  <rect class="lt-s-box lt-s-sel" x="70" y="104" width="220" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong lt-s-mono" x="180" y="124">model_pej</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="142">pejorative or neutral</text>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M120 152 V194"/>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M240 152 V194"/>
+  <rect class="lt-s-node lt-role-3" x="8" y="172" width="344" height="80" rx="14"/>
+  <text class="lt-s-sub" x="18" y="190">STEP 2</text>
+  <rect class="lt-s-tok" x="20" y="198" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="95" y="218">CONCAT</text>
+  <text class="lt-s-txt lt-s-small" x="95" y="236">append the label</text>
+  <rect class="lt-s-tok" x="190" y="198" width="150" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="265" y="218">SUBST</text>
+  <text class="lt-s-txt lt-s-small" x="265" y="236">swap in the anchor</text>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M95 246 V266"/>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M265 246 V260 H140 V266"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="270" width="164" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong lt-s-mono" x="90" y="290">model_mis</text>
+  <text class="lt-s-txt lt-s-small" x="90" y="308">misogyny detection</text>
+  <path class="lt-s-arrow" marker-end="url(#pej-card-arrow)" d="M174 293 H184"/>
+  <rect class="lt-s-label" x="188" y="279" width="164" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="270" y="298">misogynous or not</text>
+</svg>

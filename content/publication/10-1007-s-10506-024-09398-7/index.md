@@ -50,6 +50,8 @@ abstract: 'Most of the existing natural language processing systems for legal te
 
 # Summary. An optional shortened abstract.
 summary: 'With good machine translation, an English unfair-clause detector for Terms of Service matches detectors trained on new German, Italian, and Polish corpora.'
+# Caption of card.svg, the teaser of the page
+card_caption: "Three ways to obtain a German unfair clause detector from English data. After Figure 1 of the paper."
 
 tags:
 - multilingualism

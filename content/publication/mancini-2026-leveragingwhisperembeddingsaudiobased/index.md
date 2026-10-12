@@ -35,6 +35,8 @@ abstract: 'Audio-based lyrics matching can be an appealing alternative to other 
 
 # Summary. An optional shortened abstract.
 summary: WEALY matches songs by their lyrics straight from the audio, using Whisper speech embeddings, and offers a reproducible baseline across three public datasets.
+# Caption of card.svg, the teaser of the page
+card_caption: "WEALY turns song audio into Whisper latents and then into one song embedding for lyrics matching. After Figure 1 of the paper."
 
 tags:
 - lyrics matching

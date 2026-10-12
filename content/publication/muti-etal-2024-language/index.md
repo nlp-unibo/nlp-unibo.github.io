@@ -48,6 +48,8 @@ abstract: We propose misogyny detection as an Argumentative Reasoning task and w
 
 # Summary. An optional shortened abstract.
 summary: Prompting LLMs to rebuild the hidden reasoning of implicit misogyny shows that they often reach the right label for the wrong reasons.
+# Caption of card.svg, the teaser of the page
+card_caption: "An LLM prompted with the Toulmin model states the claim and the warrant of a message before classifying it. Schema drawn from the paper."
 
 tags: [misogyny, implicit hate speech, argumentative reasoning, toulmin, prompting, italian]
 

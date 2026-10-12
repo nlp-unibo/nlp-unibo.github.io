@@ -1,0 +1,31 @@
+<svg viewBox="0 0 360 300" role="img" aria-labelledby="grundler-etal-2024-amelia-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="grundler-etal-2024-amelia-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="grundler-etal-2024-amelia-card-title">Built from the task definitions in Section 2 and the example in Appendix A of the paper. The input is an argument component from one of 225 Italian decisions on Value Added Tax. Task 1 classifies it as premise or conclusion. Task 2 classifies each premise as factual, legal, or both. Task 3 assigns each legal premise one or more of five argument schemes. The example component is labeled premise, legal, and Rule. All tasks are scored with the macro F1 score.</title>
+  <text class="lt-s-sub" x="8" y="18">FROM 225 ITALIAN VAT DECISIONS</text>
+  <rect class="lt-s-tok" x="8" y="26" width="344" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="49">Argument component</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M113 64 V76"/>
+  <rect class="lt-s-box lt-s-pred" x="8" y="80" width="210" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="113" y="100">1. Component</text>
+  <text class="lt-s-txt lt-s-small" x="113" y="118">premise or conclusion?</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M220 103 H244"/>
+  <rect class="lt-s-label" x="248" y="89" width="104" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="300" y="108">Premise</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M113 128 V146"/>
+  <text class="lt-s-txt lt-s-small" x="170" y="142">premises</text>
+  <rect class="lt-s-box lt-s-pred" x="8" y="150" width="210" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="113" y="170">2. Premise type</text>
+  <text class="lt-s-txt lt-s-small" x="113" y="188">factual, legal, or both?</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M220 173 H244"/>
+  <rect class="lt-s-label" x="248" y="159" width="104" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="300" y="178">Legal</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M113 198 V216"/>
+  <text class="lt-s-txt lt-s-small" x="180" y="212">legal premises</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="220" width="210" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="113" y="240">3. Scheme</text>
+  <text class="lt-s-txt lt-s-small" x="113" y="258">one or more of five</text>
+  <path class="lt-s-arrow" marker-end="url(#grundler-etal-2024-amelia-card-arrow)" d="M220 243 H244"/>
+  <rect class="lt-s-label" x="248" y="229" width="104" height="28" rx="14"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="300" y="248">Rule</text>
+  <text class="lt-s-sub" x="8" y="292">METRIC: MACRO F1</text>
+</svg>

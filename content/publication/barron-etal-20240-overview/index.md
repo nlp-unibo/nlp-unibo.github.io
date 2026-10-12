@@ -68,6 +68,7 @@ abstract: >-
 
 # Summary. An optional shortened abstract.
 summary: CheckThat! 2024 ran six shared tasks for fact-checking, from check-worthiness to adversarial attacks, in fifteen languages with 46 participating teams.
+card_caption: "The four core stages of the CheckThat! verification pipeline and the six 2024 tasks attached to them. Schema built after Figure 1 of the paper."
 
 tags:
 - CLEF

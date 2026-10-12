@@ -54,6 +54,8 @@ abstract: 'We present an overview of the MM-ArgFallacy2025 shared task on Multim
 
 # Summary. An optional shortened abstract.
 summary: 'MM-ArgFallacy2025 benchmarks fallacy detection and classification in U.S. presidential debates from text, audio, or both, and finds that text-based systems still score highest.'
+# Caption of card.svg, the teaser of the page
+card_caption: "The two subtasks of MM-ArgFallacy2025 on text, audio, or both. Schema built from Section 3 of the paper."
 
 tags:
 - fallacy detection

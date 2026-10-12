@@ -7,6 +7,8 @@
 {{ $bib := .Resources.Get "cite.bib" }}
 {{ $teaser_video := .Resources.GetMatch "teaser.mp4" }}
 {{ $featured := (.Resources.ByType "image").GetMatch "*featured*" }}
+{{/* A drawn `card.svg` schema is the teaser when the paper has one; `card_caption`, or else the schema title, captions it. */}}
+{{ $schema := .Resources.Get "card.svg" }}
 {{ $body := .Content | replaceRE `<!--[\s\S]*?-->` "" | strings.TrimSpace }}
 {{ $sections := findRESubmatch `<h2 id="([^"]+)"[^>]*>(.*?)</h2>` $body }}
 <article class="lt-proj">
@@ -32,13 +34,17 @@
   <figure class="lt-proj-teaser">
     {{ if $teaser_video }}
       <video src="{{ $teaser_video.RelPermalink }}" autoplay muted loop playsinline{{ with $featured }} poster="{{ (.Fit "1600x900 webp").RelPermalink }}"{{ end }}></video>
+    {{ else if $schema }}
+      <div class="lt-svg lt-proj-teaser-schema">{{ $schema.Content | safeHTML }}</div>
     {{ else if $featured }}
       {{ $img := $featured.Resize "1600x webp" }}
       <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ .Params.image.caption | default .Title }}">
     {{ else }}
       {{ partial "lt/cover.html" (dict "seed" .Title) }}
     {{ end }}
-    {{ with .Params.image.caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+    {{ $caption := .Params.image.caption }}
+    {{ if and $schema (not $teaser_video) }}{{ $caption = .Params.card_caption | default (index (findRESubmatch `<title[^>]*>([^<]*)</title>` $schema.Content 1) 0 1) }}{{ end }}
+    {{ with $caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
   </figure>
 
   {{/* From 1200px the section menu is a sticky column beside the body, as on proposal pages; narrower, it is a bar. */}}

@@ -38,6 +38,7 @@ abstract: "Speech impairments in Parkinson’s disease (PD) provide significant 
 
 # Summary. An optional shortened abstract.
 summary: A systematic test of six explanation methods for a speech-based Parkinson's detector, showing faithful explanations that domain experts still cannot easily read.
+card_caption: "The evaluation protocol: six explanation methods produce saliency maps for a fixed HuBERT detector, and the maps are checked with faithfulness metrics and a classifier trained on them. Schema built from Section III of the paper."
 
 tags:
 - explainability

@@ -18,6 +18,8 @@ abstract: "TODO: Add abstract."
 summary: ""
 # Optional shorter summary of at most 15 words for the homepage preprint card
 card_summary: ""
+# With a drawn card.svg in the folder: what it shows and its source. card.svg is the first figure of the page.
+card_caption: ""
 tags: []
 featured: false
 url_pdf: ""

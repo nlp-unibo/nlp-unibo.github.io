@@ -54,6 +54,7 @@ abstract: 'Misogyny is often expressed through figurative language. Some neutral
 
 # Summary. An optional shortened abstract.
 summary: PejorativITy labels Italian tweets for pejorative words and misogyny, and shows that telling insults from neutral senses first improves misogyny detection.
+card_caption: "The two-step pipeline: model_pej labels the lexicon word as pejorative or neutral, and the answer is appended to the tweet (CONCAT) or replaces the word with its anchor (SUBST) before misogyny detection. Schema built from Figure 1 and Section 5 of the paper."
 
 tags:
 - misogyny detection

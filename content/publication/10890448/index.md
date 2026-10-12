@@ -36,6 +36,8 @@ abstract: 'Neural networks are typically black-boxes that remain opaque with reg
 
 # Summary. An optional shortened abstract.
 summary: LMAC-TD explains an audio classifier with a listenable clip decoded directly as a waveform, which improves perceived audio quality without losing faithfulness.
+# Caption of card.svg, the teaser of the page
+card_caption: "LMAC-TD decodes a listenable explanation of a frozen audio classifier directly as a waveform. Schema drawn from the paper."
 
 tags:
 - measurement
