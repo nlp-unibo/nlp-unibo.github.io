@@ -56,7 +56,7 @@ CONTENT_TYPES = {
     "proposal": ("proposals", "proposal"),
 }
 REQUIRED_FIELDS = {
-    "authors": ("title", "first_name", "last_name", "user_groups"),
+    "authors": ("title", "first_name", "last_name", "user_groups", "build"),
     "news": ("title", "date", "summary"),
     "research": ("title", "date", "summary"),
     "projects": ("title", "date", "summary", "external_link", "topics", "categories"),

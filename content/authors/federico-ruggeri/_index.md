@@ -45,12 +45,13 @@ email: 'federico.ruggeri6@unibo.it'
 
 highlight_name: true
 
-# Topics for "Works on" on the People page, in place of the ones computed from publications.
-works_on: [argument-mining, interpretability, knowledge-extraction]
-
 user_groups:
   - Members
 weight: 3
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Federico obtained his PhD from the University of Bologna in 2022 with the thesis *"Towards Integrating Unstructured Knowledge in Natural Language Processing"*.

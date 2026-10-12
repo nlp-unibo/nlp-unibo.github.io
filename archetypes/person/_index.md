@@ -4,6 +4,9 @@ first_name: "TODO: First name"
 last_name: "TODO: Last name"
 superuser: false
 draft: true
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 
 organizations:
   - name: University of Bologna

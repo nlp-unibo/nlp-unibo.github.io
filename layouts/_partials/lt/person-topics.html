@@ -1,9 +1,8 @@
-{{/* Topic keys a person works on: `works_on` from the profile, or else the three most frequent `topics` of their */}}
-{{/* publications, except `prototype`, which marks a kind of work rather than a topic. Input: the profile page. */}}
+{{/* Topic keys a person works on: the three most frequent `topics` of their ten most recent publications, except */}}
+{{/* `prototype`, which marks a kind of work rather than a topic. They follow the publications, so they need no upkeep. */}}
+{{/* Input: the profile page. */}}
 {{ $topics := slice }}
-{{ with .Params.works_on }}{{ $topics = . }}{{ else }}
-  {{ $counts := dict }}{{ range where .Pages "Section" "publication" }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
-  {{ $used := slice }}{{ range $key, $n := $counts }}{{ if ne $key "prototype" }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}{{ end }}
-  {{ range first 3 (sort $used "n" "desc") }}{{ $topics = $topics | append .key }}{{ end }}
-{{ end }}
+{{ $counts := dict }}{{ range first 10 (where .Pages "Section" "publication").ByDate.Reverse }}{{ range .Params.topics }}{{ $counts = merge $counts (dict . (add (index $counts . | default 0) 1)) }}{{ end }}{{ end }}
+{{ $used := slice }}{{ range $key, $n := $counts }}{{ if ne $key "prototype" }}{{ $used = $used | append (dict "key" $key "n" $n) }}{{ end }}{{ end }}
+{{ range first 3 (sort $used "n" "desc") }}{{ $topics = $topics | append .key }}{{ end }}
 {{ return $topics }}

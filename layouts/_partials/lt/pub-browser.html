@@ -1,5 +1,6 @@
 {{/* Publications with a search box, a type filter, a topic filter, and a live count (assets/js/ltlab.js), newest first */}}
-{{/* under year headings, as compact rows from lt/pub-row.html, with a link back to the filters at the end. Without */}}
+{{/* under year headings, as compact rows from lt/pub-row.html, with a link back to the filters at the end, and a */}}
+{{/* Back to top button once the heading scrolls out of sight (assets/js/ltlab.js). Without */}}
 {{/* JavaScript every publication is listed and the filters are hidden. Input: `pubs`, `id` of the heading, `title`. */}}
 {{ $pubs := .pubs }}
 {{ $kinds := slice (dict "key" "Journal" "title" "Journals") (dict "key" "Conference" "title" "Conferences") (dict "key" "Workshop" "title" "Workshops") (dict "key" "Preprint" "title" "Preprints") }}
@@ -32,4 +33,5 @@
   </div>
   {{ end }}
   <a class="lt-pubs-top" href="#{{ .id }}"><i class="fas fa-arrow-up" aria-hidden="true"></i> Back to the filters</a>
+  <a class="lt-to-top" href="#top" data-lt-to-top="#{{ .id }}"><i class="fas fa-arrow-up" aria-hidden="true"></i><span>Back to top</span></a>
 </section>

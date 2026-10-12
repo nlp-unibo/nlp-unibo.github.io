@@ -184,14 +184,16 @@
   });
 
   // Back to top: a fixed button shown only once the element its `data-lt-to-top` selector names has scrolled out of
-  // sight above, such as the filters at the top of the News page. The stylesheet hides it from the first paint when
-  // the script runs (`.lt-js`); without the script or IntersectionObserver the button is always shown.
+  // sight above, such as the filters at the top of the News page. It checks on every scroll, because a jump such as
+  // the End key or a year link can move the element from below the window to above it without crossing it. The
+  // stylesheet hides it from the first paint when the script runs (`.lt-js`); without the script it is always shown.
   document.querySelectorAll("[data-lt-to-top]").forEach((button) => {
     const anchor = document.querySelector(button.dataset.ltToTop);
-    if (!anchor || !("IntersectionObserver" in window)) return button.classList.add("is-shown");
-    new IntersectionObserver(([entry]) => {
-      button.classList.toggle("is-shown", !entry.isIntersecting && entry.boundingClientRect.top <= 0);
-    }).observe(anchor);
+    if (!anchor) return button.classList.add("is-shown");
+    // A strict test: an element still hidden while the page starts measures 0 and must not show the button.
+    const update = () => button.classList.toggle("is-shown", anchor.getBoundingClientRect().bottom < 0);
+    addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
+    update();
   });
 
   // Filters: the filter groups and the optional search box of one scope (`data-lt-filter-scope`, or the parent of the

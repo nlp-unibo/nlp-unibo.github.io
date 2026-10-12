@@ -156,7 +156,7 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `layouts/projects/list.html` | Projects page: start-year timeline, then project cards with scope and topic filters |
 | `layouts/tools/list.html` | Tools page: one band per tool with its `schema`, pills, install line, and link chips |
 | `layouts/people/single.html` | People page: one band per `user_groups` value |
-| `layouts/authors/list.html` | Profile page: header band, news and theses, publications with filters |
+| `layouts/authors/list.html` | Profile page: header band, then publications with filters and a Back to top button |
 | `layouts/work-with-us/single.html` | Work with us page: path tabs, steps, email form, proposals, work done with students |
 | `layouts/redirect/single.html` | Pages with `type: redirect`: an alias page to `target` or `external_link`; the build fails without one |
 | `layouts/baseof.html`, `layouts/rss.xml`, `layouts/index.webmanifest` | Theme copies with current Hugo calls |
@@ -190,7 +190,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `news-kind.html` | A page | Returns the kind `label`, `icon`, `slug` (pill colour), and `key` (filter value), derived from tags |
 | `page-intro.html` | A page | Opening band with a screen-reader `h1` and the `intro` |
 | `person-social.html` | A profile | Labelled social icon buttons |
-| `person-topics.html` | A profile | Returns `works_on`, or the three most frequent publication topics except `prototype` |
+| `person-topics.html` | A profile | Returns the three most frequent topics of the ten most recent publications, except `prototype` |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |
 | `pub-meta.html` | A publication | Returns `kind`, `venue`, `links`, `tldr`, shared by cards and pages |
@@ -424,8 +424,9 @@ Each tab has an inline `view-transition-name: lt-path-<key>`, so each card glide
 `lt-chosen` fires only after `transition.finished`, so the scroll to the panel uses the settled layout.
 The CSS lives under the `Choosing a path runs a view transition` comment.
 
-**News back to top.**
+**Back to top.**
 `layouts/news/list.html` renders `<a class="lt-to-top" href="#top" data-lt-to-top=".lt-news-page .lt-filter">`.
+`layouts/_partials/lt/pub-browser.html` renders one that appears once the publications heading scrolls away, on profile pages and on the Publications page.
 `#top` is the `id` of `<body>`.
 Point `data-lt-to-top` at any element to reuse the button on another page.
 

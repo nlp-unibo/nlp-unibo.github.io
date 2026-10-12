@@ -35,6 +35,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 4
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Nicolò Donati is a PhD student who joined the lab in 2023.

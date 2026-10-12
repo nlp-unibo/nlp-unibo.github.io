@@ -5344,32 +5344,7 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   p:last-child { margin-bottom: 0; }
 }
 
-.lt-activity {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid $lt-border;
-
-  li {
-    display: grid;
-    grid-template-columns: 3.5rem 9rem minmax(0, 1fr);
-    align-items: baseline;
-    gap: 0.4rem 0.8rem;
-    padding: 0.7rem 0;
-    border-bottom: 1px solid $lt-border;
-
-    @media (max-width: 575.98px) { grid-template-columns: auto minmax(0, 1fr); a, .lt-activity-title { grid-column: 1 / -1; } }
-  }
-
-  time { font-size: 0.85rem; color: $lt-muted; font-variant-numeric: tabular-nums; }
-
-  .lt-kind { justify-self: start; margin: 0; }
-
-  a, .lt-activity-title { font-weight: 600; }
-}
 
 .dark {
   .lt-profile-bio { color: #c9d6e3; }
-  .lt-activity, .lt-activity li { border-color: $lt-dark-border; }
-  .lt-activity time { color: $lt-dark-muted; }
 }

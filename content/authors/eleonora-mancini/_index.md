@@ -45,6 +45,10 @@ highlight_name: true
 user_groups:
   - Associate Fellows
 weight: 8
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Eleonora Mancini obtained her M.S. degree in Artificial Intelligence from University of Bologna in 2021, with a dissertation on disruptive situations detection on public transports through Speech Emotion Recognition. 

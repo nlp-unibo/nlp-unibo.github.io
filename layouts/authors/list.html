@@ -1,10 +1,9 @@
 {{/* Profile page of a person in content/authors: a header band with the photo, name, lab role, affiliation, "Works */}}
 {{/* on" topics (lt/person-topics.html), social links, and the biography from the page body; then the person's */}}
-{{/* news and theses, newest first; then their publications with filters (lt/pub-browser.html). An author */}}
-{{/* without a profile folder gets the name and the lists only. */}}
+{{/* publications with filters (lt/pub-browser.html). An author without a profile folder gets the name and the */}}
+{{/* publications only. */}}
 {{- define "main" -}}
 {{ $pubs := (where .Pages "Section" "publication").ByDate.Reverse }}
-{{ $other := (where .Pages "Section" "not in" (slice "publication")).ByDate.Reverse }}
 <article class="lt-proj lt-profile">
   <div class="lt-band lt-page-intro">
     <header class="lt-profile-head">
@@ -21,27 +20,6 @@
     </header>
     {{ with .Content }}<div class="lt-profile-bio">{{ . }}</div>{{ end }}
   </div>
-  {{ with $other }}
-  <div class="lt-band">
-    <section class="lt-pubs-section" aria-labelledby="activity-title">
-      <h2 class="lt-paths-title" id="activity-title">News and theses</h2>
-      <ul class="lt-activity">
-        {{ range . }}
-        {{/* Theses show their list category, other sections their own name. */}}
-        {{ $kind := .Section | humanize }}
-        {{ range .Params.categories }}{{ if ne . "Highlight" }}{{ $kind = . }}{{ end }}{{ end }}
-        <li>
-          <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2006" }}</time>
-          <span class="lt-kind lt-kind-{{ $kind | urlize }}">{{ $kind }}</span>
-          {{/* News items have no page: their link opens the item on the News page. A thesis opens its record. */}}
-          {{ $link := partial "lt/item-link.html" . }}{{ if eq .Section "news" }}{{ $link = printf "/news/#news-%s" (.File.ContentBaseName | urlize) | relURL }}{{ end }}
-          {{ if $link }}<a href="{{ $link }}"{{ if .Params.external_link }} target="_blank" rel="noopener"{{ end }}>{{ .Title }}</a>{{ else }}<span class="lt-activity-title">{{ .Title }}</span>{{ end }}
-        </li>
-        {{ end }}
-      </ul>
-    </section>
-  </div>
-  {{ end }}
   {{ with $pubs }}
   <div class="lt-band">
     {{ partial "lt/pub-browser.html" (dict "pubs" . "id" "publications-title" "title" "Publications") }}

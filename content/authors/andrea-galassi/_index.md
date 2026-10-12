@@ -46,6 +46,10 @@ highlight_name: true
 user_groups:
   - Members
 weight: 2
+
+# A People entry keeps its profile page; content/authors/_index.md hides every other author.
+build:
+  render: always
 ---
 
 Andrea is a Junior assistant professor (RTD-A) at the University of Bologna. He is involved in the Italian FAIR (Future Artificial Intelligence Research) project, regarding the development of scalable, transferable, neuro-symbolic machine learning techniques.
