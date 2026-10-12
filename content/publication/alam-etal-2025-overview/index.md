@@ -91,7 +91,7 @@ url_video: ''
 # Publication image
 # Add an image named `featured.jpg/png` to your page's folder then add a caption below.
 image:
-  caption: 'The four core stages of the fact-checking pipeline and the 2025 tasks attached to them, redrawn after Figure 1 of the paper.'
+  caption: ''
   focal_point: ''
   preview_only: false
 
