@@ -528,10 +528,13 @@ $lt-dark-card: #112236;
   color: $lt-dark-muted;
 }
 
+// A long pill, such as a topic name in a narrow card, wraps: centered text and a fixed radius keep it a rounded box,
+// while a one-line pill stays a capsule.
 .lt-pill {
   display: inline-block;
   padding: 0.1rem 0.6rem;
-  border-radius: 999px;
+  border-radius: 0.8rem;
+  text-align: center;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.05em;

@@ -330,11 +330,32 @@
     // web mail handlers, such as Outlook on the web, without its subject and body.
     const send = form.querySelector(".lt-mail-send");
     const wait = form.querySelector(".lt-mail-wait");
-    const ready = () => [...form.elements].every((field) => !field.required || field.disabled || field.value.trim());
+    const waitText = wait.textContent;
+    const ready = () => [...form.elements].every((field) => field.disabled || ((!field.required || field.value.trim()) && field.checkValidity()));
+    // Month fields: none before the current month, and one with `data-lt-after` at least that many months after the
+    // field it names. A browser without a month picker shows a text field, checked against the YYYY-MM pattern.
+    const months = (text) => (/^\d{4}-\d{2}$/.test(text) ? Number(text.slice(0, 4)) * 12 + Number(text.slice(5)) - 1 : NaN);
+    const today = new Date();
+    const thisMonth = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+    const monthFields = [...form.querySelectorAll("input[type=month], input[pattern][placeholder='YYYY-MM']")];
+    monthFields.forEach((field) => { field.min = thisMonth; });
+    const checkMonths = () => monthFields.forEach((field) => {
+      const value = months(field.value);
+      let message = value < months(thisMonth) ? "Choose this month or a later one." : "";
+      // Each rule names another month field, the least number of months between them, and the message; a hidden or
+      // empty field is skipped.
+      for (const rule of JSON.parse(field.dataset.ltAfter || "[]")) {
+        const other = form.elements[rule.field];
+        if (!message && other && !other.disabled && value - months(other.value) < rule.months) message = rule.message;
+      }
+      field.setCustomValidity(message);
+    });
+    const monthName = (text) => new Date(Number(text.slice(0, 4)), Number(text.slice(5)) - 1).toLocaleString("en-GB", { month: "long", year: "numeric" });
     const mailto = () => {
       const lines = [...form.elements]
         .filter((field) => field.dataset.ltLabel && !field.disabled && field.value.trim())
-        .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}` : `${field.dataset.ltLabel}: ${field.value.trim()}`));
+        .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}`
+          : `${field.dataset.ltLabel}: ${monthFields.includes(field) ? monthName(field.value) : field.value.trim()}`));
       const { to, names: people } = recipients();
       const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
       return `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
@@ -343,18 +364,27 @@
     const names = form.parentElement.querySelector(".lt-mail-names");
     // The plain email link is only for readers without JavaScript; the form replaces it.
     form.parentElement.querySelector(".lt-mail-direct").hidden = true;
-    // A field with `data-lt-when` shows only while the field it names has the given value; hidden, it is disabled, so it
+    // A field with `data-lt-when` shows only while the field it names has the given value, or a number above
+    // `data-lt-when-more`; hidden, it is disabled, so it
     // is neither required nor written in the email.
     const conditional = [...form.querySelectorAll("[data-lt-when]")];
     const update = () => {
       output.textContent = subject();
       names.textContent = recipients().names.join(", ");
       conditional.forEach((label) => {
-        label.hidden = value(label.dataset.ltWhen) !== label.dataset.ltWhenValue;
+        const shown = value(label.dataset.ltWhen);
+        label.hidden = "ltWhenMore" in label.dataset ? !(shown !== "" && Number(shown) > Number(label.dataset.ltWhenMore)) : shown !== label.dataset.ltWhenValue;
         label.querySelectorAll("input, select, textarea").forEach((field) => { field.disabled = label.hidden; });
       });
-      // Without an address the link is inactive; the message beside it names what is missing.
+      // Without an address the link is inactive; the message beside it names what is missing, or the month rule broken.
+      checkMonths();
+      form.querySelectorAll("input[type=number]").forEach((field) => {
+        field.setCustomValidity("");
+        if (!field.validity.valid && !field.validity.valueMissing) field.setCustomValidity("Write a whole number, 0 or more.");
+      });
       const done = ready();
+      const broken = [...form.elements].find((field) => !field.disabled && field.validationMessage && (field.value || field.validity.badInput));
+      wait.textContent = broken ? broken.validationMessage : waitText;
       if (done) send.href = mailto(); else send.removeAttribute("href");
       send.setAttribute("aria-disabled", String(!done));
       wait.hidden = done;

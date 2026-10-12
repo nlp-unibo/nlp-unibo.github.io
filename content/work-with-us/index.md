@@ -17,9 +17,13 @@ contacts: [paolo-torroni, andrea-galassi, federico-ruggeri]
 # a section in the step: proposals, projects, or contact (the email form). `inspiration: student-work` adds a last,
 # unnumbered step with the work done with students.
 # `form` sets the email: `subject` may name fields in braces, such as {proposal}; each field has a `key`, a `label`,
-# a `type` (text, textarea, or select), an optional `when` that shows the field only when another field has a value, such
-# as {funding: I need funding from the lab}, `options` (a list for a select, or `proposals`, which lists the research proposals
-# in a select and lets "Choose this proposal" fill a text field), and `required`. Every form also asks for the sender's name.
+# a `type` (text, textarea, select, number, a whole number from 0 with a counter, or month, a month and year written as
+# "March 2027"), an optional `when` that shows the field only when another field has a value, such
+# as {funding: I need funding from the lab}, or `when_more`, which shows it only when a number field is above a value,
+# such as {exams: 0}, `options` (a list for a select, or `proposals`, which lists the research proposals
+# in a select and lets "Choose this proposal" fill a text field), `required`, and, for a month, an optional `after` list, such as
+# [{field: start, months: 6, message: "..."}]: each rule blocks the email, showing its message, until the month is at
+# least that many months after the named field (0 months: not before it). A hidden or empty field is skipped. Every form also asks for the sender's name.
 paths:
   - key: thesis
     label: Master thesis
@@ -33,15 +37,17 @@ paths:
         text: "Open a proposal to read its description and supervisors, then select **Choose this proposal**."
         show: proposals
       - title: Write to us
-        text: "State how many exams you still have to pass and the degree session in which you intend to graduate. Please contact us at least six months before that session."
+        text: "Tell us how many exams you still have to pass and when you expect to finish them, when you can start, and the degree session in which you intend to graduate. We reserve at least six months for a thesis, so the session must be at least six months after your start, and not before the end of your exams. You may start before your last exam."
         show: contact
     inspiration: student-work
     form:
       subject: "[Master thesis] {proposal}"
       fields:
         - {key: proposal, label: Proposal, type: select, options: proposals, required: true}
-        - {key: exams, label: Exams still to pass, type: text, required: true}
-        - {key: session, label: Intended degree session, type: text, required: true}
+        - {key: exams, label: Exams still to pass, type: number, required: true}
+        - {key: exams_end, label: Estimated period to finish remaining exams, type: month, when_more: {exams: 0}, required: true}
+        - {key: start, label: Available to start, type: month, required: true}
+        - {key: session, label: Intended degree session, type: month, required: true, after: [{field: start, months: 6, message: "We reserve at least six months for a thesis: choose a session at least six months after your start."}, {field: exams_end, months: 0, message: "Choose a session no earlier than the end of your remaining exams."}]}
         - {key: message, label: Message, type: textarea}
   - key: project
     label: NLP project work

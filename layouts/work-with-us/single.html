@@ -85,13 +85,15 @@
                 <p class="lt-mail-to"><span>Subject</span> <output class="lt-mail-subject">{{ $subject }}</output></p>
                 <label>Your name <small class="lt-mail-req">(required)</small><input name="name" type="text" required autocomplete="name"></label>
                 {{ range $path.form.fields }}
-                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}{{ range $k, $v := .when }} data-lt-when="{{ $k }}" data-lt-when-value="{{ $v }}"{{ end }}>{{ .label }} {{ if .required }}<small class="lt-mail-req">(required)</small>{{ else }}<small>(optional)</small>{{ end }}
+                <label{{ if eq .type "textarea" }} class="is-wide"{{ end }}{{ range $k, $v := .when }} data-lt-when="{{ $k }}" data-lt-when-value="{{ $v }}"{{ end }}{{ range $k, $v := .when_more }} data-lt-when="{{ $k }}" data-lt-when-more="{{ $v }}"{{ end }}>{{ .label }} {{ if .required }}<small class="lt-mail-req">(required)</small>{{ else }}<small>(optional)</small>{{ end }}
                   {{- if eq .type "textarea" }}<textarea name="{{ .key }}" rows="4" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}></textarea>
                   {{- else if eq .type "select" }}<select name="{{ .key }}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>
                     <option value="">Choose…</option>
                     {{- if eq .options "proposals" }}{{ range $proposals }}<option>{{ .page.Title }}</option>{{ end }}<option>Another topic</option>
                     {{- else }}{{ range .options }}<option>{{ . }}</option>{{ end }}{{ end }}
                   </select>
+                  {{- else if eq .type "number" }}<input name="{{ .key }}" type="number" min="0" step="1" inputmode="numeric" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}>
+                  {{- else if eq .type "month" }}<input name="{{ .key }}" type="month" placeholder="YYYY-MM" pattern="[0-9]{4}-[0-9]{2}" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ with .after }} data-lt-after="{{ jsonify . }}"{{ end }}>
                   {{- else }}<input name="{{ .key }}" type="text" data-lt-label="{{ .label }}"{{ if .required }} required{{ end }}{{ if eq .options "proposals" }} data-lt-proposals{{ end }}>{{ end }}
                 </label>
                 {{ end }}
