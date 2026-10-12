@@ -1,26 +1,53 @@
-{{/* Work with us page: the title (for screen readers only), then one card per `path` under "What are you looking for?". A card opens its panel: */}}
-{{/* who can apply and what it is, then the numbered `steps`. A step may hold a section (`show`): the research proposals, */}}
-{{/* the recent projects, or the email form; `inspiration` adds an unnumbered last step with the work done with students. */}}
-{{/* assets/js/ltlab.js starts with no path open (or the one in the URL hash), moves the shared sections into the open */}}
-{{/* path's steps, and fills the email from the form; without JavaScript the path cards are hidden, every panel and */}}
-{{/* the open research proposals are visible, the work done with students stays collapsed, and each form step offers */}}
-{{/* a plain email link. */}}
+{{/* Work with us page: the title (for screen readers only), then one small card per `path` under "What are you looking */}}
+{{/* for?", then a carousel of description cards (who can apply and what it is), one per path. The small cards move the */}}
+{{/* carousel; a click on the centered description card, or on its arrow, opens the numbered `steps` of its path below. */}}
+{{/* A step may hold a section (`show`): the research proposals, the recent projects, or the email form; `inspiration` */}}
+{{/* adds an unnumbered last step with the work done with students. A path with more than one step gets a side menu. */}}
+{{/* assets/js/ltlab.js moves the shared sections into the open path's steps and fills the email from the form; without */}}
+{{/* JavaScript the small cards are hidden, the description cards scroll sideways, every path's steps and the open */}}
+{{/* research proposals are visible, the work done with students stays collapsed, and each form step offers a plain */}}
+{{/* email link. */}}
 {{- define "main" -}}
 {{ $page := . }}
 {{ $proposals := slice }}{{ with site.GetPage "/proposals" }}{{ range .Sections }}{{ $topic := .Title }}{{ range .RegularPages }}{{ $proposals = $proposals | append (dict "page" . "topic" $topic) }}{{ end }}{{ end }}{{ end }}
 <article class="lt-proj lt-work">
   <div class="lt-band">
-    <section class="lt-arg-views lt-paths" data-lt-empty data-lt-morph aria-label="Ways to work with us">
+    <section class="lt-arg-views lt-paths" aria-label="Ways to work with us">
       <h1 class="sr-only">{{ .Title }}</h1>
       <h2 class="lt-paths-title" id="paths-label">What are you looking for?</h2>
       <div class="lt-path-picker" role="tablist" aria-labelledby="paths-label">
         {{ range .Params.paths }}
-        <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}" aria-selected="false" tabindex="-1" style="view-transition-name: lt-path-{{ .key }}">
+        <button type="button" role="tab" id="{{ .key }}-tab" aria-controls="{{ .key }}-about" data-lt-path="{{ .key }}" aria-selected="false" tabindex="-1">
           <i class="fas fa-{{ .icon }}" aria-hidden="true"></i>
           <span class="lt-path-pick-label">{{ .label }}</span>
           <span class="lt-path-pick-text">{{ .summary }}</span>
         </button>
         {{ end }}
+      </div>
+
+      <div class="lt-carousel is-centered lt-path-cards" data-lt-carousel>
+        <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Ways to work with us">
+          {{ range .Params.paths }}{{ $path := . }}
+          <article class="lt-card lt-path-card" id="{{ .key }}-about" role="tabpanel" aria-labelledby="{{ .key }}-tab">
+            <div class="lt-path-logo" aria-hidden="true"><i class="fas fa-{{ .icon }}"></i></div>
+            <div class="lt-path-info">
+              <h2 class="lt-path-title" id="{{ .key }}-title">{{ .title }}</h2>
+              <dl class="lt-path-facts">
+                <dt>Who can apply</dt><dd>{{ .who | markdownify }}</dd>
+                <dt>What it is</dt><dd>{{ .what | markdownify }}</dd>
+              </dl>
+            </div>
+            {{/* The arrow, like a click on the centered card, opens the steps of the path. */}}
+            {{ with index .steps 0 }}<a class="lt-path-more" href="#{{ $path.key }}-{{ if eq .show "contact" }}contact{{ else }}step-1{{ end }}"><span>{{ cond (eq (len $path.steps) 1) "See the step" "See the steps" }}</span> <i class="fas fa-chevron-down" aria-hidden="true"></i></a>{{ end }}
+          </article>
+          {{ end }}
+        </div>
+        <div class="lt-carousel-nav" hidden>
+          <div class="lt-carousel-arrows">
+            <button type="button" data-lt-step="-1" aria-label="Previous path"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+            <button type="button" data-lt-step="1" aria-label="Next path"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
       </div>
 
       {{ range .Params.paths }}
@@ -34,9 +61,10 @@
       {{ range $path.form.fields }}{{ $subject = replace $subject (printf "{%s}" .key) (printf "<%s>" .label) }}{{ $lines = $lines | append (printf "%s: " .label) }}{{ end }}
       {{ $body := printf "%s\n\n%s\n\nBest regards,\n" $greeting (delimit $lines "\n") }}
       {{ $mailto := printf "mailto:%s?subject=%s&body=%s" (delimit $emails ",") (replace (urlquery $subject) "+" "%20") (replace (urlquery $body) "+" "%20") }}
-      <div class="lt-path" role="tabpanel" id="{{ .key }}" aria-labelledby="{{ .key }}-tab" tabindex="0">
-        {{/* Side menu of the path, a sticky column from 1200px: a link back to the path cards, the path summary, then */}}
-        {{/* each step, numbered as in the list. */}}
+      <div class="lt-path" id="{{ .key }}" role="region" aria-labelledby="{{ .key }}-title" tabindex="-1">
+        {{/* Side menu of a path with more than one step, a sticky column from 1200px: a link back to the path cards, the */}}
+        {{/* path title, then each step, numbered as in the list. */}}
+        {{ if or (gt (len .steps) 1) .inspiration }}
         <nav class="lt-proj-nav lt-proj-side lt-path-side" aria-label="{{ .title }} steps">
           <a class="lt-path-side-back" href="#paths-label"><i class="fas fa-arrow-up" aria-hidden="true"></i> What are you looking for?</a>
           <p class="lt-proj-side-label">{{ .title }}</p>
@@ -44,16 +72,7 @@
           {{ range $i, $step := .steps }}<a href="#{{ if eq $step.show "contact" }}{{ $path.key }}-contact{{ else }}{{ $path.key }}-step-{{ add $i 1 }}{{ end }}">{{ add $i 1 }}. {{ $step.title }}</a>{{ end }}
           {{ with .inspiration }}<a href="#{{ $path.key }}-inspiration">For inspiration</a>{{ end }}
         </nav>
-        <div class="lt-path-card" id="{{ .key }}-about">
-          <div class="lt-path-logo" aria-hidden="true"><i class="fas fa-{{ .icon }}"></i></div>
-          <div class="lt-path-info">
-            <h2 class="lt-path-title">{{ .title }}</h2>
-            <dl class="lt-path-facts">
-              <dt>Who can apply</dt><dd>{{ .who | markdownify }}</dd>
-              <dt>What it is</dt><dd>{{ .what | markdownify }}</dd>
-            </dl>
-          </div>
-        </div>
+        {{ end }}
         <ol class="lt-steps">
           {{ range $i, $step := .steps }}
           <li class="lt-step{{ if eq .show "contact" }} is-contact{{ end }}" id="{{ $path.key }}-{{ if eq .show "contact" }}contact{{ else }}step-{{ add $i 1 }}{{ end }}">
@@ -98,6 +117,7 @@
           {{ with .inspiration }}
           <li class="lt-step is-extra" id="{{ $path.key }}-inspiration">
             <h3 class="lt-step-title">For inspiration</h3>
+            <p class="lt-step-text">Work done with students.</p>
             <div data-lt-slot="{{ . }}" data-lt-open></div>
           </li>
           {{ end }}

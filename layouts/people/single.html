@@ -1,10 +1,11 @@
 {{/* People page: the title, then one band per group of `user_groups` in content/authors, ordered by `weight`. */}}
-{{/* Members and associate fellows are cards that open the profile page: photo, name, lab role, affiliation for */}}
-{{/* associate fellows, the `bio` sentence, up to three "Works on" topics (lt/person-topics.html), and the social */}}
-{{/* links. Former members are compact rows. */}}
+{{/* Members, associate fellows, and external collaborators are cards that open the profile page: photo, name, lab */}}
+{{/* role, affiliation for associate fellows and external collaborators, the `bio` sentence, up to three "Works on" */}}
+{{/* topics (lt/person-topics.html), and the social links. A group may carry a `caption` under its title. Former */}}
+{{/* members are compact rows. */}}
 {{- define "main" -}}
 {{ $people := where site.Pages "Section" "authors" }}
-{{ $groups := slice (dict "key" "Members" "title" "Members") (dict "key" "Associate Fellows" "title" "Associate fellows" "affiliation" true) (dict "key" "Former Members" "title" "Former members" "compact" true) }}
+{{ $groups := slice (dict "key" "Members" "title" "Members") (dict "key" "Associate Fellows" "title" "Associate fellows" "affiliation" true) (dict "key" "External Collaborators" "title" "External collaborators" "affiliation" true "caption" "People outside the lab with whom we have active research proposals.") (dict "key" "Former Members" "title" "Former members" "compact" true) }}
 <article class="lt-proj">
   {{ partial "lt/page-intro.html" . }}
   {{ range $groups }}
@@ -14,6 +15,7 @@
   <div class="lt-band">
     <section class="lt-pubs-section" aria-labelledby="group-{{ urlize $group.key }}">
       <h2 class="lt-paths-title" id="group-{{ urlize $group.key }}">{{ $group.title }}</h2>
+      {{ with $group.caption }}<p class="lt-section-subtitle">{{ . }}</p>{{ end }}
       {{ if $group.compact }}
       <ul class="lt-former">
         {{ range . }}

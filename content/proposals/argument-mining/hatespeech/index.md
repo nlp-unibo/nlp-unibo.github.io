@@ -5,8 +5,7 @@ summary: Use argumentative reasoning to make the implicit content of hate speech
 brief: Hate speech often relies on implicit content and subtle reasoning. This proposal applies argumentative reasoning to make that content explicit, toward hate speech detection systems that are more interpretable and more user-friendly.
 contacts:
 - federico-ruggeri
-- name: Arianna Muti
-  email: arianna.muti@unibocconi.it
+- arianna-muti
 tags:
 - hate speech
 - argument mining

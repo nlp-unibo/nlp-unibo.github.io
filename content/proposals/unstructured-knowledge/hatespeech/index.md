@@ -5,10 +5,8 @@ summary: Measure how different definitions of abusive and hate speech affect det
 brief: What counts as abusive or hate speech depends on the socio-cultural context. This proposal evaluates how machine learning models are affected by different definitions, to promote awareness in developing accurate abusive speech detection systems.
 contacts:
 - federico-ruggeri
-- name: Katerina Korre
-  email: k.korre@athenarc.gr
-- name: Arianna Muti
-  email: arianna.muti@unibocconi.it
+- katerina-korre
+- arianna-muti
 tags:
 - hate speech
 - abusive language

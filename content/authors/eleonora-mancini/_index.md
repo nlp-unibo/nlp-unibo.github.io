@@ -7,10 +7,10 @@ last_name: Mancini
 superuser: false
 
 organizations:
-  - name: University of Bologna
-    url: 'https://www.unibo.it/sitoweb/e.mancini/en'
+  - name: Deezer
+    url: 'https://www.deezer.com/'
 
-bio: Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech recognition.
+bio: Research Scientist at Deezer, working on natural language processing, music information retrieval, and multimodal AI.
 
 interests:
   - Artificial Intelligence
@@ -24,7 +24,7 @@ interests:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'mailto:e.mancini@unibo.it'
+    link: 'mailto:emancini@deezer.com'
   - icon: github
     icon_pack: fab
     link: https://github.com/helemanc
@@ -38,7 +38,7 @@ social:
     icon_pack: fas
     link: https://helemanc.github.io/
 
-email: 'e.mancini@unibo.it'
+email: 'emancini@deezer.com'
 
 highlight_name: true
 
@@ -51,7 +51,7 @@ build:
   render: always
 ---
 
-Eleonora Mancini obtained her M.S. degree in Artificial Intelligence from University of Bologna in 2021, with a dissertation on disruptive situations detection on public transports through Speech Emotion Recognition. 
-Her research concerns artificial intelligence and in particular multimodal deep learning, natural language processing, image and speech recognition. 
-She is a Postdoctoral Research Fellow at the Department of Computer Science and Engineering (DISI) of the University of Bologna, in the Language Technologies Lab, where she obtained her PhD in 2026. She works on multimodal argument mining, explainability in multimodal natural language processing, and vague clause detection in privacy policies.
-In addition, she works as a teaching assistant at University of Bologna.
+Eleonora Mancini is a Research Scientist at Deezer, where she works on natural language processing, music information retrieval, and multimodal AI.
+She obtained her PhD in Computer Science and Engineering from the University of Bologna, in the Language Technologies Lab, working on multimodal deep learning and interpretability.
+Her research covers speech processing, argument mining, clinical decision support, and music information retrieval.
+She has been a visiting researcher at Sony AI in Barcelona and at Mila, and she taught Artificial Intelligence and Computer Engineering courses at the University of Bologna.

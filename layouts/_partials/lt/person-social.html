@@ -1,12 +1,16 @@
-{{/* Social links of a profile as labelled icon buttons. Input: the profile page. */}}
+{{/* Social links of a profile as labelled icon buttons, always in the same order whatever the order in the file: */}}
+{{/* university page, email, website, Google Scholar, GitHub, LinkedIn, Twitter, then any other icon. */}}
+{{/* Input: the profile page. */}}
 {{ $labels := dict "university" "University page" "envelope" "Email" "google-scholar" "Google Scholar" "github" "GitHub" "linkedin" "LinkedIn" "twitter" "Twitter" "globe" "Website" }}
+{{ $order := slice "university" "envelope" "globe" "google-scholar" "github" "linkedin" "twitter" }}
 {{ with .Params.social }}
+{{ $sorted := slice }}{{ range $i, $s := . }}{{ $rank := 99 }}{{ range $j, $k := $order }}{{ if eq $k $s.icon }}{{ $rank = $j }}{{ end }}{{ end }}{{ $sorted = $sorted | append (dict "s" $s "key" (printf "%02d-%02d" $rank $i)) }}{{ end }}
 <ul class="lt-person-social">
-  {{ range . }}
+  {{ range sort $sorted "key" }}{{ with .s }}
   {{ $pack := .icon_pack | default "fas" }}
   {{ $prefix := cond (in (slice "fab" "fas" "far") $pack) "fa" $pack }}
   {{ $label := index $labels .icon | default (.icon | humanize) }}
   <li><a href="{{ .link }}"{{ if hasPrefix .link "http" }} target="_blank" rel="noopener"{{ end }} aria-label="{{ $label }}" title="{{ $label }}"><i class="{{ $pack }} {{ $prefix }}-{{ .icon }}" aria-hidden="true"></i></a></li>
-  {{ end }}
+  {{ end }}{{ end }}
 </ul>
 {{ end }}

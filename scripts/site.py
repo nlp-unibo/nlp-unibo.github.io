@@ -69,7 +69,7 @@ TOPIC_FIELDS = ("title", "summary")
 # publication_types values that the theme can label.
 PUBLICATION_TYPES = {"article-journal", "paper-conference", "article", "chapter", "thesis", "report", "book"}
 # Each `user_groups` value selects one group on the People page.
-AUTHOR_GROUPS = {"Members", "Associate Fellows", "Former Members"}
+AUTHOR_GROUPS = {"Members", "Associate Fellows", "External Collaborators", "Former Members"}
 # Each `categories` value selects one list on the section's landing page.
 SECTION_CATEGORIES = {
     "publication": {"Journal", "Conference", "Workshop", "Preprint"},

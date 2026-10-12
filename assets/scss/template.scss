@@ -451,6 +451,9 @@ $lt-dark-card: #112236;
   color: $lt-muted;
 }
 
+// A People group caption sits between its title and its cards.
+.lt-pubs-section > .lt-section-subtitle { margin-bottom: 1.4rem; }
+
 .dark .lt-section-subtitle {
   color: $lt-dark-muted;
 }
@@ -4086,53 +4089,14 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   }
 }
 
-// The path cards only switch panels with the script; without it every panel is shown, so the cards are hidden.
+// The small path cards only move the carousel with the script; without it every path is shown, so they are hidden.
 .lt-paths:not(.is-enhanced) .lt-path-picker { display: none; }
 
 .lt-path-pick-label { font-size: 1.2rem; font-weight: 700; line-height: 1.3; color: $lt-navy; }
 
 .lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; color: $lt-muted; }
 
-// Before a path is chosen, the picker fills the first screen: a centered title and larger cards on a band up to 1400px
-// wide. Once a path is chosen, the cards shrink to a row of compact tabs (icon and label; the summary stays for screen
-// readers), and the tabs not chosen are greyed until pointed at or focused.
-.lt-paths.is-enhanced:not(:has([role="tab"][aria-selected="true"])) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  min-height: calc(100vh - 12rem);
-
-  .lt-paths-title { margin-bottom: 2rem; font-size: clamp(1.8rem, 3.5vw, 2.6rem); text-align: center; }
-
-  .lt-path-picker { gap: 1.25rem; }
-
-  // Three cards per row from 768px, then all five in one row; wider than the 1180px section, the picker spans the
-  // width of the navigation bar, up to 1400px.
-  @media (min-width: 768px) {
-    .lt-path-picker { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  }
-
-  @media (min-width: 1200px) {
-    .lt-path-picker {
-      width: unquote("min(1400px, calc(100vw - 108px))");
-      margin-left: 50%;
-      transform: translateX(-50%);
-      grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 576px) {
-    [role="tab"] { min-height: 20rem; padding: 1.6rem 1.4rem; }
-
-    [role="tab"] i { width: 4rem; height: 4rem; border-radius: 14px; font-size: 1.8rem; }
-
-    .lt-path-pick-label { font-size: 1.35rem; }
-
-    .lt-path-pick-text { font-size: 1.02rem; }
-  }
-}
-
-.lt-paths:has([role="tab"][aria-selected="true"]) .lt-path-picker {
+.lt-paths .lt-path-picker {
   grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 150px)"), 1fr));
   gap: 0.6rem;
 
@@ -4158,21 +4122,6 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   .lt-path-pick-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 
-// Choosing a path runs a view transition (assets/js/ltlab.js): each card glides from the large grid to its compact tab,
-// and the page around it cross-fades, more slowly than the browser default.
-// The large card's snapshot fades out quickly so its summary does not ghost over the compact tab.
-.lt-paths-title { view-transition-name: lt-paths-title; view-transition-class: lt-path-card; }
-
-.lt-path-picker [role="tab"] { view-transition-class: lt-path-card; }
-
-::view-transition-group(*) { animation-duration: 0.45s; animation-timing-function: cubic-bezier(0.2, 0, 0, 1); }
-
-::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.35s; }
-
-::view-transition-old(*.lt-path-card) { animation-duration: 0.12s; }
-
-::view-transition-new(*.lt-path-card) { animation-duration: 0.3s; }
-
 // Leaves room for the sticky navigation bar when a click scrolls to the panel.
 .lt-path, .lt-step, .lt-proposals .lt-field-cell { scroll-margin-top: 5.5rem; }
 
@@ -4187,6 +4136,60 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   background: #fff;
 
   @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); padding: 1.2rem; }
+}
+
+// The description cards form a centered carousel under the small path cards. The pill at the bottom of each card,
+// like a click on the centered card, opens the steps of its path.
+.lt-path-cards { margin-top: 1.5rem; }
+
+.lt-path-cards .lt-carousel-track > .lt-path-card {
+  flex: 0 0 $lt-slide-width;
+  margin-top: 0;
+  padding-bottom: 4.4rem;
+  scroll-snap-align: center;
+  cursor: pointer;
+
+  @media (max-width: 767.98px) { flex-basis: 90%; }
+}
+
+.lt-path-more {
+  position: absolute;
+  right: 0;
+  bottom: 1.1rem;
+  left: 0;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 0.45rem 1.1rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $lt-blue !important;
+  text-decoration: none !important;
+  background: rgba($lt-sky, 0.16);
+  animation: lt-nudge 1.8s ease-in-out infinite;
+
+  &:hover { background: rgba($lt-sky, 0.3); }
+
+  @media (prefers-reduced-motion: reduce) { animation: none; }
+}
+
+@keyframes lt-nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(5px); } }
+
+.dark .lt-path-more { color: $lt-sky !important; background: rgba($lt-sky, 0.12); }
+
+// Progressive reveal: with the script, each step and the side menu fade in as they scroll into view.
+.lt-js .lt-path .lt-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+
+  &.is-revealed { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) { opacity: 1; transform: none; transition: none; }
 }
 
 .lt-path-logo {
@@ -4863,12 +4866,15 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     column-gap: 2rem;
 
     > :not(.lt-path-side) { grid-column: 2; }
+
+    // A path without a side menu, such as a single step, uses the whole width.
+    &:not(:has(.lt-path-side)) > * { grid-column: 1 / -1; }
   }
 
   .lt-path-side.lt-proj-nav.lt-proj-side {
     display: flex !important;
     grid-column: 1;
-    grid-row: 1 / span 2;
+    grid-row: 1;
     align-self: start;
     width: 100%;
     max-width: none;

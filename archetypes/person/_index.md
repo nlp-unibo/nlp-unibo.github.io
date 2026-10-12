@@ -25,7 +25,7 @@ social:
 email: "TODO@example.org"
 highlight_name: true
 
-# Allowed groups: Members, Associate Fellows, Former Members
+# Allowed groups: Members, Associate Fellows, External Collaborators, Former Members
 user_groups:
   - Members
 # Lower values appear first within the group on the People page.

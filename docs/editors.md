@@ -302,7 +302,7 @@ Common mistakes:
 
 ### Add or update a person
 
-**Start:** [create `content/authors/firstname-lastname/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/authors/firstname-lastname/_index.md&value=---%0A%23%20The%20full%20name%2C%20exactly%20as%20in%20publications.%20The%20folder%20name%20is%20this%20name%20in%20lowercase%20with%20hyphens.%0Atitle%3A%20%22TODO%3A%20Firstname%20Lastname%22%0Afirst_name%3A%20%22TODO%3A%20Firstname%22%0Alast_name%3A%20%22TODO%3A%20Lastname%22%0Asuperuser%3A%20false%0Aorganizations%3A%0A%20%20-%20name%3A%20University%20of%20Bologna%0A%20%20%20%20url%3A%20%22https%3A%2F%2Fwww.unibo.it%2F%22%0A%23%20One%20sentence%2C%20shown%20on%20the%20People%20page%0Abio%3A%20%22TODO%3A%20One%20sentence%20on%20your%20research.%22%0Ainterests%3A%0A%20%20-%20Natural%20Language%20Processing%0Asocial%3A%0A%20%20-%20icon%3A%20envelope%0A%20%20%20%20icon_pack%3A%20fas%0A%20%20%20%20link%3A%20%22mailto%3ATODO%40unibo.it%22%0Aemail%3A%20%22TODO%40unibo.it%22%0Ahighlight_name%3A%20true%0A%23%20Exactly%20one%20of%20Members%2C%20Associate%20Fellows%2C%20Former%20Members%0Auser_groups%3A%0A%20%20-%20Members%0A%23%20Lower%20values%20appear%20first%20in%20the%20group%0Aweight%3A%20100%0A%23%20Keep%20it%3A%20only%20People%20entries%20get%20a%20profile%20page%0Abuild%3A%0A%20%20render%3A%20always%0A---%0A%0ATODO%3A%20A%20longer%20biography%2C%20in%20a%20few%20sentences.%0A)
+**Start:** [create `content/authors/firstname-lastname/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/hugoblox-template?filename=content/authors/firstname-lastname/_index.md&value=---%0A%23%20The%20full%20name%2C%20exactly%20as%20in%20publications.%20The%20folder%20name%20is%20this%20name%20in%20lowercase%20with%20hyphens.%0Atitle%3A%20%22TODO%3A%20Firstname%20Lastname%22%0Afirst_name%3A%20%22TODO%3A%20Firstname%22%0Alast_name%3A%20%22TODO%3A%20Lastname%22%0Asuperuser%3A%20false%0Aorganizations%3A%0A%20%20-%20name%3A%20University%20of%20Bologna%0A%20%20%20%20url%3A%20%22https%3A%2F%2Fwww.unibo.it%2F%22%0A%23%20One%20sentence%2C%20shown%20on%20the%20People%20page%0Abio%3A%20%22TODO%3A%20One%20sentence%20on%20your%20research.%22%0Ainterests%3A%0A%20%20-%20Natural%20Language%20Processing%0Asocial%3A%0A%20%20-%20icon%3A%20envelope%0A%20%20%20%20icon_pack%3A%20fas%0A%20%20%20%20link%3A%20%22mailto%3ATODO%40unibo.it%22%0Aemail%3A%20%22TODO%40unibo.it%22%0Ahighlight_name%3A%20true%0A%23%20Exactly%20one%20of%20Members%2C%20Associate%20Fellows%2C%20External%20Collaborators%2C%20Former%20Members%0Auser_groups%3A%0A%20%20-%20Members%0A%23%20Lower%20values%20appear%20first%20in%20the%20group%0Aweight%3A%20100%0A%23%20Keep%20it%3A%20only%20People%20entries%20get%20a%20profile%20page%0Abuild%3A%0A%20%20render%3A%20always%0A---%0A%0ATODO%3A%20A%20longer%20biography%2C%20in%20a%20few%20sentences.%0A)
 
 Name the folder after the full name in lowercase, with hyphens and no accents, such as `maria-rossi`.
 The folder must match the `title`: the check rejects `maria-rossi` for a profile titled `Mario Rossi`.
@@ -312,7 +312,7 @@ The folder must match the `title`: the check rejects `maria-rossi` for a profile
 | `title` | Required | `Maria Rossi` | The full name exactly as in publications |
 | `first_name`, `last_name` | Required | `Maria`, `Rossi` | Used for the initials when there is no photo |
 | `build` | Required | `render: always` | Keep it as in the start link. Only People entries get a profile page; every other author name is plain text |
-| `user_groups` | Required | `- Members` | Exactly one of `Members`, `Associate Fellows`, or `Former Members`, with this spelling. It selects the section of the People page |
+| `user_groups` | Required | `- Members` | Exactly one of `Members`, `Associate Fellows`, `External Collaborators`, or `Former Members`, with this spelling. It selects the section of the People page. External collaborators are people outside the lab with whom we have active research proposals |
 | `email` | Required, except for former members | `maria.rossi@unibo.it` | Also used when a proposal names this person as a contact |
 | `weight` | Optional | `100` | Orders people within a group. Lower values appear first |
 | `bio` | Optional | `"Her research ..."` | One sentence, shown on the People page card |
@@ -615,11 +615,13 @@ Ask the maintainer to review every change, because the page sends emails to the 
 
 - `contacts` lists the people who receive every message, as folder names in `content/authors/`, whose `email` field is used.
   A path may set its own `contacts`.
-- `paths` has one entry per card under "What are you looking for?".
+- `paths` has one entry per small card under "What are you looking for?".
+  The small cards move a carousel of description cards, one per path, which show the `title`, `who`, and `what`.
   Each path has a `key`, its anchor, such as `/work-with-us/#thesis`.
   It also has a card `label` and `summary` of at most two sentences, an `icon`, a `title`, and Markdown `who` and `what`.
-- Its `steps` appear as a numbered list after the path card.
-  On wide screens, a side menu beside the open path links to its summary and to each step.
+- Its `steps` appear as a numbered list when the reader clicks the centered description card or its **See the steps** pill.
+  The steps fade in as they scroll into view.
+  On wide screens, a path with more than one step also gets a side menu that links to its card and to each step.
   Each step has a `title`, Markdown `text`, and an optional `show`.
   The `show` field places a section in the step.
   The sections are `proposals` (the research proposals, with a topic filter), `projects` (the three most recent projects), and `contact` (the email form).
@@ -630,7 +632,7 @@ Ask the maintainer to review every change, because the page sends emails to the 
   A text field with `options: proposals` receives the title chosen with **Choose this proposal**.
 - The form opens the visitor's email app with recipients, subject, and body filled in.
   Nothing passes through the site.
-- Without JavaScript the path cards are hidden, and every path and the research proposals are visible.
+- Without JavaScript the small cards are hidden, the description cards scroll sideways, and every path and the research proposals are visible.
   The work done with students then stays collapsed, and each path offers a plain email link with the same subject and an empty template.
 
 ## 4. Change existing content
@@ -807,7 +809,7 @@ The table lists the messages of the check and how to fix each one.
 | `categories must be exactly one of ...` | The `categories` value is missing, misspelled, or repeated. Copy one allowed value from the message |
 | `venue_key '...' is not defined in data/venues.yaml` | Set `venue_key` to a key of `data/venues.yaml`, or add the venue there |
 | `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
-| `user_groups must be exactly one of ...` | Use exactly one of `Members`, `Associate Fellows`, or `Former Members` |
+| `user_groups must be exactly one of ...` | Use exactly one of `Members`, `Associate Fellows`, `External Collaborators`, or `Former Members` |
 | `author slug must be '...'` | A person's folder name does not match their `title`. Create the folder with the name the message shows |
 | `authors term '...' conflicts with '...'` | The same person is written in two ways, for example with and without an accent. Use the spelling of their profile |
 | `tags term '...' conflicts with '...'` | The same tag is written in two ways, for example `semeval` and `SemEval`. Use the spelling of the existing tag |

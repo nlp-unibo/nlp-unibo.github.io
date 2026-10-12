@@ -99,15 +99,6 @@ paths:
     steps:
       - title: Apply
         text: "Follow the [admission page of the Master's degree in Artificial Intelligence](https://corsi.unibo.it/2cycle/artificial-intelligence/admission) or the [application page of the PhD in Computer Science and Engineering](https://phd.unibo.it/cse/en/apply)."
-      - title: Write to us
-        text: "Tell us which programme you apply to and which research interests you would like to pursue with the lab."
-        show: contact
-    inspiration: student-work
-    form:
-      subject: "[Prospective student] {programme}"
-      fields:
-        - {key: programme, label: Programme, type: select, options: [Master's degree in Artificial Intelligence, PhD in Computer Science and Engineering], required: true}
-        - {key: interests, label: Research interests, type: textarea, required: true}
   - key: partnership
     label: Project partnership
     summary: "A national or international research project with a company, a public institution, or a research group."

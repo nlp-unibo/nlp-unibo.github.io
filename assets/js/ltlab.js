@@ -55,7 +55,8 @@
 
   // Stage diagrams and argument views: tabs switch the visible panel; arrow keys move between tabs.
   // Argument views render every panel, so without the script all views stay visible.
-  document.querySelectorAll(".lt-stages, .lt-arg-views").forEach((figure) => {
+  // The Work with us paths (`.lt-paths`) have their own controller below.
+  document.querySelectorAll(".lt-stages, .lt-arg-views:not(.lt-paths)").forEach((figure) => {
     const tabs = [...figure.querySelectorAll('[role="tab"]')];
     figure.classList.add("is-tabbed");
     // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation, and
@@ -112,21 +113,37 @@
     mark();
   });
 
-  // Work with us paths. Picking a path writes its anchor in the URL and moves the shared sections below the paths (each a
-  // band with `data-lt-section`) into the open path's steps (`data-lt-slot`); their bands stay hidden. Every moved
-  // section opens, and a slot with `data-lt-open` lets the step title replace the section heading. Filter buttons show
-  // the items of one tag. A path's form becomes an email: its subject fills {field} names from the form, and its body greets the
-  // recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
-  // proposal field. Changing path closes an open proposal and resets every filter to All. A link to `#<path>-contact`
-  // opens the path at its email step, and `?proposal=<title>` fills the proposal field.
+  // Work with us paths. The small path cards (tabs) and the arrows move a carousel of description cards, one per path;
+  // the selected tab follows the centered card. A click on the centered card, or on its "See the steps" pill, opens the
+  // steps of its path below, writes its anchor in the URL, and moves the shared sections (each a band with
+  // `data-lt-section`) into its steps (`data-lt-slot`); their bands stay hidden. Moving the carousel to another path
+  // closes the open steps. Every moved section opens, and a slot with `data-lt-open` lets the step title replace the
+  // section heading. A path's form becomes an email: its subject fills {field} names from the form, and its body greets
+  // the recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
+  // proposal field. Opening a path closes an open proposal and resets every filter to All. A hash naming a path, or a
+  // place in it such as `#thesis-contact`, opens that path, and `?proposal=<title>` fills the proposal field.
   document.querySelectorAll(".lt-paths").forEach((paths) => {
     const sections = [...document.querySelectorAll("[data-lt-section]")];
     const picks = [...document.querySelectorAll(".lt-proposal-pick")];
+    const tabs = [...paths.querySelectorAll('[role="tab"]')];
+    const cards = tabs.map((tab) => document.getElementById(tab.getAttribute("aria-controls")));
+    const panels = tabs.map((tab) => document.getElementById(tab.dataset.ltPath));
+    const carousel = paths.querySelector("[data-lt-carousel]");
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
     sections.forEach((section) => { section.hidden = true; });
+    panels.forEach((panel) => { panel.hidden = true; });
     paths.classList.add("is-enhanced");
+    let focus = -1;
     let open = null;
-    const show = (tab) => {
-      open = tab && document.getElementById(tab.getAttribute("aria-controls"));
+    const mark = (index) => {
+      focus = index;
+      tabs.forEach((tab, i) => {
+        tab.setAttribute("aria-selected", String(i === index));
+        tab.tabIndex = i === index ? 0 : -1;
+      });
+    };
+    // Fills the open path's steps with the shared sections, or empties every path when none is open.
+    const fill = () => {
       document.querySelectorAll("[data-lt-fields]").forEach((fields) => fields.dispatchEvent(new CustomEvent("lt-reset")));
       document.querySelectorAll("[data-lt-search]").forEach((search) => { search.value = ""; });
       document.querySelectorAll('[data-lt-filter=""]').forEach((all) => all.click());
@@ -140,48 +157,97 @@
       const field = open && open.querySelector("[data-lt-proposals]");
       picks.forEach((pick) => { pick.hidden = !field; });
     };
-    paths.addEventListener("lt-select", (event) => {
-      show(event.detail);
-      // A `#<path>-contact` hash stays, so the theme's own scroll to the hash on load lands on the email step.
-      if (event.detail && !location.hash.startsWith(`#${open.id}-`)) history.replaceState(null, "", `#${open.id}`);
+    const close = () => {
+      if (!open) return;
+      open.hidden = true;
+      open = null;
+      fill();
+      history.replaceState(null, "", location.pathname + location.search);
+    };
+    const openPath = (index, scroll) => {
+      if (open !== panels[index]) {
+        panels.forEach((panel, i) => { panel.hidden = i !== index; });
+        open = panels[index];
+        fill();
+      }
+      // A hash naming a place inside the path stays, so a reload lands on that place.
+      if (!location.hash.startsWith(`#${open.id}-`)) history.replaceState(null, "", `#${open.id}`);
+      if (scroll) open.scrollIntoView({ block: "start", behavior: reduce ? "auto" : "smooth" });
+    };
+    // The carousel script runs later in this file, so the tabs reach it through its `ltGo` once it is ready.
+    const go = (index) => {
+      mark(index);
+      if (open && open !== panels[index]) close();
+      if (carousel.ltGo) carousel.ltGo(index);
+    };
+    carousel.addEventListener("lt-slide", (event) => {
+      if (event.detail === focus) return;
+      mark(event.detail);
+      if (open && open !== panels[event.detail]) close();
     });
-    show(paths.querySelector('[role="tab"][aria-selected="true"]'));
-    // A click on a path card scrolls to its panel once the cards have settled, but only when the panel starts in the
-    // lower part of the window: a panel already in view stays put, so the page does not jump after the animation.
-    // Arrow keys only move between cards.
-    paths.addEventListener("lt-chosen", () => {
-      if (open.getBoundingClientRect().top < innerHeight * 0.6) return;
-      open.scrollIntoView({ block: "start", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => go(index));
+      tab.addEventListener("keydown", (event) => {
+        const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+        if (!step) return;
+        const next = (index + step + tabs.length) % tabs.length;
+        go(next);
+        tabs[next].focus();
+      });
     });
-    // A hash naming a place inside a path, such as #thesis-contact or #thesis-step-1, opens that path if needed and
-    // scrolls to the place. On page load, `?proposal=<title>` fills the proposal field and the email step is focused.
+    // A click on the centered card opens its steps; a link inside it, other than the pill, keeps its own behaviour.
+    // A click on a card beside it only moves the carousel (handled by the carousel script).
+    cards.forEach((card, index) => card.addEventListener("click", (event) => {
+      const link = event.target.closest("a");
+      if (index !== focus || (link && !link.classList.contains("lt-path-more"))) return;
+      event.preventDefault();
+      openPath(index, true);
+    }));
+    mark(0);
+    // A hash naming a path, or a place inside it such as #thesis-contact or #thesis-step-1, centers its card, opens it,
+    // and scrolls to the place. On page load, `?proposal=<title>` fills the proposal field and the email step is focused.
     const openFromHash = (loaded) => {
-      const place = location.hash.match(/^#([a-z0-9-]+?)-(contact|about|inspiration|step-\d+)$/);
-      const target = place && document.getElementById(`${place[1]}-tab`);
-      if (!target) return;
-      if (target.getAttribute("aria-selected") !== "true") target.click();
+      const place = location.hash.match(/^#([a-z0-9-]+?)(?:-(contact|about|inspiration|step-\d+))?$/);
+      const index = place ? panels.findIndex((panel) => panel.id === place[1]) : -1;
+      if (index < 0) return;
+      go(index);
+      openPath(index, false);
       const field = open.querySelector("[data-lt-proposals]");
       const proposal = new URLSearchParams(location.search).get("proposal");
       if (loaded && field && proposal) {
         field.value = proposal;
         field.dispatchEvent(new Event("input", { bubbles: true }));
       }
-      const step = document.getElementById(location.hash.slice(1));
-      step.scrollIntoView({ block: "start" });
-      const empty = [...step.querySelectorAll("input, select, textarea")].find((input) => !input.value);
+      const target = place[2] ? document.getElementById(location.hash.slice(1)) : open;
+      target.scrollIntoView({ block: "start" });
+      const empty = [...target.querySelectorAll("input, select, textarea")].find((input) => !input.value);
       if (loaded && empty && place[2] === "contact") addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
     };
-    openFromHash(true);
+    setTimeout(() => openFromHash(true));
     addEventListener("hashchange", () => openFromHash(false));
     picks.forEach((pick) => pick.addEventListener("click", () => {
       const field = open && open.querySelector("[data-lt-proposals]");
       if (!field) return;
       field.value = pick.dataset.ltProposal;
       field.dispatchEvent(new Event("input", { bubbles: true }));
-      field.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+      field.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
       field.focus({ preventScroll: true });
     }));
   });
+
+  // Work with us paths present their content progressively: each step and the side menu fade in once they scroll
+  // into view, so an opened path first shows only its description card (the stylesheet keeps everything visible under
+  // reduced motion). Without IntersectionObserver everything is shown at once.
+  const reveals = [...document.querySelectorAll(".lt-path .lt-step, .lt-path .lt-path-side")];
+  reveals.forEach((element) => element.classList.add("lt-reveal"));
+  if ("IntersectionObserver" in window) {
+    const reveal = new IntersectionObserver((entries) => entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add("is-revealed");
+      reveal.unobserve(entry.target);
+    }), { rootMargin: "0px 0px -12% 0px" });
+    reveals.forEach((element) => reveal.observe(element));
+  } else reveals.forEach((element) => element.classList.add("is-revealed"));
 
   // Back to top: a fixed button shown only once the element its `data-lt-to-top` selector names has scrolled out of
   // sight above, such as the filters at the top of the News page. It checks on every scroll, because a jump such as
