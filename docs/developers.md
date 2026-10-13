@@ -82,12 +82,12 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py setup` | Download the pinned Hugo extended and Go into `.tools/`, then print their versions |
 | `uv run python scripts/site.py serve` | Run `hugo server --buildDrafts --buildFuture --disableFastRender --cleanDestinationDir` |
 | `uv run python scripts/site.py new TYPE SLUG` | Run `hugo new content --kind <archetype>` for one entry of `CONTENT_TYPES` |
-| `uv run python scripts/site.py content` | Validate YAML front matter (repeated keys included), then content quality: slugs, required fields, groups, categories, publication types, topics, research views, placeholders, local links, and asset sizes |
+| `uv run python scripts/site.py content` | Validate YAML front matter (repeated keys included), then content quality: slugs, required fields, groups, categories, publication types, topics, research views, venue ranks against `categories`, proposal lengths, contacts, and sections, placeholders, local links, and asset sizes |
 | `uv run python scripts/site.py templates` | Create one draft from every archetype in `.build/archetype-check` and verify it |
 | `uv run python scripts/site.py build` | Run `hugo --gc --minify --destination .build/public` with `HUGO_RESOURCEDIR=.build/resources` |
 | `uv run python scripts/site.py check` | Run `content`, `templates`, and `build` in that order |
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
-| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, and the research view validators |
+| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, and the research view validators |
 
 `new` accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
 A proposal slug is `TOPIC/NAME`, as in `new proposal legal/new-idea`, and the topic folder must exist.
@@ -465,6 +465,7 @@ Quote numbers such as `"72.30"` to keep trailing zeros.
 Inlines an SVG file from the page folder, so CSS can theme it.
 Parameters: `src` (required), `caption`.
 The build fails when the file is missing.
+On narrow screens the drawing stops shrinking at 80% of its `viewBox` width and scrolls inside the figure, so 12.5px labels stay at 10px or more.
 
 ```text
 {{< svg src="schema.svg" caption="The task setup." >}}
