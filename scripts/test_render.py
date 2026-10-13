@@ -75,6 +75,17 @@ def latest_paper_dates(home: str) -> dict[str, str]:
     return dict(cards)
 
 
+def carousel_navs(html: str) -> list[tuple[int, int, list[str]]]:
+    """For each carousel: its slide count, its dot count, and the labels of its arrows, previous first."""
+    found = []
+    for part in html.split("data-lt-carousel")[1:]:
+        track = part.split('class="lt-carousel-track"', 1)[1].split('class="lt-carousel-nav"', 1)[0]
+        nav = part.split('class="lt-carousel-nav"', 1)[1].split("</div>\n    </div>", 1)[0]
+        slides = len(re.findall(r'<article class="lt-card[^"]*(?:lt-slide|lt-focus-card)', track))
+        found.append((slides, nav.count("data-lt-slide="), re.findall(r'data-lt-step="-?1" aria-label="([^"]+)"', nav)))
+    return found
+
+
 if __name__ == "__main__":
     public = build()
     home = (public / "index.html").read_text(encoding="utf-8")
@@ -90,5 +101,15 @@ if __name__ == "__main__":
     schema_page = (public / "publication" / "render-check-schema" / "index.html").read_text(encoding="utf-8")
     teaser = schema_page.split('class="lt-proj-teaser"', 1)[1].split("</figure>", 1)[0]
     assert "lt-proj-teaser-schema" in teaser and "<figcaption" not in teaser, teaser
+
+    # Every carousel has one dot per slide, and its arrows read previous, then next.
+    research = next((public / "research").glob("*/index.html")).read_text(encoding="utf-8")
+    for html, noun in ((home, "paper"), ((public / "publication" / "index.html").read_text(encoding="utf-8"), "highlight"),
+                       (research, "topic")):
+        navs = carousel_navs(html)
+        assert navs, noun
+        for slides, dots, arrows in navs:
+            assert slides and slides == dots, (noun, slides, dots)
+            assert arrows == [f"Previous {noun}", f"Next {noun}"], arrows
 
     print("Rendered-template checks passed.")

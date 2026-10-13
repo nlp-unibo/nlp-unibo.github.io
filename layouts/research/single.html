@@ -414,15 +414,7 @@
         </article>
         {{ end }}
       </div>
-      <div class="lt-carousel-nav" hidden>
-        <div class="lt-carousel-dots">
-          {{ range $i, $t := $topics }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $t.title }}"></button>{{ end }}
-        </div>
-        <div class="lt-carousel-arrows">
-          <button type="button" data-lt-step="-1" aria-label="Previous topic"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-          <button type="button" data-lt-step="1" aria-label="Next topic"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-        </div>
-      </div>
+      {{ partial "lt/carousel-nav.html" (dict "labels" (apply $topics "index" "." "title") "noun" "topic") }}
     </div>
 
     <div class="lt-topics-detail">

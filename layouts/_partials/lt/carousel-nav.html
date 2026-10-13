@@ -1,0 +1,12 @@
+{{/* Controls of a carousel (assets/js/ltlab.js shows them): one dot per slide, labelled by `labels` in slide order, */}}
+{{/* and the previous and next arrows, labelled "Previous <noun>" and "Next <noun>". The script reads the first two */}}
+{{/* `data-lt-step` buttons as previous and next. Input: a dict with `labels` (a slice of strings) and `noun`. */}}
+<div class="lt-carousel-nav" hidden>
+  <div class="lt-carousel-dots">
+    {{ range $i, $label := .labels }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $label }}"></button>{{ end }}
+  </div>
+  <div class="lt-carousel-arrows">
+    <button type="button" data-lt-step="-1" aria-label="Previous {{ .noun }}"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
+    <button type="button" data-lt-step="1" aria-label="Next {{ .noun }}"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+  </div>
+</div>
