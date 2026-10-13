@@ -14,9 +14,8 @@
     </linearGradient>
   </defs>
   <rect y="{{ cond .tall -100 0 }}" width="400" height="{{ cond .tall 400 200 }}" fill="url(#{{ $id }})"/>
-  {{- /* In a tall box the page grows to fill it; the wrapper keeps this apart from the hover zoom of .lt-cover-art. */}}
+  {{- /* In a tall box the page grows to fill it. The page stays still, like a drawn card schema or a paper figure. */}}
   <g{{ if .tall }} transform="translate(200 102) scale(1.65) translate(-200 -102)"{{ end }}>
-  <g class="lt-cover-art">
     <rect x="132" y="14" width="136" height="176" rx="6" fill="#ffffff" opacity="0.07"/>
     <rect x="132" y="14" width="136" height="176" rx="6" fill="none" stroke="#60c0e0" stroke-opacity="0.45" stroke-width="1.2"/>
     <rect x="146" y="28" width="{{ add 70 (mod $h 31) }}" height="7" rx="3.5" fill="#f09010" opacity="0.9"/>
@@ -34,6 +33,5 @@
         {{- end }}
       {{- end }}
     {{- end }}
-  </g>
   </g>
 </svg>

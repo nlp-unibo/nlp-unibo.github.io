@@ -10,7 +10,7 @@ organizations:
   - name: Bocconi University
     url: 'https://www.unibocconi.it/en/faculty/arianna-muti'
 
-bio: Research Fellow at the Department of Computing Sciences of Bocconi University, working on hate speech and misogyny detection.
+bio: Research Fellow in the Department of Computing Sciences at Bocconi University, working on hate speech detection, implicit misogyny, and identity factors in NLP.
 
 social:
   - icon: university
@@ -39,5 +39,5 @@ build:
   render: always
 ---
 
-Arianna Muti is a Research Fellow at the Department of Computing Sciences of Bocconi University.
-With the lab, she works on hate speech detection, and in particular on implicit and pejorative misogynistic language.
+Arianna Muti is a Research Fellow in the Department of Computing Sciences at Bocconi University.
+Her research focuses on hate speech detection, particularly implicit misogyny, and on incorporating identity factors beyond demographics throughout the NLP pipeline.
