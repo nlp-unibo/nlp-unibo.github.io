@@ -24,7 +24,7 @@ interests:
 social:
   - icon: envelope
     icon_pack: fas
-    link: 'mailto:emancini@deezer.com'
+    link: 'mailto:elemancem@gmail.com'
   - icon: github
     icon_pack: fab
     link: https://github.com/helemanc
