@@ -1635,9 +1635,11 @@ $lt-slide-height: 29rem;
 }
 
 // Visual components for publication pages (layouts/_shortcodes: pipeline, gap, bars, takeaways, annotate)
-// Annotation colors are the validated categorical slots 1-4; labels are always visible, so no color stands alone.
-$lt-cat-light: #2a78d6, #eb6834, #1baf7a, #eda100;
-$lt-cat-dark: #3987e5, #d95926, #199e70, #c98500;
+// Annotation colors are the categorical slots 1-4: blue, yellow, magenta, green. The site is dark only, and the dark
+// set passes every pairwise check of the dataviz palette validator (--pairs all) on #0d1a2a and #112236, with a color
+// vision deficiency WARN (protan ΔE 6.9) that is legal because every mark also shows its label as text.
+$lt-cat-light: #2a78d6, #eda100, #e87ba4, #008300;
+$lt-cat-dark: #3987e5, #c98500, #d55181, #008300;
 
 .lt-viz {
   margin: 2rem 0;
@@ -2464,18 +2466,19 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 .dark .lt-concepts { color: #c9d6e3; }
 
 // Argument views: tabs by argument model and domain, then the marked text and the argument graph.
-// Roles take categorical colors in fixed order (validated for color vision deficiency in both modes),
-// and every colored mark also carries its role as text.
+// Roles take the categorical slots in fixed order: blue, yellow, magenta, green. The dark set passes every pairwise check
+// of the dataviz palette validator (--pairs all), with a color vision deficiency WARN (protan ΔE 6.9) that is legal
+// because every colored mark also carries its role as text.
 .lt-arg-views,
 .lt-overview,
 .lt-research-mosaic,
 .lt-tool-figure,
 .lt-card-schema,
 .lt-proj-teaser-schema {
-  --lt-role-1: #1f6fb2;
-  --lt-role-2: #c26a00;
-  --lt-role-3: #0f8a7a;
-  --lt-role-4: #9a4fb5;
+  --lt-role-1: #2a78d6;
+  --lt-role-2: #eda100;
+  --lt-role-3: #e87ba4;
+  --lt-role-4: #008300;
 }
 
 .dark .lt-arg-views,
@@ -2484,10 +2487,10 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 .dark .lt-tool-figure,
 .dark .lt-card-schema,
 .dark .lt-proj-teaser-schema {
-  --lt-role-1: #3f8fd6;
-  --lt-role-2: #c97a14;
-  --lt-role-3: #13917d;
-  --lt-role-4: #a866c8;
+  --lt-role-1: #3987e5;
+  --lt-role-2: #c98500;
+  --lt-role-3: #d55181;
+  --lt-role-4: #008300;
 }
 
 .lt-role-1 { --lt-role: var(--lt-role-1); }
@@ -2793,9 +2796,9 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   color: $lt-ink;
 }
 
-// Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red; the pair
-// passes the color vision deficiency check in light mode and stays in the 6 to 8 floor band in dark mode,
-// which is legal only because every edge also has a text label.
+// Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red. The dark pair passes
+// the dataviz palette validator with a color vision deficiency WARN (deutan ΔE 6.9), which is legal only because every
+// edge also has a text label.
 .lt-arg-views,
 .lt-overview,
 .lt-research-mosaic,
@@ -2882,12 +2885,13 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
 }
 
 // Detect views: a document whose annotated clauses are highlighted in the color of their fairness level.
-// Potentially unfair clauses take a dashed orange underline and clearly unfair ones a solid red one, and every
-// clause also names its category and level as text. Clearly fair clauses take the teal role color.
+// Clearly fair clauses take green, potentially unfair ones a dashed yellow underline, and clearly unfair ones a solid
+// magenta one; every clause also names its category and level as text. The three colors are role slots 4, 2, and 3,
+// and they pass every pairwise check of the dataviz palette validator, with a protan WARN (ΔE 6.9).
 .lt-detect {
-  --lt-level-1: var(--lt-role-3);
+  --lt-level-1: var(--lt-role-4);
   --lt-level-2: var(--lt-role-2);
-  --lt-level-3: var(--lt-attack);
+  --lt-level-3: var(--lt-role-3);
 }
 
 .lt-detect .is-level-1 { --lt-level: var(--lt-level-1); --lt-line: solid; }

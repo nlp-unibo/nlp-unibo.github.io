@@ -261,15 +261,32 @@ Change them together.
 | --- | --- |
 | Top of `template.scss` | `$lt-navy` `#003060`, `$lt-blue` `#105080`, `$lt-sky` `#60c0e0`, `$lt-orange` `#f09010`, `$lt-border`, `$lt-muted` |
 | `Homepage blocks` section of `template.scss` | `$lt-ink`, `$lt-dark-border`, `$lt-dark-muted`, `$lt-dark-card` |
-| `Visual components` section of `template.scss` | `$lt-cat-light` and `$lt-cat-dark`, the four validated categorical slots used by `.lt-c1` to `.lt-c4` |
+| `Visual components` section of `template.scss` | `$lt-cat-light` and `$lt-cat-dark`, the four categorical slots used by `.lt-c1` to `.lt-c4` |
 | `Argument views` section of `template.scss` | CSS custom properties `--lt-role-1` to `--lt-role-4`, `--lt-support`, `--lt-attack`, scoped to `.lt-arg-views`, `.lt-overview`, `.lt-research-mosaic`, `.lt-tool-figure`, with a `.dark` variant |
 | `data/themes/ltlab.toml` | Theme `primary`, `link`, `link_hover`, `background`, menu colours, and `home_section_odd` / `home_section_even` band colours |
 | `data/topics.yaml` | Topic tag labels |
 | `layouts/_partials/lt/cover.html` | Four hard-coded gradient palettes for generated covers |
 
 The first comment of `template.scss` states that `ltlab.toml` uses the same values as the Sass palette.
-Role and relation colours were checked for colour vision deficiency, and every coloured mark also carries a text label.
-Keep both properties when you change a colour.
+Every coloured mark also carries a text label, so no colour carries meaning alone.
+Keep that property when you change a colour.
+
+### Colour vision deficiency
+
+The site has a dark theme only (`theme_night: ltlab`, `show_day_night: false`), so the check covers the dark values, on the page background `#0d1a2a` and the card background `#112236`.
+The light values in `template.scss` are never shown.
+Every pair of a set is checked, not only neighbours, because any two colours can meet in a text.
+Distances are OKLab ΔE × 100: at least 15 under normal vision, and at least 8 under simulated protanopia and deuteranopia.
+A value from 6 to 8 is a warning, allowed only when a text label or a line style also separates the colours.
+
+| Set | Dark values | Result |
+| --- | --- | --- |
+| Annotation slots `$lt-cat-dark` | `#3987e5` `#c98500` `#d55181` `#008300` | Pass, warning at ΔE 6.9 (protanopia), labels always visible |
+| Roles `--lt-role-1` to `--lt-role-4` | `#3987e5` `#c98500` `#d55181` `#008300` | Pass, warning at ΔE 6.9 (protanopia), roles always named as text |
+| Relations `--lt-support`, `--lt-attack` | `#45ad64` `#d8443a` | Pass, warning at ΔE 6.9 (deuteranopia), edges always labelled |
+| Fairness levels `--lt-level-1` to `--lt-level-3` | role slots 4, 2, 3 | Pass, warning at ΔE 6.9 (protanopia), levels named as text and drawn solid, dashed, solid |
+| Stage states `.is-evolved`, `.is-trained`, `.is-frozen` | `#f09010` `#60c0e0` `#8aa4bf` | Exempt: brand colours for borders and text, with each state named in the legend and frozen marked by a texture |
+
 
 The script sets these custom properties at run time: `--lt-f` (section focus), `--lt-autoplay` (carousel delay), and `--lt-ring`, `--lt-fill`, `--lt-lift` (flying boxes).
 Templates set `--lt-cols` (graph columns), `--t` (voice reading start), and `--w`, `--l`, `--ew` (bars).
