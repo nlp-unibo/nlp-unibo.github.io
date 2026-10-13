@@ -27,7 +27,7 @@ To change the design or the code, read [the developers' guide](developers.md).
 2. **Edit.** Replace every `TODO`. The check fails while one is left.
 3. **Commit.** Select **Commit changes**, then **Create a new branch for this commit and start a pull request**, with a short branch name such as `news/acl-2026`.
 4. **Open the pull request.** Select **Create pull request**, with base branch `main`.
-5. **Upload files** (images, PDFs) into the page folder of your branch, as in [Add images and files](#add-images-and-files).
+5. **Add more files** (images, PDFs, a second page) to the same branch, as in [Add images and files](#add-images-and-files).
 6. **Wait for the check.** The **Validate content and build** check runs on every commit: yellow is running, green is fine, red lists the problems (see [When the check fails](#when-the-check-fails)).
 7. **Merge.** Select **Merge pull request**, or ask the maintainer. The site updates a few minutes later at <https://nlp.unibo.it/>.
 
@@ -225,8 +225,23 @@ When the thesis led to a paper, add the paper with the keyword `student publicat
 
 **Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/main?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20on%20the%20card%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20opened%20card%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
 
-**Folder:** `content/proposals/<topic>/<slug>/`, with topic `argument-mining`, `interpretability`, `legal`, or `unstructured-knowledge`.
-New topic first: [create `content/proposals/new-topic/_index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/main?filename=content/proposals/new-topic/_index.md&value=---%0Atitle%3A%20%22TODO%3A%20Topic%20title%22%0Asummary%3A%20%22TODO%3A%20One%20sentence%20on%20the%20topic.%22%0A---%0A%0ATODO%3A%20A%20short%20description%20of%20the%20topic%2C%20in%20a%20few%20sentences.%0A)
+**Folder:** `content/proposals/<topic>/<slug>/`.
+In the file name, change `legal` to a topic folder of [`content/proposals/`](../content/proposals/), and `short-name` to a short name for the proposal.
+
+**New topic?** Write the new topic name in the file name and finish the proposal. Then add the topic page to the same pull request:
+
+1. On the pull request page, select your branch name, then open `content/proposals/<topic>/`.
+2. Select **Add file**, then **Create new file**. Name it `_index.md`, paste the block below, and replace every `TODO`.
+3. Select **Commit directly to the branch**. The check stays red until this commit.
+
+```text
+---
+title: "TODO: Topic title"
+summary: "TODO: One sentence on the topic."
+---
+
+TODO: A short description of the topic, in a few sentences.
+```
 
 | Field | Rule |
 | --- | --- |
@@ -378,6 +393,7 @@ The form opens the visitor's email app; nothing passes through the site. Ask the
 
 1. On the pull request page, select your branch name, then open the page folder.
 2. **Add file**, **Upload files**, drag the files, **Commit directly to the branch**.
+   For a text page: **Add file**, **Create new file**, type its name, paste the text, **Commit directly to the branch**.
 
 Rules: at most 5 MiB each, lowercase names with hyphens and no spaces, exact names (`avatar.jpg`, `featured.png`, `card.svg`), only files you may publish.
 
