@@ -30,6 +30,7 @@ import subprocess
 import sys
 import tarfile
 import tempfile
+from typing import NamedTuple
 import unicodedata
 import urllib.request
 from urllib.parse import unquote
@@ -501,6 +502,110 @@ def local_link_targets(path: Path, body: str) -> list[tuple[str, list[Path]]]:
     return results
 
 
+class Vocabulary(NamedTuple):
+    """The site-wide lists a page is checked against: data/venues.yaml, data/tags.yaml, data/topics.yaml, the focus
+    topics of content/research as <area>/<key>, and the author folders."""
+    venues: dict
+    keywords: list[str]
+    topics: dict
+    focus_topics: set[str]
+    authors: set[str]
+
+
+def page_errors(section: str, slug: str, metadata: dict, body: str, vocabulary: Vocabulary, *, page: Path | None = None,
+                required: tuple[str, ...] | None = None, bib: str | None = None, exists=Path.exists,
+                today: date | None = None) -> tuple[list[str], list[str]]:
+    """Return (errors, warnings) for one content page of `section`, whose folder is `slug`.
+
+    `page` is the page file, used to resolve local links through `exists`; without it, links are not checked.
+    `required` defaults to the fields of the section, and `bib` is the text of cite.bib, or None when it is missing.
+    """
+    errors: list[str] = []
+    warnings: list[str] = []
+    required = REQUIRED_FIELDS[section] if required is None else required
+    is_draft = metadata.get("draft") is True
+    if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
+        errors.append(f"invalid slug {slug!r}")
+    for field in required:
+        # An acceptance (tag `paper`) needs no summary: its title and venue already say what it is.
+        if section == "news" and field == "summary" and "paper" in [str(tag).lower() for tag in metadata.get("tags") or []]:
+            continue
+        if metadata.get(field) in (None, "", []):
+            errors.append(f"required field {field!r} is empty")
+    if section == "authors":
+        groups = metadata.get("user_groups") or []
+        if len(groups) != 1 or groups[0] not in AUTHOR_GROUPS:
+            errors.append(f"user_groups must be exactly one of {', '.join(sorted(AUTHOR_GROUPS))}")
+        if groups != ["Former Members"] and not metadata.get("email"):
+            errors.append("required field 'email' is empty")
+        if not is_draft and isinstance(metadata.get("title"), str) and slug != content_slug(metadata["title"]):
+            errors.append(f"author slug must be {content_slug(metadata['title'])!r}")
+
+    if not is_draft:
+        visible_text = "\n".join(metadata_strings(metadata)) + "\n" + strip_code(body) + "\n" + (bib or "")
+        errors += [f"contains {name}" for name, pattern in PLACEHOLDER_PATTERNS.items() if pattern.search(visible_text)]
+        publication_date = content_date(metadata.get("publishDate", metadata.get("date")))
+        if publication_date and publication_date > (today or date.today()):
+            warnings.append(f"future publication date {publication_date.isoformat()}")
+
+    if page is not None:
+        for raw_target, candidates in local_link_targets(page, body):
+            if any(exists(candidate) for candidate in candidates):
+                continue
+            if EMAIL.fullmatch(raw_target):
+                errors.append(f"email link {raw_target!r} must start with mailto:")
+            else:
+                errors.append(f"local link {raw_target!r} does not exist")
+
+    if section == "publication" and bib is None:
+        warnings.append("missing cite.bib")
+    # A conference, journal, or workshop paper names its venue in data/venues.yaml, whose name every list shows
+    # and whose rank selects the Highlights.
+    categories = metadata.get("categories") or []
+    if section == "publication" and not is_draft and set(categories) & {"Conference", "Journal", "Workshop"}:
+        if metadata.get("venue_key") not in vocabulary.venues:
+            errors.append(f"venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
+        elif len(categories) == 1:
+            error = venue_rank_error(categories[0], vocabulary.venues[metadata["venue_key"]].get("rank"))
+            if error:
+                errors.append(f"{error}; check venue_key or categories")
+    if section == "proposals" and required != TOPIC_FIELDS and not is_draft:
+        errors += proposal_errors(metadata, body, vocabulary.authors)
+    if section in {"publication", "theses"} and not is_draft:
+        types = metadata.get("publication_types") or []
+        if len(types) != 1 or types[0] not in PUBLICATION_TYPES:
+            errors.append(f"publication_types must be exactly one of {', '.join(sorted(PUBLICATION_TYPES))}")
+    # Research area views, fields, and focus topics need unique keys, and a publication may join only
+    # existing focus topics.
+    if section == "research":
+        for name in ("views", "fields", "focus"):
+            keys = [entry.get("key") for entry in metadata.get(name) or []]
+            for key in {key for key in keys if keys.count(key) > 1 or not key}:
+                errors.append(f"{name} key {key!r} is missing or repeated")
+    if section == "publication":
+        for tag in map(str, metadata.get("tags") or []):
+            if tag in vocabulary.keywords:
+                continue
+            match = next((keyword for keyword in vocabulary.keywords if same_keyword(tag, keyword)), None)
+            if match:
+                errors.append(f"tag {tag!r} is not in data/tags.yaml; use the existing {match!r}")
+            else:
+                errors.append(f"tag {tag!r} is not in data/tags.yaml; add it there if it is a new keyword")
+        for topic in metadata.get("focus") or []:
+            if topic not in vocabulary.focus_topics:
+                errors.append(f"focus topic {topic!r} is not a <area>/<key> of content/research")
+    for view in metadata.get("views") or []:
+        errors += [f"view {view.get('key')!r}: {error}" for error in view_errors(view)]
+    for topic in metadata.get("topics") or []:
+        if topic not in vocabulary.topics:
+            errors.append(f"topic {topic!r} is not defined in data/topics.yaml")
+    if section in SECTION_CATEGORIES and not is_draft:
+        error = category_error(section, categories)
+        if error:
+            errors.append(error)
+    return errors, warnings
+
+
 def section_pages(section: str) -> list[tuple[Path, Path, tuple[str, ...]]]:
     """Return (bundle folder, page file, required fields) for every entry of a validated section."""
     entries = []
@@ -541,6 +646,7 @@ def validate_content_quality() -> None:
         if str(venue.get("rank") or "") not in set().union(*VENUE_RANKS.values()):
             failures.append(f"data/venues.yaml: venue {key!r} has rank {venue.get('rank')!r}; use A*, A, B, C, Multiconference, Q1 to Q4, or \"\"")
     authors = {path.name for path in (content_root / "authors").iterdir() if path.is_dir()}
+    vocabulary = Vocabulary(venues, keywords, project_topics, focus_topics, authors)
     for key, topic in project_topics.items():
         if not isinstance(topic, dict) or not topic.get("label"):
             failures.append(f"data/topics.yaml: topic {key!r} needs a label")
@@ -550,35 +656,11 @@ def validate_content_quality() -> None:
             if stray.name != "_index.md":
                 failures.append(f"{stray.relative_to(ROOT)}: pages must be folders with an index.md")
         for directory, page, required_fields in section_pages(section):
-            slug = directory.name
-            if not re.fullmatch(r"[a-z0-9][a-z0-9-]*", slug):
-                failures.append(f"{directory.relative_to(ROOT)}: invalid slug {slug!r}")
             if not page.exists():
                 failures.append(f"{directory.relative_to(ROOT)}: missing page index")
                 continue
             metadata, body = read_page(page)
             checked_pages += 1
-            is_draft = metadata.get("draft") is True
-            for field in required_fields:
-                # An acceptance (tag `paper`) needs no summary: its title and venue already say what it is.
-                if section == "news" and field == "summary" and "paper" in [str(tag).lower() for tag in metadata.get("tags") or []]:
-                    continue
-                if metadata.get(field) in (None, "", []):
-                    failures.append(f"{page.relative_to(ROOT)}: required field {field!r} is empty")
-            if section == "authors":
-                groups = metadata.get("user_groups") or []
-                if len(groups) != 1 or groups[0] not in AUTHOR_GROUPS:
-                    allowed = ", ".join(sorted(AUTHOR_GROUPS))
-                    failures.append(f"{page.relative_to(ROOT)}: user_groups must be exactly one of {allowed}")
-                if groups != ["Former Members"] and not metadata.get("email"):
-                    failures.append(f"{page.relative_to(ROOT)}: required field 'email' is empty")
-            if section == "authors" and not is_draft and isinstance(metadata.get("title"), str):
-                expected_slug = content_slug(metadata["title"])
-                if slug != expected_slug:
-                    failures.append(
-                        f"{directory.relative_to(ROOT)}: author slug must be {expected_slug!r}"
-                    )
-
             for taxonomy, names in term_names.items():
                 for term in metadata.get(taxonomy) or []:
                     if not isinstance(term, str):
@@ -592,81 +674,14 @@ def validate_content_quality() -> None:
                         )
                     else:
                         names[term_slug] = (term, page)
-
             bib = directory / "cite.bib"
-            if not is_draft:
-                visible_text = "\n".join(metadata_strings(metadata)) + "\n" + strip_code(body)
-                if bib.exists():
-                    visible_text += "\n" + bib.read_text(encoding="utf-8")
-                for name, pattern in PLACEHOLDER_PATTERNS.items():
-                    if pattern.search(visible_text):
-                        failures.append(f"{page.relative_to(ROOT)}: contains {name}")
-
-            publication_date = content_date(metadata.get("publishDate", metadata.get("date")))
-            if not is_draft and publication_date and publication_date > date.today():
-                warnings.append(
-                    f"{page.relative_to(ROOT)}: future publication date {publication_date.isoformat()}"
-                )
-
-            for raw_target, candidates in local_link_targets(page, body):
-                checked_links += 1
-                if any(candidate.exists() for candidate in candidates):
-                    continue
-                if EMAIL.fullmatch(raw_target):
-                    failures.append(
-                        f"{page.relative_to(ROOT)}: email link {raw_target!r} must start with mailto:"
-                    )
-                else:
-                    failures.append(f"{page.relative_to(ROOT)}: local link {raw_target!r} does not exist")
-
-            if section == "publication" and not bib.exists():
-                warnings.append(f"{directory.relative_to(ROOT)}: missing cite.bib")
-            # A conference, journal, or workshop paper names its venue in data/venues.yaml, whose name every list shows
-            # and whose rank selects the Highlights.
-            if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal", "Workshop"}:
-                if metadata.get("venue_key") not in venues:
-                    failures.append(f"{page.relative_to(ROOT)}: venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
-                elif len(metadata["categories"]) == 1:
-                    error = venue_rank_error(metadata["categories"][0], venues[metadata["venue_key"]].get("rank"))
-                    if error:
-                        failures.append(f"{page.relative_to(ROOT)}: {error}; check venue_key or categories")
-            if section == "proposals" and page.name == "index.md" and not is_draft:
-                failures += [f"{page.relative_to(ROOT)}: {error}" for error in proposal_errors(metadata, body, authors)]
-            if section in {"publication", "theses"} and not is_draft:
-                types = metadata.get("publication_types") or []
-                if len(types) != 1 or types[0] not in PUBLICATION_TYPES:
-                    allowed = ", ".join(sorted(PUBLICATION_TYPES))
-                    failures.append(
-                        f"{page.relative_to(ROOT)}: publication_types must be exactly one of {allowed}"
-                    )
-            # Research area views, fields, and focus topics need unique keys, and a publication may join only
-            # existing focus topics.
-            if section == "research":
-                for name in ("views", "fields", "focus"):
-                    keys = [entry.get("key") for entry in metadata.get(name) or []]
-                    for key in {key for key in keys if keys.count(key) > 1 or not key}:
-                        failures.append(f"{page.relative_to(ROOT)}: {name} key {key!r} is missing or repeated")
-            if section == "publication":
-                for tag in map(str, metadata.get("tags") or []):
-                    if tag in keywords:
-                        continue
-                    match = next((keyword for keyword in keywords if same_keyword(tag, keyword)), None)
-                    if match:
-                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; use the existing {match!r}")
-                    else:
-                        failures.append(f"{page.relative_to(ROOT)}: tag {tag!r} is not in data/tags.yaml; add it there if it is a new keyword")
-                for topic in metadata.get("focus") or []:
-                    if topic not in focus_topics:
-                        failures.append(f"{page.relative_to(ROOT)}: focus topic {topic!r} is not a <area>/<key> of content/research")
-            for view in metadata.get("views") or []:
-                failures += [f"{page.relative_to(ROOT)}: view {view.get('key')!r}: {error}" for error in view_errors(view)]
-            for topic in metadata.get("topics") or []:
-                if topic not in project_topics:
-                    failures.append(f"{page.relative_to(ROOT)}: topic {topic!r} is not defined in data/topics.yaml")
-            if section in SECTION_CATEGORIES and not is_draft:
-                error = category_error(section, metadata.get("categories") or [])
-                if error:
-                    failures.append(f"{page.relative_to(ROOT)}: {error}")
+            errors, notes = page_errors(
+                section, directory.name, metadata, body, vocabulary, page=page, required=required_fields,
+                bib=bib.read_text(encoding="utf-8") if bib.exists() else None,
+            )
+            failures += [f"{page.relative_to(ROOT)}: {error}" for error in errors]
+            warnings += [f"{page.relative_to(ROOT)}: {note}" for note in notes]
+            checked_links += len(local_link_targets(page, body))
 
     checked_assets = 0
     for asset_root in (content_root, ROOT / "assets", ROOT / "static"):

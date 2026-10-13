@@ -41,5 +41,17 @@ jobs:
       - name: Run validator self-checks
         run: uv run --locked python scripts/test_site.py
 
+      - name: Run script helper checks
+        run: node --test scripts/test_ltcore.mjs
+
       - name: Validate content and production build
         run: uv run --locked python scripts/site.py check
+
+      - name: Check rendered templates
+        run: uv run --locked python scripts/test_render.py
+
+      - name: Install Chromium for browser checks
+        run: uv run --locked playwright install --with-deps chromium
+
+      - name: Check page behaviour in a browser
+        run: uv run --locked python scripts/test_browser.py

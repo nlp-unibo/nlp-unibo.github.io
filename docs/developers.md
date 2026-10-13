@@ -32,7 +32,7 @@ layouts/ in this repository              overrides theme templates of the same p
         |
         v
 assets pipeline                          scss/main.scss (theme) imports assets/scss/template.scss (ours)
-                                         js/ltlab.js is minified and fingerprinted by a body-end hook
+                                         js/ltlab.js is bundled with js/lt-core.mjs, minified, and fingerprinted by a body-end hook
         |
         v
 public/ (GitHub Actions) or .build/public (site.py build)
@@ -45,7 +45,7 @@ public/ (GitHub Actions) or .build/public (site.py build)
 4. The theme's `layouts/_partials/site_head.html` compiles `scss/main.scss` with `toCSS`.
    That file imports Bootstrap, the theme styles, `template`, and `custom`, in that order.
    Our `assets/scss/template.scss` replaces the theme's empty `template.scss`, so our rules load after the theme rules.
-5. `layouts/_partials/hooks/body-end/ltlab.html` loads `assets/js/ltlab.js` with `minify | fingerprint` as a deferred script with an `integrity` hash.
+5. `layouts/_partials/hooks/body-end/ltlab.html` bundles `assets/js/ltlab.js` and the helpers it imports from `assets/js/lt-core.mjs` with `js.Build` (minified), then loads it with `fingerprint` as a deferred script with an `integrity` hash.
 6. `layouts/_partials/hooks/head-start/lt-js.html` adds the `lt-js` class to `<html>` before the first paint.
 
 ### Override order
@@ -88,7 +88,10 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py check` | Run `content`, `templates`, and `build` in that order |
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
 | `uv run python scripts/site.py publications --since YYYY-MM-DD` | Ask OpenAlex for the works of each `Members` ORCID and list those that match no publication page by DOI or title, minus `data/publication_ignore.yaml`. It needs the network, so CI never runs it |
-| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, and the missing-publication matching |
+| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, the rules of one page (`page_errors`), and the missing-publication matching |
+| `uv run python scripts/test_render.py` | Build the content plus fixture pages into `.build/render-check` with `--buildFuture`, then check the rendered dates |
+| `uv run python scripts/test_browser.py` | Serve that fixture build and check the carousels, path links, filters, widget isolation, and reduced motion in headless Chromium; the first run needs `uv run playwright install chromium` |
+| `node --test scripts/test_ltcore.mjs` | Check the DOM-free helpers of `assets/js/lt-core.mjs` |
 
 `new` accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
 A proposal slug is `TOPIC/NAME`, as in `new proposal legal/new-idea`, and the topic folder must exist.
@@ -102,7 +105,7 @@ Two workflows live in `.github/workflows/`.
 
 | Workflow | Trigger | Steps |
 | --- | --- | --- |
-| `validate.yml`, **Validate website** (job **Validate content and build**) | Pull requests to `main`, manual dispatch | Set up uv, restore `.tools` and `.build/go-mod-cache` (keyed on `site.py`, `hugo.yml`, `go.mod`, `go.sum`), `uv sync --locked`, `scripts/test_site.py`, `site.py check` |
+| `validate.yml`, **Validate website** (job **Validate content and build**) | Pull requests to `main`, manual dispatch | Set up uv, restore `.tools` and `.build/go-mod-cache` (keyed on `site.py`, `hugo.yml`, `go.mod`, `go.sum`), `uv sync --locked`, `scripts/test_site.py`, `node --test scripts/test_ltcore.mjs`, `site.py check`, `scripts/test_render.py`, Chromium install, `scripts/test_browser.py` |
 | `hugo.yml`, **Deploy Hugo site to Pages** | Push to `main`, manual dispatch, daily at 04:00 UTC | Install Hugo extended `HUGO_VERSION` from the release `.deb`, `hugo --minify --baseURL <pages url>`, upload `public/`, deploy to GitHub Pages |
 
 The daily run publishes pages whose future date has arrived.
@@ -140,10 +143,12 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `data/tags.yaml` | Vocabulary of publication keywords; `scripts/site.py` rejects a missing or near-duplicate keyword (`same_keyword`) |
 | `assets/scss/template.scss` | Every site style rule, layered over the theme |
 | `assets/js/ltlab.js` | Every site behaviour, as progressive enhancement |
+| `assets/js/lt-core.mjs` | DOM-free helpers that `ltlab.js` imports: index stepping, hash parsing, filter matching, nearest slide, section focus values |
 | `assets/media/logo.svg`, `assets/media/icon.png` | Navbar and hero logo, and the favicon generated from it |
 | `archetypes/` | Templates used by `site.py new`, one folder per kind |
 | `scripts/site.py`, `scripts/test_site.py` | Toolchain and validator, and its self-checks |
-| `pyproject.toml`, `uv.lock` | Python environment (PyYAML only) |
+| `scripts/test_render.py`, `scripts/test_browser.py`, `scripts/test_ltcore.mjs` | Checks of the rendered templates, of page behaviour in a browser, and of the script helpers |
+| `pyproject.toml`, `uv.lock` | Python environment: PyYAML, and Playwright as a development dependency for the browser checks |
 | `.github/workflows/` | Validation (`validate.yml`) and deployment (`hugo.yml`) |
 | `.github/pull_request_template.md` | Pull-request checklist |
 
@@ -198,7 +203,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `person-topics.html` | A profile | Returns the "Latest topics": the three most frequent topics of the publications of the last two years, without workshop papers, papers tagged `shared task`, and `prototype`; ties go to the topic of more first-authored papers |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |
-| `pub-meta.html` | A publication | Returns `kind`, `venue` ("Preprint" for a preprint), `links`, `tldr`, `blog` (it has a body), and `url` (the blog, else the DOI, arXiv, PDF, or first link), shared by cards, rows, and pages |
+| `pub-meta.html` | A publication | Returns `kind`, `venue` ("Preprint" for a preprint), `links`, `tldr`, `blog` (it has a body), `url` (the blog, else the DOI, arXiv, PDF, or first link), and `date` and `iso` at the precision of the date (`2025-01-01` is a year, `2025-07-01` a month), shared by cards, rows, news previews, and pages |
 | `pub-row.html` | A publication | Compact list row |
 | `rule-parts.html` | Parts of a rules-view sentence | Marked spans, recursive |
 | `section-head.html` | A block | Eyebrow, title, subtitle, and "see all" link |
@@ -364,10 +369,12 @@ LibSass treats some CSS function names as Sass functions.
 Each behaviour is one block that starts with a comment, finds its elements with `querySelectorAll`, and does nothing when none exist.
 Every behaviour is progressive enhancement: the page must stay complete without it.
 
-Two early `return` statements end the function.
-Under reduced motion, the function returns before the section focus block.
-Without `IntersectionObserver`, it returns before the scroll reveal block.
-Add new behaviours **above** the section focus block, or they will not run under reduced motion.
+Each block sets up every element through `guarded`, so an error in one widget is reported with `reportError` and the widgets after it still set up.
+Logic that needs no DOM, such as index stepping, hash parsing, and filter matching, lives in `assets/js/lt-core.mjs`.
+`ltlab.js` imports it, and `scripts/test_ltcore.mjs` checks it.
+
+One early `return` ends the function: without `IntersectionObserver`, it returns before the card fade-in, the last block.
+Add new behaviours **above** the card fade-in block.
 
 ### Custom events
 
@@ -699,13 +706,13 @@ Proposal pages use `## Context`, `## Objective`, and `## References` the same wa
 
 ### Add a JavaScript behaviour
 
-1. Add one block to `assets/js/ltlab.js`, above the `Section focus` block.
+1. Add one block to `assets/js/ltlab.js`, above the card fade-in block. Put any logic that needs no DOM in `assets/js/lt-core.mjs`, with a test in `scripts/test_ltcore.mjs`.
 2. Write a comment above it that states what it does, its markup hook, and its fallback without the script.
 3. Hook it on a `data-lt-*` attribute, or on a class the template already sets, and do nothing when no element matches:
 
    ```js
    // Expanders: a `data-lt-expand` button shows the element its value names. Without the script the element is visible.
-   document.querySelectorAll("[data-lt-expand]").forEach((button) => {
+   document.querySelectorAll("[data-lt-expand]").forEach(guarded((button) => {
      const target = document.querySelector(button.dataset.ltExpand);
      if (!target) return;
      target.hidden = true;
@@ -714,7 +721,7 @@ Proposal pages use `## Context`, `## Objective`, and `## References` the same wa
        target.hidden = !target.hidden;
        button.setAttribute("aria-expanded", String(!target.hidden));
      });
-   });
+   }));
    ```
 
 4. Render the complete content in the template, and let the script hide or rearrange it.
@@ -726,17 +733,18 @@ Proposal pages use `## Context`, `## Objective`, and `## References` the same wa
 
 ### Add a validation rule to `scripts/site.py`
 
-1. Add the check inside the per-page loop of `validate_content_quality()`, next to the related checks.
-   Append to `failures` for errors and to `warnings` for problems that still build.
-   Start every message with `page.relative_to(ROOT)` or `directory.relative_to(ROOT)`.
+1. Add the check to `page_errors()`, next to the related checks.
+   Append to `errors` for errors and to `warnings` for problems that still build.
+   `page_errors()` reads nothing from disk, and `validate_content_quality()` prefixes every message with the page path.
 
    ```python
    if section == "tools" and not is_draft and not str(metadata.get("external_link", "")).startswith("https://"):
-       failures.append(f"{page.relative_to(ROOT)}: external_link must start with https://")
+       errors.append("external_link must start with https://")
    ```
 
-2. For a rule on nested data, write a pure function that returns a list of messages, as `view_errors()` does, and call it from the loop.
-3. Add an `assert` for the new rule to `scripts/test_site.py`, which loads `site.py` by path.
+2. For a rule on nested data, write a pure function that returns a list of messages, as `view_errors()` does, and call it from `page_errors()`.
+   A rule across pages, such as conflicting taxonomy terms, stays in the loop of `validate_content_quality()`.
+3. Add an `assert` for the new rule to `scripts/test_site.py`, which calls `page_errors()` with a small `Vocabulary`.
 4. Add the message and its fix to the message table for editors.
 5. Run `uv run python scripts/test_site.py` and `uv run python scripts/site.py content`.
 
@@ -753,7 +761,10 @@ Run only one server at a time.
 | Command | Use |
 | --- | --- |
 | `uv run python scripts/test_site.py` | After a change to `site.py`; it runs without Hugo |
+| `node --test scripts/test_ltcore.mjs` | After a change to `assets/js/lt-core.mjs` |
 | `uv run python scripts/site.py content` | After a content or front-matter change; it runs without Hugo |
+| `uv run python scripts/test_render.py` | After a change to a template |
+| `uv run python scripts/test_browser.py` | After a change to `ltlab.js` or to markup that it reads |
 | `uv run python scripts/site.py check` | Before every pull request |
 
 `check` fails on any validation failure and on any Hugo error.
@@ -788,10 +799,11 @@ For motion work, also check the page by hand without reduced motion, and with Ja
 
 ### What CI runs
 
-On every pull request to `main`, **Validate content and build** runs `uv sync --locked`, `scripts/test_site.py`, and `site.py check`.
+On every pull request to `main`, **Validate content and build** runs `uv sync --locked`, `scripts/test_site.py`, `scripts/test_ltcore.mjs`, `site.py check`, `scripts/test_render.py`, and `scripts/test_browser.py`.
 The pull request needs that status check to merge.
 `test_site.py` reads no content, so only a change to `site.py` can fail it.
 `site.py check` fails on content, templates, or the build.
+`test_render.py` and `test_browser.py` build the content plus their own fixture pages, so a template or script change can fail them.
 After the merge, **Deploy Hugo site to Pages** builds with `hugo --minify` and publishes.
 
 ## 8. Upgrades and policy

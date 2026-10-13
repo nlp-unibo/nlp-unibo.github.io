@@ -3,7 +3,8 @@
 {{/* the PDF, or the first link, in this order; empty when there is none. A preprint's venue reads "Preprint", or */}}
 {{/* "arXiv preprint" when the venue field names arXiv. A paper with a `venue_key` shows that venue's `name` in */}}
 {{/* data/venues.yaml, the full name with the acronym in brackets, so every list writes a venue the same way. A paper */}}
-{{/* with a DOI shows no arXiv link. */}}
+{{/* with a DOI shows no arXiv link. `date` and `iso` carry only the precision of the date: `2025-01-01` is a year and */}}
+{{/* `2025-07-01` a month. */}}
 {{- $kinds := slice "Journal" "Conference" "Workshop" "Preprint" -}}
 {{- $kind := index (intersect $kinds (.Params.categories | default slice) | default (slice "Publication")) 0 -}}
 {{- $venue := .Params.publication_short | default .Params.publication | default "" | markdownify | plainify | htmlUnescape -}}
@@ -37,4 +38,8 @@
 {{- else if .Params.url_pdf }}{{ $url = .Params.url_pdf | relURL -}}
 {{- else }}{{ with index (.Params.links | default slice) 0 }}{{ $url = .url }}{{ end -}}
 {{- end -}}
-{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr "blog" $blog "url" $url -}}
+{{- $date := .Date | time.Format ":date_medium" -}}
+{{- $iso := .Date.Format "2006-01-02" -}}
+{{- if eq (.Date.Format "01-02") "01-01" }}{{ $date = .Date.Format "2006" }}{{ $iso = $date }}
+{{- else if eq .Date.Day 1 }}{{ $date = .Date.Format "Jan 2006" }}{{ $iso = .Date.Format "2006-01" }}{{ end -}}
+{{- return dict "kind" $kind "venue" $venue "links" $links "tldr" $tldr "blog" $blog "url" $url "date" $date "iso" $iso -}}

@@ -1,6 +1,17 @@
 // Site behaviours of the Language Technologies Lab theme, catalogued in docs/developers.md (section 4).
 // Every effect is optional progressive enhancement: the pages work without this script.
+// Hugo bundles it with the DOM-free helpers of lt-core.mjs (layouts/_partials/hooks/body-end/ltlab.html).
+import { arrowStep, countLabel, fits, focusLine, focusValue, nearest, parsePlace, slideIndex } from "./lt-core.mjs";
+
 (() => {
+  // Each widget sets up alone: an error in one is reported, and the widgets after it still set up.
+  const guarded = (init) => (...args) => {
+    try {
+      init(...args);
+    } catch (error) {
+      reportError(error);
+    }
+  };
   const navbar = document.getElementById("navbar-main");
   if (navbar) {
     const onScroll = () => navbar.classList.toggle("lt-scrolled", window.scrollY > 8);
@@ -9,7 +20,7 @@
   }
 
   // Long citation lists get a heading before the first entry of each year, unless their block sets `lt-no-years`.
-  document.querySelectorAll(".wg-collection:not(.lt-no-years), .universal-wrapper").forEach((list) => {
+  document.querySelectorAll(".wg-collection:not(.lt-no-years), .universal-wrapper").forEach(guarded((list) => {
     const items = list.querySelectorAll(".pub-list-item[data-year]");
     if (items.length < 6) return;
     let year = null;
@@ -21,10 +32,10 @@
       heading.textContent = year;
       item.before(heading);
     });
-  });
+  }));
 
   // Copy buttons on publication pages copy the text of the element named by `data-lt-copy`.
-  document.querySelectorAll("[data-lt-copy]").forEach((button) => {
+  document.querySelectorAll("[data-lt-copy]").forEach(guarded((button) => {
     button.addEventListener("click", () => {
       const source = document.querySelector(button.dataset.ltCopy);
       if (!source || !navigator.clipboard) return;
@@ -35,10 +46,10 @@
         setTimeout(() => { label.textContent = text; }, 1600);
       });
     });
-  });
+  }));
 
   // Annotated examples: a legend entry toggles a filter that dims every other label.
-  document.querySelectorAll(".lt-annotate").forEach((figure) => {
+  document.querySelectorAll(".lt-annotate").forEach(guarded((figure) => {
     const keys = figure.querySelectorAll(".lt-annotate-key");
     keys.forEach((key) => {
       key.addEventListener("click", () => {
@@ -51,12 +62,12 @@
         });
       });
     });
-  });
+  }));
 
   // Stage diagrams and argument views: tabs switch the visible panel; arrow keys move between tabs.
   // Argument views render every panel, so without the script all views stay visible.
   // The Work with us paths (`.lt-paths`) have their own controller below.
-  document.querySelectorAll(".lt-stages, .lt-arg-views:not(.lt-paths)").forEach((figure) => {
+  document.querySelectorAll(".lt-stages, .lt-arg-views:not(.lt-paths)").forEach(guarded((figure) => {
     const tabs = [...figure.querySelectorAll('[role="tab"]')];
     figure.classList.add("is-tabbed");
     // A tab chosen by the reader announces its panel with an `lt-show` event, which starts the view animation, and
@@ -87,9 +98,9 @@
         document.startViewTransition(() => select(tab, true)).finished.then(chosen);
       });
       tab.addEventListener("keydown", (event) => {
-        const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+        const step = arrowStep(event.key);
         if (!step) return;
-        const next = tabs[(index + step + tabs.length) % tabs.length];
+        const next = tabs[slideIndex(index + step, tabs.length, true)];
         select(next, true);
         next.focus();
       });
@@ -97,10 +108,10 @@
     const hashed = () => tabs.find((tab) => location.hash === `#${tab.getAttribute("aria-controls")}`);
     addEventListener("hashchange", () => { if (hashed()) select(hashed(), true); });
     select(hashed() || tabs.find((tab) => tab.getAttribute("aria-selected") === "true") || ("ltEmpty" in figure.dataset ? null : tabs[0]));
-  });
+  }));
 
   // Section menus of project pages: the link of the section under the sticky header carries aria-current.
-  document.querySelectorAll(".lt-proj-nav").forEach((nav) => {
+  document.querySelectorAll(".lt-proj-nav").forEach(guarded((nav) => {
     const links = [...nav.querySelectorAll('a[href^="#"]:not(.lt-path-side-back)')];
     const targets = links.map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))));
     if (!links.length || targets.includes(null)) return;
@@ -111,7 +122,7 @@
     };
     addEventListener("scroll", () => requestAnimationFrame(mark), { passive: true });
     mark();
-  });
+  }));
 
   // Work with us paths. The small path cards (tabs) and the arrows move a carousel of description cards, one per path;
   // the selected tab follows the centered card. A click on the centered card, or on its "See the steps" pill, opens the
@@ -122,7 +133,7 @@
   // the recipients and lists every filled field. "Choose this proposal" copies a proposal title into the open path's
   // proposal field. Opening a path closes an open proposal and resets every filter to All. A hash naming a path, or a
   // place in it such as `#thesis-contact`, opens that path, and `?proposal=<title>` fills the proposal field.
-  document.querySelectorAll(".lt-paths").forEach((paths) => {
+  document.querySelectorAll(".lt-paths").forEach(guarded((paths) => {
     const sections = [...document.querySelectorAll("[data-lt-section]")];
     const picks = [...document.querySelectorAll(".lt-proposal-pick")];
     const tabs = [...paths.querySelectorAll('[role="tab"]')];
@@ -188,9 +199,9 @@
     tabs.forEach((tab, index) => {
       tab.addEventListener("click", () => go(index));
       tab.addEventListener("keydown", (event) => {
-        const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+        const step = arrowStep(event.key);
         if (!step) return;
-        const next = (index + step + tabs.length) % tabs.length;
+        const next = slideIndex(index + step, tabs.length, true);
         go(next);
         tabs[next].focus();
       });
@@ -207,8 +218,8 @@
     // A hash naming a path, or a place inside it such as #thesis-contact or #thesis-step-1, centers its card, opens it,
     // and scrolls to the place. On page load, `?proposal=<title>` fills the proposal field and the email step is focused.
     const openFromHash = (loaded) => {
-      const place = location.hash.match(/^#([a-z0-9-]+?)(?:-(contact|about|inspiration|step-\d+))?$/);
-      const index = place ? panels.findIndex((panel) => panel.id === place[1]) : -1;
+      const place = parsePlace(location.hash);
+      const index = place ? panels.findIndex((panel) => panel.id === place.path) : -1;
       if (index < 0) return;
       go(index);
       openPath(index, false);
@@ -218,10 +229,11 @@
         field.value = proposal;
         field.dispatchEvent(new Event("input", { bubbles: true }));
       }
-      const target = place[2] ? document.getElementById(location.hash.slice(1)) : open;
+      // A place that the path does not hold, such as a removed step, falls back to the path itself.
+      const target = (place.place && document.getElementById(location.hash.slice(1))) || open;
       target.scrollIntoView({ block: "start" });
       const empty = [...target.querySelectorAll("input, select, textarea")].find((input) => !input.value);
-      if (loaded && empty && place[2] === "contact") addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
+      if (loaded && empty && place.place === "contact") addEventListener("load", () => setTimeout(() => empty.focus({ preventScroll: true })));
     };
     setTimeout(() => openFromHash(true));
     addEventListener("hashchange", () => openFromHash(false));
@@ -233,7 +245,7 @@
       field.scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
       field.focus({ preventScroll: true });
     }));
-  });
+  }));
 
   // Work with us paths present their content progressively: each step and the side menu fade in once they scroll
   // into view, so an opened path first shows only its description card (the stylesheet keeps everything visible under
@@ -253,14 +265,14 @@
   // sight above, such as the filters at the top of the News page. It checks on every scroll, because a jump such as
   // the End key or a year link can move the element from below the window to above it without crossing it. The
   // stylesheet hides it from the first paint when the script runs (`.lt-js`); without the script it is always shown.
-  document.querySelectorAll("[data-lt-to-top]").forEach((button) => {
+  document.querySelectorAll("[data-lt-to-top]").forEach(guarded((button) => {
     const anchor = document.querySelector(button.dataset.ltToTop);
     if (!anchor) return button.classList.add("is-shown");
     // A strict test: an element still hidden while the page starts measures 0 and must not show the button.
     const update = () => button.classList.toggle("is-shown", anchor.getBoundingClientRect().bottom < 0);
     addEventListener("scroll", () => requestAnimationFrame(update), { passive: true });
     update();
-  });
+  }));
 
   // Filters: the filter groups and the optional search box of one scope (`data-lt-filter-scope`, or the parent of the
   // group) combine. A group compares its pressed value with each item's `data-lt-tag`, or with the data attribute that
@@ -268,27 +280,27 @@
   // A year with no item left hides its heading and its jump link, and `data-lt-count` reports how many items are shown.
   // A button whose label ends with a count, such as "Speech (6)", counts the items it would show under the other
   // filters and the search, and disappears when it would show none, unless it is pressed.
-  new Set([...document.querySelectorAll("[data-lt-filter-group]")].map((group) => group.closest("[data-lt-filter-scope]") || group.parentElement)).forEach((scope) => {
+  new Set([...document.querySelectorAll("[data-lt-filter-group]")].map((group) => group.closest("[data-lt-filter-scope]") || group.parentElement)).forEach(guarded((scope) => {
     const groups = [...scope.querySelectorAll("[data-lt-filter-group]")];
     const search = scope.querySelector("[data-lt-search]");
     const count = scope.querySelector("[data-lt-count]");
     const counted = groups.flatMap((group) => [...group.querySelectorAll("[data-lt-filter]")].filter((button) => {
-      const match = button.textContent.match(/^(.*?)\s*\((\d+)\)$/s);
-      if (match) button.dataset.ltLabel = match[1].trim();
-      return Boolean(match);
+      const label = countLabel(button.textContent);
+      if (label !== null) button.dataset.ltLabel = label;
+      return label !== null;
     }));
     const apply = () => {
       const active = groups.map((group) => ({ group, key: group.dataset.ltFilterKey || "ltTag", value: group.querySelector('[aria-pressed="true"]').dataset.ltFilter }));
       const query = search ? search.value.trim().toLowerCase() : "";
       const items = [...scope.querySelectorAll("[data-lt-tag]")];
-      const fits = (item, key, value) => !value || (item.dataset[key] || "").split(" ").includes(value);
-      const passes = (item, skip) => active.every((filter) => filter.group === skip || fits(item, filter.key, filter.value))
+      const fit = (item, key, value) => fits(item.dataset[key], value);
+      const passes = (item, skip) => active.every((filter) => filter.group === skip || fit(item, filter.key, filter.value))
         && (!query || item.textContent.toLowerCase().includes(query));
       items.forEach((item) => { item.hidden = !passes(item, null); });
       counted.forEach((button) => {
         const group = button.closest("[data-lt-filter-group]");
         const key = group.dataset.ltFilterKey || "ltTag";
-        const n = items.filter((item) => passes(item, group) && fits(item, key, button.dataset.ltFilter)).length;
+        const n = items.filter((item) => passes(item, group) && fit(item, key, button.dataset.ltFilter)).length;
         const label = button.lastChild;
         label.textContent = `${button.dataset.ltLabel} (${n})`;
         button.hidden = n === 0 && button.getAttribute("aria-pressed") !== "true";
@@ -313,11 +325,11 @@
       search.addEventListener("input", apply);
     }
     apply();
-  });
+  }));
 
   // Recipients: a proposal named in the form's proposal field replaces the form's own recipients with its contacts.
   const greet = (names) => `Dear ${names.length > 2 ? `${names.slice(0, -1).join(", ")}, and ${names.at(-1)}` : names.join(" and ")},`;
-  document.querySelectorAll(".lt-mail-form").forEach((form) => {
+  document.querySelectorAll(".lt-mail-form").forEach(guarded((form) => {
     const value = (key) => (form.elements[key] ? form.elements[key].value.trim() : "");
     const subject = () => form.dataset.ltSubject.replace(/\{(\w+)\}/g, (_, key) => value(key) || `<${form.elements[key] ? form.elements[key].dataset.ltLabel : key}>`);
     const recipients = () => {
@@ -399,7 +411,7 @@
       event.preventDefault();
       if (ready()) send.click(); else form.reportValidity();
     });
-  });
+  }));
 
   // A view starts once it comes into sight, above the bottom quarter of the window, so its writing is seen from
   // the start. Without IntersectionObserver it starts at once.
@@ -452,7 +464,7 @@
     Object.entries(attributes).forEach(([key, value]) => element.setAttribute(key, value));
     return element;
   };
-  document.querySelectorAll("[data-lt-graph]").forEach((graph, index) => {
+  document.querySelectorAll("[data-lt-graph]").forEach(guarded((graph, index) => {
     const svg = graph.querySelector("svg");
     const edges = [...graph.querySelectorAll(".lt-arg-edges li")];
     const head = (relation) => `lt-arg-head-${index}-${relation}`;
@@ -565,10 +577,10 @@
     graph.ltDraw = draw;
     new ResizeObserver(draw).observe(graph);
     draw();
-  });
+  }));
 
   // Pointing at or focusing a box of an argument graph, or a component in the text, lights the pair and dims the rest of the text.
-  document.querySelectorAll(".lt-arg-view [data-lt-graph]").forEach((graph) => {
+  document.querySelectorAll(".lt-arg-view [data-lt-graph]").forEach(guarded((graph) => {
     const view = graph.closest(".lt-arg-view");
     const link = (event, on) => {
       const item = event.target.closest("[data-lt-node], [data-lt-span]");
@@ -581,11 +593,11 @@
     };
     ["pointerover", "focusin"].forEach((type) => view.addEventListener(type, (event) => link(event, true)));
     ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
-  });
+  }));
 
   // Pointing at or focusing a clause in a rules view, or its row in the matrix, lights both; while the view plays,
   // only once Detect has marked the clauses.
-  document.querySelectorAll(".lt-rules").forEach((view) => {
+  document.querySelectorAll(".lt-rules").forEach(guarded((view) => {
     const link = (event, on) => {
       const item = event.target.closest("[data-lt-clause], [data-lt-card]");
       if (!item || (on && view.classList.contains("is-ready") && !view.classList.contains("is-marked"))) return;
@@ -594,7 +606,7 @@
     };
     ["pointerover", "focusin"].forEach((type) => view.addEventListener(type, (event) => link(event, true)));
     ["pointerout", "focusout"].forEach((type) => view.addEventListener(type, (event) => link(event, false)));
-  });
+  }));
 
   // Argument views play at reading pace. Picking a tab, or scrolling the first view into sight, writes the text;
   // the Annotate button then marks its components, and the Show graph button shows the argument graph, beside the text
@@ -613,7 +625,7 @@
       };
       requestAnimationFrame(frame);
     });
-    document.querySelectorAll(".lt-arg-views").forEach((views) => {
+    document.querySelectorAll(".lt-arg-views").forEach(guarded((views) => {
       const panels = [...views.querySelectorAll(".lt-arg-view:not(.lt-detect, .lt-rules, .lt-speech)")];
       const controls = (view) => {
         const bar = view.querySelector(".lt-arg-controls");
@@ -852,7 +864,7 @@
       onSight(first, () => {
         if (first.ltRun && !first.ltRun.started) write(first);
       });
-    });
+    }));
   }
 
   // Document views (detect, rules, and voices): picking a tab, or the first view coming into sight, writes the
@@ -866,7 +878,7 @@
   if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
     const pause = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
     const docs = [...document.querySelectorAll(".lt-detect, .lt-rules, .lt-speech")];
-    docs.forEach((view) => {
+    docs.forEach(guarded((view) => {
       const rules = view.classList.contains("lt-rules");
       const speech = view.classList.contains("lt-speech");
       const bar = view.querySelector(".lt-detect-controls");
@@ -1071,9 +1083,9 @@
       view.addEventListener("lt-hide", clear);
       view.ltWrite = write;
       view.ltBlank = blank;
-    });
+    }));
     // The first visible document view is written once it comes into sight; until then it stays blank.
-    document.querySelectorAll(".lt-arg-views").forEach((views) => {
+    document.querySelectorAll(".lt-arg-views").forEach(guarded((views) => {
       const first = docs.find((view) => views.contains(view) && !view.hidden);
       if (!first) return;
       let started = false;
@@ -1083,13 +1095,13 @@
       });
       first.addEventListener("lt-show", () => { started = true; }, { once: true });
       first.ltBlank();
-    });
+    }));
   }
 
   // Research areas: opening a block hides the others, enlarges it, and shows its panel beside it.
   // The back button, a second click on the block, or Escape returns to the grid.
   // Without the script every panel is visible below its block.
-  document.querySelectorAll("[data-lt-fields]").forEach((fields) => {
+  document.querySelectorAll("[data-lt-fields]").forEach(guarded((fields) => {
     const grid = fields.querySelector(".lt-fields-grid");
     const blocks = [...fields.querySelectorAll(".lt-field")];
     const panel = (block) => document.getElementById(block.getAttribute("aria-controls"));
@@ -1117,13 +1129,13 @@
     fields.addEventListener("keydown", (event) => { if (event.key === "Escape" && open) show(null); });
     fields.classList.add("is-interactive");
     show(null);
-  });
+  }));
 
   // Research area focus topics: the centered card opens its detail box below the carousel, scrolls to it,
   // and holds the rotation; a faded neighbour card moves to the center instead. The box fades out when the
   // carousel moves to another topic, and its close button returns to the carousel.
   // Without the script every box is visible and the card links jump to it.
-  document.querySelectorAll(".lt-focus").forEach((focus) => {
+  document.querySelectorAll(".lt-focus").forEach(guarded((focus) => {
     const boxes = [...focus.querySelectorAll(".lt-topic-box")];
     const cards = [...focus.querySelectorAll(".lt-focus-card")];
     const carousel = focus.querySelector("[data-lt-carousel]");
@@ -1210,7 +1222,7 @@
         fromHash.scrollIntoView({ block: "start" });
       });
     }
-  });
+  }));
 
   // Bar charts grow when they scroll into view; without the observer they render complete.
   const charts = document.querySelectorAll(".lt-bars");
@@ -1232,7 +1244,7 @@
   // the track scrolls by itself without the script. `is-centered` centers the active slide, `data-lt-loop`
   // wraps from the last slide to the first, and `data-lt-autoplay` advances every N milliseconds.
   // There is no autoplay under reduced motion.
-  document.querySelectorAll("[data-lt-carousel]").forEach((carousel) => {
+  document.querySelectorAll("[data-lt-carousel]").forEach(guarded((carousel) => {
     const track = carousel.querySelector(".lt-carousel-track");
     const slides = [...track.children];
     const dots = [...carousel.querySelectorAll("[data-lt-slide]")];
@@ -1265,15 +1277,14 @@
     const items = [...track.children];
     let current = 0;
     const offset = (item) => (centered ? item.offsetLeft - (track.clientWidth - item.offsetWidth) / 2 : item.offsetLeft);
-    const nearest = () => items.reduce((best, item) =>
-      (Math.abs(offset(item) - track.scrollLeft) < Math.abs(offset(best) - track.scrollLeft) ? item : best), items[0]);
+    const nearestItem = () => items[nearest(items.map(offset), track.scrollLeft)];
     let target = null;
     let settle = null;
     const go = (index) => {
       let item;
       if (copies.size && index === slides.length) item = items[items.length - 1];
       else if (copies.size && index === -1) item = items[0];
-      else item = slides[loop ? (index + slides.length) % slides.length : Math.max(0, Math.min(slides.length - 1, index))];
+      else item = slides[slideIndex(index, slides.length, loop)];
       // The target stays active during the scroll, so the slides it passes do not light up on the way.
       target = item;
       track.scrollTo({ left: offset(item), behavior: reduce ? "auto" : "smooth" });
@@ -1289,7 +1300,7 @@
     };
     const update = () => {
       const atEnd = !centered && track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-      const item = target || (atEnd ? slides[slides.length - 1] : nearest());
+      const item = target || (atEnd ? slides[slides.length - 1] : nearestItem());
       const before = current;
       current = slides.indexOf(copies.get(item) || item);
       if (current !== before) carousel.dispatchEvent(new CustomEvent("lt-slide", { detail: current }));
@@ -1303,7 +1314,7 @@
     };
     // The scroll has settled 150 ms after its last event.
     const settled = () => {
-      const landed = nearest();
+      const landed = nearestItem();
       target = null;
       if (copies.has(landed)) jump(copies.get(landed));
       else update();
@@ -1369,7 +1380,7 @@
       sweeping = setTimeout(() => { sweep = 0; }, 200);
     }, { passive: false });
     track.addEventListener("keydown", (event) => {
-      const step = { ArrowRight: 1, ArrowLeft: -1 }[event.key];
+      const step = arrowStep(event.key);
       if (!step || event.target !== track) return;
       event.preventDefault();
       go(current + step);
@@ -1408,7 +1419,7 @@
       track.scrollLeft = offset(slides[current]);
     });
     update();
-  });
+  }));
 
   // Section focus: on the homepage and on research area pages, each section gets a focus value from 0 to 1 as
   // `--lt-f`, from its distance to a focus line, so it grows and takes its color while it nears the line and
@@ -1416,10 +1427,9 @@
   // focus at the top of the page; it reaches 40% of the window height after scrolling that far, and moves to the
   // bottom of the window over the last 40% of the page, so the last section takes the focus at the bottom.
   // Without the script, or under reduced motion, every section stays fully visible.
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   // Only the homepage (`.home-section`) and research area pages (`.lt-focus`) use it; other pages keep still bands.
   const sections = [...document.querySelectorAll(".home-section, .lt-band")];
-  if (sections.length > 1 && document.querySelector(".home-section, .lt-focus")) {
+  if (!matchMedia("(prefers-reduced-motion: reduce)").matches && sections.length > 1 && document.querySelector(".home-section, .lt-focus")) {
     document.body.classList.add("lt-section-focus");
     let queued = false;
     // While the body has `data-lt-focus-hold`, every section keeps its focus value: a topic box that folds away
@@ -1430,13 +1440,12 @@
       const h = innerHeight;
       const left = document.documentElement.scrollHeight - h - scrollY;
       // The line never sits above the first section, which may start below the navigation bar.
-      const line = Math.max(sections[0].getBoundingClientRect().top, Math.min(scrollY, h * 0.4) + Math.max(0, h * 0.4 - left) * 1.5);
+      const line = focusLine({ firstTop: sections[0].getBoundingClientRect().top, scrollY, viewport: h, below: left });
       const fade = h * 0.35;
       sections.forEach((section) => {
         // Only the content of a section is scaled, so the section box, and its focus value, stay put.
         const { top, bottom } = section.getBoundingClientRect();
-        const d = line < top ? top - line : line > bottom ? line - bottom : 0;
-        section.style.setProperty("--lt-f", Math.max(0, 1 - d / fade).toFixed(3));
+        section.style.setProperty("--lt-f", focusValue(top, bottom, line, fade).toFixed(3));
       });
     };
     const queue = () => {
@@ -1458,8 +1467,8 @@
       observer.unobserve(entry.target);
     });
   }, { rootMargin: "0px 0px -8% 0px" });
-  targets.forEach((target) => {
+  targets.forEach(guarded((target) => {
     target.classList.add("lt-reveal");
     observer.observe(target);
-  });
+  }));
 })();
