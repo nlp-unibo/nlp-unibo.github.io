@@ -2,7 +2,10 @@
 {{/* Usage: {{< svg src="schema.svg" caption="..." >}}. Draw with the classes lt-s-box, lt-s-sel, lt-s-pred, lt-s-tok, lt-s-on, lt-s-off, lt-s-txt, lt-s-sub, lt-s-arrow. */}}
 {{- $src := .Get "src" -}}
 {{- with .Page.Resources.Get $src -}}
-<figure class="lt-viz lt-svg">
+{{- /* On narrow screens the drawing stops shrinking at 80% of its viewBox width, so its labels stay readable. */ -}}
+{{- $width := 0.0 -}}
+{{- with findRESubmatch `viewBox="[-\d.]+[ ,]+[-\d.]+[ ,]+([\d.]+)` .Content 1 }}{{ $width = float (index (index . 0) 1) }}{{ end -}}
+<figure class="lt-viz lt-svg" style="--lt-svg-min: {{ mul $width 0.8 }}px">
   {{ .Content | safeHTML }}
   {{ with $.Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
 </figure>
