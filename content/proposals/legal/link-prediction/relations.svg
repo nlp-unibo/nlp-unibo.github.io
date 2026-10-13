@@ -1,0 +1,27 @@
+<svg viewBox="0 0 800 300" role="img" aria-labelledby="linkpred-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="linkpred-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="linkpred-title">Link prediction on two argument components of a CJEU decision, such as a premise and a conclusion. A large language model receives the pair together with background information, the type of each argument and the distance between the components in the text, and predicts whether a relation exists: support, attack, or no relation.</title>
+  <text class="lt-s-sub" x="40" y="22">TWO ARGUMENT COMPONENTS OF A CJEU DECISION</text>
+  <rect class="lt-s-tok" x="40" y="32" width="300" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="190" y="56">Component A</text>
+  <text class="lt-s-txt lt-s-small" x="190" y="76">such as a premise</text>
+  <text class="lt-s-txt lt-s-strong" x="400" y="65">related?</text>
+  <rect class="lt-s-tok" x="460" y="32" width="300" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="610" y="56">Component B</text>
+  <text class="lt-s-txt lt-s-small" x="610" y="76">such as a conclusion</text>
+  <path class="lt-s-arrow" marker-end="url(#linkpred-arrow)" d="M190 92 V110 H330 V128"/>
+  <path class="lt-s-arrow" marker-end="url(#linkpred-arrow)" d="M610 92 V110 H470 V128"/>
+  <rect class="lt-s-box lt-s-sel" x="220" y="132" width="360" height="64" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="158">Large language model</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="180">background: argument types, distance in the text</text>
+  <path class="lt-s-arrow" marker-end="url(#linkpred-arrow)" d="M400 200 V218 H170 V240"/>
+  <path class="lt-s-arrow" marker-end="url(#linkpred-arrow)" d="M400 200 V240"/>
+  <path class="lt-s-arrow" marker-end="url(#linkpred-arrow)" d="M400 218 H630 V240"/>
+  <text class="lt-s-sub" x="40" y="236">RELATION</text>
+  <rect class="lt-s-box lt-s-pred" x="100" y="244" width="140" height="40" rx="20"/>
+  <text class="lt-s-txt lt-s-strong" x="170" y="269">support</text>
+  <rect class="lt-s-box lt-s-pred" x="330" y="244" width="140" height="40" rx="20"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="269">attack</text>
+  <rect class="lt-s-tok" x="560" y="244" width="140" height="40" rx="20"/>
+  <text class="lt-s-txt lt-s-strong" x="630" y="269">no relation</text>
+</svg>

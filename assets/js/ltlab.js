@@ -293,7 +293,7 @@
         label.textContent = `${button.dataset.ltLabel} (${n})`;
         button.hidden = n === 0 && button.getAttribute("aria-pressed") !== "true";
       });
-      scope.querySelectorAll(".lt-work-year, .lt-news-year").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
+      scope.querySelectorAll(".lt-work-year, .lt-news-year, .lt-proposal-group").forEach((year) => { year.hidden = !year.querySelector("[data-lt-tag]:not([hidden])"); });
       scope.querySelectorAll(".lt-news-years a").forEach((link) => { link.hidden = document.querySelector(link.hash).hidden; });
       if (count) {
         const shown = items.filter((item) => !item.hidden).length;

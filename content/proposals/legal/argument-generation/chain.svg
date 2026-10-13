@@ -1,0 +1,31 @@
+<svg viewBox="0 0 800 280" role="img" aria-labelledby="arggen-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="arggen-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="arggen-title">A legal argumentative chain of four reasoning steps: a premise, an intermediate step, a missing step, and the conclusion. A large language model, given related arguments or similar documents as demonstrations or through retrieval-augmented generation, generates the missing part. The missing part may also be the final conclusion.</title>
+  <text class="lt-s-sub" x="20" y="22">AN ARGUMENTATIVE CHAIN WITH A GAP</text>
+  <rect class="lt-s-tok" x="20" y="34" width="160" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="100" y="58">Premise</text>
+  <text class="lt-s-txt lt-s-small" x="100" y="78">a fact of the case</text>
+  <path class="lt-s-arrow" marker-end="url(#arggen-arrow)" d="M184 62 H216"/>
+  <rect class="lt-s-tok" x="220" y="34" width="160" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="300" y="58">Step</text>
+  <text class="lt-s-txt lt-s-small" x="300" y="78">intermediate</text>
+  <path class="lt-s-arrow" marker-end="url(#arggen-arrow)" d="M384 62 H416"/>
+  <rect class="lt-s-off" x="420" y="34" width="160" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="500" y="58">?</text>
+  <text class="lt-s-txt lt-s-small" x="500" y="78">missing step</text>
+  <path class="lt-s-arrow" marker-end="url(#arggen-arrow)" d="M584 62 H616"/>
+  <rect class="lt-s-tok" x="620" y="34" width="160" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="700" y="58">Conclusion</text>
+  <text class="lt-s-txt lt-s-small" x="700" y="78">may be missing too</text>
+  <text class="lt-s-sub" x="20" y="150">RELATED MATERIAL</text>
+  <rect class="lt-s-box lt-s-pred" x="20" y="160" width="260" height="76" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="150" y="186">Related arguments</text>
+  <text class="lt-s-txt lt-s-strong" x="150" y="206">or similar documents</text>
+  <text class="lt-s-txt lt-s-small" x="150" y="226">as demonstrations or with RAG</text>
+  <path class="lt-s-arrow" marker-end="url(#arggen-arrow)" d="M284 198 H366"/>
+  <rect class="lt-s-box lt-s-sel" x="370" y="160" width="260" height="76" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="500" y="192">Large language model</text>
+  <text class="lt-s-txt lt-s-small" x="500" y="216">generates the missing part</text>
+  <path class="lt-s-arrow" marker-end="url(#arggen-arrow)" d="M500 156 V94"/>
+  <text class="lt-s-txt lt-s-small" x="400" y="268">The generated step is evaluated against the original chain.</text>
+</svg>
