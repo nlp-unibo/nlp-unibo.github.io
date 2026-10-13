@@ -1,0 +1,42 @@
+<svg viewBox="0 0 800 384" role="img" aria-labelledby="idiom-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="idiom-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="idiom-title">Three groups of idioms. Shared: the Italian rompere il ghiaccio and the English break the ice use the same image and mean ease the first tension. Same meaning, new image: the Italian in bocca al lupo and the English break a leg both mean good luck. Culture-specific: the Italian fare la scarpetta, wipe the plate with bread, has no English idiom. An LLM is tested on whether it recovers the meaning in each group.</title>
+  <text class="lt-s-sub" x="25" y="22">SHARED</text>
+  <rect class="lt-s-tok" x="25" y="34" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="140" y="60">rompere il ghiaccio</text>
+  <text class="lt-s-txt lt-s-small" x="140" y="82">Italian, image: ice</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M140 102 V124"/>
+  <rect class="lt-s-box lt-s-sel" x="25" y="128" width="230" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong" x="140" y="155">ease the first tension</text>
+  <rect class="lt-s-tok" x="25" y="200" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="140" y="226">break the ice</text>
+  <text class="lt-s-txt lt-s-small" x="140" y="248">English, image: ice</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M140 196 V176"/>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M140 268 V306"/>
+  <text class="lt-s-sub" x="285" y="22">SAME MEANING, NEW IMAGE</text>
+  <rect class="lt-s-tok" x="285" y="34" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="60">in bocca al lupo</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="82">Italian, image: wolf</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M400 102 V124"/>
+  <rect class="lt-s-box lt-s-sel" x="285" y="128" width="230" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="155">good luck</text>
+  <rect class="lt-s-tok" x="285" y="200" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="226">break a leg</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="248">English, image: leg</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M400 196 V176"/>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M400 268 V306"/>
+  <text class="lt-s-sub" x="545" y="22">CULTURE-SPECIFIC</text>
+  <rect class="lt-s-tok" x="545" y="34" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="660" y="60">fare la scarpetta</text>
+  <text class="lt-s-txt lt-s-small" x="660" y="82">Italian, image: little shoe</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M660 102 V124"/>
+  <rect class="lt-s-box lt-s-sel" x="545" y="128" width="230" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong" x="660" y="155">wipe the plate with bread</text>
+  <rect class="lt-s-off" x="545" y="200" width="230" height="64" rx="10"/>
+  <text class="lt-s-txt lt-s-small" x="660" y="226">no English idiom</text>
+  <text class="lt-s-txt lt-s-small" x="660" y="248">English: a paraphrase only</text>
+  <path class="lt-s-arrow" marker-end="url(#idiom-arrow)" d="M660 268 V306"/>
+  <rect class="lt-s-box lt-s-pred" x="100" y="310" width="600" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="334">LLM</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="354">does it recover the meaning in each group, without new annotation?</text>
+</svg>
