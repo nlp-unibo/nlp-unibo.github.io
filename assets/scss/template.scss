@@ -2299,6 +2299,16 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   font-family: inherit;
 }
 
+// A body figure keeps its labels readable on narrow screens: the drawing stops shrinking at 80% of its viewBox width
+// (--lt-svg-min, set by the svg shortcode) and scrolls inside its own box, so 12.5px labels stay at 10px or more.
+// Card and teaser schemas are previews and always fit.
+figure.lt-svg {
+  overflow-x: auto;
+  color-scheme: dark;
+
+  svg { min-width: var(--lt-svg-min, 0); }
+}
+
 .lt-svg {
   .lt-s-txt { font-size: 15px; text-anchor: middle; fill: $lt-navy; }
   .lt-s-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 16px; }
@@ -4526,11 +4536,6 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   p, ol, ul { margin: 0 0 0.7rem; }
 
   .lt-viz { margin: 1rem 0; }
-
-  // A schema keeps a readable size on phones and scrolls sideways inside its own box.
-  .lt-svg { overflow-x: auto; }
-
-  .lt-svg svg { min-width: 560px; }
 }
 
 .lt-proposal-actions {

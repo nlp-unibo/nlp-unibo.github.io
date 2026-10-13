@@ -467,6 +467,7 @@ Quote numbers such as `"72.30"` to keep trailing zeros.
 Inlines an SVG file from the page folder, so CSS can theme it.
 Parameters: `src` (required), `caption`.
 The build fails when the file is missing.
+On narrow screens the drawing stops shrinking at 80% of its `viewBox` width and scrolls inside the figure, so 12.5px labels stay at 10px or more.
 
 ```text
 {{< svg src="schema.svg" caption="The task setup." >}}
