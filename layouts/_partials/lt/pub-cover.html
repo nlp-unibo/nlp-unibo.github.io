@@ -1,0 +1,39 @@
+{{/* Default cover of a publication without a figure: a stylized paper page (title bar, author line, two text columns, */}}
+{{/* and a figure block) on the site navy, so a paper never borrows the cover art of a research area. The `seed` (the */}}
+{{/* title) sets the line lengths and the figure position, so neighbouring cards differ. `tall` extends the background */}}
+{{/* to a square around the 400x200 band, as in lt/cover.html. Input: a dict with `seed` and optional `tall`. */}}
+{{- $seed := .seed -}}
+{{- $h := hash.FNV32a $seed -}}
+{{- $id := printf "lt-pubcover-%d" $h -}}
+{{- $figLeft := eq (mod $h 2) 0 -}}
+<svg class="lt-cover lt-cover-paper" viewBox="{{ cond .tall "0 -100 400 400" "0 0 400 200" }}" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="{{ $id }}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2440"/>
+      <stop offset="1" stop-color="#14365a"/>
+    </linearGradient>
+  </defs>
+  <rect y="{{ cond .tall -100 0 }}" width="400" height="{{ cond .tall 400 200 }}" fill="url(#{{ $id }})"/>
+  {{- /* In a tall box the page grows to fill it; the wrapper keeps this apart from the hover zoom of .lt-cover-art. */}}
+  <g{{ if .tall }} transform="translate(200 102) scale(1.65) translate(-200 -102)"{{ end }}>
+  <g class="lt-cover-art">
+    <rect x="132" y="14" width="136" height="176" rx="6" fill="#ffffff" opacity="0.07"/>
+    <rect x="132" y="14" width="136" height="176" rx="6" fill="none" stroke="#60c0e0" stroke-opacity="0.45" stroke-width="1.2"/>
+    <rect x="146" y="28" width="{{ add 70 (mod $h 31) }}" height="7" rx="3.5" fill="#f09010" opacity="0.9"/>
+    <rect x="146" y="40" width="{{ add 40 (mod (div $h 31) 41) }}" height="4" rx="2" fill="#ffffff" opacity="0.35"/>
+    {{- range $col := seq 0 1 }}
+      {{- $x := add 146 (mul $col 58) -}}
+      {{- $figHere := eq $figLeft (eq $col 0) -}}
+      {{- range $row := seq 0 9 }}
+        {{- $y := add 56 (mul $row 12) -}}
+        {{- if and $figHere (ge $row 5) (le $row 8) }}
+          {{- if eq $row 5 }}<rect x="{{ $x }}" y="{{ $y }}" width="50" height="42" rx="3" fill="#60c0e0" opacity="0.28"/>{{ end -}}
+        {{- else }}
+          {{- $r := mod (hash.FNV32a (printf "%s|%d|%d" $seed $col $row)) 21 -}}
+          <rect x="{{ $x }}" y="{{ $y }}" width="{{ cond (eq $row 9) (add 18 $r) (add 30 $r) }}" height="4" rx="2" fill="#ffffff" opacity="0.22"/>
+        {{- end }}
+      {{- end }}
+    {{- end }}
+  </g>
+  </g>
+</svg>

@@ -40,7 +40,7 @@
       {{ $img := $featured.Resize "1600x webp" }}
       <img src="{{ $img.RelPermalink }}" width="{{ $img.Width }}" height="{{ $img.Height }}" alt="{{ .Params.image.caption | default .Title }}">
     {{ else }}
-      {{ partial "lt/cover.html" (dict "seed" .Title) }}
+      {{ partial "lt/pub-cover.html" (dict "seed" .Title) }}
     {{ end }}
     {{ $caption := .Params.image.caption }}
     {{ if and $schema (not $teaser_video) }}{{ $caption = .Params.card_caption | default (index (findRESubmatch `<title[^>]*>([^<]*)</title>` $schema.Content 1) 0 1) }}{{ end }}
