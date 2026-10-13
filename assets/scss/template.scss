@@ -1640,6 +1640,8 @@ $lt-slide-height: 29rem;
 // vision deficiency WARN (protan ΔE 6.9) that is legal because every mark also shows its label as text.
 $lt-cat-light: #2a78d6, #eda100, #e87ba4, #008300;
 $lt-cat-dark: #3987e5, #c98500, #d55181, #008300;
+// Tag text on each dark slot, the side of black or white that reaches 4.5:1: 5.77, 6.84, 5.32, and 4.95.
+$lt-cat-dark-ink: #000, #000, #000, #fff;
 
 .lt-viz {
   margin: 2rem 0;
@@ -2119,7 +2121,7 @@ $lt-cat-dark: #3987e5, #c98500, #d55181, #008300;
     $d: nth($lt-cat-dark, $i);
     .lt-annotate-key.lt-c#{$i} { color: lighten($d, 12%); }
     .lt-annotate-text mark.lt-c#{$i} { background: rgba($d, 0.22); border-bottom-color: $d; }
-    .lt-annotate-text mark.lt-c#{$i} .lt-annotate-tag { background: $d; }
+    .lt-annotate-text mark.lt-c#{$i} .lt-annotate-tag { background: $d; color: nth($lt-cat-dark-ink, $i); }
   }
 }
 

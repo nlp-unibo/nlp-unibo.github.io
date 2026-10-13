@@ -287,6 +287,9 @@ A value from 6 to 8 is a warning, allowed only when a text label or a line style
 | Fairness levels `--lt-level-1` to `--lt-level-3` | role slots 4, 2, 3 | Pass, warning at ΔE 6.9 (protanopia), levels named as text and drawn solid, dashed, solid |
 | Stage states `.is-evolved`, `.is-trained`, `.is-frozen` | `#f09010` `#60c0e0` `#8aa4bf` | Exempt: brand colours for borders and text, with each state named in the legend and frozen marked by a texture |
 
+Annotation tags write their label on the slot colour, so they also need a text contrast of 4.5:1.
+`$lt-cat-dark-ink` gives each slot its tag text: black on blue, yellow, and magenta (5.77, 6.84, 5.32), and white on green (4.95).
+
 
 The script sets these custom properties at run time: `--lt-f` (section focus), `--lt-autoplay` (carousel delay), and `--lt-ring`, `--lt-fill`, `--lt-lift` (flying boxes).
 Templates set `--lt-cols` (graph columns), `--t` (voice reading start), and `--w`, `--l`, `--ew` (bars).
