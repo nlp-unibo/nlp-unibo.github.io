@@ -29,7 +29,7 @@ To change the design or the code, read [the developers' guide](developers.md).
 4. **Open the pull request.** Select **Create pull request**, with base branch `main`.
 5. **Add more files** (images, PDFs, a second page) to the same branch, as in [Add images and files](#add-images-and-files).
 6. **Wait for the check.** The **Validate content and build** check runs on every commit: yellow is running, green is fine, red lists the problems (see [When the check fails](#when-the-check-fails)).
-7. **Merge.** Select **Merge pull request**, or ask the maintainer. The site updates a few minutes later at <https://nlp.unibo.it/>.
+7. **Merge.** Select **Merge pull request**, or ask the maintainer. If GitHub shows **Update branch** instead, select it and wait for the check again. The site updates a few minutes later at <https://nlp.unibo.it/>.
 
 Five rules for the front matter, the block between the two `---` lines at the top of each file:
 
@@ -505,6 +505,15 @@ Reuse a figure from a paper only when its source is openly licensed (arXiv, ACL 
 | Change | The `form` of the path in `content/work-with-us/index.md`, editors with maintainer review |
 
 ## When the check fails
+
+The check runs two scripts on every commit of a pull request to `main`:
+
+| Script | What it verifies |
+| --- | --- |
+| `scripts/test_site.py` | The checker itself. It fails only after a change to the code: ask the maintainer |
+| `scripts/site.py check` | The front matter of every page, the content rules in the table below, every template, and a full build of the site |
+
+A pull request merges only with a green check, and `main` accepts changes only through a pull request.
 
 Select **Details** next to the red cross, open **Validate content and production build**, and read the lines that start with a file name.
 
