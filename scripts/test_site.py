@@ -1,4 +1,4 @@
-"""Self-checks for the link parser, front-matter loader, and category rule in site.py: uv run python scripts/test_site.py"""
+"""Self-checks for the link parser, front-matter loader, category, venue rank, and proposal rules in site.py: uv run python scripts/test_site.py"""
 
 import importlib.util
 from pathlib import Path
@@ -77,5 +77,24 @@ rules = {"type": "rules", "rules": [{"level": 2, "n": 2, "category": "open", "sp
 assert view_errors(rules) == [], view_errors(rules)
 assert view_errors({**rules, "rules": [{**rules["rules"][0], "category": "closed"}]}) == ["sentence 1: category is open, but level 2 rule 2 needs closed"]
 assert view_errors({**rules, "rules": [{**rules["rules"][0], "n": 3}]}) == ["sentence 1: level 2 rule 2 is not listed"]
+
+# A conference takes an ICORE class and a journal an SJR quartile; a workshop takes no rank.
+venue_rank_error, proposal_errors = site_tools.venue_rank_error, site_tools.proposal_errors
+assert venue_rank_error("Conference", "A*") is None
+assert venue_rank_error("Conference", "Multiconference") is None
+assert venue_rank_error("Journal", "Q1") is None
+assert venue_rank_error("Journal", "") is None
+assert venue_rank_error("Conference", "Q1")
+assert venue_rank_error("Journal", "A")
+assert venue_rank_error("Workshop", "B")
+
+proposal = {"summary": "One short sentence.", "brief": "Two short sentences. Here.", "contacts": ["federico-ruggeri", {"name": "A B", "email": "a@unibo.it"}]}
+body = "\n## Context\n\nText.\n\n## Objective\n\nText.\n\n{{< svg src=\"a.svg\" caption=\"## not a heading\" >}}\n"
+assert proposal_errors(proposal, body, {"federico-ruggeri"}) == [], proposal_errors(proposal, body, {"federico-ruggeri"})
+assert proposal_errors(proposal, "", {"federico-ruggeri"}) == []
+assert proposal_errors(proposal, body, set()) == ["contact 'federico-ruggeri' is not a folder in content/authors"]
+assert proposal_errors({**proposal, "contacts": [{"name": "A B"}]}, body, set()) == ["contact {'name': 'A B'} needs a name and an email"]
+assert proposal_errors({**proposal, "brief": "word " * 71}, body, {"federico-ruggeri"}) == ["brief has 71 words; keep it at most 70"]
+assert proposal_errors(proposal, "## Background\n\nText.", {"federico-ruggeri"}) == ["body sections are ['Background']; use exactly ## Context and ## Objective"]
 
 print("site.py self-checks passed.")

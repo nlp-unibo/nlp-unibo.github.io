@@ -189,6 +189,47 @@ def view_errors(view: dict) -> list[str]:
     return errors
 
 
+# A conference takes an ICORE class (Multiconference for an umbrella event such as ICASSP) and a journal an SJR best
+# quartile; a workshop has no rank. An empty rank means the source does not rate the venue.
+VENUE_RANKS = {"Conference": {"A*", "A", "B", "C", "Multiconference", ""}, "Journal": {"Q1", "Q2", "Q3", "Q4", ""}, "Workshop": {""}}
+# Limits of the proposal card in docs/editors.md, with some slack over the recommended lengths.
+PROPOSAL_SUMMARY_WORDS, PROPOSAL_BRIEF_WORDS, PROPOSAL_BODY_WORDS = 25, 70, 160
+PROPOSAL_SECTIONS = ["Context", "Objective"]
+
+
+def venue_rank_error(category: str, rank: object) -> str | None:
+    allowed = VENUE_RANKS[category]
+    if str(rank if rank is not None else "") not in allowed:
+        kinds = {"Conference": "an ICORE class", "Journal": "an SJR quartile", "Workshop": "no rank"}
+        values = ", ".join(repr(value) for value in sorted(allowed))
+        return f"venue rank {rank!r} does not fit a {category} paper, which takes {kinds[category]}: {values}"
+    return None
+
+
+def proposal_errors(metadata: dict, body: str, authors: set[str]) -> list[str]:
+    """Return the problems of one research proposal: lengths, contacts, and body sections."""
+    errors = []
+    words = lambda text: len(str(text or "").split())
+    if words(metadata.get("summary")) > PROPOSAL_SUMMARY_WORDS:
+        errors.append(f"summary has {words(metadata.get('summary'))} words; keep it under {PROPOSAL_SUMMARY_WORDS}")
+    if words(metadata.get("brief")) > PROPOSAL_BRIEF_WORDS:
+        errors.append(f"brief has {words(metadata.get('brief'))} words; keep it at most {PROPOSAL_BRIEF_WORDS}")
+    for contact in metadata.get("contacts") or []:
+        if isinstance(contact, dict):
+            if not contact.get("name") or not EMAIL.fullmatch(str(contact.get("email", ""))):
+                errors.append(f"contact {contact!r} needs a name and an email")
+        elif str(contact) not in authors:
+            errors.append(f"contact {contact!r} is not a folder in content/authors")
+    # Comments and shortcode lines (figures) carry no prose.
+    prose = re.sub(r"<!--.*?-->|\{\{<.*?>\}\}", "", body, flags=re.DOTALL)
+    headings = re.findall(r"^#+\s*(.+?)\s*$", prose, flags=re.MULTILINE)
+    if prose.strip() and headings != PROPOSAL_SECTIONS:
+        errors.append(f"body sections are {headings}; use exactly ## Context and ## Objective")
+    if words(prose) > PROPOSAL_BODY_WORDS:
+        errors.append(f"body has {words(prose)} words; keep it near 120")
+    return errors
+
+
 def category_error(section: str, categories: list) -> str | None:
     allowed = SECTION_CATEGORIES[section]
     if len(categories) != 1 or categories[0] not in allowed:
@@ -495,6 +536,10 @@ def validate_content_quality() -> None:
         for page in (content_root / "research").glob("*/index.md")
         for topic in read_page(page)[0].get("focus") or []
     }
+    for key, venue in venues.items():
+        if str(venue.get("rank") or "") not in set().union(*VENUE_RANKS.values()):
+            failures.append(f"data/venues.yaml: venue {key!r} has rank {venue.get('rank')!r}; use A*, A, B, C, Multiconference, Q1 to Q4, or \"\"")
+    authors = {path.name for path in (content_root / "authors").iterdir() if path.is_dir()}
     for key, topic in project_topics.items():
         if not isinstance(topic, dict) or not topic.get("label"):
             failures.append(f"data/topics.yaml: topic {key!r} needs a label")
@@ -580,6 +625,12 @@ def validate_content_quality() -> None:
             if section == "publication" and not is_draft and set(metadata.get("categories") or []) & {"Conference", "Journal", "Workshop"}:
                 if metadata.get("venue_key") not in venues:
                     failures.append(f"{page.relative_to(ROOT)}: venue_key {metadata.get('venue_key')!r} is not defined in data/venues.yaml")
+                elif len(metadata["categories"]) == 1:
+                    error = venue_rank_error(metadata["categories"][0], venues[metadata["venue_key"]].get("rank"))
+                    if error:
+                        failures.append(f"{page.relative_to(ROOT)}: {error}; check venue_key or categories")
+            if section == "proposals" and page.name == "index.md" and not is_draft:
+                failures += [f"{page.relative_to(ROOT)}: {error}" for error in proposal_errors(metadata, body, authors)]
             if section in {"publication", "theses"} and not is_draft:
                 types = metadata.get("publication_types") or []
                 if len(types) != 1 or types[0] not in PUBLICATION_TYPES:
