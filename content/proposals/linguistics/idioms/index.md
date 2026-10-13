@@ -30,3 +30,5 @@ Existing datasets, including SemEval shared tasks, already pair idioms with thei
 
 This proposal tests whether LLMs grasp shared, image-different, and culture-specific idioms, without new annotation.
 The student builds the three groups from existing datasets and compares models across languages.
+
+{{< svg src="groups.svg" caption="The three groups of idioms this proposal compares, on examples chosen for illustration rather than taken from a dataset. In each group, an Italian idiom and its English counterpart point to one meaning, and the culture-specific idiom has no English counterpart." >}}
