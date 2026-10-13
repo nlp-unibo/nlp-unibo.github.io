@@ -89,7 +89,7 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
 | `uv run python scripts/site.py publications --since YYYY-MM-DD` | Ask OpenAlex for the works of each `Members` ORCID and list those that match no publication page by DOI or title, minus `data/publication_ignore.yaml`. It needs the network, so CI never runs it |
 | `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, the rules of one page (`page_errors`), and the missing-publication matching |
-| `uv run python scripts/test_render.py` | Build the content plus fixture pages into `.build/render-check` with `--buildFuture`, then check the rendered dates |
+| `uv run python scripts/test_render.py` | Build the content plus fixture pages into `.build/render-check` with `--buildFuture`, then check the rendered dates and carousel controls |
 | `uv run python scripts/test_browser.py` | Serve that fixture build and check the carousels, path links, filters, widget isolation, and reduced motion in headless Chromium; the first run needs `uv run playwright install chromium` |
 | `node --test scripts/test_ltcore.mjs` | Check the DOM-free helpers of `assets/js/lt-core.mjs` |
 
@@ -189,11 +189,13 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 
 | Partial | Input | Output |
 | --- | --- | --- |
+| `carousel-nav.html` | `labels` (one per slide, in order), `noun` | Carousel dots and the previous and next arrows that `ltlab.js` reveals and reads; shared by Latest papers, Highlights, and focus topics |
 | `author-names.html` | A page | Returns the display names of its `authors`: a profile folder name, such as `nicolo-donati`, becomes the profile title; used by cards that print authors as text |
 | `contacts.html` | List of author folder names or `{name, email}` maps | Returns people with `name`, `email`, `url`, `avatar`, `initials`; fails the build on an unknown author or a missing email |
 | `people-row.html` | Output of `contacts.html` | Avatar row linked to profiles or `mailto:` |
 | `cover.html` | `seed`, optional `pattern` (`tokens`, `graph`, `wave`, `dots`), optional `tall` | Generated SVG cover art of research areas, stable for a given seed |
 | `pub-cover.html` | `seed` (the title), optional `tall` | Default cover of a publication without a figure: a stylized paper page whose line lengths and figure position follow the seed; used by `pub-card.html` and the publication page teaser |
+| `item-link.html` | A page | Returns the address a list links it to: its `external_link`, else its own page; empty for a redirect page without `external_link` |
 | `links.html` | A page | Returns the links of its body as `name`, `url`, Font Awesome `icon` |
 | `link-chips.html` | `links`, `max` | Chip list |
 | `news-data.html` | A news page or a publication | Returns `kind`, `date`, `iso`, `venue`, `summary`, `links`, `id` for previews |
@@ -203,6 +205,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `person-topics.html` | A profile | Returns the "Latest topics": the three most frequent topics of the publications of the last two years, without workshop papers, papers tagged `shared task`, and `prototype`; ties go to the topic of more first-authored papers |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |
+| `pub-media.html` | A publication, or `{page, cardOnly}` | Card-size figure: inline `card.svg`, else a `card` image, else (without `cardOnly`) the `featured` figure; empty when there is none |
 | `pub-meta.html` | A publication | Returns `kind`, `venue` ("Preprint" for a preprint), `links`, `tldr`, `blog` (it has a body), `url` (the blog, else the DOI, arXiv, PDF, or first link), and `date` and `iso` at the precision of the date (`2025-01-01` is a year, `2025-07-01` a month), shared by cards, rows, news previews, and pages |
 | `pub-row.html` | A publication | Compact list row |
 | `rule-parts.html` | Parts of a rules-view sentence | Marked spans, recursive |
@@ -263,13 +266,12 @@ The sections appear in this order.
 
 ### Colour tokens
 
-Colours live in five places.
+Colours live in these places.
 Change them together.
 
 | Where | What |
 | --- | --- |
-| Top of `template.scss` | `$lt-navy` `#003060`, `$lt-blue` `#105080`, `$lt-sky` `#60c0e0`, `$lt-orange` `#f09010`, `$lt-border`, `$lt-muted` |
-| `Homepage blocks` section of `template.scss` | `$lt-ink`, `$lt-dark-border`, `$lt-dark-muted`, `$lt-dark-card` |
+| Top of `template.scss` | `$lt-navy` `#003060`, `$lt-blue` `#105080`, `$lt-sky` `#60c0e0`, `$lt-orange` `#f09010`, `$lt-border`, `$lt-muted`, and the dark theme values `$lt-ink`, `$lt-dark-border`, `$lt-dark-muted`, `$lt-dark-card` `#112236`, `$lt-dark-text` `#f1f5fa` (main text), `$lt-dark-soft` `#c9d6e3` (secondary text) |
 | `Visual components` section of `template.scss` | `$lt-cat-dark`, the four categorical slots used by `.lt-c1` to `.lt-c4`, and `$lt-cat-dark-ink`, the tag text on each |
 | `Argument views` section of `template.scss` | CSS custom properties `--lt-role-1` to `--lt-role-4`, `--lt-support`, `--lt-attack`, scoped to `.lt-arg-views`, `.lt-overview`, `.lt-research-mosaic`, `.lt-tool-figure`, under `.dark` |
 | `data/themes/ltlab.toml` | Theme `primary`, `link`, `link_hover`, `background`, menu colours, and `home_section_odd` / `home_section_even` band colours |

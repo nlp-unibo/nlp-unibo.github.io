@@ -22,15 +22,8 @@
         <div class="lt-carousel-track" tabindex="0" role="region" aria-label="Highlighted publications">
           {{ range . }}{{ partial "lt/pub-card.html" (dict "page" . "year" true) }}{{ end }}
         </div>
-        <div class="lt-carousel-nav" hidden>
-          <div class="lt-carousel-dots">
-            {{ range $i, $pub := . }}<button type="button" data-lt-slide="{{ $i }}" aria-label="{{ $pub.Title }}"></button>{{ end }}
-          </div>
-          <div class="lt-carousel-arrows">
-            <button type="button" data-lt-step="-1" aria-label="Previous highlight"><i class="fas fa-arrow-left" aria-hidden="true"></i></button>
-            <button type="button" data-lt-step="1" aria-label="Next highlight"><i class="fas fa-arrow-right" aria-hidden="true"></i></button>
-          </div>
-        </div>
+        {{ $labels := slice }}{{ range . }}{{ $labels = $labels | append .Title }}{{ end }}
+        {{ partial "lt/carousel-nav.html" (dict "labels" $labels "noun" "highlight") }}
       </div>
       {{ end }}
     </section>

@@ -5,6 +5,13 @@ $lt-sky: #60c0e0;
 $lt-orange: #f09010;
 $lt-border: #e3e8ef;
 $lt-muted: #5b6b7d;
+// Dark theme: border, muted text, card surface, main text, and secondary text.
+$lt-ink: #33475b;
+$lt-dark-border: rgba(255, 255, 255, 0.12);
+$lt-dark-muted: #9fb2c6;
+$lt-dark-card: #112236;
+$lt-dark-text: #f1f5fa;
+$lt-dark-soft: #c9d6e3;
 
 // Inter is self-hosted, so pages make no request to a font provider.
 @each $style in normal, italic {
@@ -44,7 +51,7 @@ h1, h2, h3, h4, h5, h6,
   h1, h2, h3, h4, h5, h6,
   .article-title,
   .section-heading h1 {
-    color: #f1f5fa;
+    color: $lt-dark-text;
   }
 }
 
@@ -168,34 +175,7 @@ h1, h2, h3, h4, h5, h6,
   line-height: 1.5;
 }
 
-.dark .lt-topic { border-color: rgba(255, 255, 255, 0.24); color: #c9d6e3; }
-
-// Kind badges in the Latest list of profile pages, set by layouts/authors/list.html
-.lt-kind {
-  display: inline-block;
-  min-width: 6.2rem;
-  margin-right: 0.5rem;
-  padding: 0.08rem 0.45rem;
-  border-radius: 999px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.5;
-  text-align: center;
-  text-transform: uppercase;
-  vertical-align: 0.12em;
-  color: #fff;
-  background: $lt-muted;
-}
-
-.lt-kind-conference { background: $lt-blue; }
-.lt-kind-workshop { background: #0b6e70; }
-.lt-kind-preprint { background: #e6ebf1; color: #33475b; }
-.lt-kind-event { background: $lt-orange; color: $lt-navy; }
-.lt-kind-master-thesis,
-.lt-kind-bachelor-thesis { background: #7b4fa0; }
-
-.dark .lt-kind-journal { background: #2a5a8a; }
+.dark .lt-topic { border-color: rgba(255, 255, 255, 0.24); color: $lt-dark-soft; }
 
 // Year headings inserted by assets/js/ltlab.js in long citation lists
 .lt-year {
@@ -371,10 +351,6 @@ h1, h2, h3, h4, h5, h6,
 // Homepage blocks (layouts/_partials/blocks/lt-*.html) and publication pages
 // ---------------------------------------------------------------------------
 
-$lt-ink: #33475b;
-$lt-dark-border: rgba(255, 255, 255, 0.12);
-$lt-dark-muted: #9fb2c6;
-$lt-dark-card: #112236;
 
 // Navbar brand: logo mark plus the site title
 .navbar-brand {
@@ -393,7 +369,7 @@ $lt-dark-card: #112236;
 }
 
 .dark .lt-brand-text {
-  color: #f1f5fa;
+  color: $lt-dark-text;
 }
 
 // The navy logo gets a thin sky outline so it stands out on the dark navbar
@@ -484,7 +460,7 @@ $lt-dark-card: #112236;
   .lt-btn-ghost {
     border-color: $lt-dark-border;
     background: transparent;
-    color: #f1f5fa !important;
+    color: $lt-dark-text !important;
   }
 }
 
@@ -513,8 +489,6 @@ $lt-dark-card: #112236;
   line-height: 1.6;
   text-transform: uppercase;
 }
-
-.lt-pill-paper { background: rgba($lt-blue, 0.12); color: $lt-blue; }
 
 .dark {
   .lt-pill { background: rgba($lt-sky, 0.14); color: $lt-sky; }
@@ -774,7 +748,7 @@ img.lt-cover {
 }
 
 .dark .lt-hero-lead {
-  color: #c9d6e3;
+  color: $lt-dark-soft;
 }
 
 .lt-hero-actions {
@@ -843,7 +817,7 @@ img.lt-cover {
 }
 
 .dark {
-  .lt-area-tagline { color: #c9d6e3; }
+  .lt-area-tagline { color: $lt-dark-soft; }
   .lt-area-topics li { color: $lt-sky; background: rgba($lt-sky, 0.12); }
 }
 
@@ -1101,13 +1075,13 @@ $lt-slide-height: 29rem;
 }
 
 .dark {
-  .lt-slide-text, .lt-slide-authors { color: #c9d6e3; }
+  .lt-slide-text, .lt-slide-authors { color: $lt-dark-soft; }
   .lt-carousel-dots button::before { background: rgba($lt-sky, 0.3); }
   .lt-carousel-dots button[aria-current="true"]::before { background: $lt-sky; }
   .lt-carousel.is-autoplay .lt-carousel-dots button[aria-current="true"]::before {
     background: linear-gradient($lt-sky, $lt-sky) no-repeat left / 0% 100%, rgba($lt-sky, 0.3);
   }
-  .lt-carousel-arrows button { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-carousel-arrows button { border-color: $lt-dark-border; color: $lt-dark-text; background: $lt-dark-card; }
   .lt-carousel-arrows button:hover:not(:disabled) { border-color: $lt-sky; }
 }
 
@@ -1140,11 +1114,6 @@ $lt-slide-height: 29rem;
   gap: 1rem;
   padding: 1rem 0.5rem;
   border-bottom: 1px solid $lt-border;
-  transition: background-color 0.15s ease;
-
-  &:hover {
-    background: rgba($lt-blue, 0.04);
-  }
 
   time {
     font-size: 0.85rem;
@@ -1182,7 +1151,7 @@ $lt-slide-height: 29rem;
   gap: 0.5rem 1rem;
 }
 
-.lt-news-row-title { color: #f1f5fa !important; }
+.lt-news-row-title { color: $lt-dark-text !important; }
 }
 
 // Publication page in the style of a research project page (layouts/publication/single.html)
@@ -1261,13 +1230,6 @@ $lt-slide-height: 29rem;
 
   &:hover {
     transform: translateY(-1px);
-  }
-}
-
-.lt-proj-button-light {
-
-  &:hover {
-    background: #e1e8f0;
   }
 }
 
@@ -1507,27 +1469,27 @@ $lt-slide-height: 29rem;
 
 .dark {
   .lt-proj-venue, .lt-proj-affiliations, .lt-proj-number-label, .lt-proj-teaser figcaption, .lt-proj-body figcaption, .lt-pub-empty { color: $lt-dark-muted; }
-  .lt-proj-tagline { color: #c9d6e3; }
+  .lt-proj-tagline { color: $lt-dark-soft; }
   .lt-proj-authors a { color: $lt-sky !important; }
-  .lt-proj-button { background: #f1f5fa; color: $lt-navy !important; }
+  .lt-proj-button { background: $lt-dark-text; color: $lt-navy !important; }
   .lt-proj-button:hover { background: $lt-sky; }
-  .lt-proj-button-light { background: rgba(255, 255, 255, 0.08); color: #f1f5fa !important; }
+  .lt-proj-button-light { background: rgba(255, 255, 255, 0.08); color: $lt-dark-text !important; }
   .lt-proj-numbers li { border-color: $lt-dark-border; }
-  .lt-proj-number { color: #f1f5fa; }
+  .lt-proj-number { color: $lt-dark-text; }
   .lt-proj-nav { border-color: $lt-dark-border; background: rgba(13, 26, 42, 0.9); }
   .lt-proj-nav a { color: $lt-dark-muted !important; }
-  .lt-proj-nav a:hover { color: #f1f5fa !important; }
+  .lt-proj-nav a:hover { color: $lt-dark-text !important; }
   .lt-proj-body th, .lt-proj-body td { border-color: $lt-dark-border; }
   .lt-proj-body thead th { border-bottom-color: $lt-sky; }
-  .lt-proj-body blockquote { color: #f1f5fa; background: rgba($lt-orange, 0.1); }
-  .lt-post-related { background: #112236; }
+  .lt-proj-body blockquote { color: $lt-dark-text; background: rgba($lt-orange, 0.1); }
+  .lt-post-related { background: $lt-dark-card; }
   .lt-bib pre { background: rgba(255, 255, 255, 0.05); }
-  .lt-bib-copy { border-color: $lt-dark-border; background: $lt-dark-card; color: #f1f5fa; }
+  .lt-bib-copy { border-color: $lt-dark-border; background: $lt-dark-card; color: $lt-dark-text; }
 }
 
 // Visual components for publication pages (layouts/_shortcodes: pipeline, gap, bars, takeaways, annotate)
 // Annotation colors are the categorical slots 1-4: blue, yellow, magenta, green. The site is dark only, and the dark
-// set passes every pairwise check of the dataviz palette validator (--pairs all) on #0d1a2a and #112236, with a color
+// set passes every pairwise check of the dataviz palette validator (--pairs all) on #0d1a2a and $lt-dark-card, with a color
 // vision deficiency WARN (protan ΔE 6.9) that is legal because every mark also shows its label as text.
 $lt-cat-dark: #3987e5, #c98500, #d55181, #008300;
 // Tag text on each dark slot, the side of black or white that reaches 4.5:1: 5.77, 6.84, 5.32, and 4.95.
@@ -1665,7 +1627,7 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
 }
 
 .dark .lt-pipeline-branches b {
-  color: #f1f5fa;
+  color: $lt-dark-text;
 }
 
 .lt-pipeline-index {
@@ -1817,11 +1779,11 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
 }
 
 .dark .lt-bar-err {
-  border-top-color: #f1f5fa;
+  border-top-color: $lt-dark-text;
 
   &::before,
   &::after {
-    background: #f1f5fa;
+    background: $lt-dark-text;
   }
 }
 
@@ -1990,7 +1952,7 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   .lt-pipeline-step, .lt-bars, .lt-annotate { border-color: $lt-dark-border; background: transparent; }
   .lt-pipeline-step.is-highlight { border-color: $lt-orange; }
   .lt-pipeline-index { color: $lt-sky; background: rgba($lt-sky, 0.12); }
-  .lt-pipeline-step strong, .lt-takeaways strong, .lt-bars .lt-viz-title, .lt-gap tr.is-ours th { color: #f1f5fa; }
+  .lt-pipeline-step strong, .lt-takeaways strong, .lt-bars .lt-viz-title, .lt-gap tr.is-ours th { color: $lt-dark-text; }
   .lt-gap th, .lt-gap td { border-bottom-color: $lt-dark-border; }
   .lt-gap thead th { color: $lt-dark-muted; border-bottom-color: $lt-sky; }
   .lt-bar-track { background: rgba(255, 255, 255, 0.06); }
@@ -2179,7 +2141,7 @@ figure.lt-svg {
 }
 
 .dark .lt-svg {
-  .lt-s-txt { fill: #f1f5fa; }
+  .lt-s-txt { fill: $lt-dark-text; }
   .lt-s-small, .lt-s-sub { fill: $lt-dark-muted; }
   .lt-s-tok { fill: rgba(255, 255, 255, 0.05); stroke: $lt-dark-border; }
   .lt-s-off { stroke: $lt-dark-border; }
@@ -2196,10 +2158,6 @@ figure.lt-svg {
   .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
   .lt-s-head.lt-s-support { fill: var(--lt-support); }
   .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
-}
-
-.lt-news-row:hover {
-  background: none;
 }
 
 // Phones: headings stack above their "see all" links
@@ -2296,12 +2254,12 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-definition { border-color: $lt-sky; background: rgba($lt-sky, 0.06); color: #c9d6e3; }
+  .lt-definition { border-color: $lt-sky; background: rgba($lt-sky, 0.06); color: $lt-dark-soft; }
   .lt-definition-label { color: $lt-dark-muted; }
   .lt-definition-label i { color: $lt-sky; }
   .lt-overview-block { border-color: $lt-dark-border; background: $lt-dark-card; }
-  .lt-overview-block h3 { color: #f1f5fa; }
-  .lt-overview-block p { color: #c9d6e3; }
+  .lt-overview-block h3 { color: $lt-dark-text; }
+  .lt-overview-block p { color: $lt-dark-soft; }
 }
 
 // Core concepts: the short background text above the views, at the reading width of the page body.
@@ -2314,7 +2272,7 @@ figure.lt-svg {
   p { margin: 0 0 0.8rem; }
 }
 
-.dark .lt-concepts { color: #c9d6e3; }
+.dark .lt-concepts { color: $lt-dark-soft; }
 
 // Argument views: tabs by argument model and domain, then the marked text and the argument graph.
 // Roles take the categorical slots in fixed order: blue, yellow, magenta, green. The dark set passes every pairwise check
@@ -2678,18 +2636,18 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-arg-tabgroup [role="tab"] { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-arg-tabgroup [role="tab"] { border-color: $lt-dark-border; color: $lt-dark-text; background: $lt-dark-card; }
   .lt-arg-tabgroup [role="tab"][aria-selected="true"] { border-color: $lt-sky; color: $lt-navy; background: $lt-sky; }
   .lt-arg-tabgroup-label, .lt-arg-example figcaption { color: $lt-dark-muted; }
-  .lt-arg-description, .lt-arg-text, .lt-arg-tag, .lt-arg-scheme, .lt-arg-edges { color: #c9d6e3; }
-  .lt-arg-span, .lt-arg-node { color: #f1f5fa; }
+  .lt-arg-description, .lt-arg-text, .lt-arg-tag, .lt-arg-scheme, .lt-arg-edges { color: $lt-dark-soft; }
+  .lt-arg-span, .lt-arg-node { color: $lt-dark-text; }
   .lt-arg-panel { background: rgba(255, 255, 255, 0.04); }
   .lt-arg-node { border-color: $lt-dark-border; border-left-color: var(--lt-role); background: $lt-dark-card; }
   .lt-arg-node.is-implicit { background: transparent; }
   .lt-arg-scheme { border-color: $lt-dark-border; }
-  .lt-arg-edge.is-link { stroke: #c9d6e3; }
-  .lt-arg-edge-head.is-link { fill: #c9d6e3; }
-  .lt-arg-edge-label { fill: #c9d6e3; stroke: #15243a; }
+  .lt-arg-edge.is-link { stroke: $lt-dark-soft; }
+  .lt-arg-edge-head.is-link { fill: $lt-dark-soft; }
+  .lt-arg-edge-label { fill: $lt-dark-soft; stroke: #15243a; }
 }
 
 // Detect views: a document whose annotated clauses are highlighted in the color of their fairness level.
@@ -2966,9 +2924,9 @@ figure.lt-svg {
 
 .dark {
   .lt-voice-row, .lt-voice-pause, .lt-voice-hears { color: $lt-dark-muted; }
-  .lt-voice-loud i { background: color-mix(in srgb, #c9d6e3 30%, transparent); }
-  .lt-voice-word { color: #f1f5fa; }
-  .lt-voice-summary { color: #c9d6e3; }
+  .lt-voice-loud i { background: color-mix(in srgb, $lt-dark-soft 30%, transparent); }
+  .lt-voice-word { color: $lt-dark-text; }
+  .lt-voice-summary { color: $lt-dark-soft; }
 }
 
 @media (min-width: 992px) {
@@ -2979,10 +2937,10 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-speech-question { color: #f1f5fa; }
-  .lt-speech-answers thead th { color: #c9d6e3; }
+  .lt-speech-question { color: $lt-dark-text; }
+  .lt-speech-answers thead th { color: $lt-dark-soft; }
   .lt-speech-answers thead th { border-bottom-color: $lt-dark-border; }
-  .lt-speech-answers tbody th, .lt-speech-answer { color: #f1f5fa; }
+  .lt-speech-answers tbody th, .lt-speech-answer { color: $lt-dark-text; }
 }
 
 @keyframes lt-detect-in {
@@ -2990,9 +2948,9 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-detect-doc { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
-  .lt-detect-doc h4, .lt-detect-mark { color: #f1f5fa; }
-  .lt-detect-tag, .lt-detect-count, .lt-detect-summary { color: #c9d6e3; }
+  .lt-detect-doc { border-color: $lt-dark-border; color: $lt-dark-soft; background: $lt-dark-card; }
+  .lt-detect-doc h4, .lt-detect-mark { color: $lt-dark-text; }
+  .lt-detect-tag, .lt-detect-count, .lt-detect-summary { color: $lt-dark-soft; }
   .lt-detect-mark, .lt-detect-count { background: color-mix(in srgb, var(--lt-level) 22%, transparent); }
 }
 
@@ -3279,10 +3237,10 @@ figure.lt-svg {
 .lt-rules .is-labelled .lt-rule-num { background: var(--lt-level); }
 
 .dark {
-  .lt-rule-span, .lt-cell { color: #f1f5fa; }
-  .lt-rules-legend span, .lt-matrix thead th, .lt-matrix-levels { color: #c9d6e3; }
-  .lt-rules-legend .is-line::before { border-bottom-color: #c9d6e3; }
-  .lt-rule-tag, .lt-rule-label { color: #c9d6e3; }
+  .lt-rule-span, .lt-cell { color: $lt-dark-text; }
+  .lt-rules-legend span, .lt-matrix thead th, .lt-matrix-levels { color: $lt-dark-soft; }
+  .lt-rules-legend .is-line::before { border-bottom-color: $lt-dark-soft; }
+  .lt-rule-tag, .lt-rule-label { color: $lt-dark-soft; }
   .lt-cell.is-none, .lt-cell.is-any, .lt-matrix-sep th { color: $lt-dark-muted; }
   .lt-rule-num { color: $lt-navy; background: $lt-sky; }
   .lt-matrix thead th { border-bottom-color: $lt-dark-border; }
@@ -3441,11 +3399,11 @@ figure.lt-svg {
 .dark {
   .lt-field { border-color: $lt-dark-border; background: $lt-dark-card; }
   .lt-field:hover, .lt-field[aria-expanded="true"] { border-color: $lt-sky; }
-  .lt-field-title, .lt-field-tasks dt { color: #f1f5fa; }
-  .lt-field-question, .lt-field-panel > p, .lt-field-tasks dd { color: #c9d6e3; }
+  .lt-field-title, .lt-field-tasks dt { color: $lt-dark-text; }
+  .lt-field-question, .lt-field-panel > p, .lt-field-tasks dd { color: $lt-dark-soft; }
   .lt-field-panel { background: rgba(255, 255, 255, 0.05); }
-  .lt-proposal-body { color: #c9d6e3; }
-  .lt-proposal-body h4 { color: #f1f5fa; }
+  .lt-proposal-body { color: $lt-dark-soft; }
+  .lt-proposal-body h4 { color: $lt-dark-text; }
   .lt-proposal-actions { border-color: $lt-dark-border; }
   .lt-field-back { color: $lt-sky; }
 }
@@ -3579,9 +3537,9 @@ figure.lt-svg {
 
 .dark {
   .lt-focus-card.is-selected { border-color: $lt-sky; }
-  .lt-focus-summary, .lt-focus-lanes ul, .lt-focus-spot { color: #c9d6e3; }
+  .lt-focus-summary, .lt-focus-lanes ul, .lt-focus-spot { color: $lt-dark-soft; }
   .lt-focus-spot .lt-slide-media { border-color: $lt-dark-border; }
-  .lt-focus-spot-title { color: #f1f5fa; }
+  .lt-focus-spot-title { color: $lt-dark-text; }
   .lt-focus-spot-venue { color: $lt-dark-muted; }
   .lt-focus-more { color: $lt-sky; }
 }
@@ -3693,10 +3651,10 @@ figure.lt-svg {
 
 .dark {
   .lt-topic-box { border-color: $lt-dark-border; }
-  .lt-topic-close { border-color: $lt-dark-border; color: #f1f5fa; background: $lt-dark-card; }
+  .lt-topic-close { border-color: $lt-dark-border; color: $lt-dark-text; background: $lt-dark-card; }
   .lt-topic-close:hover { border-color: $lt-sky; }
-  .lt-topic-description, .lt-topic-text p { color: #c9d6e3; }
-  .lt-topic-text .lt-topic-item-title { color: #f1f5fa; }
+  .lt-topic-description, .lt-topic-text p { color: $lt-dark-soft; }
+  .lt-topic-text .lt-topic-item-title { color: $lt-dark-text; }
   .lt-topic-item { background: rgba(255, 255, 255, 0.04); border-left-color: $lt-dark-border; }
   .lt-topic-item.is-done { border-left-color: $lt-sky; }
   .lt-topic-item.is-now { border-left-color: $lt-orange; }
@@ -3821,10 +3779,10 @@ figure.lt-svg {
 .dark {
   .lt-research-tile { border-color: $lt-dark-border; background: $lt-dark-card; }
   .lt-research-tile figcaption, .lt-research-label { color: $lt-dark-muted; }
-  .lt-research-title a, .lt-research-lead { color: #f1f5fa; }
+  .lt-research-title a, .lt-research-lead { color: $lt-dark-text; }
   .lt-research-row:hover .lt-research-title a { color: $lt-sky; }
   .lt-research-row:has(a:focus-visible) { outline-color: $lt-sky; }
-  .lt-research-text { color: #c9d6e3; }
+  .lt-research-text { color: $lt-dark-soft; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -4378,37 +4336,37 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-path-picker [role="tab"] { border-color: $lt-dark-border; color: #c9d6e3; background: $lt-dark-card; }
+  .lt-path-picker [role="tab"] { border-color: $lt-dark-border; color: $lt-dark-soft; background: $lt-dark-card; }
   .lt-path-picker [role="tab"]:hover, .lt-path-picker [role="tab"][aria-selected="true"] { border-color: $lt-sky; }
   .lt-path-picker [role="tab"][aria-selected="true"] { box-shadow: inset 0 0 0 1px $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-picker i { color: $lt-sky; background: rgba($lt-sky, 0.12); }
-  .lt-path-pick-label, .lt-step-title, .lt-paths-title { color: #f1f5fa; }
+  .lt-path-pick-label, .lt-step-title, .lt-paths-title { color: $lt-dark-text; }
   .lt-path-pick-text { color: $lt-dark-muted; }
   .lt-path-card, .lt-path-contact { border-color: $lt-dark-border; background: $lt-dark-card; }
   .lt-path-contact { border-top-color: $lt-orange; }
   .lt-step::before { color: $lt-navy; background: $lt-sky; }
   .lt-step::after, .lt-step.is-extra::before { border-color: $lt-dark-border; background: $lt-dark-border; }
   .lt-step.is-extra::before { color: $lt-sky; background: transparent; }
-  .lt-step-text { color: #c9d6e3; }
+  .lt-step-text { color: $lt-dark-soft; }
   .lt-expand p { border-left: 0; }
   .lt-proposal-more { color: $lt-sky; }
   .lt-proposal-group-title { color: $lt-dark-muted; }
   .lt-proposal-faces img, .lt-proposal-faces span { border: 2px solid $lt-dark-card; }
   .lt-proposal-faces span { color: $lt-sky; background: #18324a; }
-  .lt-people a { color: #f1f5fa; }
-  .lt-work-search { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); color-scheme: dark; }
+  .lt-people a { color: $lt-dark-text; }
+  .lt-work-search { border-color: $lt-dark-border; color: $lt-dark-text; background: rgba(255, 255, 255, 0.04); color-scheme: dark; }
   .lt-work-count { color: $lt-dark-muted; }
   .lt-people .lt-people-initials { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-logo { color: $lt-sky; background: rgba($lt-sky, 0.12); }
   .lt-path-facts dt, .lt-path-label, .lt-mail-to span, .lt-mail-hint, .lt-mail-form small, .lt-expand-count, .lt-path-projects span, .lt-work-year h3, .lt-work-list .lt-work-by { color: $lt-dark-muted; }
-  .lt-path-facts dd, .lt-mail-to { color: #c9d6e3; }
-  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a, .lt-work-list .lt-work-title { color: #f1f5fa; }
-  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); }
+  .lt-path-facts dd, .lt-mail-to { color: $lt-dark-soft; }
+  .lt-path-projects b, .lt-mail-form label, .lt-expand-title, .lt-work-list a, .lt-work-list .lt-work-title { color: $lt-dark-text; }
+  .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { border-color: $lt-dark-border; color: $lt-dark-text; background: rgba(255, 255, 255, 0.04); }
   // The native option list draws its own popup: a dark color scheme and an opaque option background keep it readable.
   .lt-mail-form input, .lt-mail-form select, .lt-mail-form textarea { color-scheme: dark; }
-  .lt-mail-form option { color: #f1f5fa; background: $lt-dark-card; }
+  .lt-mail-form option { color: $lt-dark-text; background: $lt-dark-card; }
   .lt-mail-form .lt-mail-req { color: $lt-sky; }
-  .lt-mail-wait { color: #f1f5fa; background: rgba($lt-orange, 0.18); }
+  .lt-mail-wait { color: $lt-dark-text; background: rgba($lt-orange, 0.18); }
   .lt-expand > summary::after { color: $lt-sky; }
   .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
   .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }
@@ -4477,7 +4435,7 @@ figure.lt-svg {
   .lt-arg-span:not(.is-linked) { opacity: 0.45; }
 }
 
-.dark .lt-arg-view.is-linking .lt-arg-text { color: rgba(#c9d6e3, 0.45); }
+.dark .lt-arg-view.is-linking .lt-arg-text { color: rgba($lt-dark-soft, 0.45); }
 
 .lt-arg-span.is-linked { background-color: rgba($lt-sky, 0.25); }
 
@@ -4629,7 +4587,7 @@ figure.lt-svg {
 
   .dark {
     .lt-proj-nav.lt-proj-side { border-left-color: $lt-dark-border; background: none; }
-    .lt-proj-nav.lt-proj-side a[aria-current="true"] { border-left-color: $lt-sky; color: #f1f5fa !important; }
+    .lt-proj-nav.lt-proj-side a[aria-current="true"] { border-left-color: $lt-sky; color: $lt-dark-text !important; }
     .lt-proj-side-label { color: $lt-dark-muted; }
   }
 }
@@ -4708,9 +4666,9 @@ figure.lt-svg {
 .lt-pubs-top { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 1.5rem; font-weight: 600; }
 
 .dark {
-  .lt-pub-row-title { color: #f1f5fa; }
+  .lt-pub-row-title { color: $lt-dark-text; }
   .lt-pub-row-title:hover { color: $lt-sky; }
-  .lt-pub-row-authors { color: #c9d6e3; }
+  .lt-pub-row-authors { color: $lt-dark-soft; }
   .lt-pub-row-venue { color: $lt-dark-muted; }
   .lt-pub-list, .lt-pub-row { border-color: $lt-dark-border; }
 }
@@ -4807,7 +4765,7 @@ figure.lt-svg {
 .dark {
   .lt-timeline figcaption, .lt-timeline-year, .lt-project-name { color: $lt-dark-muted; }
   .lt-timeline-years ul { border-color: $lt-dark-border; }
-  .lt-project-text { color: #c9d6e3; }
+  .lt-project-text { color: $lt-dark-soft; }
   .lt-timeline-item.is-international-project, .lt-pill-international-project { background: rgba($lt-sky, 0.14); color: $lt-sky !important; }
   .lt-timeline-item.is-national-project, .lt-pill-national-project { background: rgba($lt-orange, 0.18); color: #f5c46b !important; }
   .lt-timeline-key.is-international-project { color: $lt-sky; }
@@ -4852,7 +4810,7 @@ figure.lt-svg {
 
 .dark .lt-to-top { color: $lt-navy !important; background: $lt-sky; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45); }
 
-.dark .lt-to-top:hover { background: #f1f5fa; }
+.dark .lt-to-top:hover { background: $lt-dark-text; }
 
 .lt-news-years {
   display: flex;
@@ -4942,9 +4900,9 @@ figure.lt-svg {
   .lt-news-item.is-call { --lt-dot: #b98ad8; }
   .lt-news-item.is-task { --lt-dot: #4fb3b5; }
   .lt-news-item.is-preprint { --lt-dot: #199e70; }
-  .lt-news-item-title { color: #f1f5fa; }
+  .lt-news-item-title { color: $lt-dark-text; }
   .lt-news-venue { color: $lt-dark-muted; }
-  .lt-news-item-text { color: #c9d6e3; }
+  .lt-news-item-text { color: $lt-dark-soft; }
 }
 
 // Tools page (layouts/tools/list.html): one research-style band per tool, with a single schema in place of the mosaic.
@@ -4970,7 +4928,7 @@ figure.lt-svg {
   code { padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; }
 }
 
-.dark .lt-tool-install code { color: #f1f5fa; background: rgba(255, 255, 255, 0.08); }
+.dark .lt-tool-install code { color: $lt-dark-text; background: rgba(255, 255, 255, 0.08); }
 
 // People page (layouts/people/single.html): member cards that open the profile page, and compact former members.
 .lt-person-grid {
@@ -5046,11 +5004,11 @@ figure.lt-svg {
 
 .dark {
   .lt-person-org, .lt-former p { color: $lt-dark-muted; }
-  .lt-person-bio { color: #c9d6e3; }
+  .lt-person-bio { color: $lt-dark-soft; }
   .lt-person-social a { color: $lt-sky; }
   .lt-person-social a:focus-visible { outline-color: $lt-sky; }
   .lt-person-head .lt-people-initials, .lt-former .lt-people-initials { color: $lt-sky; }
-  .lt-former-name { color: #f1f5fa; }
+  .lt-former-name { color: $lt-dark-text; }
 }
 
 // Opening band of section pages (layouts/_partials/lt/page-intro.html): the page intro as a centered lead.
@@ -5066,7 +5024,7 @@ figure.lt-svg {
   letter-spacing: -0.01em;
 }
 
-.dark .lt-page-intro-text { color: #f1f5fa; }
+.dark .lt-page-intro-text { color: $lt-dark-text; }
 
 // Profile page (layouts/authors/list.html): photo and details on the intro backdrop, the biography below them,
 // then the publications with filters, then news, events, and theses.
@@ -5102,5 +5060,5 @@ figure.lt-svg {
 }
 
 .dark {
-  .lt-profile-bio { color: #c9d6e3; }
+  .lt-profile-bio { color: $lt-dark-soft; }
 }

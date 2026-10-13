@@ -24,7 +24,7 @@
     <h3>{{ .Key }}</h3>
     <ol class="lt-pub-list">
       {{ range .Pages }}
-      {{ $kind := index (intersect (slice "Journal" "Conference" "Workshop" "Preprint") (.Params.categories | default slice) | default (slice "Publication")) 0 }}
+      {{ $kind := (partial "lt/pub-meta.html" .).kind }}
       <li class="lt-pub-row" data-lt-tag="{{ urlize $kind }}" data-lt-topics="{{ delimit (.Params.topics | default slice) " " }}">
         {{ partial "lt/pub-row.html" . }}
       </li>

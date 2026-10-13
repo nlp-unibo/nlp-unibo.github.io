@@ -13,7 +13,7 @@
   </div>
   <div class="lt-slide-body">
     <h3 class="lt-slide-title">{{ with $meta.url }}<a class="lt-stretch" href="{{ . }}"{{ if not $meta.blog }} target="_blank" rel="noopener"{{ end }}>{{ $page.Title }}</a>{{ else }}{{ .Title }}{{ end }}</h3>
-    {{ $kind := "" }}{{ if $showKind }}{{ range slice "Preprint" "Journal" "Conference" "Workshop" }}{{ if and (not $kind) (in ($page.Params.categories | default slice) .) }}{{ $kind = . }}{{ end }}{{ end }}{{ end }}
+    {{ $kind := "" }}{{ if and $showKind (ne $meta.kind "Publication") }}{{ $kind = $meta.kind }}{{ end }}
     {{/* A Preprint pill already says what the venue "Preprint" would. */}}{{ $venue := $meta.venue }}{{ if eq $venue $kind }}{{ $venue = "" }}{{ end }}
     <div class="lt-meta">{{ with $kind }}<span class="lt-pill lt-pill-{{ if eq . "Preprint" }}preprint{{ else }}paper{{ end }}">{{ . }}</span>{{ end }}<span>{{ with $venue }}<span class="lt-slide-venue">{{ . }}</span> {{ end }}<span class="lt-nowrap">{{ with $venue }}· {{ end }}{{ if $yearOnly }}<time datetime="{{ .Date.Format "2006" }}">{{ .Date.Format "2006" }}</time>{{ else }}<time datetime="{{ $meta.iso }}">{{ $meta.date }}</time>{{ end }}</span></span></div>
     {{ with .Params.award }}<p class="lt-award"><i class="fas fa-trophy" aria-hidden="true"></i> {{ . }}</p>{{ end }}
