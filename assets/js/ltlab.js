@@ -358,7 +358,8 @@
           : `${field.dataset.ltLabel}: ${monthFields.includes(field) ? monthName(field.value) : field.value.trim()}`));
       const { to, names: people } = recipients();
       const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
-      return `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body)}`;
+      // RFC 6068 line breaks are CRLF; some mail clients join lines that end in a bare LF.
+      return `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body.replace(/\r?\n/g, "\r\n"))}`;
     };
     const output = form.querySelector(".lt-mail-subject");
     const names = form.parentElement.querySelector(".lt-mail-names");

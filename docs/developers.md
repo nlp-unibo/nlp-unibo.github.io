@@ -184,6 +184,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 
 | Partial | Input | Output |
 | --- | --- | --- |
+| `author-names.html` | A page | Returns the display names of its `authors`: a profile folder name, such as `nicolo-donati`, becomes the profile title; used by cards that print authors as text |
 | `contacts.html` | List of author folder names or `{name, email}` maps | Returns people with `name`, `email`, `url`, `avatar`, `initials`; fails the build on an unknown author or a missing email |
 | `people-row.html` | Output of `contacts.html` | Avatar row linked to profiles or `mailto:` |
 | `cover.html` | `seed`, optional `pattern` (`tokens`, `graph`, `wave`, `dots`), optional `tall` | Generated SVG cover art, stable for a given seed |

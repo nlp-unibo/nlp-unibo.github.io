@@ -1489,6 +1489,9 @@ $lt-slide-height: 29rem;
   }
 }
 
+// The theme script adds its own copy button to every `pre > code`; the citation block already has `.lt-bib-copy`.
+.lt-bib .btn-copy-code { display: none !important; }
+
 .lt-bib-copy {
   position: absolute;
   z-index: 1;

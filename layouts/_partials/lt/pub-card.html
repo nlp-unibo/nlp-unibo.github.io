@@ -5,7 +5,7 @@
 {{ if reflect.IsMap . }}{{ $page = .page }}{{ $yearOnly = .year }}{{ $showKind = .kind }}{{ end }}
 {{ with $page }}
 {{ $meta := partial "lt/pub-meta.html" . }}
-{{ $authors := .Params.authors | default slice }}
+{{ $authors := partial "lt/author-names.html" . }}
 <article class="lt-card lt-link-card lt-slide">
   <div class="lt-slide-media">
     {{/* The figure of lt/pub-media.html, or generated cover art when the publication has none. */}}

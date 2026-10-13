@@ -1,0 +1,9 @@
+{{/* Returns the display names of a page's authors: an entry written as a profile folder name, such as nicolo-donati, */}}
+{{/* becomes the title of that profile; any other entry stays as written. Input: a page. */}}
+{{ $names := slice }}
+{{ range .Params.authors | default slice }}
+  {{ $name := . }}
+  {{ with site.GetPage (printf "/authors/%s" .) }}{{ $name = .Title }}{{ end }}
+  {{ $names = $names | append $name }}
+{{ end }}
+{{ return $names }}
