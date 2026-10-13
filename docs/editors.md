@@ -235,6 +235,18 @@ New topic first: [create `content/proposals/new-topic/_index.md`](https://github
 | `brief` | Two to four sentences, at most 70 words, shown on the opened card |
 | `contacts` | Folder names in `content/authors/`, or `{name: ..., email: ...}` for someone outside the lab |
 | Body (optional) | Two sections, `## Context` and `## Objective`, about 120 words, no references |
+| Figure (optional) | One drawn schema or one image, uploaded to the proposal folder as in [Add images and files](#add-images-and-files) |
+
+To show the figure, add one line at the end of the body, with a caption that says what the figure shows and where it comes from:
+
+```text
+{{< svg src="schema.svg" caption="What the schema shows." >}}
+{{< figure src="figure.png" caption="What the figure shows (Figure 1 of the paper, CC BY 4.0)." >}}
+```
+
+Use `svg` for a drawn schema, which follows the site colors; ask the maintainer to draw one.
+Use `figure` for an image you may publish.
+A figure needs the body: without it, the opened card shows only the brief.
 
 **Result**
 
