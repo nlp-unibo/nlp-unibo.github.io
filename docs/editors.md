@@ -85,11 +85,17 @@ featured.png the main figure of the paper (optional)
    ```yaml
    tacl:
      name: "Transactions of the Association for Computational Linguistics (TACL)"  # full name (ACRONYM)
-     rank: "Q1"         # conference: ICORE class A*, A, B, C; journal: SJR best quartile Q1 to Q4; workshop: ""
+     rank: "Q1"         # from the table below
      source: SJR 2024   # the edition the rank comes from
    ```
 
-   - Conference rank: [ICORE portal](https://portal.core.edu.au/conf-ranks/). Journal rank: [SCImago](https://www.scimagojr.com/journalrank.php).
+   | Paper `categories` | Where to find the rank | Allowed `rank` |
+   | --- | --- | --- |
+   | Conference | [ICORE portal](https://portal.core.edu.au/conf-ranks/), latest edition | `A*`, `A`, `B`, `C`, `Multiconference`, or `""` if unranked |
+   | Journal | [SCImago](https://www.scimagojr.com/journalrank.php), best quartile | `Q1`, `Q2`, `Q3`, `Q4`, or `""` if unranked |
+   | Workshop | none | `""` |
+
+   - The check fails when the rank does not fit the paper's `categories`, such as a `Q1` venue on a Conference paper.
    - Findings papers use their own key (such as `findings-acl`) with the rank of the main conference.
    - The rank decides the Highlights (see [Site rules](#highlights)).
 4. **Topics and keywords.**
@@ -246,10 +252,10 @@ TODO: A short description of the topic, in a few sentences.
 | Field | Rule |
 | --- | --- |
 | `title`, `date` | Proposal title, day added |
-| `summary` | One sentence of about 18 words, shown on the card |
+| `summary` | One sentence of about 18 words (at most 25), shown on the card |
 | `brief` | Two to four sentences, at most 70 words, shown on the opened card |
-| `contacts` | Folder names in `content/authors/`, or `{name: ..., email: ...}` for someone outside the lab |
-| Body (optional) | Two sections, `## Context` and `## Objective`, about 120 words, no references |
+| `contacts` | Folder names in [`content/authors/`](../content/authors/), or `{name: ..., email: ...}` for someone outside the lab |
+| Body (optional) | Exactly two sections, `## Context` and `## Objective`, about 120 words (at most 160), no references |
 | Figure (optional) | One drawn schema or one image, uploaded to the proposal folder as in [Add images and files](#add-images-and-files) |
 
 To show the figure, add one line at the end of the body, with a caption that says what the figure shows and where it comes from:
@@ -525,6 +531,11 @@ Select **Details** next to the red cross, open **Validate content and production
 | `contains Lorem ipsum` or `contains publication boilerplate` | Placeholder text from an old template is still there. Replace it |
 | `categories must be exactly one of ...` | The `categories` value is missing, misspelled, or repeated. Copy one allowed value from the message |
 | `venue_key '...' is not defined in data/venues.yaml` | Set `venue_key` to a key of `data/venues.yaml`, or add the venue there |
+| `venue rank '...' does not fit a ... paper` | The venue rank belongs to another kind of venue. Check `venue_key` and `categories`, or fix `rank` in `data/venues.yaml` with the table in [Add a publication](#add-a-publication) |
+| `venue '...' has rank '...'` | A rank in `data/venues.yaml` is misspelled. Use one value of the table in [Add a publication](#add-a-publication) |
+| `summary has ... words`, `brief has ... words`, `body has ... words` | A proposal text is too long. Shorten it to the limit in the message |
+| `contact '...' is not a folder in content/authors` | Write the folder name of the person, such as `federico-ruggeri`, or `{name: ..., email: ...}` for someone outside the lab |
+| `body sections are ...` | A proposal body has other headings. Use exactly `## Context` and `## Objective` |
 | `publication_types must be exactly one of ...` | Use one value from the message, as described in [Add a publication](#add-a-publication) |
 | `user_groups must be exactly one of ...` | Use exactly one of `Members`, `Associate Fellows`, `External Collaborators`, or `Former Members` |
 | `author slug must be '...'` | A person's folder name does not match their `title`. Create the folder with the name the message shows |

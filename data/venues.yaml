@@ -1,7 +1,7 @@
 # Venues of conference, journal, and workshop papers, keyed by the `venue_key` of each publication. `name` is what every
 # publication list and page shows: the full venue name with its acronym in brackets, or the full name alone when the
 # venue has no established acronym.
-# `rank` is the ICORE class of a conference (A*, A, B, C) or the SCImago (SJR) best quartile of a journal (Q1 to Q4);
+# `rank` is the ICORE class of a conference (A*, A, B, C, Multiconference) or the SCImago (SJR) best quartile of a journal (Q1 to Q4);
 # an empty rank means the source does not rate the venue. The Highlights carousel shows the twelve newest papers of the
 # last four years whose venue rank is A*, A, or Q1, or whose venue sets `top: true`. `source` names the edition the rank
 # comes from. Industry and demo tracks are separate venues without a rank.
