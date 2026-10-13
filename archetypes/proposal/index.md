@@ -2,7 +2,7 @@
 title: '{{ replace .Name "-" " " | title }}'
 date: '{{ now.Format "2006-01-02" }}'
 draft: true
-# Card on the Work with us page: one sentence of at most about 18 words.
+# Shown at the top of the opened proposal on the Work with us page: one sentence of at most about 18 words.
 summary: "TODO: One sentence that says what the proposal does."
 # Opened card on the Work with us page: two to four sentences, at most 70 words.
 brief: "TODO: Two to four sentences: the problem, the idea, and what a student would do."

@@ -1,0 +1,28 @@
+<svg viewBox="0 0 800 270" role="img" aria-labelledby="tosexp-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="tosexp-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="tosexp-title">An illustrative clause of a Terms of Service document, We may change these terms at any time, goes to a large language model. The model receives information such as guidelines or other contracts, through retrieval-augmented generation or few-shot learning. It returns a label, fair or unfair, which is either its own or given by a person or another system, and a legal explanation of why the label holds.</title>
+  <text class="lt-s-sub" x="20" y="22">A CLAUSE OF A TERMS OF SERVICE</text>
+  <rect class="lt-s-tok" x="20" y="34" width="330" height="56" rx="10"/>
+  <text class="lt-s-txt" x="185" y="67">We may change these terms at any time.</text>
+  <text class="lt-s-sub" x="20" y="140">INFORMATION</text>
+  <rect class="lt-s-box lt-s-pred" x="20" y="152" width="330" height="64" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="185" y="178">Guidelines or other contracts</text>
+  <text class="lt-s-txt lt-s-small" x="185" y="200">through RAG or few-shot learning</text>
+  <path class="lt-s-arrow" marker-end="url(#tosexp-arrow)" d="M354 62 H380 V112 H406"/>
+  <path class="lt-s-arrow" marker-end="url(#tosexp-arrow)" d="M354 184 H380 V148 H406"/>
+  <rect class="lt-s-box lt-s-sel" x="410" y="96" width="160" height="68" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="490" y="125">Large language</text>
+  <text class="lt-s-txt lt-s-strong" x="490" y="145">model</text>
+  <text class="lt-s-sub" x="620" y="22">OUTPUT</text>
+  <path class="lt-s-arrow" d="M574 130 H596 V62 V184"/>
+  <path class="lt-s-arrow" marker-end="url(#tosexp-arrow)" d="M596 62 H616"/>
+  <path class="lt-s-arrow" marker-end="url(#tosexp-arrow)" d="M596 184 H616"/>
+  <rect class="lt-s-label" x="620" y="40" width="160" height="44" rx="22"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="700" y="67">fair or unfair</text>
+  <text class="lt-s-txt lt-s-small" x="700" y="110">its own label, or one given</text>
+  <text class="lt-s-txt lt-s-small" x="700" y="126">by a person or a system</text>
+  <rect class="lt-s-tok" x="620" y="156" width="160" height="56" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="700" y="180">Explanation</text>
+  <text class="lt-s-txt lt-s-small" x="700" y="200">why the label holds</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="254">The thesis measures how the type of information and the technique change the explanations.</text>
+</svg>

@@ -129,10 +129,12 @@
     </section>
   </div>
 
-  {{/* Research proposals: compact cards with a topic filter. Opening a card hides the others and shows its panel below */}}
-  {{/* it (the research-area pattern, `data-lt-fields`): the proposal body, or the brief without a body, the contacts, */}}
-  {{/* and "Choose this proposal", which fills the open path's proposal field and sends the email to the */}}
-  {{/* proposal's contacts. A proposal has no page of its own, so the body headings become h4 without ids. */}}
+  {{/* Research proposals: one compact row per proposal, grouped under its topic, with a topic filter and a search box, */}}
+  {{/* so the list stays short as proposals grow. A row shows the title, the summary, and the contacts' faces. Opening a */}}
+  {{/* row hides the others and shows its panel below it (the research-area pattern, `data-lt-fields`): the proposal */}}
+  {{/* body, or the brief without a body, the contacts, and "Choose this proposal", which fills the open path's proposal */}}
+  {{/* field and sends the email to the proposal's contacts. A proposal has no page of its own, so the body headings */}}
+  {{/* become h4 without ids. */}}
   {{ with $proposals }}
   <div class="lt-band" data-lt-section="proposals">
     <details class="lt-expand" id="proposals" open>
@@ -140,29 +142,39 @@
       <div class="lt-proposal-browser" data-lt-fields>
         <div class="lt-filter" role="group" aria-label="Show proposals by topic" data-lt-filter-group>
           <button type="button" aria-pressed="true" data-lt-filter="">All</button>
-          {{ range (site.GetPage "/proposals").Sections }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .Title }}">{{ .Title }}</button>{{ end }}
+          {{ range (site.GetPage "/proposals").Sections }}<button type="button" aria-pressed="false" data-lt-filter="{{ urlize .Title }}">{{ .Title }} ({{ len .RegularPages }})</button>{{ end }}
         </div>
+        <input class="lt-work-search" type="search" placeholder="Search proposals" aria-label="Search proposals" data-lt-search hidden>
+        <p class="lt-work-count" aria-live="polite" data-lt-count></p>
         <div class="lt-fields-grid lt-proposals">
-          {{ range . }}
-          {{ $p := .page }}{{ $id := printf "proposal-%s" (path.Base $p.File.Dir | urlize) }}{{ $id = printf "%s-%s" $id (urlize .topic) }}
-          {{ $contacts := partial "lt/contacts.html" $p.Params.contacts }}
-          {{ $cnames := slice }}{{ $cemails := slice }}{{ range $contacts }}{{ $cnames = $cnames | append .name }}{{ $cemails = $cemails | append .email }}{{ end }}
-          <div class="lt-field-cell lt-proposal" data-lt-tag="{{ urlize .topic }}" data-lt-proposal-title="{{ $p.Title }}" data-lt-proposal-to="{{ delimit $cemails "," }}" data-lt-proposal-names="{{ delimit $cnames "|" }}">
-            <button type="button" class="lt-field" id="{{ $id }}" aria-expanded="false" aria-controls="{{ $id }}-panel">
-              <span class="lt-pill">{{ .topic }}</span>
-              <span class="lt-field-title">{{ $p.Title }}</span>
-              <span class="lt-field-question">{{ $p.Params.summary }}</span>
-              <span class="lt-proposal-more">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
-            </button>
-            <div class="lt-field-panel" id="{{ $id }}-panel" role="region" aria-labelledby="{{ $id }}">
-              <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All proposals</button>
-              {{/* Contacts and "Choose this proposal" come first, so the action stays in view above the proposal. */}}
-              <div class="lt-proposal-actions">
-                <div><p class="lt-path-label">Contacts</p>{{ partial "lt/people-row.html" $contacts }}</div>
-                <button type="button" class="lt-btn lt-btn-primary lt-proposal-pick" data-lt-proposal="{{ $p.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
+          {{ range (site.GetPage "/proposals").Sections }}{{ $topic := .Title }}
+          <div class="lt-proposal-group">
+            <h4 class="lt-proposal-group-title">{{ $topic }}</h4>
+            {{ range .RegularPages }}
+            {{ $p := . }}{{ $id := printf "proposal-%s" (path.Base $p.File.Dir | urlize) }}{{ $id = printf "%s-%s" $id (urlize $topic) }}
+            {{ $contacts := partial "lt/contacts.html" $p.Params.contacts }}
+            {{ $cnames := slice }}{{ $cemails := slice }}{{ range $contacts }}{{ $cnames = $cnames | append .name }}{{ $cemails = $cemails | append .email }}{{ end }}
+            <div class="lt-field-cell lt-proposal" data-lt-tag="{{ urlize $topic }}" data-lt-proposal-title="{{ $p.Title }}" data-lt-proposal-to="{{ delimit $cemails "," }}" data-lt-proposal-names="{{ delimit $cnames "|" }}">
+              <button type="button" class="lt-field" id="{{ $id }}" aria-expanded="false" aria-controls="{{ $id }}-panel">
+                <span class="lt-pill">{{ $topic }}</span>
+                <span class="lt-proposal-text">
+                  <span class="lt-field-title">{{ $p.Title }}</span>
+                  <span class="lt-field-question">{{ $p.Params.summary }}</span>
+                </span>
+                <span class="lt-proposal-faces" aria-hidden="true">{{ range $contacts }}{{ with .avatar }}<img src="{{ . }}" width="28" height="28" alt="" loading="lazy">{{ else }}<span>{{ .initials }}</span>{{ end }}{{ end }}</span>
+                <span class="lt-proposal-more">Read more <i class="fas fa-arrow-right" aria-hidden="true"></i></span>
+              </button>
+              <div class="lt-field-panel" id="{{ $id }}-panel" role="region" aria-labelledby="{{ $id }}">
+                <button type="button" class="lt-field-back" hidden><i class="fas fa-arrow-left" aria-hidden="true"></i> All proposals</button>
+                {{/* Contacts and "Choose this proposal" come first, so the action stays in view above the proposal. */}}
+                <div class="lt-proposal-actions">
+                  <div><p class="lt-path-label">Contacts</p>{{ partial "lt/people-row.html" $contacts }}</div>
+                  <button type="button" class="lt-btn lt-btn-primary lt-proposal-pick" data-lt-proposal="{{ $p.Title }}" hidden><i class="fas fa-pen" aria-hidden="true"></i> Choose this proposal</button>
+                </div>
+                {{ with $p.Content }}<div class="lt-proposal-body">{{ . | replaceRE `<h2[^>]*>` "<h4>" | replaceRE `</h2>` "</h4>" | safeHTML }}</div>{{ else }}<p>{{ $p.Params.brief | markdownify }}</p>{{ end }}
               </div>
-              {{ with $p.Content }}<div class="lt-proposal-body">{{ . | replaceRE `<h2[^>]*>` "<h4>" | replaceRE `</h2>` "</h4>" | safeHTML }}</div>{{ else }}<p>{{ $p.Params.brief | markdownify }}</p>{{ end }}
             </div>
+            {{ end }}
           </div>
           {{ end }}
         </div>

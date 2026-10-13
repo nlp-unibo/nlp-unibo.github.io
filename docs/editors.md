@@ -253,7 +253,7 @@ When the thesis led to a paper, add the paper with the keyword `student publicat
 
 ### Add a research proposal
 
-**Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/main?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20on%20the%20card%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20opened%20card%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
+**Start:** [create `content/proposals/legal/short-name/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/main?filename=content/proposals/legal/short-name/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Proposal%20title%22%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20One%20sentence%20of%20about%2018%20words%2C%20shown%20at%20the%20top%20of%20the%20opened%20proposal%0Asummary%3A%20%22TODO%3A%20One%20sentence%20that%20says%20what%20the%20proposal%20does.%22%0A%23%20Two%20to%20four%20sentences%2C%20at%20most%2070%20words%2C%20shown%20on%20the%20opened%20card%0Abrief%3A%20%22TODO%3A%20The%20problem%2C%20the%20idea%2C%20and%20what%20a%20student%20would%20do.%22%0A%23%20Folder%20names%20in%20content%2Fauthors%2C%20or%20%7Bname%3A%20Full%20Name%2C%20email%3A%20address%7D%20for%20a%20person%20outside%20the%20lab%0Acontacts%3A%0A%20%20-%20TODO-folder-name%0A%23%20Plain%20words%2C%20not%20abbreviations%0Atags%3A%0A%20%20-%20TODO%20tag%0A---%0A%0A%3C%21--%20The%20body%20is%20optional.%20Without%20it%2C%20the%20opened%20card%20shows%20the%20brief.%20Delete%20all%20sections%20below%20to%20skip%20it.%20--%3E%0A%0A%23%23%20Context%0A%0ATODO%3A%20The%20research%20setting%2C%20with%20every%20technical%20term%20defined%20at%20its%20first%20use.%0A%0A%23%23%20Objective%0A%0ATODO%3A%20What%20the%20proposal%20aims%20at%2C%20in%20one%20or%20two%20sentences.%0A)
 
 **Folder:** `content/proposals/<topic>/<slug>/`.
 In the file name, change `legal` to a topic folder of [`content/proposals/`](../content/proposals/), and `short-name` to a short name for the proposal.
@@ -276,7 +276,7 @@ TODO: A short description of the topic, in a few sentences.
 | Field | Rule |
 | --- | --- |
 | `title`, `date` | Proposal title, day added |
-| `summary` | One sentence of about 18 words (at most 25), shown on the card |
+| `summary` | One sentence of about 18 words (at most 25), shown at the top of the opened proposal; the search also matches it |
 | `brief` | Two to four sentences, at most 70 words, shown on the opened card |
 | `contacts` | Folder names in [`content/authors/`](../content/authors/), or `{name: ..., email: ...}` for someone outside the lab |
 | Body (optional) | Exactly two sections, `## Context` and `## Objective`, about 120 words (at most 160), no references |
@@ -295,9 +295,9 @@ A figure needs the body: without it, the opened card shows only the brief.
 
 **Result**
 
-![Proposal cards on the Work with us page, with a topic filter](img/proposals.webp)
+![Proposal rows on the Work with us page, grouped by topic, with a topic filter and a search box](img/proposals.webp)
 
-- A card on Work with us under its topic. Opening it shows the contacts, **Choose this proposal**, and the body or brief.
+- A row on Work with us under its topic heading, with its title and the faces of its contacts. Opening it shows the summary, the contacts, **Choose this proposal**, and the body or brief.
 - A student who chooses it writes to its contacts.
 
 ### Add a project

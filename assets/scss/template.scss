@@ -1600,12 +1600,9 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   overflow-wrap: break-word;
   line-height: 1.5;
   text-align: left;
-  transition: border-color 0.2s ease, transform 0.2s ease;
+  // A step is not interactive, so it does not react to hover or focus.
 
-  &:hover {
-    border-color: $lt-blue;
-    transform: translateY(-2px);
-  }
+  > .lt-ours { align-self: flex-start; margin-left: 0; }
 
   strong {
     font-size: 0.95rem;
@@ -4190,26 +4187,69 @@ figure.lt-svg {
 // The filter works only with the script, so without it the buttons are not shown.
 .lt-filter:not(.is-enhanced) { display: none; }
 
-// Research proposals reuse the research-area blocks (`.lt-fields-grid`, `.lt-field`); the filter is hidden while a
-// proposal is open.
-.lt-proposal-browser:has(.has-open) > .lt-filter { display: none; }
+// Research proposals reuse the research-area blocks (`.lt-fields-grid`, `.lt-field`); the filter, the search, and the
+// count are hidden while a proposal is open.
+.lt-proposal-browser:has(.has-open) > :is(.lt-filter, .lt-work-search, .lt-work-count) { display: none; }
 
-// On phones the closed list is one row that scrolls sideways inside its own box, so the next step stays close;
-// an opened proposal returns to the stacked layout.
-@media (max-width: 575.98px) {
-  .lt-proposals:not(.has-open) {
-    display: flex;
-    gap: 0.8rem;
-    overflow-x: auto;
-    padding-bottom: 0.6rem;
-    scroll-snap-type: x mandatory;
-    overscroll-behavior-x: contain;
+// Closed, the proposals are compact rows under topic headings, two per line from tablets up: the title and the
+// contacts' faces; the summary appears once a proposal is open, and the search still matches it. A row marks hover
+// with its border only, so it never moves.
+.lt-proposals:not(.has-open) {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.4rem;
 
-    > .lt-field-cell { flex: 0 0 85%; scroll-snap-align: start; }
+  .lt-field {
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    box-shadow: none;
+
+    &:hover { transform: none; border-color: $lt-blue; }
+  }
+
+  .lt-pill { display: none; }
+
+  .lt-field-title { font-size: 0.95rem; line-height: 1.35; }
+
+  .lt-field-question { display: none; }
+
+  .lt-proposal-more { display: none; }
+
+  @media (max-width: 575.98px) {
+    .lt-proposal-faces { display: none; }
   }
 }
 
-.lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; }
+.lt-proposal-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem;
+
+  @media (min-width: 768px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.lt-proposal-group-title { grid-column: 1 / -1; margin: 0 0 0.2rem; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+
+.lt-fields-grid.has-open .lt-proposal-group { display: contents; }
+
+.lt-fields-grid.has-open .lt-field-cell:not(.is-open), .lt-fields-grid.has-open .lt-proposal-group-title { display: none; }
+
+.lt-proposal-text { display: flex; flex: 1 1 auto; flex-direction: column; gap: 0.15rem; min-width: 0; }
+
+.lt-proposal-faces {
+  display: flex;
+  flex: none;
+
+  img, span { width: 1.75rem; height: 1.75rem; margin-left: -0.45rem; border-radius: 50%; }
+
+  :first-child { margin-left: 0; }
+
+  span { display: inline-flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; }
+}
+
+.lt-fields-grid.has-open .lt-proposal-faces { display: none; }
 
 .lt-fields-grid.has-open .lt-proposal-more { display: none; }
 
@@ -4352,6 +4392,9 @@ figure.lt-svg {
   .lt-step-text { color: #c9d6e3; }
   .lt-expand p { border-left: 0; }
   .lt-proposal-more { color: $lt-sky; }
+  .lt-proposal-group-title { color: $lt-dark-muted; }
+  .lt-proposal-faces img, .lt-proposal-faces span { border: 2px solid $lt-dark-card; }
+  .lt-proposal-faces span { color: $lt-sky; background: #18324a; }
   .lt-people a { color: #f1f5fa; }
   .lt-work-search { border-color: $lt-dark-border; color: #f1f5fa; background: rgba(255, 255, 255, 0.04); color-scheme: dark; }
   .lt-work-count { color: $lt-dark-muted; }
