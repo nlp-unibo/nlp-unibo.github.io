@@ -766,6 +766,8 @@ For motion work, also check the page by hand without reduced motion, and with Ja
 
 On every pull request to `main`, **Validate content and build** runs `uv sync --locked`, `scripts/test_site.py`, and `site.py check`.
 The pull request needs that status check to merge.
+`test_site.py` reads no content, so only a change to `site.py` can fail it.
+`site.py check` fails on content, templates, or the build.
 After the merge, **Deploy Hugo site to Pages** builds with `hugo --minify` and publishes.
 
 ## 8. Upgrades and policy
@@ -805,7 +807,13 @@ The direct import lets the site exclude `layouts/_markup/sitemap.xml` from blox-
 
 ### Review and emergency policy
 
-The repository has one active maintainer, so pull requests require zero approvals and the **Validate content and build** status check.
+The ruleset **merge branch and PR** protects `main`, with no bypass actors.
+It blocks direct pushes, force pushes, and deletion.
+It also requires linear history.
+Every change arrives through a pull request that passes the **Validate content and build** status check.
+The branch must be up to date with `main`, so GitHub offers **Update branch** when `main` moved.
+
+The repository has one active maintainer, so pull requests require zero approvals.
 The repository has no `CODEOWNERS` file, so new pull requests request no reviewers by default.
 Request a reviewer explicitly when a change needs a second opinion.
 When a second maintainer becomes active, raise the ruleset to one required approval and require another maintainer to review each change.
