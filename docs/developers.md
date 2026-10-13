@@ -187,7 +187,8 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `author-names.html` | A page | Returns the display names of its `authors`: a profile folder name, such as `nicolo-donati`, becomes the profile title; used by cards that print authors as text |
 | `contacts.html` | List of author folder names or `{name, email}` maps | Returns people with `name`, `email`, `url`, `avatar`, `initials`; fails the build on an unknown author or a missing email |
 | `people-row.html` | Output of `contacts.html` | Avatar row linked to profiles or `mailto:` |
-| `cover.html` | `seed`, optional `pattern` (`tokens`, `graph`, `wave`, `dots`), optional `tall` | Generated SVG cover art, stable for a given seed |
+| `cover.html` | `seed`, optional `pattern` (`tokens`, `graph`, `wave`, `dots`), optional `tall` | Generated SVG cover art of research areas, stable for a given seed |
+| `pub-cover.html` | `seed` (the title), optional `tall` | Default cover of a publication without a figure: a stylized paper page whose line lengths and figure position follow the seed; used by `pub-card.html` and the publication page teaser |
 | `links.html` | A page | Returns the links of its body as `name`, `url`, Font Awesome `icon` |
 | `link-chips.html` | `links`, `max` | Chip list |
 | `news-data.html` | A news page or a publication | Returns `kind`, `date`, `iso`, `venue`, `summary`, `links`, `id` for previews |
@@ -269,6 +270,7 @@ Change them together.
 | `data/themes/ltlab.toml` | Theme `primary`, `link`, `link_hover`, `background`, menu colours, and `home_section_odd` / `home_section_even` band colours |
 | `data/topics.yaml` | Topic tag labels |
 | `layouts/_partials/lt/cover.html` | Four hard-coded gradient palettes for generated covers |
+| `layouts/_partials/lt/pub-cover.html` | The navy gradient, sky outline, and orange title bar of the default paper cover |
 
 The first comment of `template.scss` states that `ltlab.toml` uses the same values as the Sass palette.
 Every coloured mark also carries a text label, so no colour carries meaning alone.
@@ -607,7 +609,7 @@ The theme's `figure` shortcode shows an image from the page folder: `{{< figure 
 
 `layouts/publication/single.html` renders a publication as a project page.
 The header shows the kind pill, venue and year, title, `summary`, authors, `topics`, `affiliations`, `award`, and link buttons from `lt/pub-meta.html`.
-The teaser is `teaser.mp4`, else the `*featured*` image, else a generated cover.
+The teaser is `teaser.mp4`, else `card.svg`, else the `*featured*` image, else the default paper cover of `lt/pub-cover.html`.
 The side menu lists every `<h2 id>` of the body plus Cite, and appears only with two or more entries.
 A page without a body shows its `abstract`.
 

@@ -520,10 +520,11 @@ All topics share one style; a topic has no colour of its own.
 
 | Place | First available |
 | --- | --- |
-| Publication page teaser | `teaser.mp4`, then `card.svg`, then `featured.png`, then a pattern |
-| Cards (carousels, lists) | `card.svg`, then `card.png`, then `featured.png` |
+| Publication page teaser | `teaser.mp4`, then `card.svg`, then `featured.png`, then the default paper cover |
+| Cards (carousels, lists) | `card.svg`, then `card.png`, then `featured.png`, then the default paper cover |
 | Research focus card | `card.svg`, then `card.png` |
 
+The default paper cover is a drawn paper page on the site navy, the same for every paper apart from small line variations. It replaces nothing: add `card.svg` or a figure whenever the paper has one.
 Reuse a figure from a paper only when its source is openly licensed (arXiv, ACL Anthology, CEUR-WS), and credit it in `image: caption:`.
 
 ### Work with us forms
