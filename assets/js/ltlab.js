@@ -1325,6 +1325,19 @@
     // An arrow moves one slide per click; the second click of a double click is ignored, so it does not skip a slide.
     if (previous) previous.addEventListener("click", (event) => { if (event.detail < 2) go(current - 1); });
     if (next) next.addEventListener("click", (event) => { if (event.detail < 2) go(current + 1); });
+    // Focusing a link in a slide scrolls the track only until the link shows, which leaves the slide off center;
+    // center it as an arrow does. The browser jumps during focus, so the track returns to where it was before the
+    // next paint and glides from there.
+    track.addEventListener("focusin", (event) => {
+      const index = slides.indexOf(event.target.closest(".lt-carousel-track > *"));
+      // A pointer focus is left to the click handler below, which moves to a neighbour instead of following its link.
+      if (index < 0 || !event.target.matches(":focus-visible")) return;
+      const from = offset(slides[current]);
+      requestAnimationFrame(() => {
+        track.scrollLeft = from;
+        go(index);
+      });
+    });
     // Focusing a link can still shift the track vertically by the height of the card shadows; undo it.
     track.addEventListener("scroll", () => { if (track.scrollTop) track.scrollTop = 0; update(); wait(); }, { passive: true });
     // With the script the track does not scroll freely, so a vertical page scroll can never shift it.
