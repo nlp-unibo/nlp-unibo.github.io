@@ -36,7 +36,6 @@ body {
 h1, h2, h3, h4, h5, h6,
 .article-title,
 .section-heading h1 {
-  color: $lt-navy;
   font-weight: 650;
   letter-spacing: -0.015em;
 }
@@ -127,15 +126,6 @@ h1, h2, h3, h4, h5, h6,
 }
 
 // Hero backdrop: a soft brand gradient with a faint dot grid, also behind the opening band of section pages
-#section-hero,
-.lt-band.lt-page-intro {
-  background:
-    radial-gradient(circle at 1px 1px, rgba($lt-blue, 0.12) 1px, transparent 0) 0 0 / 22px 22px,
-    radial-gradient(ellipse at 85% 20%, rgba($lt-sky, 0.22), transparent 55%),
-    radial-gradient(ellipse at 10% 90%, rgba($lt-orange, 0.10), transparent 50%),
-    #fff;
-}
-
 .dark #section-hero,
 .dark .lt-band.lt-page-intro {
   background:
@@ -150,7 +140,6 @@ h1, h2, h3, h4, h5, h6,
   margin-top: 0.2rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: $lt-navy;
 
   .fa-trophy {
     color: $lt-orange;
@@ -174,7 +163,6 @@ h1, h2, h3, h4, h5, h6,
   padding: 0.08rem 0.55rem;
   border: 1px solid rgba($lt-muted, 0.45);
   border-radius: 999px;
-  color: $lt-muted;
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1.5;
@@ -200,7 +188,6 @@ h1, h2, h3, h4, h5, h6,
   background: $lt-muted;
 }
 
-.lt-kind-journal { background: $lt-navy; }
 .lt-kind-conference { background: $lt-blue; }
 .lt-kind-workshop { background: #0b6e70; }
 .lt-kind-preprint { background: #e6ebf1; color: #33475b; }
@@ -216,7 +203,6 @@ h1, h2, h3, h4, h5, h6,
   font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: $lt-muted;
 }
 
 .dark .lt-year {
@@ -225,15 +211,11 @@ h1, h2, h3, h4, h5, h6,
 
 // Translucent navbar that gains a hairline once the page scrolls
 #navbar-main {
-  background-color: rgba(255, 255, 255, 0.82) !important;
   -webkit-backdrop-filter: saturate(180%) blur(10px);
   backdrop-filter: saturate(180%) blur(10px);
   box-shadow: none;
   transition: box-shadow 0.2s ease;
 
-  &.lt-scrolled {
-    box-shadow: 0 1px 0 $lt-border;
-  }
 }
 
 .dark #navbar-main {
@@ -357,7 +339,6 @@ h1, h2, h3, h4, h5, h6,
     left: 0;
     top: 50px;
     width: 100%;
-    background-color: $sta-menu-primary;
   }
 
   .dark #navbar-main .navbar-collapse {
@@ -409,7 +390,6 @@ $lt-dark-card: #112236;
 
 .lt-brand-text {
   font-size: 1.05rem;
-  color: $lt-navy;
 }
 
 .dark .lt-brand-text {
@@ -428,7 +408,6 @@ $lt-dark-card: #112236;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: $lt-blue;
 }
 
 .dark .lt-eyebrow {
@@ -451,7 +430,6 @@ $lt-dark-card: #112236;
 .lt-section-subtitle {
   max-width: 40rem;
   margin: 0.5rem 0 0;
-  color: $lt-muted;
 }
 
 // A People group caption sits between its title and its cards.
@@ -484,8 +462,6 @@ $lt-dark-card: #112236;
 }
 
 .lt-btn-primary {
-  background: $lt-navy;
-  color: #fff !important;
 
   &:hover {
     background: $lt-blue;
@@ -493,9 +469,6 @@ $lt-dark-card: #112236;
 }
 
 .lt-btn-ghost {
-  border-color: $lt-border;
-  color: $lt-navy !important;
-  background: rgba(255, 255, 255, 0.7);
 
   &:hover {
     border-color: $lt-blue;
@@ -521,7 +494,6 @@ $lt-dark-card: #112236;
   align-items: center;
   gap: 0.35rem 0.75rem;
   font-size: 0.8rem;
-  color: $lt-muted;
 }
 
 .dark .lt-meta {
@@ -542,10 +514,7 @@ $lt-dark-card: #112236;
   text-transform: uppercase;
 }
 
-.lt-pill { background: rgba($lt-blue, 0.1); color: $lt-blue; }
 .lt-pill-paper { background: rgba($lt-blue, 0.12); color: $lt-blue; }
-.lt-pill-call { background: rgba(#7b4fa0, 0.12); color: #6a3f8f; }
-.lt-pill-event { background: rgba($lt-orange, 0.16); color: #9a5600; }
 
 .dark {
   .lt-pill { background: rgba($lt-sky, 0.14); color: $lt-sky; }
@@ -574,14 +543,8 @@ $lt-dark-card: #112236;
   border-radius: 8px;
   font-size: 0.8rem;
   font-weight: 600;
-  color: $lt-navy !important;
-  background: #fff;
   text-decoration: none !important;
   transition: border-color 0.15s ease, color 0.15s ease;
-
-  i {
-    color: $lt-blue;
-  }
 
   &:hover {
     border-color: $lt-blue;
@@ -603,18 +566,12 @@ $lt-dark-card: #112236;
   padding: 0.1rem 0.55rem;
   border-radius: 6px;
   font-size: 0.75rem;
-  color: $lt-ink;
-  background: #eef2f7;
   text-decoration: none !important;
 }
 
 .lt-tags a {
   transition: background-color 0.15s ease, color 0.15s ease;
 
-  &:hover {
-    color: #fff;
-    background: $lt-blue;
-  }
 }
 
 .dark .lt-tags a:hover {
@@ -649,7 +606,6 @@ $lt-dark-card: #112236;
   flex-direction: column;
   overflow: hidden;
   border-radius: 16px;
-  background: rgba($lt-blue, 0.05);
 }
 
 .dark .lt-card {
@@ -660,15 +616,12 @@ $lt-dark-card: #112236;
 // keyboard focus only, so a focus that a script returns after a click does not move it.
 .lt-link-card {
   border: 1px solid $lt-border;
-  background: #fff;
   color: inherit !important;
   text-decoration: none !important;
-  box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
   transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover,
   &:has(:focus-visible) {
-    border-color: rgba($lt-blue, 0.45);
     transform: translateY(-3px);
     box-shadow: 0 18px 36px -24px rgba($lt-navy, 0.5);
   }
@@ -726,8 +679,6 @@ img.lt-cover {
   height: 2.2rem;
   border-radius: 10px;
   font-size: 0.95rem;
-  color: $lt-blue;
-  background: rgba($lt-sky, 0.16);
 }
 
 .dark .lt-area-icon {
@@ -760,7 +711,6 @@ img.lt-cover {
   overflow: hidden;
   font-size: 0.9rem;
   line-height: 1.55;
-  color: $lt-muted;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
@@ -805,7 +755,6 @@ img.lt-cover {
 
   em {
     font-style: normal;
-    color: $lt-blue;
   }
 }
 
@@ -818,7 +767,6 @@ img.lt-cover {
   margin: 0 auto;
   font-size: clamp(1.15rem, 2vw, 1.35rem);
   line-height: 1.6;
-  color: $lt-ink;
 
   p:last-child {
     margin-bottom: 0;
@@ -876,7 +824,6 @@ img.lt-cover {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.5;
-  color: $lt-ink;
 }
 
 .lt-area-topics {
@@ -892,8 +839,6 @@ img.lt-cover {
     border-radius: 999px;
     font-size: 0.78rem;
     font-weight: 600;
-    color: $lt-blue;
-    background: rgba($lt-sky, 0.16);
   }
 }
 
@@ -967,12 +912,6 @@ $lt-slide-height: 29rem;
   padding-block: 1.5rem;
   margin-block: -1.5rem;
 
-  > .lt-card {
-    border-color: rgba($lt-blue, 0.22);
-    box-shadow: 0 1px 2px rgba($lt-navy, 0.08), 0 18px 40px -20px rgba($lt-navy, 0.55);
-  }
-
-  > .lt-card.is-active { box-shadow: 0 0 0 1px rgba($lt-blue, 0.18), 0 22px 48px -20px rgba($lt-navy, 0.6); }
 }
 
 .dark .lt-carousel-track {
@@ -1046,7 +985,6 @@ $lt-slide-height: 29rem;
     @media (max-width: 767.98px) { position: static; padding: 0.8rem 0.6rem; svg { height: auto; } }
   }
 
-
   @media (max-width: 767.98px) {
     aspect-ratio: 2 / 1;
   }
@@ -1077,16 +1015,13 @@ $lt-slide-height: 29rem;
 .lt-slide-authors {
   margin: 0;
   font-size: 0.88rem;
-  color: $lt-ink;
 }
 
 .lt-slide-text {
   margin: 0;
   font-size: 0.98rem;
   line-height: 1.6;
-  color: $lt-ink;
 }
-
 
 .lt-carousel-nav {
   display: flex;
@@ -1121,13 +1056,11 @@ $lt-slide-height: 29rem;
       width: 0.55rem;
       height: 0.55rem;
       border-radius: 999px;
-      background: rgba($lt-blue, 0.3);
       transition: width 0.2s ease, background 0.2s ease;
     }
 
     &[aria-current="true"]::before {
       width: 1.4rem;
-      background: $lt-blue;
     }
   }
 }
@@ -1138,7 +1071,6 @@ $lt-slide-height: 29rem;
 
   &[aria-current="true"]::before {
     width: 2.6rem;
-    background: linear-gradient($lt-blue, $lt-blue) no-repeat left / 0% 100%, rgba($lt-blue, 0.3);
     animation: lt-dot-fill var(--lt-autoplay) linear forwards;
   }
 }
@@ -1161,12 +1093,6 @@ $lt-slide-height: 29rem;
     height: 2.6rem;
     border: 1px solid $lt-border;
     border-radius: 50%;
-    color: $lt-navy;
-    background: #fff;
-
-    &:hover:not(:disabled) {
-      border-color: $lt-blue;
-    }
 
     &:disabled {
       opacity: 0.4;
@@ -1222,7 +1148,6 @@ $lt-slide-height: 29rem;
 
   time {
     font-size: 0.85rem;
-    color: $lt-muted;
     font-variant-numeric: tabular-nums;
   }
 
@@ -1240,18 +1165,9 @@ $lt-slide-height: 29rem;
   }
 }
 
-.lt-news-row-main {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem 1rem;
-}
-
 .lt-news-row-title {
   font-weight: 600;
   line-height: 1.4;
-  color: $lt-navy !important;
   text-decoration: none !important;
 }
 
@@ -1268,7 +1184,6 @@ $lt-slide-height: 29rem;
 
 .lt-news-row-title { color: #f1f5fa !important; }
 }
-
 
 // Publication page in the style of a research project page (layouts/publication/single.html)
 .lt-proj-header {
@@ -1287,7 +1202,6 @@ $lt-slide-height: 29rem;
   margin: 0 0 1.2rem;
   font-size: 0.9rem;
   font-weight: 600;
-  color: $lt-muted;
 }
 
 .lt-proj-title {
@@ -1304,16 +1218,12 @@ $lt-slide-height: 29rem;
   margin: 1rem auto 0;
   font-size: 1.2rem;
   line-height: 1.5;
-  color: $lt-ink;
 }
 
 .lt-proj-authors {
   margin: 1.4rem 0 0;
   font-size: 1.05rem;
 
-  a {
-    color: $lt-blue !important;
-  }
 }
 
 .lt-proj-topics .lt-topics {
@@ -1324,7 +1234,6 @@ $lt-slide-height: 29rem;
 .lt-proj-affiliations {
   margin: 0.3rem 0 0;
   font-size: 0.92rem;
-  color: $lt-muted;
 }
 
 .lt-proj-header .lt-award {
@@ -1347,20 +1256,15 @@ $lt-slide-height: 29rem;
   border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 600;
-  color: #fff !important;
-  background: #1f2933;
   text-decoration: none !important;
   transition: background-color 0.15s ease, transform 0.15s ease;
 
   &:hover {
-    background: $lt-navy;
     transform: translateY(-1px);
   }
 }
 
 .lt-proj-button-light {
-  color: $lt-navy !important;
-  background: #eef2f7;
 
   &:hover {
     background: #e1e8f0;
@@ -1391,7 +1295,6 @@ $lt-slide-height: 29rem;
   font-size: 1.7rem;
   font-weight: 750;
   line-height: 1.1;
-  color: $lt-navy;
   font-variant-numeric: tabular-nums;
 }
 
@@ -1399,7 +1302,6 @@ $lt-slide-height: 29rem;
   margin-top: 0.25rem;
   font-size: 0.8rem;
   text-align: center;
-  color: $lt-muted;
 }
 
 // A drawn card schema keeps a moderate width, since its viewBox is small and its text would otherwise grow large.
@@ -1450,7 +1352,6 @@ $lt-slide-height: 29rem;
     margin: 0.8rem auto 0;
     font-size: 0.92rem;
     text-align: center;
-    color: $lt-muted;
   }
 }
 
@@ -1466,19 +1367,14 @@ $lt-slide-height: 29rem;
   padding: 0.75rem 16px;
   border-top: 1px solid $lt-border;
   border-bottom: 1px solid $lt-border;
-  background: rgba(255, 255, 255, 0.9);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
 
   a {
     font-size: 0.9rem;
     font-weight: 600;
-    color: $lt-muted !important;
     text-decoration: none !important;
 
-    &:hover {
-      color: $lt-navy !important;
-    }
   }
 }
 
@@ -1514,7 +1410,6 @@ $lt-slide-height: 29rem;
   figcaption {
     margin-top: 0.6rem;
     font-size: 0.9rem;
-    color: $lt-muted;
   }
 
   table {
@@ -1543,8 +1438,6 @@ $lt-slide-height: 29rem;
     border-left: 4px solid $lt-orange;
     border-radius: 0 12px 12px 0;
     font-size: 1.15rem;
-    color: $lt-navy;
-    background: rgba($lt-orange, 0.07);
 
     p:last-child {
       margin-bottom: 0;
@@ -1568,7 +1461,6 @@ $lt-slide-height: 29rem;
 
 .lt-post-related {
   padding: 3.5rem 0 4.5rem;
-  background: rgb(246, 248, 251);
 
   .lt-section-title {
     margin-bottom: 1.5rem;
@@ -1576,7 +1468,6 @@ $lt-slide-height: 29rem;
 }
 
 .lt-pub-empty {
-  color: $lt-muted;
   text-align: center;
 }
 
@@ -1591,7 +1482,6 @@ $lt-slide-height: 29rem;
     font-size: 0.8rem;
     white-space: pre-wrap;
     word-break: break-word;
-    background: #f4f6f9;
   }
 
   code {
@@ -1609,8 +1499,6 @@ $lt-slide-height: 29rem;
   border-radius: 8px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: $lt-navy;
-  background: #fff;
   cursor: pointer;
 }
 
@@ -1638,7 +1526,6 @@ $lt-slide-height: 29rem;
 // Annotation colors are the categorical slots 1-4: blue, yellow, magenta, green. The site is dark only, and the dark
 // set passes every pairwise check of the dataviz palette validator (--pairs all) on #0d1a2a and #112236, with a color
 // vision deficiency WARN (protan ΔE 6.9) that is legal because every mark also shows its label as text.
-$lt-cat-light: #2a78d6, #eda100, #e87ba4, #008300;
 $lt-cat-dark: #3987e5, #c98500, #d55181, #008300;
 // Tag text on each dark slot, the side of black or white that reaches 4.5:1: 5.77, 6.84, 5.32, and 4.95.
 $lt-cat-dark-ink: #000, #000, #000, #fff;
@@ -1674,8 +1561,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   line-height: 1.6;
   text-transform: uppercase;
   vertical-align: 0.15em;
-  color: $lt-navy;
-  background: rgba($lt-orange, 0.25);
 }
 
 // Pipeline: steps keep a readable width and the row scrolls on narrow screens
@@ -1708,7 +1593,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   padding: 0.9rem 0.8rem;
   border: 1px solid $lt-border;
   border-radius: 14px;
-  background: #fff;
   font-size: 0.85rem;
   overflow-wrap: break-word;
   line-height: 1.5;
@@ -1723,15 +1607,9 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   strong {
     font-size: 0.95rem;
     line-height: 1.3;
-    color: $lt-navy;
-  }
-
-  span:last-child {
-    color: $lt-muted;
   }
 
   &.is-highlight {
-    border-color: $lt-orange;
     box-shadow: 0 0 0 3px rgba($lt-orange, 0.15);
   }
 
@@ -1780,10 +1658,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
     background: rgba($lt-sky, 0.1);
   }
 
-  b {
-    color: $lt-navy;
-  }
-
   p {
     display: inline;
     margin: 0;
@@ -1803,8 +1677,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   margin-bottom: 0.3rem;
   border-radius: 9px;
   font-weight: 700;
-  color: $lt-blue;
-  background: rgba($lt-sky, 0.18);
 }
 
 // Gap table
@@ -1847,9 +1719,9 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   }
 }
 
-.lt-yes { color: #1a7f4b; font-size: 1.1rem; }
+.lt-yes { font-size: 1.1rem; }
 .lt-no { color: #c0392b; opacity: 0.75; font-size: 1.1rem; }
-.lt-partial { color: #b26b00; font-size: 1.1rem; }
+.lt-partial { font-size: 1.1rem; }
 
 // Bars
 .lt-bars {
@@ -1862,11 +1734,9 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
     font-size: 0.95rem;
     font-weight: 700;
     text-align: left;
-    color: $lt-navy;
 
     span {
       font-weight: 500;
-      color: $lt-muted;
     }
   }
 
@@ -1909,7 +1779,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   position: relative;
   height: 0.9rem;
   border-radius: 4px;
-  background: rgba($lt-blue, 0.07);
 }
 
 .lt-bar-fill {
@@ -1917,7 +1786,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   width: var(--w);
   height: 100%;
   border-radius: 0 4px 4px 0;
-  background: rgba($lt-blue, 0.55);
   transition: width 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), background-color 0.15s ease;
 }
 
@@ -1938,7 +1806,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
     top: -5px;
     width: 1.5px;
     height: 8px;
-    background: $lt-navy;
   }
 
   &::before { left: 0; }
@@ -2024,7 +1891,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
     border-radius: 14px;
     font-size: 0.93rem;
     line-height: 1.55;
-    background: rgba($lt-blue, 0.05);
     counter-increment: lt-takeaway;
 
     &::before {
@@ -2039,7 +1905,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
   strong {
     font-size: 1.02rem;
     line-height: 1.35;
-    color: $lt-navy;
   }
 
   p {
@@ -2112,11 +1977,6 @@ $lt-cat-dark-ink: #000, #000, #000, #fff;
 }
 
 @for $i from 1 through 4 {
-  $c: nth($lt-cat-light, $i);
-  .lt-annotate-key.lt-c#{$i} { color: darken($c, 12%); }
-  .lt-annotate-text mark.lt-c#{$i} { background: rgba($c, 0.14); border-bottom-color: $c; }
-  .lt-annotate-text mark.lt-c#{$i} .lt-annotate-tag { background: darken($c, 12%); }
-
   .dark {
     $d: nth($lt-cat-dark, $i);
     .lt-annotate-key.lt-c#{$i} { color: lighten($d, 12%); }
@@ -2180,15 +2040,9 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: $lt-muted;
     background: transparent;
     cursor: pointer;
 
-    &[aria-selected="true"] {
-      border-color: $lt-navy;
-      color: #fff;
-      background: $lt-navy;
-    }
   }
 }
 
@@ -2250,10 +2104,10 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
     }
   }
 
-  .is-evolved { border: 1.5px solid $lt-orange; background: rgba($lt-orange, 0.1); color: #8a4d00; }
-  .is-trained { border: 1.5px solid $lt-blue; background: rgba($lt-sky, 0.15); color: $lt-blue; }
-  .is-frozen { border: 1.5px solid #8aa4bf; background: repeating-linear-gradient(135deg, rgba(#8aa4bf, 0.12) 0 6px, transparent 6px 12px); color: #4f6780; }
-  .is-data { border: 1.5px solid $lt-border; background: #f4f6f9; color: $lt-ink; }
+  .is-evolved { border: 1.5px solid $lt-orange; background: rgba($lt-orange, 0.1); }
+  .is-trained { border: 1.5px solid $lt-blue; background: rgba($lt-sky, 0.15); }
+  .is-frozen { border: 1.5px solid #8aa4bf; background: repeating-linear-gradient(135deg, rgba(#8aa4bf, 0.12) 0 6px, transparent 6px 12px); }
+  .is-data { border: 1.5px solid $lt-border; }
 
   strong {
     color: inherit;
@@ -2272,9 +2126,6 @@ html:not(.lt-js) .lt-stages-tabs { display: none; }
   margin: 1rem 0 0;
   font-size: 0.8rem;
 
-  .is-evolved { color: #8a4d00; }
-  .is-trained { color: $lt-blue; }
-  .is-frozen { color: #4f6780; }
   .is-data { color: $lt-muted; }
 }
 
@@ -2310,22 +2161,18 @@ figure.lt-svg {
 }
 
 .lt-svg {
-  .lt-s-txt { font-size: 15px; text-anchor: middle; fill: $lt-navy; }
+  .lt-s-txt { font-size: 15px; text-anchor: middle; }
   .lt-s-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 16px; }
   .lt-s-strong { font-weight: 700; }
-  .lt-s-small { font-size: 12.5px; fill: $lt-muted; }
-  .lt-s-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; fill: $lt-muted; }
-  .lt-s-tok { fill: #f4f6f9; stroke: $lt-border; }
+  .lt-s-small { font-size: 12.5px; }
+  .lt-s-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; }
   .lt-s-on { fill: rgba($lt-orange, 0.25); stroke: $lt-orange; stroke-width: 1.5; }
   .lt-s-ontxt { font-weight: 700; }
-  .lt-s-off { fill: none; stroke: $lt-border; stroke-dasharray: 3 3; }
+  .lt-s-off { fill: none; stroke-dasharray: 3 3; }
   .lt-s-box { stroke-width: 1.5; }
   .lt-s-sel { fill: rgba($lt-orange, 0.1); stroke: $lt-orange; }
-  .lt-s-pred { fill: rgba($lt-sky, 0.15); stroke: $lt-blue; }
-  .lt-s-label { fill: $lt-navy; }
-  .lt-s-labeltxt { fill: #fff; }
-  .lt-s-arrow { fill: none; stroke: $lt-muted; stroke-width: 1.8; }
-  .lt-s-head { fill: $lt-muted; }
+  .lt-s-pred { fill: rgba($lt-sky, 0.15); }
+  .lt-s-arrow { fill: none; stroke-width: 1.8; }
   // Role boxes and relation edges take the colors of the argument views; their text stays neutral for contrast.
   .lt-s-node { fill: color-mix(in srgb, var(--lt-role) 12%, transparent); stroke: var(--lt-role); stroke-width: 1.5; }
   .lt-s-implicit { stroke-dasharray: 4 3; }
@@ -2343,14 +2190,13 @@ figure.lt-svg {
   .lt-s-head { fill: $lt-dark-muted; }
 }
 
-// Relation colors come after the dark rules above, so they hold in both modes (the tokens switch themselves).
+// Relation colors come after the dark rules above, so their tokens win.
 .lt-svg {
   .lt-s-arrow.lt-s-support { stroke: var(--lt-support); }
   .lt-s-arrow.lt-s-attack { stroke: var(--lt-attack); }
   .lt-s-head.lt-s-support { fill: var(--lt-support); }
   .lt-s-head.lt-s-attack { fill: var(--lt-attack); }
 }
-
 
 .lt-news-row:hover {
   background: none;
@@ -2394,10 +2240,8 @@ figure.lt-svg {
   padding: 1.1rem 1.4rem;
   border-left: 4px solid $lt-blue;
   border-radius: 0 14px 14px 0;
-  background: rgba($lt-blue, 0.05);
   font-size: 1.1rem;
   line-height: 1.7;
-  color: $lt-ink;
 
   p { margin: 0 0 0.6rem; }
   p:last-child { margin-bottom: 0; }
@@ -2408,9 +2252,8 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: $lt-muted;
 
-  i { margin-right: 0.3rem; color: $lt-blue; }
+  i { margin-right: 0.3rem; }
 }
 
 // Core concepts: two columns of blocks, one on phones; each block ends with a small schema.
@@ -2428,7 +2271,6 @@ figure.lt-svg {
   padding: 1.1rem 1.3rem;
   border: 1px solid $lt-border;
   border-radius: 14px;
-  background: #fff;
 
   h3 {
     display: flex;
@@ -2436,13 +2278,11 @@ figure.lt-svg {
     gap: 0.6rem;
     margin: 0 0 0.6rem;
     font-size: 1.1rem;
-    color: $lt-navy;
   }
 
   p {
     margin: 0;
     line-height: 1.65;
-    color: $lt-ink;
 
     @media (min-width: 992px) { font-size: 0.95rem; line-height: 1.6; }
   }
@@ -2470,7 +2310,6 @@ figure.lt-svg {
   margin-bottom: 1.6rem;
   font-size: 1.05rem;
   line-height: 1.7;
-  color: $lt-ink;
 
   p { margin: 0 0 0.8rem; }
 }
@@ -2481,18 +2320,6 @@ figure.lt-svg {
 // Roles take the categorical slots in fixed order: blue, yellow, magenta, green. The dark set passes every pairwise check
 // of the dataviz palette validator (--pairs all), with a color vision deficiency WARN (protan ΔE 6.9) that is legal
 // because every colored mark also carries its role as text.
-.lt-arg-views,
-.lt-overview,
-.lt-research-mosaic,
-.lt-tool-figure,
-.lt-card-schema,
-.lt-proj-teaser-schema {
-  --lt-role-1: #2a78d6;
-  --lt-role-2: #eda100;
-  --lt-role-3: #e87ba4;
-  --lt-role-4: #008300;
-}
-
 .dark .lt-arg-views,
 .dark .lt-overview,
 .dark .lt-research-mosaic,
@@ -2535,14 +2362,6 @@ figure.lt-svg {
     border-radius: 999px;
     font-size: 0.88rem;
     font-weight: 600;
-    color: $lt-navy;
-    background: #fff;
-
-    &[aria-selected="true"] {
-      border-color: $lt-blue;
-      color: #fff;
-      background: $lt-blue;
-    }
 
     &:focus-visible {
       outline: 2px solid $lt-blue;
@@ -2556,13 +2375,11 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: $lt-muted;
 }
 
 .lt-arg-description {
   max-width: 48rem;
   margin: 0 0 1rem;
-  color: $lt-ink;
 }
 
 .lt-arg-view + .lt-arg-view {
@@ -2575,7 +2392,6 @@ figure.lt-svg {
   figcaption {
     margin-top: 0.8rem;
     font-size: 0.85rem;
-    color: $lt-muted;
   }
 }
 
@@ -2592,7 +2408,6 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: $lt-muted;
 }
 
 .dark .lt-arg-textlabel { color: $lt-dark-muted; }
@@ -2639,7 +2454,6 @@ figure.lt-svg {
 .lt-arg-panel {
   padding: 1.3rem;
   border-radius: 16px;
-  background: rgba($lt-blue, 0.05);
 }
 
 .lt-arg-step {
@@ -2669,14 +2483,12 @@ figure.lt-svg {
   margin: 0;
   font-size: 1rem;
   line-height: 1.9;
-  color: $lt-ink;
 }
 
 // A marked component: its role as a small tag, then the text with a colored underline.
 .lt-arg-span {
   text-decoration: underline 2px var(--lt-role);
   text-underline-offset: 0.3em;
-  color: $lt-navy;
 }
 
 .lt-arg-tag {
@@ -2686,7 +2498,6 @@ figure.lt-svg {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   vertical-align: 0.1em;
-  color: $lt-ink;
 
   &::before {
     content: "";
@@ -2760,8 +2571,6 @@ figure.lt-svg {
   border-radius: 8px;
   font-size: 0.86rem;
   line-height: 1.4;
-  color: $lt-navy;
-  background: #fff;
 
   .lt-arg-tag {
     display: block;
@@ -2772,7 +2581,6 @@ figure.lt-svg {
     border-style: dashed;
     border-left-style: dashed;
     color: $lt-ink;
-    background: transparent;
   }
 }
 
@@ -2805,20 +2613,11 @@ figure.lt-svg {
   border: 1px solid $lt-border;
   border-radius: 999px;
   font-size: 0.7rem;
-  color: $lt-ink;
 }
 
 // Edges: a line that ends in an arrowhead at the target. Supports are green and attacks are red. The dark pair passes
 // the dataviz palette validator with a color vision deficiency WARN (deutan ΔE 6.9), which is legal only because every
 // edge also has a text label.
-.lt-arg-views,
-.lt-overview,
-.lt-research-mosaic,
-.lt-tool-figure {
-  --lt-support: #17663a;
-  --lt-attack: #e8584e;
-}
-
 .dark .lt-arg-views,
 .dark .lt-overview,
 .dark .lt-research-mosaic,
@@ -2847,9 +2646,7 @@ figure.lt-svg {
 .lt-arg-edge-label {
   font-size: 11px;
   font-weight: 700;
-  fill: $lt-ink;
   paint-order: stroke;
-  stroke: #f3f6f9;
   stroke-width: 4px;
   stroke-linejoin: round;
 }
@@ -2859,7 +2656,6 @@ figure.lt-svg {
   margin: 0;
   padding-left: 1.1rem;
   font-size: 0.82rem;
-  color: $lt-ink;
 }
 
 .is-drawn .lt-arg-edges {
@@ -2915,15 +2711,12 @@ figure.lt-svg {
   padding: 1.2rem 1.4rem;
   border: 1px solid $lt-border;
   border-radius: 10px;
-  background: #fff;
-  color: $lt-ink;
   line-height: 1.85;
 
   h4 {
     margin: 0 0 0.3rem;
     font-size: 1rem;
     font-weight: 700;
-    color: $lt-navy;
   }
 
   p { margin: 0; }
@@ -2942,8 +2735,6 @@ figure.lt-svg {
   border-radius: 3px;
   transition: background-color 0.4s ease, border-color 0.4s ease;
   border-bottom: 2px var(--lt-line) var(--lt-level);
-  color: $lt-navy;
-  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
@@ -2955,7 +2746,6 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: $lt-ink;
 
   &::before {
     content: "";
@@ -2993,14 +2783,12 @@ figure.lt-svg {
   gap: 0.4rem 0.6rem;
   margin: 0;
   font-size: 0.9rem;
-  color: $lt-ink;
 }
 
 .lt-detect-count {
   padding: 0.2rem 0.6rem;
   border: 1px var(--lt-line) var(--lt-level);
   border-radius: 999px;
-  background: color-mix(in srgb, var(--lt-level) 13%, transparent);
 }
 
 // While the script plays a view, the clauses stay plain until the scan reaches them, and the summary appears at the end.
@@ -3025,7 +2813,6 @@ figure.lt-svg {
 .lt-speech-question {
   margin: 1rem 0 0.6rem;
   font-weight: 600;
-  color: $lt-navy;
 }
 
 .lt-speech-answers {
@@ -3043,10 +2830,9 @@ figure.lt-svg {
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: $lt-ink;
   }
 
-  tbody th { font-weight: 600; color: $lt-navy; }
+  tbody th { font-weight: 600; }
 }
 
 .lt-speech-answer {
@@ -3056,7 +2842,6 @@ figure.lt-svg {
   border-radius: 999px;
   font-weight: 600;
   white-space: nowrap;
-  color: $lt-navy;
   background: color-mix(in srgb, var(--lt-answer) 12%, transparent);
 
   i { color: var(--lt-answer); }
@@ -3064,9 +2849,6 @@ figure.lt-svg {
   &.is-right { --lt-answer: var(--lt-support); }
   &.is-wrong { --lt-answer: var(--lt-attack); }
 }
-
-
-
 
 // While the script plays a voices view, the answers panel takes no room until Classify, and the answers follow row by
 // row (assets/js/ltlab.js).
@@ -3106,7 +2888,6 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: $lt-muted;
 }
 
 .lt-voice-pitch {
@@ -3126,7 +2907,6 @@ figure.lt-svg {
     flex: 1;
     height: var(--h);
     border-radius: 2px 2px 0 0;
-    background: color-mix(in srgb, #{$lt-ink} 35%, transparent);
     transform-origin: bottom;
   }
 }
@@ -3136,7 +2916,6 @@ figure.lt-svg {
   font-size: 0.92rem;
   white-space: nowrap;
   text-align: center;
-  color: $lt-navy;
 }
 
 .lt-voice-pause {
@@ -3146,14 +2925,13 @@ figure.lt-svg {
   line-height: 1.2;
   white-space: nowrap;
   text-align: center;
-  color: $lt-muted;
 }
 
 .lt-voice-reading + .lt-voice-reading { margin-top: 0.8rem; }
 
-.lt-voice-summary { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-ink; }
+.lt-voice-summary { margin: 0.3rem 0 0; font-size: 0.85rem; }
 
-.lt-voice-hears { display: block; font-size: 0.75rem; font-weight: 400; color: $lt-muted; }
+.lt-voice-hears { display: block; font-size: 0.75rem; font-weight: 400; }
 
 // Until Listen, the strip is plain text: tight columns, no cue rows, and no pause cells. Listen takes the readings in
 // order, from the start --t of each: it spreads the words on the time grid, opens the cue rows, and draws the cues
@@ -3227,7 +3005,6 @@ figure.lt-svg {
 .lt-rule-span {
   text-decoration: underline 2px var(--lt-role);
   text-underline-offset: 0.3em;
-  color: $lt-navy;
   transition: text-decoration-color 0.5s ease, border-color 0.5s ease, background-color 0.5s ease;
 
   &.is-open { text-decoration-style: dashed; }
@@ -3252,7 +3029,6 @@ figure.lt-svg {
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: $lt-ink;
 }
 
 .lt-rule-tag {
@@ -3287,8 +3063,6 @@ figure.lt-svg {
   font-weight: 700;
   line-height: 1;
   vertical-align: 0.1em;
-  color: #fff;
-  background: $lt-navy;
 }
 
 .lt-rule-clause { border-radius: 4px; transition: background-color 0.4s ease; }
@@ -3334,7 +3108,6 @@ figure.lt-svg {
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: $lt-ink;
 
     &::before {
       content: "";
@@ -3370,7 +3143,7 @@ figure.lt-svg {
   border-spacing: 0 0.35rem;
   font-size: 0.85rem;
 
-  // The theme stripes and borders tables; the matrix sets its own backgrounds and lines in both modes.
+  // The theme stripes and borders tables; the matrix sets its own backgrounds and lines.
   th, td { padding: 0.35rem 0.45rem; border: 0; text-align: left; vertical-align: middle; background: transparent; }
 
   thead th {
@@ -3379,7 +3152,6 @@ figure.lt-svg {
     font-weight: 700;
     letter-spacing: 0.03em;
     text-transform: uppercase;
-    color: $lt-ink;
   }
 
   thead th[class*="lt-role-"]::before {
@@ -3417,7 +3189,7 @@ figure.lt-svg {
 }
 
 .lt-matrix .lt-matrix-row > *,
-.lt-matrix .lt-matrix-rule > * { background: #fff; transition: background-color 0.3s ease; }
+.lt-matrix .lt-matrix-rule > * { transition: background-color 0.3s ease; }
 
 .lt-matrix-row > :first-child,
 .lt-matrix-rule > :first-child { border-radius: 8px 0 0 8px; box-shadow: inset 4px 0 0 var(--lt-level); }
@@ -3425,17 +3197,12 @@ figure.lt-svg {
 .lt-matrix-row > :last-child,
 .lt-matrix-rule > :last-child { border-radius: 0 8px 8px 0; }
 
-.lt-matrix .lt-matrix-row.is-current > *,
-.lt-matrix .lt-matrix-row.is-linked > *,
-.lt-matrix .lt-matrix-rule.is-match > * { background: color-mix(in srgb, #{$lt-sky} 22%, #fff); }
-
 .lt-matrix-sep th {
   padding-top: 0.8rem;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: $lt-muted;
 }
 
 .lt-cell {
@@ -3444,11 +3211,10 @@ figure.lt-svg {
   border-bottom: 2px solid var(--lt-role);
   font-weight: 600;
   line-height: 1.3;
-  color: $lt-navy;
 
   &.is-open { border-bottom-style: dashed; }
 
-  &.is-none, &.is-any { border-bottom-color: transparent; font-weight: 400; color: $lt-muted; }
+  &.is-none, &.is-any { border-bottom-color: transparent; font-weight: 400; }
 }
 
 .lt-cell-count {
@@ -3456,7 +3222,6 @@ figure.lt-svg {
   margin-top: 0.15rem;
   font-size: 0.72rem;
   white-space: nowrap;
-  color: $lt-muted;
 }
 
 .dark .lt-cell-count { color: $lt-dark-muted; }
@@ -3464,7 +3229,6 @@ figure.lt-svg {
 .lt-matrix-levels {
   margin: 0.6rem 0 0;
   font-size: 0.8rem;
-  color: $lt-ink;
 
   > span { display: inline-block; margin-right: 0.8rem; white-space: nowrap; }
 
@@ -3561,14 +3325,8 @@ figure.lt-svg {
   border-radius: 16px;
   color: inherit;
   text-align: left;
-  background: #fff;
   box-shadow: 0 1px 2px rgba($lt-navy, 0.06), 0 10px 24px -18px rgba($lt-navy, 0.45);
   transition: border-color 0.2s ease, transform 0.2s ease;
-
-  &:hover,
-  &[aria-expanded="true"] {
-    border-color: $lt-blue;
-  }
 
   &:hover {
     transform: translateY(-2px);
@@ -3584,7 +3342,6 @@ figure.lt-svg {
 .lt-field-title {
   font-size: 1.1rem;
   font-weight: 700;
-  color: $lt-navy;
   overflow-wrap: anywhere;
   hyphens: auto;
 }
@@ -3592,7 +3349,6 @@ figure.lt-svg {
 .lt-field-question {
   font-size: 0.9rem;
   line-height: 1.5;
-  color: $lt-ink;
 }
 
 .lt-field-panel {
@@ -3600,11 +3356,9 @@ figure.lt-svg {
   padding: 1.1rem 1.2rem;
   border-radius: 16px;
   font-size: 0.9rem;
-  background: rgba($lt-blue, 0.06);
 
   > p {
     margin: 0 0 0.8rem;
-    color: $lt-ink;
   }
 }
 
@@ -3615,13 +3369,11 @@ figure.lt-svg {
 
   dt {
     font-weight: 700;
-    color: $lt-navy;
   }
 
   dd {
     margin: 0.1rem 0 0;
     line-height: 1.5;
-    color: $lt-ink;
   }
 }
 
@@ -3633,7 +3385,6 @@ figure.lt-svg {
   border: 0;
   font-size: 0.85rem;
   font-weight: 600;
-  color: $lt-blue;
   background: none;
 
   &:hover { text-decoration: underline; }
@@ -3709,8 +3460,6 @@ figure.lt-svg {
 
   i { font-size: 0.65rem; }
 
-  .is-done > &, &.is-done { color: $lt-blue; }
-  .is-now > &, &.is-now { color: #9a5600; }
 }
 
 .dark {
@@ -3773,8 +3522,6 @@ figure.lt-svg {
     padding: 1.3rem;
   }
 
-  &.is-selected { border-color: $lt-blue; }
-
   .lt-area-title { margin: 0; font-size: 1.35rem; }
 
   .lt-area-title a {
@@ -3787,7 +3534,6 @@ figure.lt-svg {
   margin: 0;
   font-size: 0.95rem;
   line-height: 1.55;
-  color: $lt-ink;
 }
 
 .lt-focus-lanes {
@@ -3800,7 +3546,6 @@ figure.lt-svg {
     padding-left: 1.1rem;
     font-size: 0.88rem;
     line-height: 1.45;
-    color: $lt-ink;
   }
 }
 
@@ -3808,7 +3553,6 @@ figure.lt-svg {
 .lt-focus-spot {
   font-size: 0.88rem;
   line-height: 1.45;
-  color: $lt-ink;
 
   .lt-slide-media {
     aspect-ratio: 16 / 10;
@@ -3823,15 +3567,14 @@ figure.lt-svg {
   p { margin: 0 0 0.3rem; }
 }
 
-.lt-focus-spot-title { font-weight: 700; color: $lt-navy; }
+.lt-focus-spot-title { font-weight: 700; }
 
-.lt-focus-spot-venue { font-style: italic; color: $lt-muted; }
+.lt-focus-spot-venue { font-style: italic; }
 
 .lt-focus-more {
   margin-top: auto;
   font-size: 0.88rem;
   font-weight: 600;
-  color: $lt-blue;
 }
 
 .dark {
@@ -3881,17 +3624,12 @@ figure.lt-svg {
   border-radius: 999px;
   font-size: 0.88rem;
   font-weight: 600;
-  color: $lt-navy;
-  background: #fff;
-
-  &:hover { border-color: $lt-blue; }
 
   &[hidden] { display: none; }
 }
 
 .lt-topic-description {
   max-width: 48rem;
-  color: $lt-ink;
 
   p:last-child { margin-bottom: 0; }
 }
@@ -3911,10 +3649,6 @@ figure.lt-svg {
   padding: 0.9rem 1rem;
   border-left: 3px solid $lt-border;
   border-radius: 0 10px 10px 0;
-  background: rgba($lt-blue, 0.04);
-
-  &.is-done { border-left-color: $lt-blue; }
-  &.is-now { border-left-color: $lt-orange; }
 
   &:has(.lt-topic-pubs) {
     grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
@@ -3927,14 +3661,12 @@ figure.lt-svg {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.55;
-  color: $lt-ink;
 }
 
 .lt-topic-text .lt-topic-item-title {
   margin-bottom: 0.3rem;
   font-size: 1rem;
   font-weight: 700;
-  color: $lt-navy;
 }
 
 .lt-topic-pubs {
@@ -3956,7 +3688,6 @@ figure.lt-svg {
     display: block;
     margin-top: 0.1rem;
     font-size: 0.78rem;
-    color: $lt-muted;
   }
 }
 
@@ -3983,11 +3714,8 @@ figure.lt-svg {
 // section colors (`home_section_odd` and `home_section_even` in data/themes/ltlab.toml), with a hairline between them.
 .lt-band {
   padding: 3rem 0;
-  background: #fff;
 
   & + & { border-top: 1px solid $lt-border; }
-
-  &:nth-of-type(even) { background: rgb(246, 248, 251); }
 
   > .lt-overview-section, > .lt-arg-views, > .lt-fields, > .lt-focus, > .lt-pubs-compact { margin-block: 0; }
 
@@ -4038,7 +3766,6 @@ figure.lt-svg {
   padding: 0.9rem;
   border: 1px solid $lt-border;
   border-radius: 12px;
-  background: #fff;
 
   .lt-svg { width: 100%; max-width: 220px; margin: auto; }
 
@@ -4048,7 +3775,6 @@ figure.lt-svg {
     letter-spacing: 0.06em;
     text-align: center;
     text-transform: uppercase;
-    color: $lt-muted;
   }
 }
 
@@ -4071,22 +3797,20 @@ figure.lt-svg {
   margin: 0 0 0.8rem;
   font-size: clamp(1.5rem, 3vw, 2rem);
 
-  a { color: $lt-navy; text-decoration: none; }
+  a { text-decoration: none; }
 
   a::after { content: ""; position: absolute; inset: 0; }
 
   a:focus-visible { outline: none; }
 }
 
-.lt-research-row:hover .lt-research-title a { color: $lt-blue; }
-
 .lt-research-row:has(a:focus-visible) { outline: 2px solid $lt-blue; outline-offset: 0.75rem; border-radius: 12px; }
 
-.lt-research-lead { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 600; line-height: 1.45; color: $lt-navy; }
+.lt-research-lead { margin: 0 0 0.6rem; font-size: 1.15rem; font-weight: 600; line-height: 1.45; }
 
-.lt-research-text { margin: 0 0 1.2rem; line-height: 1.6; color: $lt-ink; }
+.lt-research-text { margin: 0 0 1.2rem; line-height: 1.6; }
 
-.lt-research-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+.lt-research-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
 .lt-research-more { margin-top: 1.4rem; }
 
@@ -4110,7 +3834,7 @@ figure.lt-svg {
 // Work with us page (layouts/work-with-us/single.html): path cards, a path card with its numbered steps (one of them the
 // email form), and the expandable research proposals and work done with students that the script moves into the steps.
 // Filter buttons take the look of the tabs.
-.lt-paths-title { margin: 0 0 1.2rem; font-size: 1.8rem; font-weight: 700; color: $lt-navy; }
+.lt-paths-title { margin: 0 0 1.2rem; font-size: 1.8rem; font-weight: 700; }
 
 .lt-path-picker {
   display: grid;
@@ -4126,14 +3850,8 @@ figure.lt-svg {
     border: 1px solid $lt-border;
     border-radius: 16px;
     text-align: left;
-    color: $lt-ink;
-    background: #fff;
 
     @media (max-width: 575.98px) { min-height: 0; padding: 1.2rem; }
-
-    &:hover { border-color: $lt-blue; }
-
-    &[aria-selected="true"] { border-color: $lt-blue; box-shadow: inset 0 0 0 1px $lt-blue; background: rgba($lt-sky, 0.12); }
 
     &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
 
@@ -4155,9 +3873,9 @@ figure.lt-svg {
 // The small path cards only move the carousel with the script; without it every path is shown, so they are hidden.
 .lt-paths:not(.is-enhanced) .lt-path-picker { display: none; }
 
-.lt-path-pick-label { font-size: 1.2rem; font-weight: 700; line-height: 1.3; color: $lt-navy; }
+.lt-path-pick-label { font-size: 1.2rem; font-weight: 700; line-height: 1.3; }
 
-.lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; color: $lt-muted; }
+.lt-path-pick-text { font-size: 0.95rem; line-height: 1.5; }
 
 .lt-paths .lt-path-picker {
   grid-template-columns: repeat(auto-fit, minmax(unquote("min(100%, 150px)"), 1fr));
@@ -4196,7 +3914,6 @@ figure.lt-svg {
   padding: 1.6rem;
   border: 1px solid $lt-border;
   border-radius: 14px;
-  background: #fff;
 
   @media (max-width: 575.98px) { grid-template-columns: minmax(0, 1fr); padding: 1.2rem; }
 }
@@ -4230,9 +3947,7 @@ figure.lt-svg {
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: $lt-blue !important;
   text-decoration: none !important;
-  background: rgba($lt-sky, 0.16);
   animation: lt-nudge 1.8s ease-in-out infinite;
 
   &:hover { background: rgba($lt-sky, 0.3); }
@@ -4263,8 +3978,6 @@ figure.lt-svg {
   height: 4rem;
   border-radius: 14px;
   font-size: 1.6rem;
-  color: $lt-blue;
-  background: rgba($lt-sky, 0.16);
 }
 
 .lt-path-title { margin: 0 0 1rem; font-size: 1.5rem; }
@@ -4274,7 +3987,7 @@ figure.lt-svg {
 
   dt, .lt-path-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
 
-  dd { margin: 0.2rem 0 1rem; line-height: 1.6; color: $lt-ink; }
+  dd { margin: 0.2rem 0 1rem; line-height: 1.6; }
 
   dd p, dd ol { margin: 0; }
 
@@ -4283,7 +3996,7 @@ figure.lt-svg {
   dd ol + p { margin-top: 0.5rem; }
 }
 
-.lt-path-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+.lt-path-label { margin: 0 0 0.4rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
 .lt-path-projects {
   margin: 0;
@@ -4294,9 +4007,9 @@ figure.lt-svg {
 
   a { display: flex; gap: 0.6rem; align-items: baseline; text-decoration: none; }
 
-  b { flex: none; color: $lt-navy; }
+  b { flex: none; }
 
-  span { font-size: 0.85rem; color: $lt-muted; }
+  span { font-size: 0.85rem; }
 }
 
 // Steps: numbered circles on one vertical line. The contact step holds the email form in its own box; the extra step,
@@ -4325,11 +4038,9 @@ figure.lt-svg {
     height: 2.2rem;
     border-radius: 50%;
     font-weight: 700;
-    color: #fff;
-    background: $lt-blue;
   }
 
-  &::after { content: ""; position: absolute; top: 2.6rem; bottom: 0.4rem; left: calc(1.1rem - 1px); width: 2px; background: $lt-border; }
+  &::after { content: ""; position: absolute; top: 2.6rem; bottom: 0.4rem; left: calc(1.1rem - 1px); width: 2px; }
 
   &:last-child { padding-bottom: 0; }
 
@@ -4337,7 +4048,7 @@ figure.lt-svg {
 
   &.is-extra { counter-increment: none; }
 
-  &.is-extra::before { content: "+"; border: 2px dashed $lt-border; color: $lt-blue; background: transparent; }
+  &.is-extra::before { content: "+"; border: 2px dashed $lt-border; }
 
   .lt-expand { max-width: none; padding: 0; }
 
@@ -4346,9 +4057,9 @@ figure.lt-svg {
   @media (max-width: 575.98px) { padding-left: 2.8rem; }
 }
 
-.lt-step-title { margin: 0.3rem 0 0.4rem; font-size: 1.25rem; color: $lt-navy; }
+.lt-step-title { margin: 0.3rem 0 0.4rem; font-size: 1.25rem; }
 
-.lt-step-text { max-width: 48rem; margin: 0 0 1rem; color: $lt-ink; }
+.lt-step-text { max-width: 48rem; margin: 0 0 1rem; }
 
 // In a numbered step the step title replaces the section heading.
 .lt-expand.is-step > summary { display: none; }
@@ -4360,7 +4071,6 @@ figure.lt-svg {
   border: 1px solid $lt-border;
   border-top: 3px solid $lt-orange;
   border-radius: 14px;
-  background: #fff;
 }
 
 .lt-mail-to {
@@ -4369,9 +4079,8 @@ figure.lt-svg {
   align-items: baseline;
   margin: 0 0 0.5rem;
   font-size: 0.9rem;
-  color: $lt-ink;
 
-  span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+  span { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
   output { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 0.82rem; overflow-wrap: anywhere; }
 }
@@ -4382,9 +4091,9 @@ figure.lt-svg {
   gap: 0.7rem;
   margin-top: 0.8rem;
 
-  label { display: flex; flex-direction: column; gap: 0.25rem; margin: 0; font-size: 0.82rem; font-weight: 600; color: $lt-navy; }
+  label { display: flex; flex-direction: column; gap: 0.25rem; margin: 0; font-size: 0.82rem; font-weight: 600; }
 
-  small { font-weight: 400; color: $lt-muted; }
+  small { font-weight: 400; }
 
   input, select, textarea {
     width: 100%;
@@ -4394,13 +4103,11 @@ figure.lt-svg {
     font: inherit;
     font-size: 0.9rem;
     font-weight: 400;
-    color: $lt-ink;
-    background: #fff;
 
     &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
   }
 
-  .lt-mail-req { font-weight: 700; color: $lt-navy; }
+  .lt-mail-req { font-weight: 700; }
 }
 
 .lt-mail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 0.3rem; }
@@ -4414,13 +4121,11 @@ figure.lt-svg {
   border-radius: 6px;
   font-size: 0.82rem;
   font-weight: 600;
-  color: $lt-ink;
-  background: rgba($lt-orange, 0.14);
 
   &[hidden] { display: none; }
 }
 
-.lt-mail-hint { margin: 0; font-size: 0.78rem; color: $lt-muted; }
+.lt-mail-hint { margin: 0; font-size: 0.78rem; }
 
 .lt-mail-direct { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; font-size: 0.88rem; font-weight: 600; }
 
@@ -4440,7 +4145,7 @@ figure.lt-svg {
 
     &::-webkit-details-marker { display: none; }
 
-    &::after { content: "\f078"; margin-left: auto; font-family: "Font Awesome 5 Free"; font-weight: 900; color: $lt-blue; transition: transform 0.2s ease; }
+    &::after { content: "\f078"; margin-left: auto; font-family: "Font Awesome 5 Free"; font-weight: 900; transition: transform 0.2s ease; }
 
     &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 4px; border-radius: 6px; }
   }
@@ -4451,14 +4156,14 @@ figure.lt-svg {
 }
 
 // The theme draws a rule beside every paragraph inside <details>; expandable sections keep plain paragraphs.
-.lt-expand p { margin-left: 0; padding-left: 0; border-left: 0; }
+.lt-expand p { margin-left: 0; padding-left: 0; }
 
-.lt-expand-title { font-size: 1.6rem; font-weight: 700; color: $lt-navy; }
+.lt-expand-title { font-size: 1.6rem; font-weight: 700; }
 
-.lt-expand-count { font-size: 0.9rem; color: $lt-muted; }
+.lt-expand-count { font-size: 0.9rem; }
 
 // The "current/total" counter beside a carousel title, such as Highlights.
-.lt-carousel-count { margin-left: 0.6rem; padding: 0.1rem 0.6rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; vertical-align: middle; color: $lt-muted; background: rgba($lt-blue, 0.08); }
+.lt-carousel-count { margin-left: 0.6rem; padding: 0.1rem 0.6rem; border-radius: 999px; font-size: 0.85rem; font-weight: 600; font-variant-numeric: tabular-nums; vertical-align: middle; }
 
 .dark .lt-carousel-count { color: $lt-dark-muted; background: rgba(255, 255, 255, 0.08); }
 
@@ -4474,10 +4179,6 @@ figure.lt-svg {
     border-radius: 999px;
     font-size: 0.85rem;
     font-weight: 600;
-    color: $lt-navy;
-    background: #fff;
-
-    &[aria-pressed="true"] { border-color: $lt-blue; color: #fff; background: $lt-blue; }
 
     &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 2px; }
   }
@@ -4505,7 +4206,7 @@ figure.lt-svg {
   }
 }
 
-.lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; color: $lt-blue; }
+.lt-proposal-more { margin-top: auto; font-size: 0.85rem; font-weight: 600; }
 
 .lt-fields-grid.has-open .lt-proposal-more { display: none; }
 
@@ -4549,8 +4250,6 @@ figure.lt-svg {
   border-bottom: 1px solid $lt-border;
 }
 
-
-
 // People: avatar, or initials for a person outside the lab, then the name.
 .lt-people {
   display: flex;
@@ -4560,7 +4259,7 @@ figure.lt-svg {
   padding: 0;
   list-style: none;
 
-  a { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; color: $lt-navy; text-decoration: none; }
+  a { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600; text-decoration: none; }
 
   a:hover span { text-decoration: underline; }
 
@@ -4568,7 +4267,7 @@ figure.lt-svg {
 
   img { object-fit: cover; }
 
-  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; }
 }
 
 // Student work tools: a search box above the kind and topic filters, and a live count of the items shown.
@@ -4581,8 +4280,6 @@ figure.lt-svg {
   border-radius: 999px;
   font: inherit;
   font-size: 0.9rem;
-  color: $lt-ink;
-  background: #fff;
 
   &:focus-visible { outline: 2px solid $lt-blue; outline-offset: 1px; }
 }
@@ -4600,14 +4297,14 @@ figure.lt-svg {
   }
 }
 
-.lt-work-count { margin: -0.4rem 0 1rem; font-size: 0.85rem; color: $lt-muted; }
+.lt-work-count { margin: -0.4rem 0 1rem; font-size: 0.85rem; }
 
 .lt-work-list .lt-work-topics { grid-column: 2; @media (max-width: 575.98px) { grid-column: 1; } }
 
 .lt-work-topics .lt-topic { font-size: 0.72rem; }
 
 .lt-work-year {
-  h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; color: $lt-muted; }
+  h3 { margin: 1.4rem 0 0.5rem; font-size: 1.1rem; }
 
   &:first-of-type h3 { margin-top: 0; }
 }
@@ -4630,11 +4327,11 @@ figure.lt-svg {
 
   .lt-pill { justify-self: start; align-self: start; margin-top: 0.15rem; }
 
-  a, .lt-work-title { font-weight: 600; color: $lt-navy; text-decoration: none; }
+  a, .lt-work-title { font-weight: 600; text-decoration: none; }
 
   a:hover { color: $lt-blue; }
 
-  .lt-work-by { grid-column: 2; font-size: 0.85rem; color: $lt-muted; @media (max-width: 575.98px) { grid-column: 1; } }
+  .lt-work-by { grid-column: 2; font-size: 0.85rem; @media (max-width: 575.98px) { grid-column: 1; } }
 }
 
 .dark {
@@ -4731,7 +4428,6 @@ figure.lt-svg {
 .lt-arg-span { transition: color 0.2s ease, opacity 0.2s ease; }
 
 .lt-arg-view.is-linking {
-  .lt-arg-text { color: rgba($lt-ink, 0.45); }
   .lt-arg-span:not(.is-linked) { opacity: 0.45; }
 }
 
@@ -4764,24 +4460,15 @@ figure.lt-svg {
     background: rgba(255, 255, 255, 0.25);
   }
 
-  button:disabled .lt-arg-num { background: rgba($lt-blue, 0.12); }
-
-  button.is-done:disabled {
-    border-color: $lt-blue;
-    color: $lt-blue;
-  }
-
   .lt-arg-link {
     position: relative;
     width: 2.5rem;
     height: 2px;
-    background: $lt-border;
 
     &::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: $lt-blue;
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.6s ease;
@@ -4803,14 +4490,7 @@ figure.lt-svg {
     border-radius: 999px;
     font-size: 0.88rem;
     font-weight: 600;
-    color: #fff;
-    background: $lt-blue;
 
-    &:disabled {
-      border-color: $lt-border;
-      color: $lt-muted;
-      background: transparent;
-    }
   }
 }
 
@@ -4833,7 +4513,6 @@ figure.lt-svg {
 // encloses the marked text, then fills and carries a copy of the box at its final size. The script sets
 // --lt-ring (frame), --lt-fill (background), and --lt-lift (shadow), each from 0 to 1.
 .lt-arg-fly {
-  --lt-fly-bg: #fff;
   position: absolute;
   top: 0;
   left: 0;
@@ -4892,17 +4571,15 @@ figure.lt-svg {
     padding: 0;
     border: 0;
     border-left: 2px solid $lt-border;
-    background: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     top: 100px;
 
     a { margin-left: -2px; padding: 0.35rem 0 0.35rem 1rem; border-left: 2px solid transparent; }
 
-    a[aria-current="true"] { border-left-color: $lt-blue; color: $lt-navy !important; }
   }
 
-  .lt-proj-side-label { display: block; margin: 0 0 0.5rem 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: $lt-muted; }
+  .lt-proj-side-label { display: block; margin: 0 0 0.5rem 1rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; }
 
   .dark {
     .lt-proj-nav.lt-proj-side { border-left-color: $lt-dark-border; background: none; }
@@ -4972,13 +4649,13 @@ figure.lt-svg {
   .lt-award { margin: 0; }
 }
 
-.lt-pub-row-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; color: $lt-navy; text-decoration: none; }
+.lt-pub-row-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; text-decoration: none; }
 
-.lt-pub-row-title:hover { color: $lt-blue; text-decoration: underline; }
+.lt-pub-row-title:hover { text-decoration: underline; }
 
-.lt-pub-row-authors { font-size: 0.9rem; color: $lt-ink; }
+.lt-pub-row-authors { font-size: 0.9rem; }
 
-.lt-pub-row-venue { font-size: 0.88rem; color: $lt-muted; }
+.lt-pub-row-venue { font-size: 0.88rem; }
 
 .lt-pub-row-venue span { font-style: italic; }
 
@@ -5006,7 +4683,6 @@ figure.lt-svg {
     gap: 0.4rem 1rem;
     margin-top: 0.8rem;
     font-size: 0.85rem;
-    color: $lt-muted;
   }
 }
 
@@ -5038,7 +4714,6 @@ figure.lt-svg {
   font-size: 0.85rem;
   font-weight: 700;
   line-height: 1.6rem;
-  color: $lt-muted;
   font-variant-numeric: tabular-nums;
 }
 
@@ -5062,16 +4737,6 @@ figure.lt-svg {
   &:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 }
 
-.lt-timeline-item.is-international-project,
-.lt-pill-international-project { background: rgba($lt-blue, 0.12); color: $lt-blue !important; }
-
-.lt-timeline-item.is-national-project,
-.lt-pill-national-project { background: rgba($lt-orange, 0.16); color: #9a5600 !important; }
-
-.lt-timeline-key.is-international-project { color: $lt-blue; }
-
-.lt-timeline-key.is-national-project { color: #9a5600; }
-
 .lt-project-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(unquote("min(100%, 420px)"), 1fr));
@@ -5089,9 +4754,9 @@ figure.lt-svg {
   .lt-chips { margin-top: auto; }
 }
 
-.lt-project-name { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.4; color: $lt-muted; }
+.lt-project-name { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.4; }
 
-.lt-project-text { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+.lt-project-text { margin: 0; font-size: 0.92rem; line-height: 1.55; }
 
 .dark {
   .lt-timeline figcaption, .lt-timeline-year, .lt-project-name { color: $lt-dark-muted; }
@@ -5105,10 +4770,6 @@ figure.lt-svg {
 
 // News page (layouts/news/list.html): a kind filter and year links over a vertical timeline grouped by year. Each item
 // is a dot on the line in its kind color, and its kind pill names the kind, so color is never the only cue.
-.lt-pill-task { background: rgba(#0b6e70, 0.12); color: #0b6e70; }
-.lt-pill-preprint { background: rgba(#1baf7a, 0.14); color: #137a55; }
-.lt-pill-news { background: rgba($lt-muted, 0.14); color: $lt-ink; }
-
 .lt-news-page .lt-filter button i { margin-right: 0.35rem; }
 
 // Back to top button of the News page: fixed at the bottom right, icon only on phones, with the label kept for screen
@@ -5125,13 +4786,8 @@ figure.lt-svg {
   border-radius: 999px;
   font-size: 0.9rem;
   font-weight: 600;
-  color: #fff !important;
-  background: $lt-blue;
-  box-shadow: 0 4px 14px rgba($lt-navy, 0.3);
   text-decoration: none !important;
   transition: opacity 0.2s, visibility 0.2s;
-
-  &:hover { background: $lt-navy; }
 
   &:focus-visible { outline: 2px solid $lt-orange; outline-offset: 2px; }
 
@@ -5161,9 +4817,6 @@ figure.lt-svg {
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 
-  a { color: $lt-muted; }
-
-  a:hover { color: $lt-blue; }
 }
 
 .lt-news-year {
@@ -5188,7 +4841,6 @@ figure.lt-svg {
   font-weight: 700;
   line-height: 1;
   white-space: nowrap;
-  color: $lt-muted;
   font-variant-numeric: tabular-nums;
 
   @media (max-width: 575.98px) { position: static; margin-bottom: 0.8rem; font-size: 1.6rem; }
@@ -5202,7 +4854,6 @@ figure.lt-svg {
 }
 
 .lt-news-item {
-  --lt-dot: #{$lt-muted};
   position: relative;
   padding: 0.2rem 0 1.4rem;
   scroll-margin-top: 5rem;
@@ -5216,26 +4867,21 @@ figure.lt-svg {
     height: 12px;
     border-radius: 50%;
     background: var(--lt-dot);
-    box-shadow: 0 0 0 3px #fff;
   }
 
-  &.is-paper { --lt-dot: #{$lt-blue}; }
-  &.is-call { --lt-dot: #7b4fa0; }
   &.is-event { --lt-dot: #{$lt-orange}; }
-  &.is-task { --lt-dot: #0b6e70; }
-  &.is-preprint { --lt-dot: #1baf7a; }
 
   .lt-meta { margin-bottom: 0.35rem; }
 
   .lt-topics, .lt-chips { margin-top: 0.5rem; }
 }
 
-.lt-news-item-title { margin: 0; font-size: 1.1rem; line-height: 1.35; color: $lt-navy; }
+.lt-news-item-title { margin: 0; font-size: 1.1rem; line-height: 1.35; }
 
 // Venue under a news title, on the News page and the homepage: a publication venue or the `venue` of a news item.
-.lt-news-venue { display: block; margin: 0.2rem 0 0; font-size: 0.88rem; font-style: italic; line-height: 1.4; color: $lt-muted; }
+.lt-news-venue { display: block; margin: 0.2rem 0 0; font-size: 0.88rem; font-style: italic; line-height: 1.4; }
 
-.lt-news-item-text { margin: 0.35rem 0 0; font-size: 0.95rem; line-height: 1.55; color: $lt-ink; }
+.lt-news-item-text { margin: 0.35rem 0 0; font-size: 0.95rem; line-height: 1.55; }
 
 .dark {
   .lt-pill-task { background: rgba(#4fb3b5, 0.16); color: #7fd3d4; }
@@ -5268,8 +4914,6 @@ figure.lt-svg {
 
 .lt-tool-row .lt-meta { margin: 0 0 0.8rem; }
 
-.lt-pill-open { background: rgba(#25734a, 0.14); color: #1d5e3c; }
-
 .dark .lt-pill-open { background: rgba(#45ad64, 0.16); color: #7fd19a; }
 
 .lt-tool-row .lt-topics { margin: 0 0 1rem; }
@@ -5277,7 +4921,7 @@ figure.lt-svg {
 .lt-tool-install {
   margin: 0 0 1rem;
 
-  code { padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; color: $lt-navy; background: rgba($lt-blue, 0.08); }
+  code { padding: 0.3rem 0.6rem; border-radius: 6px; font-size: 0.85rem; }
 }
 
 .dark .lt-tool-install code { color: #f1f5fa; background: rgba(255, 255, 255, 0.08); }
@@ -5296,14 +4940,14 @@ figure.lt-svg {
 
   img, .lt-people-initials { flex: none; width: 4.5rem; height: 4.5rem; border-radius: 50%; object-fit: cover; }
 
-  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-weight: 700; background: rgba($lt-sky, 0.16); }
 
   .lt-meta { margin: 0.35rem 0 0; }
 }
 
-.lt-person-org { margin: 0.3rem 0 0; font-size: 0.85rem; color: $lt-muted; }
+.lt-person-org { margin: 0.3rem 0 0; font-size: 0.85rem; }
 
-.lt-person-bio { margin: 0; font-size: 0.92rem; line-height: 1.55; color: $lt-ink; }
+.lt-person-bio { margin: 0; font-size: 0.92rem; line-height: 1.55; }
 
 .lt-person .lt-research-label { margin: 0.2rem 0 -0.3rem; }
 
@@ -5328,7 +4972,6 @@ figure.lt-svg {
     height: 2.2rem;
     border-radius: 8px;
     font-size: 1.05rem;
-    color: $lt-blue;
 
     &:hover { background: rgba($lt-sky, 0.16); }
 
@@ -5348,12 +4991,12 @@ figure.lt-svg {
 
   img, .lt-people-initials { flex: none; width: 3rem; height: 3rem; border-radius: 50%; object-fit: cover; }
 
-  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: $lt-blue; background: rgba($lt-sky, 0.16); }
+  .lt-people-initials { display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; background: rgba($lt-sky, 0.16); }
 
-  p { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.5; color: $lt-muted; }
+  p { margin: 0.2rem 0 0; font-size: 0.88rem; line-height: 1.5; }
 }
 
-.lt-former-name { font-weight: 700; color: $lt-navy; }
+.lt-former-name { font-weight: 700; }
 
 .dark {
   .lt-person-org, .lt-former p { color: $lt-dark-muted; }
@@ -5375,7 +5018,6 @@ figure.lt-svg {
   font-weight: 600;
   line-height: 1.4;
   letter-spacing: -0.01em;
-  color: $lt-navy;
 }
 
 .dark .lt-page-intro-text { color: #f1f5fa; }
@@ -5409,11 +5051,9 @@ figure.lt-svg {
   padding: 0 16px;
   font-size: 1.02rem;
   line-height: 1.65;
-  color: $lt-ink;
 
   p:last-child { margin-bottom: 0; }
 }
-
 
 .dark {
   .lt-profile-bio { color: #c9d6e3; }

@@ -261,8 +261,8 @@ Change them together.
 | --- | --- |
 | Top of `template.scss` | `$lt-navy` `#003060`, `$lt-blue` `#105080`, `$lt-sky` `#60c0e0`, `$lt-orange` `#f09010`, `$lt-border`, `$lt-muted` |
 | `Homepage blocks` section of `template.scss` | `$lt-ink`, `$lt-dark-border`, `$lt-dark-muted`, `$lt-dark-card` |
-| `Visual components` section of `template.scss` | `$lt-cat-light` and `$lt-cat-dark`, the four categorical slots used by `.lt-c1` to `.lt-c4` |
-| `Argument views` section of `template.scss` | CSS custom properties `--lt-role-1` to `--lt-role-4`, `--lt-support`, `--lt-attack`, scoped to `.lt-arg-views`, `.lt-overview`, `.lt-research-mosaic`, `.lt-tool-figure`, with a `.dark` variant |
+| `Visual components` section of `template.scss` | `$lt-cat-dark`, the four categorical slots used by `.lt-c1` to `.lt-c4`, and `$lt-cat-dark-ink`, the tag text on each |
+| `Argument views` section of `template.scss` | CSS custom properties `--lt-role-1` to `--lt-role-4`, `--lt-support`, `--lt-attack`, scoped to `.lt-arg-views`, `.lt-overview`, `.lt-research-mosaic`, `.lt-tool-figure`, under `.dark` |
 | `data/themes/ltlab.toml` | Theme `primary`, `link`, `link_hover`, `background`, menu colours, and `home_section_odd` / `home_section_even` band colours |
 | `data/topics.yaml` | Topic tag labels |
 | `layouts/_partials/lt/cover.html` | Four hard-coded gradient palettes for generated covers |
@@ -274,7 +274,6 @@ Keep that property when you change a colour.
 ### Colour vision deficiency
 
 The site has a dark theme only (`theme_night: ltlab`, `show_day_night: false`), so the check covers the dark values, on the page background `#0d1a2a` and the card background `#112236`.
-The light values in `template.scss` are never shown.
 Every pair of a set is checked, not only neighbours, because any two colours can meet in a text.
 Distances are OKLab ΔE × 100: at least 15 under normal vision, and at least 8 under simulated protanopia and deuteranopia.
 A value from 6 to 8 is a warning, allowed only when a text label or a line style also separates the colours.
@@ -301,16 +300,15 @@ The site shows only dark mode.
 `layouts/_partials/functions/parse_theme.html` then stores `light = false`, and `layouts/baseof.html` adds the `dark` class to `<body>` on every page.
 The theme also hides the day and night switch.
 
-Write every rule for light mode first, then its override under `.dark`:
+Write each colour once, under `.dark`, and keep the base rule for layout and other values that do not depend on the mode:
 
 ```scss
-.lt-meta { color: $lt-muted; }
+.lt-meta { display: flex; font-size: 0.8rem; }
 .dark .lt-meta { color: $lt-dark-muted; }
 ```
 
-The light rules stay so that the site can return to two modes by adding `theme_day` again.
-Only the `.dark` rules are visible today, so check them first.
-A rule without a `.dark` override shows its light value on the dark background.
+The `.dark` prefix keeps the rule above the theme's own `.dark` rules.
+`template.scss` holds no light colours, so returning to two modes means writing every light colour again.
 
 ### Breakpoints
 
@@ -473,7 +471,7 @@ On narrow screens the drawing stops shrinking at 80% of its `viewBox` width and 
 {{< svg src="schema.svg" caption="The task setup." >}}
 ```
 
-Draw only with these classes, which `.lt-svg` styles in both modes.
+Draw only with these classes, which `.lt-svg` styles.
 
 | Class | Draws |
 | --- | --- |

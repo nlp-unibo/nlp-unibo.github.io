@@ -1,4 +1,4 @@
-{{/* Inline SVG figure from the page folder, so that its classes follow the light and dark themes (template.scss, `.lt-svg`). */}}
+{{/* Inline SVG figure from the page folder, so that its classes follow the site theme (template.scss, `.lt-svg`). */}}
 {{/* Usage: {{< svg src="schema.svg" caption="..." >}}. Draw with the classes lt-s-box, lt-s-sel, lt-s-pred, lt-s-tok, lt-s-on, lt-s-off, lt-s-txt, lt-s-sub, lt-s-arrow. */}}
 {{- $src := .Get "src" -}}
 {{- with .Page.Resources.Get $src -}}
