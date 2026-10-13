@@ -27,6 +27,9 @@ social:
   - icon: envelope
     icon_pack: fas
     link: 'mailto:gianmarco.pappacoda@unibo.it'
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0009-0001-6609-4156
 
 email: 'gianmarco.pappacoda@unibo.it'
 

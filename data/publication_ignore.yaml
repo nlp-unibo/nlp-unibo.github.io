@@ -1,0 +1,9 @@
+# Works that `site.py publications` must not report.
+# id: the DOI without https://doi.org/, or the OpenAlex work ID (W...) of a work without a DOI.
+# reason: why the work has no publication page, such as "dataset deposit" or "another author with the same name".
+- id: 10.7490/f1000research.1090031.1
+  reason: another author with the same name
+- id: W7208935288
+  reason: another author with the same name
+- id: W7209502057
+  reason: another author with the same name

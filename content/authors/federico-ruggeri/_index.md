@@ -40,6 +40,9 @@ social:
   - icon: globe
     icon_pack: fas
     link: https://federicoruggeri.github.io/
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0000-0002-1697-8586
 
 email: 'federico.ruggeri6@unibo.it'
 

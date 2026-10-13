@@ -87,7 +87,8 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py build` | Run `hugo --gc --minify --destination .build/public` with `HUGO_RESOURCEDIR=.build/resources` |
 | `uv run python scripts/site.py check` | Run `content`, `templates`, and `build` in that order |
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
-| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, and the research view validators |
+| `uv run python scripts/site.py publications --since YYYY-MM-DD` | Ask OpenAlex for the works of each `Members` ORCID and list those that match no publication page by DOI or title, minus `data/publication_ignore.yaml`. It needs the network, so CI never runs it |
+| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, and the missing-publication matching |
 
 `new` accepts `news`, `person`, `research`, `tool`, `national-project`, `international-project`, `bachelors-thesis`, `masters-thesis`, `journal`, `conference`, `workshop`, `preprint`, and `proposal`.
 A proposal slug is `TOPIC/NAME`, as in `new proposal legal/new-idea`, and the topic folder must exist.
@@ -135,6 +136,7 @@ Keep **Enforce HTTPS** enabled under **Settings → Pages** for the `nlp.unibo.i
 | `data/themes/ltlab.toml` | Theme colours for the `[light]` and `[dark]` modes |
 | `data/fonts/ltlab.toml`, `static/fonts/inter/` | Inter font set, self-hosted, under the SIL Open Font License |
 | `data/topics.yaml` | Topic keys with their `label` |
+| `data/publication_ignore.yaml` | Works that `site.py publications` must not list, each with an `id` (DOI or OpenAlex ID) and a `reason` |
 | `data/tags.yaml` | Vocabulary of publication keywords; `scripts/site.py` rejects a missing or near-duplicate keyword (`same_keyword`) |
 | `assets/scss/template.scss` | Every site style rule, layered over the theme |
 | `assets/js/ltlab.js` | Every site behaviour, as progressive enhancement |
@@ -190,7 +192,7 @@ Every block also accepts `eyebrow` and `subtitle` through `lt/section-head.html`
 | `news-data.html` | A news page or a publication | Returns `kind`, `date`, `iso`, `venue`, `summary`, `links`, `id` for previews |
 | `news-kind.html` | A page | Returns the kind `label`, `icon`, `slug` (pill colour), and `key` (filter value), derived from tags |
 | `page-intro.html` | A page | Opening band with a screen-reader `h1` and the `intro` |
-| `person-social.html` | A profile | Labelled social icon buttons |
+| `person-social.html` | A profile | Labelled social icon buttons in a fixed order (university, email, website, Google Scholar, ORCID, GitHub, LinkedIn, Twitter, then others) |
 | `person-topics.html` | A profile | Returns the "Latest topics": the three most frequent topics of the publications of the last two years, without workshop papers, papers tagged `shared task`, and `prototype`; ties go to the topic of more first-authored papers |
 | `pub-browser.html` | `pubs`, `id`, `title` | Search, type and topic filters, count, year groups of `pub-row.html` |
 | `pub-card.html` | A publication, or `{page, year, kind}` | Wide carousel card |

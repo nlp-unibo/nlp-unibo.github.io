@@ -1,4 +1,4 @@
-"""Self-checks for the link parser, front-matter loader, category, venue rank, and proposal rules in site.py: uv run python scripts/test_site.py"""
+"""Self-checks for the link parser, front-matter loader, category, venue rank, proposal, and missing-publication rules in site.py: uv run python scripts/test_site.py"""
 
 import importlib.util
 from pathlib import Path
@@ -96,5 +96,15 @@ assert proposal_errors(proposal, body, set()) == ["contact 'federico-ruggeri' is
 assert proposal_errors({**proposal, "contacts": [{"name": "A B"}]}, body, set()) == ["contact {'name': 'A B'} needs a name and an email"]
 assert proposal_errors({**proposal, "brief": "word " * 71}, body, {"federico-ruggeri"}) == ["brief has 71 words; keep it at most 70"]
 assert proposal_errors(proposal, "## Background\n\nText.", {"federico-ruggeri"}) == ["body sections are ['Background']; use exactly ## Context and ## Objective"]
+
+# OpenAlex works are matched to publication pages by DOI, then by title; datasets and duplicate preprints are skipped.
+missing_works, work_key = site_tools.missing_works, site_tools.work_key
+def work(id, title, type="article", doi=None):
+    return {"id": f"https://openalex.org/{id}", "doi": doi and f"https://doi.org/{doi}", "display_name": title, "type": type}
+works = [work("W1", "On Pages", doi="10.1/A"), work("W2", "A Paper Title Here"), work("W3", "A New Paper"), work("W4", "A New Paper", "preprint"),
+         work("W5", "Data", "dataset"), work("W6", "Only A Preprint", "preprint"), work("W7", "Only a preprint", "preprint"), work("W8", "Ignored")]
+site = [("10.1/a", "Another title"), ("", "A paper title here.")]
+assert [w["id"][-2:] for w in missing_works(works, site, {"w8"})] == ["W3", "W6"], missing_works(works, site, {"w8"})
+assert work_key(works[0]) == "10.1/a" and work_key(works[1]) == "w2"
 
 print("site.py self-checks passed.")
