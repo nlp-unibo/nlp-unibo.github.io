@@ -1,5 +1,6 @@
-"""Self-checks for the link parser, front-matter loader, category, venue rank, proposal, and missing-publication rules in site.py: uv run python scripts/test_site.py"""
+"""Self-checks for the link parser, front-matter loader, category, venue rank, proposal, page, and missing-publication rules in site.py: uv run python scripts/test_site.py"""
 
+from datetime import date
 import importlib.util
 from pathlib import Path
 
@@ -106,5 +107,61 @@ works = [work("W1", "On Pages", doi="10.1/A"), work("W2", "A Paper Title Here"),
 site = [("10.1/a", "Another title"), ("", "A paper title here.")]
 assert [w["id"][-2:] for w in missing_works(works, site, {"w8"})] == ["W3", "W6"], missing_works(works, site, {"w8"})
 assert work_key(works[0]) == "10.1/a" and work_key(works[1]) == "w2"
+
+# One page is checked through page_errors, which reads nothing from disk: the vocabulary and the file test are passed in.
+page_errors, Vocabulary = site_tools.page_errors, site_tools.Vocabulary
+vocabulary = Vocabulary(venues={"acl": {"rank": "A*"}}, keywords=["argument mining"], topics={"nlp": {"label": "NLP"}},
+                        focus_topics={"argumentation/fallacies"}, authors={"federico-ruggeri"})
+person = {"title": "Ada Rossi", "first_name": "Ada", "last_name": "Rossi", "user_groups": ["Members"], "build": {"render": "always"},
+          "email": "ada@unibo.it"}
+def errors(section, slug, metadata, body="", **options):
+    return page_errors(section, slug, metadata, body, vocabulary, **options)[0]
+assert errors("authors", "ada-rossi", person) == [], errors("authors", "ada-rossi", person)
+
+assert errors("authors", "ada", person) == ["author slug must be 'ada-rossi'"]
+assert errors("authors", "Ada_Rossi", {**person, "title": "Ada_Rossi"})[0] == "invalid slug 'Ada_Rossi'"
+assert errors("authors", "ada-rossi", {**person, "user_groups": ["Members", "Former Members"]}) == [
+    "user_groups must be exactly one of Associate Fellows, External Collaborators, Former Members, Members"]
+assert errors("authors", "ada-rossi", {**person, "email": ""}) == ["required field 'email' is empty"]
+assert errors("authors", "ada-rossi", {**person, "email": "", "user_groups": ["Former Members"]}) == []
+
+news = {"title": "Accepted", "date": "2026-01-10", "summary": ""}
+assert errors("news", "accepted", news) == ["required field 'summary' is empty"]
+assert errors("news", "accepted", {**news, "tags": ["Paper"]}) == []
+assert errors("news", "accepted", {**news, "summary": "Lorem ipsum."}) == ["contains Lorem ipsum"]
+assert errors("news", "accepted", {**news, "summary": "Draft.", "draft": True}, body="TODO") == []
+assert page_errors("news", "accepted", {**news, "summary": "S."}, "", vocabulary, today=date(2026, 1, 9))[1] == [
+    "future publication date 2026-01-10"]
+
+page = Path("content/news/accepted/index.md")
+body = "[slides](slides.pdf) [mail](a.b@unibo.it)"
+assert errors("news", "accepted", {**news, "summary": "S."}, body, page=page, exists=lambda path: False) == [
+    "local link 'slides.pdf' does not exist", "email link 'a.b@unibo.it' must start with mailto:"]
+assert errors("news", "accepted", {**news, "summary": "S."}, body, page=page,
+              exists=lambda path: path == page.parent / "slides.pdf") == ["email link 'a.b@unibo.it' must start with mailto:"]
+
+paper = {"title": "P", "authors": ["A"], "date": "2025-01-01", "publication_types": ["paper-conference"],
+         "categories": ["Conference"], "venue_key": "acl", "tags": ["argument mining"], "focus": ["argumentation/fallacies"]}
+assert errors("publication", "p", paper, bib="") == []
+assert page_errors("publication", "p", paper, "", vocabulary)[1] == ["missing cite.bib"]
+assert errors("publication", "p", {**paper, "venue_key": "acm"}, bib="") == ["venue_key 'acm' is not defined in data/venues.yaml"]
+assert errors("publication", "p", {**paper, "categories": ["Journal"]}, bib="") == [
+    "venue rank 'A*' does not fit a Journal paper, which takes an SJR quartile: '', 'Q1', 'Q2', 'Q3', 'Q4'; check venue_key or categories"]
+assert errors("publication", "p", {**paper, "publication_types": ["poster"]}, bib="") == [
+    "publication_types must be exactly one of article, article-journal, book, chapter, paper-conference, report, thesis"]
+assert errors("publication", "p", {**paper, "tags": ["Argument-Mining"]}, bib="") == [
+    "tag 'Argument-Mining' is not in data/tags.yaml; use the existing 'argument mining'"]
+assert errors("publication", "p", {**paper, "tags": ["speech"]}, bib="") == [
+    "tag 'speech' is not in data/tags.yaml; add it there if it is a new keyword"]
+assert errors("publication", "p", {**paper, "focus": ["argumentation/other"]}, bib="") == [
+    "focus topic 'argumentation/other' is not a <area>/<key> of content/research"]
+assert errors("publication", "p", {**paper, "categories": ["Preprint", "Conference"]}, bib="") == [
+    "categories must be exactly one of Conference, Journal, Preprint, Workshop"]
+
+area = {"title": "A", "date": "2025-01-01", "summary": "S.", "focus": [{"key": "f"}, {"key": "f"}], "fields": [{}]}
+assert sorted(errors("research", "a", area)) == ["fields key None is missing or repeated", "focus key 'f' is missing or repeated"]
+tool = {"title": "T", "date": "2025-01-01", "summary": "S.", "external_link": "https://x.org", "topics": ["nlp", "vision"]}
+assert errors("tools", "t", tool) == ["topic 'vision' is not defined in data/topics.yaml"]
+assert errors("proposals", "topic", {"title": "T", "summary": "S."}, required=site_tools.TOPIC_FIELDS) == []
 
 print("site.py self-checks passed.")

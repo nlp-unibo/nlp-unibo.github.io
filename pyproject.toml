@@ -9,3 +9,8 @@ dependencies = [
 
 [tool.uv]
 package = false
+
+[dependency-groups]
+dev = [
+    "playwright>=1.50,<2",
+]
