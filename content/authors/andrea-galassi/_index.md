@@ -38,6 +38,9 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/a-galassi/
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0000-0001-9711-7042
 
 email: 'a.galassi@unibo.it'
 

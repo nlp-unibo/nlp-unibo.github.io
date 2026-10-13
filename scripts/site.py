@@ -10,6 +10,7 @@ Usage:
     uv run python scripts/site.py build
     uv run python scripts/site.py check
     uv run python scripts/site.py clean
+    uv run python scripts/site.py publications --since YYYY-MM-DD
 """
 
 from __future__ import annotations
@@ -781,6 +782,83 @@ def new_content(content_type: str, slug: str) -> None:
     print(f"Created content/{relative_path}. Replace every TODO and remove draft only when ready.")
 
 
+OPENALEX_WORKS = "https://api.openalex.org/works"
+# OpenAlex work types that never become a publication page.
+SKIPPED_WORK_TYPES = {"dataset", "dissertation", "editorial", "erratum", "letter", "other", "paratext", "peer-review",
+                      "retraction", "supplementary-materials"}
+
+
+def doi_key(value: str) -> str:
+    return re.sub(r"^https?://(dx\.)?doi\.org/", "", value.strip().lower())
+
+
+def work_key(work: dict) -> str:
+    """The DOI of an OpenAlex work, or its OpenAlex ID (W...) when it has no DOI."""
+    return doi_key(work.get("doi") or "") or work["id"].rsplit("/", 1)[-1].lower()
+
+
+def missing_works(works: list[dict], site: list[tuple[str, str]], ignored: set[str]) -> list[dict]:
+    """Return the OpenAlex works without a page, matched by DOI and then by title; site holds (doi, title) pairs."""
+    dois = {doi for doi, _ in site if doi}
+    titles = [content_slug(title) for _, title in site]
+    published = {content_slug(work["display_name"] or "") for work in works if work["type"] != "preprint"}
+    missing, seen = [], set()
+    for work in works:
+        title = content_slug(work["display_name"] or "")
+        if (work_key(work) in ignored | dois or title in seen or work["type"] in SKIPPED_WORK_TYPES
+                or (work["type"] == "preprint" and title in published)
+                or difflib.get_close_matches(title, titles, n=1, cutoff=0.9)):
+            continue
+        seen.add(title)
+        missing.append(work)
+    return missing
+
+
+def openalex_works(orcid: str, since: date) -> list[dict]:
+    filters = f"author.orcid:{orcid},from_publication_date:{since}"
+    works, cursor = [], "*"
+    while cursor:
+        page = json.loads(read_url(f"{OPENALEX_WORKS}?filter={filters}&per-page=200&cursor={cursor}"
+                                   "&select=id,doi,display_name,publication_date,type,primary_location"))
+        works += page["results"]
+        cursor = page["meta"].get("next_cursor") if page["results"] else None
+    return works
+
+
+def publication_report(since: date) -> None:
+    """Print, for each Members author with an ORCID link, the OpenAlex works missing from content/publication."""
+    members = []
+    for path in sorted((ROOT / "content" / "authors").glob("*/_index.md")):
+        metadata, _ = read_page(path)
+        if "Members" in (metadata.get("user_groups") or []):
+            links = [item.get("link", "") for item in metadata.get("social") or [] if item.get("icon") == "orcid"]
+            members.append((metadata.get("weight", 100), metadata["title"], links[0].rsplit("/", 1)[-1] if links else ""))
+    site = []
+    for path in (ROOT / "content" / "publication").glob("*/index.md"):
+        metadata, _ = read_page(path)
+        site.append((doi_key(str(metadata.get("doi") or "")), str(metadata.get("title") or "")))
+    entries = yaml.safe_load((ROOT / "data" / "publication_ignore.yaml").read_text(encoding="utf-8")) or []
+    ignored = {doi_key(str(entry["id"])) for entry in entries}
+    # A work co-authored by several members is listed once, under the first of them in People order.
+    reported: set[str] = set()
+    for _, name, orcid in sorted(members):
+        if not orcid:
+            print(f"{name}: no ORCID link in social; skipped.\n")
+            continue
+        try:
+            works = missing_works(openalex_works(orcid, since), site, ignored)
+        except urllib.error.URLError as error:
+            sys.exit(f"OpenAlex request failed for {name}: {error}")
+        works = [work for work in works if work_key(work) not in reported]
+        reported |= {work_key(work) for work in works}
+        print(f"{name} ({orcid}): {len(works)} missing")
+        for work in sorted(works, key=lambda work: work["publication_date"] or "", reverse=True):
+            venue = ((work.get("primary_location") or {}).get("source") or {}).get("display_name") or "no venue"
+            link = work.get("doi") or work["id"]
+            print(f"  {work['publication_date']}  {work['type']}  {work['display_name']}\n      {venue} | {link}")
+        print()
+
+
 def clean() -> None:
     if BUILD.exists():
         shutil.rmtree(BUILD)
@@ -791,10 +869,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "command",
-        choices=("setup", "content", "templates", "build", "check", "serve", "new", "clean"),
+        choices=("setup", "content", "templates", "build", "check", "serve", "new", "clean", "publications"),
     )
     parser.add_argument("content_type", nargs="?", help="Content type for the new command")
     parser.add_argument("slug", nargs="?", help="Lowercase, hyphen-separated slug for the new command")
+    parser.add_argument("--since", type=date.fromisoformat, help="Earliest publication date, as YYYY-MM-DD, for the publications command")
     args = parser.parse_args()
     if args.command == "setup":
         setup()
@@ -818,6 +897,10 @@ def main() -> None:
         new_content(args.content_type, args.slug)
     elif args.command == "clean":
         clean()
+    elif args.command == "publications":
+        if args.since is None:
+            parser.error("publications requires --since YYYY-MM-DD, such as --since 2026-01-01")
+        publication_report(args.since)
 
 
 if __name__ == "__main__":

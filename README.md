@@ -16,10 +16,11 @@ The site also rebuilds every day at 04:00 UTC, so pages with a future date appea
 | I want to ... | Read |
 | --- | --- |
 | add or change content, such as a publication, a news item, a person, or a project | [docs/editors.md](docs/editors.md) |
+| find the papers of lab members that the site does not list yet | [docs/editors.md, Find missing publications](docs/editors.md#find-missing-publications) |
 | change the design or the code | [docs/developers.md](docs/developers.md) |
 
-The editors' guide needs no installation.
-Every step works on the GitHub website, and each recipe opens a ready-made template.
+The editors' guide needs no installation, except for finding missing publications, which runs on a local copy.
+Every other step works on the GitHub website, and each recipe opens a ready-made template.
 
 ## Preview the site on your computer
 

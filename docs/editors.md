@@ -9,7 +9,7 @@ To change the design or the code, read [the developers' guide](developers.md).
 - [How every change works](#how-every-change-works)
 - [Quick map](#quick-map)
 - [Actions](#actions)
-  - Publications: [Add a publication](#add-a-publication) · [Change a publication](#change-a-publication)
+  - Publications: [Add a publication](#add-a-publication) · [Change a publication](#change-a-publication) · [Find missing publications](#find-missing-publications)
   - News: [Add a news item](#add-a-news-item) · [Announce an accepted paper](#announce-an-accepted-paper) · [Change a news item](#change-a-news-item)
   - People: [Add or update a person](#add-or-update-a-person)
   - Students: [Add a thesis](#add-a-thesis) · [Add a research proposal](#add-a-research-proposal)
@@ -50,6 +50,7 @@ Never rename a published folder: links to it would break.
 | --- | --- | --- |
 | Add a paper | `content/publication/<slug>/index.md` | [Add a publication](#add-a-publication) |
 | Fix a venue, add a DOI, change topics | the same file | [Change a publication](#change-a-publication) |
+| List member papers missing from the site | `data/publication_ignore.yaml` for works to skip | [Find missing publications](#find-missing-publications) |
 | Announce something | `content/news/<slug>/index.md` | [Add a news item](#add-a-news-item) |
 | Add or update a person | `content/authors/<first-last>/_index.md` | [Add or update a person](#add-or-update-a-person) |
 | Add a thesis | `content/theses/<year><name>/index.md` | [Add a thesis](#add-a-thesis) |
@@ -143,6 +144,29 @@ Open `content/publication/<slug>/index.md` and edit the field.
 | Show on a focus card | `focus: [am/fallacies]` | Appears on that card ([rule](#research-focus-current-and-past-work)) |
 | Better card figure | Upload `card.svg` and set `card_caption` | Replaces `featured.png` on cards and the page ([rule](#publication-figures)) |
 
+### Find missing publications
+
+This action runs on a local copy of the repository, set up as in [the developers' guide](developers.md).
+
+**Command:** `uv run --locked python scripts/site.py publications --since 2026-01-01`.
+`--since` is required. It takes the earliest publication date to compare, as `YYYY-MM-DD`. Use the date of the previous run, or the first day of the year.
+
+**What it does:** for each person in `Members` with an ORCID link (the persistent researcher ID from orcid.org), it asks [OpenAlex](https://openalex.org/), an open catalogue of scholarly works, for the works of that ORCID.
+It lists the works that match no publication page, first by DOI and then by title.
+A work by several members is listed once, under the first of them in People order.
+Datasets, supplementary materials, and preprint copies of a listed paper are left out.
+
+**Steps**
+
+1. Run the command. It needs no account and makes one request for each member.
+2. For each listed work, choose one of these:
+   - A lab paper: [add the publication](#add-a-publication).
+   - Not a paper for the site, such as a deposit, a duplicate record, or a work by another person with the same name: add it to `data/publication_ignore.yaml` with its `id` (the DOI without `https://doi.org/`, or the OpenAlex ID `W...` printed for a work without a DOI) and a `reason`.
+3. Run the command again. Only the remaining works are listed.
+
+OpenAlex can miss some workshop papers, and it can take a few weeks to list a new paper.
+A member without an ORCID link is skipped, and the command prints a warning.
+
 ### Add a news item
 
 **Start:** [create `content/news/short-name-2026/index.md`](https://github.com/nlp-unibo/nlp-unibo.github.io/new/main?filename=content/news/short-name-2026/index.md&value=---%0Atitle%3A%20%22TODO%3A%20Headline%22%0A%23%20YYYY-MM-DD.%20A%20future%20date%20keeps%20the%20item%20hidden%20until%20that%20day.%0Adate%3A%20%22TODO%3A%20YYYY-MM-DD%22%0A%23%20The%20tag%20paper%2C%20special%20issue%2C%20shared%20task%2C%20workshop%2C%20or%20event%20sets%20the%20label.%20Otherwise%3A%20News.%0Atags%3A%0A%20%20-%20news%0Asummary%3A%20%22TODO%3A%20At%20most%20two%20sentences.%22%0A%23%20Optional%2C%20shown%20in%20italics%20under%20the%20title%2C%20such%20as%20a%20venue%20or%20a%20journal%0Avenue%3A%20%22%22%0A%23%20Keys%20from%20data%2Ftopics.yaml%0Atopics%3A%20%5B%5D%0A---%0A%0A-%20%5BTODO%3A%20Link%20text%5D%28https%3A%2F%2FTODO%29%0A)
@@ -195,7 +219,7 @@ Open `content/news/<slug>/index.md`. Edit `title`, `summary`, or the links. Chan
 1. `title` (full name exactly as in publications), `first_name`, `last_name`.
 2. `user_groups`: one of `Members`, `Associate Fellows`, `External Collaborators`, `Former Members`.
 3. `email` (required except for former members; used by proposal contacts), `bio` (one sentence), `weight` (lower comes first).
-4. `social` links: University page `university`/`fas`, email `envelope`/`fas`, website `globe`/`fas`, GitHub `github`/`fab`, LinkedIn `linkedin`/`fab`, Scholar `google-scholar`/`ai`.
+4. `social` links: University page `university`/`fas`, email `envelope`/`fas`, website `globe`/`fas`, GitHub `github`/`fab`, LinkedIn `linkedin`/`fab`, Scholar `google-scholar`/`ai`, ORCID `orcid`/`ai` with the `https://orcid.org/...` link. Every member needs the ORCID link for [Find missing publications](#find-missing-publications).
 5. Upload one square `avatar.jpg` (or `.png`). Without it, the initials appear.
 6. Body: the longer biography for the profile page. Do not set `role` (head and deputy only).
 

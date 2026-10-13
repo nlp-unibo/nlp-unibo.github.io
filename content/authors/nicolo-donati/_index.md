@@ -27,6 +27,9 @@ social:
   - icon: envelope
     icon_pack: fas
     link: 'mailto:n.donati@unibo.it'
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0009-0000-5673-5274
 
 email: 'n.donati@unibo.it'
 

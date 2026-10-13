@@ -29,6 +29,9 @@ social:
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?user=60j_-AwAAAAJ
+  - icon: orcid
+    icon_pack: ai
+    link: https://orcid.org/0000-0002-7255-9343
 
 email: 'giulia.grundler2@unibo.it'
 
