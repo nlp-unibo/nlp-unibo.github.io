@@ -1,0 +1,50 @@
+<svg viewBox="0 0 360 330" role="img" aria-labelledby="bolognini-etal-2026-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="bolognini-etal-2026-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="bolognini-etal-2026-card-title">Drawn from the Methods and Technical Validation sections of the paper. 1. Articles are selected from the publication repository of the University of Bologna by querying it with fragments of the SDG descriptors; 139 articles are kept, each represented by its title, abstract, and keywords. 2. Eight annotators work in four pairs, G1 to G4; each pair labels all 139 articles on 4 or 5 SDGs, then discusses disagreements. 3. Each article receives one yes or no label for each of the 17 SDGs. 4. The dataset is validated by inter-annotator agreement, an average Cohen's kappa of 0.54, and by the zero-shot inference of LLMs and existing tools.</title>
+  <text class="lt-s-sub" x="8" y="16">1. SELECT ARTICLES</text>
+  <rect class="lt-s-tok" x="8" y="24" width="160" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="88" y="43">UniBo repository</text>
+  <text class="lt-s-txt lt-s-small" x="88" y="61">queried with SDG text</text>
+  <path class="lt-s-arrow" marker-end="url(#bolognini-etal-2026-card-arrow)" d="M170 47 H188"/>
+  <rect class="lt-s-node lt-role-1" x="192" y="24" width="160" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="272" y="43">139 articles</text>
+  <text class="lt-s-txt lt-s-small" x="272" y="61">title, abstract, keywords</text>
+  <path class="lt-s-arrow" marker-end="url(#bolognini-etal-2026-card-arrow)" d="M180 74 V88"/>
+  <text class="lt-s-sub" x="8" y="106">2. ANNOTATE IN PAIRS</text>
+  <rect class="lt-s-box lt-s-sel" x="8" y="114" width="80" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="48" y="137">G1</text>
+  <rect class="lt-s-box lt-s-sel" x="96" y="114" width="80" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="136" y="137">G2</text>
+  <rect class="lt-s-box lt-s-sel" x="184" y="114" width="80" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="224" y="137">G3</text>
+  <rect class="lt-s-box lt-s-sel" x="272" y="114" width="80" height="36" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="312" y="137">G4</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="168">2 annotators each, 4 or 5 SDGs per pair</text>
+  <path class="lt-s-arrow" marker-end="url(#bolognini-etal-2026-card-arrow)" d="M180 174 V188"/>
+  <text class="lt-s-sub" x="8" y="206">3. ONE YES OR NO LABEL PER SDG</text>
+  <rect class="lt-s-tok" x="8" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="16.5" y="231">1</text>
+  <rect class="lt-s-tok" x="28" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="36.5" y="231">2</text>
+  <rect class="lt-s-tok" x="48" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="56.5" y="231">3</text>
+  <rect class="lt-s-tok" x="68" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="76.5" y="231">4</text>
+  <rect class="lt-s-tok" x="88" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="96.5" y="231">5</text>
+  <rect class="lt-s-tok" x="108" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="116.5" y="231">6</text>
+  <rect class="lt-s-tok" x="128" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="136.5" y="231">7</text>
+  <rect class="lt-s-tok" x="148" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="156.5" y="231">8</text>
+  <rect class="lt-s-tok" x="168" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="176.5" y="231">9</text>
+  <rect class="lt-s-tok" x="188" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="196.5" y="231">10</text>
+  <rect class="lt-s-tok" x="208" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="216.5" y="231">11</text>
+  <rect class="lt-s-tok" x="228" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="236.5" y="231">12</text>
+  <rect class="lt-s-tok" x="248" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="256.5" y="231">13</text>
+  <rect class="lt-s-tok" x="268" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="276.5" y="231">14</text>
+  <rect class="lt-s-tok" x="288" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="296.5" y="231">15</text>
+  <rect class="lt-s-tok" x="308" y="214" width="17" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="316.5" y="231">16</text>
+  <rect class="lt-s-tok" x="328" y="214" width="24" height="24" rx="4"/><text class="lt-s-txt lt-s-small" x="340" y="231">17</text>
+  <path class="lt-s-arrow" marker-end="url(#bolognini-etal-2026-card-arrow)" d="M180 242 V256"/>
+  <text class="lt-s-sub" x="8" y="274">4. VALIDATE</text>
+  <rect class="lt-s-node lt-role-4" x="8" y="282" width="168" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="92" y="300">Agreement</text>
+  <text class="lt-s-txt lt-s-small" x="92" y="316">mean kappa 0.54</text>
+  <rect class="lt-s-node lt-role-4" x="184" y="282" width="168" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="268" y="300">Zero-shot tests</text>
+  <text class="lt-s-txt lt-s-small" x="268" y="316">LLMs and tools</text>
+</svg>

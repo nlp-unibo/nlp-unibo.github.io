@@ -96,6 +96,10 @@ cpaior:
   name: "International Conference on the Integration of Constraint Programming, Artificial Intelligence, and Operations Research (CPAIOR)"
   rank: "B"
   source: ICORE2026
+doceng:
+  name: "ACM Symposium on Document Engineering (DocEng)"
+  rank: "B"
+  source: ICORE2026
 clar:
   name: "International Conference on Logic and Argumentation (CLAR)"
   rank: ""
@@ -146,6 +150,10 @@ nature-mi:
   name: "Nature Machine Intelligence"
   rank: "Q1"
   source: SJR2025
+scientific-data:
+  name: "Scientific Data"
+  rank: "Q1"
+  source: SJR2025
 tacl:
   name: "Transactions of the Association for Computational Linguistics (TACL)"
   rank: "Q1"
@@ -164,8 +172,16 @@ clef-wn:
   name: "Working Notes of the Conference and Labs of the Evaluation Forum (CLEF)"
   rank: ""
   source: ""
+evalita:
+  name: "Evaluation Campaign of Natural Language Processing and Speech Tools for Italian (EVALITA)"
+  rank: ""
+  source: ""
 finnlp:
   name: "Workshop on Financial Technology and Natural Language Processing (FinNLP)"
+  rank: ""
+  source: ""
+knowledgenlp:
+  name: "Workshop on Knowledge-Augmented Methods for Natural Language Processing (KnowledgeNLP)"
   rank: ""
   source: ""
 icasspw:

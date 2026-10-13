@@ -1,0 +1,61 @@
+<svg viewBox="0 0 360 346" role="img" aria-labelledby="akhter-etal-2026-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="akhter-etal-2026-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="akhter-etal-2026-card-title">After Figure 1 of the paper. The example claim, top French cartoonists Charb, Cabu, Wolinski, Tignous confirmed among dead in the Paris Charlie Hebdo attack, editor is critically wounded, is decomposed into three sub-claims: s1, the four are cartoonists at Charlie Hebdo; s2, the editor is critically wounded; s3, the four were confirmed dead. In the SAE setup, each sub-claim is paired with its own aligned evidence span, e1 to e3, and decomposition brings a significant gain. In the SRE setup, every sub-claim is paired with the same claim-level evidence, Ec, and decomposition brings negligible changes.</title>
+  <text class="lt-s-sub" x="8" y="16">CLAIM, EXAMPLE OF THE PAPER</text>
+  <rect class="lt-s-tok" x="8" y="24" width="344" height="62" rx="10"/>
+  <text class="lt-s-txt lt-s-small" x="180" y="44">Top French cartoonists Charb, Cabu, Wolinski,</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="60">Tignous confirmed among dead in #Paris</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="76">#CharlieHebdo attack. Editor is critically wounded.</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M62 88 V102"/>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M180 88 V102"/>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M298 88 V102"/>
+  <rect class="lt-s-tok" x="8" y="106" width="108" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="62" y="124">s1</text>
+  <text class="lt-s-txt lt-s-small" x="62" y="140">cartoonists</text>
+  <rect class="lt-s-tok" x="126" y="106" width="108" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="124">s2</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="140">editor wounded</text>
+  <rect class="lt-s-tok" x="244" y="106" width="108" height="42" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="298" y="124">s3</text>
+  <text class="lt-s-txt lt-s-small" x="298" y="140">four dead</text>
+  <text class="lt-s-sub" x="8" y="172">SAE</text>
+  <text class="lt-s-small" x="40" y="172">its own span</text>
+  <text class="lt-s-sub" x="188" y="172">SRE</text>
+  <text class="lt-s-small" x="220" y="172">same claim evidence</text>
+  <rect class="lt-s-tok" x="8" y="182" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="30" y="200">s1</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M54 196 H68"/>
+  <rect class="lt-s-node lt-role-1" x="72" y="182" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="122" y="200">span e1</text>
+  <rect class="lt-s-tok" x="8" y="218" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="30" y="236">s2</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M54 232 H68"/>
+  <rect class="lt-s-node lt-role-1" x="72" y="218" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="122" y="236">span e2</text>
+  <rect class="lt-s-tok" x="8" y="254" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="30" y="272">s3</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M54 268 H68"/>
+  <rect class="lt-s-node lt-role-1" x="72" y="254" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="122" y="272">span e3</text>
+  <rect class="lt-s-tok" x="188" y="182" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="210" y="200">s1</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M234 196 H248"/>
+  <rect class="lt-s-node lt-role-2" x="252" y="182" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="302" y="200">evidence Ec</text>
+  <rect class="lt-s-tok" x="188" y="218" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="210" y="236">s2</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M234 232 H248"/>
+  <rect class="lt-s-node lt-role-2" x="252" y="218" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="302" y="236">evidence Ec</text>
+  <rect class="lt-s-tok" x="188" y="254" width="44" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="210" y="272">s3</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M234 268 H248"/>
+  <rect class="lt-s-node lt-role-2" x="252" y="254" width="100" height="28" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="302" y="272">evidence Ec</text>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M90 286 V302"/>
+  <path class="lt-s-arrow" marker-end="url(#akhter-etal-2026-card-arrow)" d="M270 286 V302"/>
+  <rect class="lt-s-label" x="8" y="306" width="164" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-strong lt-s-labeltxt" x="90" y="327">Significant gain</text>
+  <rect class="lt-s-tok" x="188" y="306" width="164" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-strong" x="270" y="327">Negligible change</text>
+</svg>

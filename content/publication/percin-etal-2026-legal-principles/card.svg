@@ -1,0 +1,46 @@
+<svg viewBox="0 0 360 318" role="img" aria-labelledby="percin-etal-2026-card-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="percin-etal-2026-card-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="percin-etal-2026-card-title">Drawn from Sections 5 and 7 of the paper, on an illustrative decision of six paragraphs. 1. A CJEU decision on Fiscal State Aid is split into paragraphs; the corpus has 64 decisions. 2. A classifier decides, for each paragraph on its own, whether it states a legal principle; the best combination, BERT encoding with an SVM classifier, reaches an F1 score of 0.72. 3. The paragraphs classified as principles, here p2 and p5, are collated in document order into a collection. 4. The generated collection is compared with the expert-made collection through ROUGE and human evaluation, and the two are comparable.</title>
+  <text class="lt-s-sub" x="8" y="16">1. A CJEU DECISION, SPLIT</text>
+  <rect class="lt-s-tok" x="8" y="24" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="34" y="43">p1</text>
+  <rect class="lt-s-tok" x="66" y="24" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="92" y="43">p2</text>
+  <rect class="lt-s-tok" x="124" y="24" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="150" y="43">p3</text>
+  <rect class="lt-s-tok" x="182" y="24" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="208" y="43">p4</text>
+  <rect class="lt-s-tok" x="240" y="24" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="266" y="43">p5</text>
+  <rect class="lt-s-tok" x="298" y="24" width="54" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="325" y="43">p6</text>
+  <path class="lt-s-arrow" marker-end="url(#percin-etal-2026-card-arrow)" d="M180 56 V70"/>
+  <text class="lt-s-sub" x="8" y="88">2. CLASSIFY EACH PARAGRAPH</text>
+  <rect class="lt-s-box lt-s-pred" x="8" y="96" width="344" height="46" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="180" y="115">Does it state a legal principle?</text>
+  <text class="lt-s-txt lt-s-small" x="180" y="133">best: BERT encoding + SVM, F1 0.72</text>
+  <path class="lt-s-arrow" marker-end="url(#percin-etal-2026-card-arrow)" d="M180 144 V158"/>
+  <text class="lt-s-sub" x="8" y="176">3. KEEP THE PRINCIPLES</text>
+  <rect class="lt-s-off" x="8" y="184" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="34" y="203">p1</text>
+  <rect class="lt-s-on" x="66" y="184" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small lt-s-ontxt" x="92" y="203">p2</text>
+  <rect class="lt-s-off" x="124" y="184" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="150" y="203">p3</text>
+  <rect class="lt-s-off" x="182" y="184" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="208" y="203">p4</text>
+  <rect class="lt-s-on" x="240" y="184" width="52" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small lt-s-ontxt" x="266" y="203">p5</text>
+  <rect class="lt-s-off" x="298" y="184" width="54" height="30" rx="8"/>
+  <text class="lt-s-txt lt-s-small" x="325" y="203">p6</text>
+  <path class="lt-s-arrow" marker-end="url(#percin-etal-2026-card-arrow)" d="M180 216 V230"/>
+  <text class="lt-s-sub" x="8" y="248">4. COLLATE AND COMPARE</text>
+  <rect class="lt-s-node lt-role-1" x="8" y="256" width="124" height="54" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="70" y="278">Generated</text>
+  <text class="lt-s-txt lt-s-small" x="70" y="296">p2, p5 in order</text>
+  <rect class="lt-s-label" x="136" y="268" width="88" height="30" rx="15"/>
+  <text class="lt-s-txt lt-s-small lt-s-strong lt-s-labeltxt" x="180" y="287">comparable</text>
+  <rect class="lt-s-node lt-role-2" x="228" y="256" width="124" height="54" rx="10"/>
+  <text class="lt-s-txt lt-s-strong" x="290" y="278">Expert-made</text>
+  <text class="lt-s-txt lt-s-small" x="290" y="296">the reference</text>
+</svg>

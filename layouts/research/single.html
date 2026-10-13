@@ -436,7 +436,7 @@
         <ul class="lt-topic-items">
           {{ range . }}
           {{ $url := (partial "lt/pub-meta.html" .).url }}
-          {{ $authors := .Params.authors | default slice }}{{ $title := .Title }}
+          {{ $authors := partial "lt/author-names.html" . }}{{ $title := .Title }}
           <li class="lt-topic-item is-{{ $k }}">
             {{/* Left: the publication `summary`, or its abstract cut to 280 characters. Right: the citation. */}}
             <div class="lt-topic-text">
