@@ -17,6 +17,17 @@ Exceptions:
 3. Publications, logos, and other material by third parties remain under
    their owners' terms.
 
+Text and data mining reservation:
+
+The Language Technologies Lab expressly reserves the use of this repository
+and of the website built from it for text and data mining, including the
+training of artificial intelligence models, under Article 4(3) of Directive
+(EU) 2019/790. The reservation is also stated in machine-readable form in
+robots.txt, in /.well-known/tdmrep.json, and in the tdm-reservation meta tag
+of every page. It does not restrict uses that the CC BY-NC-ND 4.0 License
+grants, nor text and data mining for scientific research under Article 3 of
+the same Directive.
+
 =======================================================================
 
 Attribution-NonCommercial-NoDerivatives 4.0 International

@@ -3,6 +3,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  {{/* TDM Reservation Protocol: text and data mining rights are reserved, as stated in LICENSE. */}}
+  <meta name="tdm-reservation" content="1" />
   {{ $is_sponsor := site.Params.i_am_a_sponsor | default false }}
   {{ $hide_generator := site.Params.power_ups.hide_generator | default false }}
   {{ if not (and $is_sponsor $hide_generator) }}
