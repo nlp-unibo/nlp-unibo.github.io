@@ -1,0 +1,15 @@
+# Crawlers that collect content to train AI models are refused, as listed in each vendor's documentation.
+# Search crawlers and fetches requested by a person stay allowed.
+User-agent: GPTBot
+User-agent: ClaudeBot
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+User-agent: meta-externalagent
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: *
+Disallow:
+
+Sitemap: {{ "sitemap.xml" | absURL }}

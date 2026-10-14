@@ -112,4 +112,11 @@ if __name__ == "__main__":
             assert slides and slides == dots, (noun, slides, dots)
             assert arrows == [f"Previous {noun}", f"Next {noun}"], arrows
 
+    # The text and data mining reservation of LICENSE reaches robots.txt, tdmrep.json, and every page head.
+    robots = (public / "robots.txt").read_text(encoding="utf-8")
+    assert re.search(r"User-agent: GPTBot\n(User-agent: .+\n)*Disallow: /\n", robots), robots
+    assert "Sitemap: " in robots, robots
+    assert '"tdm-reservation": 1' in (public / ".well-known" / "tdmrep.json").read_text(encoding="utf-8")
+    assert '<meta name="tdm-reservation" content="1"' in home
+
     print("Rendered-template checks passed.")

@@ -42,3 +42,6 @@ Run `uv run python scripts/site.py check` before opening a pull request: it runs
 
 The repository and the website are licensed under CC BY-NC-ND 4.0, as stated in the site footer and in `LICENSE`.
 Code derived from the Hugo Blox template keeps its MIT License, and the Inter font keeps the SIL Open Font License.
+`LICENSE` also reserves text and data mining under Article 4(3) of Directive (EU) 2019/790.
+The site states that reservation in `static/.well-known/tdmrep.json` and in the `tdm-reservation` meta tag of `layouts/_partials/site_head.html`.
+Additionally, `layouts/robots.txt` refuses the crawlers that collect content for AI training.
