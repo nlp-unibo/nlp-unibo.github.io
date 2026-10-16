@@ -4070,7 +4070,7 @@ figure.lt-svg {
 
 .lt-mail-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 0.9rem; margin-top: 0.3rem; }
 
-.lt-mail-send[aria-disabled="true"] { cursor: not-allowed; opacity: 0.45; pointer-events: none; }
+.lt-mail-send[aria-disabled="true"], .lt-mail-copy:disabled { cursor: not-allowed; opacity: 0.45; pointer-events: none; }
 
 .lt-mail-wait {
   margin: 0;
@@ -4084,6 +4084,24 @@ figure.lt-svg {
 }
 
 .lt-mail-hint { margin: 0; font-size: 0.78rem; }
+
+.lt-mail-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  margin-top: 0.15rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid rgba($lt-orange, 0.45);
+  border-left: 3px solid $lt-orange;
+  border-radius: 8px;
+  background: rgba($lt-orange, 0.08);
+  font-size: 0.78rem;
+  line-height: 1.5;
+
+  i { flex: none; margin-top: 0.15rem; color: darken($lt-orange, 8%); }
+  p { margin: 0; }
+  strong { display: block; color: $lt-navy; }
+}
 
 .lt-mail-direct { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; font-size: 0.88rem; font-weight: 600; }
 
@@ -4367,6 +4385,9 @@ figure.lt-svg {
   .lt-mail-form option { color: $lt-dark-text; background: $lt-dark-card; }
   .lt-mail-form .lt-mail-req { color: $lt-sky; }
   .lt-mail-wait { color: $lt-dark-text; background: rgba($lt-orange, 0.18); }
+  .lt-mail-warning { border-color: rgba($lt-orange, 0.45); border-left-color: $lt-orange; color: $lt-dark-soft; background: rgba($lt-orange, 0.12); }
+  .lt-mail-warning strong { color: $lt-dark-text; }
+  .lt-mail-warning i { color: $lt-orange; }
   .lt-expand > summary::after { color: $lt-sky; }
   .lt-work-list, .lt-work-list li { border-color: $lt-dark-border; }
   .lt-filter button { border-color: $lt-dark-border; color: #dbe7f3; background: transparent; }

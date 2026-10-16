@@ -98,6 +98,25 @@ def test_a_hash_to_a_missing_step_opens_its_path(page: Page, base: str, errors: 
     assert page.locator("#thesis").is_visible()
 
 
+def test_mail_form_opens_and_copies_the_same_draft(page: Page, base: str, errors: list[str]) -> None:
+    page.context.grant_permissions(["clipboard-read", "clipboard-write"], origin=base)
+    page.goto(base + "/work-with-us/#partnership-contact")
+    assert page.locator(".lt-mail-form").count() == page.locator(".lt-mail-warning").count() == 4
+    form = page.locator("#partnership-contact .lt-mail-form")
+    form.locator('[name="name"]').fill("Ada Lovelace")
+    form.locator('[name="organisation"]').fill("Analytical Engines")
+    form.locator('[name="idea"]').fill("Study structured language.")
+    send = form.locator(".lt-mail-send")
+    copy = form.locator(".lt-mail-copy")
+    assert send.get_attribute("href").startswith("mailto:")
+    assert copy.is_enabled()
+    copy.click()
+    expected = "To: p.torroni@unibo.it,a.galassi@unibo.it,federico.ruggeri6@unibo.it\nSubject: [Partnership] Analytical Engines\n\nDear Paolo Torroni, Andrea Galassi, and Federico Ruggeri,\n\nOrganisation: Analytical Engines\n\nYour idea:\nStudy structured language.\n\nBest regards,\nAda Lovelace"
+    assert page.evaluate("navigator.clipboard.readText()") == expected
+    assert copy.locator("span").inner_text() == "Copied"
+    assert errors == [], errors
+
+
 def test_a_filter_hides_other_items_and_updates_counts(page: Page, base: str, errors: list[str]) -> None:
     page.goto(base + "/publication/")
     group = page.locator('[aria-label="Show publications by type"]')
