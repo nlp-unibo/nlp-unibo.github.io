@@ -99,9 +99,14 @@
                 {{ end }}
                 <div class="lt-mail-actions">
                   <a class="lt-btn lt-btn-primary lt-mail-send" role="link" aria-disabled="true" aria-describedby="{{ $path.key }}-mail-wait">Contact us <i class="fas fa-paper-plane" aria-hidden="true"></i></a>
+                  <button type="button" class="lt-btn lt-btn-ghost lt-mail-copy" disabled><i class="far fa-copy" aria-hidden="true"></i> <span aria-live="polite">Copy draft</span></button>
                   <p class="lt-mail-wait" id="{{ $path.key }}-mail-wait" role="status">Fill the necessary information to contact us.</p>
                 </div>
-                <p class="lt-mail-hint">The button opens your email app with the message filled in; nothing is sent until you send it there.</p>
+                <p class="lt-mail-hint">Nothing is sent until you send the message in your email app.</p>
+                <aside class="lt-mail-warning" role="note">
+                  <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
+                  <p><strong>Contact us not working?</strong> Allow email links in your browser settings or choose a default email app in your device settings. You can also use Copy draft and paste the message into your email app.</p>
+                </aside>
               </form>
               <a class="lt-mail-direct" href="{{ $mailto | safeURL }}"><i class="fas fa-envelope" aria-hidden="true"></i> Email us directly</a>
             </div>

@@ -341,6 +341,7 @@ import { arrowStep, countLabel, fits, focusLine, focusValue, nearest, parsePlace
     // "Contact us" is a real link whose address follows the form, active only once every required field is filled: a mailto address opened from a script reaches some
     // web mail handlers, such as Outlook on the web, without its subject and body.
     const send = form.querySelector(".lt-mail-send");
+    const copy = form.querySelector(".lt-mail-copy");
     const wait = form.querySelector(".lt-mail-wait");
     const waitText = wait.textContent;
     const ready = () => [...form.elements].every((field) => field.disabled || ((!field.required || field.value.trim()) && field.checkValidity()));
@@ -363,16 +364,30 @@ import { arrowStep, countLabel, fits, focusLine, focusValue, nearest, parsePlace
       field.setCustomValidity(message);
     });
     const monthName = (text) => new Date(Number(text.slice(0, 4)), Number(text.slice(5)) - 1).toLocaleString("en-GB", { month: "long", year: "numeric" });
-    const mailto = () => {
+    const draft = () => {
       const lines = [...form.elements]
         .filter((field) => field.dataset.ltLabel && !field.disabled && field.value.trim())
         .map((field) => (field.tagName === "TEXTAREA" ? `${field.dataset.ltLabel}:\n${field.value.trim()}`
           : `${field.dataset.ltLabel}: ${monthFields.includes(field) ? monthName(field.value) : field.value.trim()}`));
       const { to, names: people } = recipients();
-      const body = `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}`;
-      // RFC 6068 line breaks are CRLF; some mail clients join lines that end in a bare LF.
-      return `mailto:${to}?subject=${encodeURIComponent(subject())}&body=${encodeURIComponent(body.replace(/\r?\n/g, "\r\n"))}`;
+      return { to, subject: subject(), body: `${greet(people)}\n\n${lines.join("\n\n")}\n\nBest regards,\n${value("name")}` };
     };
+    const mailto = () => {
+      const message = draft();
+      // RFC 6068 line breaks are CRLF; some mail clients join lines that end in a bare LF.
+      return `mailto:${message.to}?subject=${encodeURIComponent(message.subject)}&body=${encodeURIComponent(message.body.replace(/\r?\n/g, "\r\n"))}`;
+    };
+    copy.addEventListener("click", () => {
+      const message = draft();
+      const label = copy.querySelector("span");
+      navigator.clipboard.writeText(`To: ${message.to}\nSubject: ${message.subject}\n\n${message.body}`).then(() => {
+        label.textContent = "Copied";
+        setTimeout(() => { label.textContent = "Copy draft"; }, 1600);
+      }).catch(() => {
+        label.textContent = "Copy failed";
+        setTimeout(() => { label.textContent = "Copy draft"; }, 1600);
+      });
+    });
     const output = form.querySelector(".lt-mail-subject");
     const names = form.parentElement.querySelector(".lt-mail-names");
     // The plain email link is only for readers without JavaScript; the form replaces it.
@@ -400,6 +415,7 @@ import { arrowStep, countLabel, fits, focusLine, focusValue, nearest, parsePlace
       wait.textContent = broken ? broken.validationMessage : waitText;
       if (done) send.href = mailto(); else send.removeAttribute("href");
       send.setAttribute("aria-disabled", String(!done));
+      copy.disabled = !done || !navigator.clipboard;
       wait.hidden = done;
     };
     form.hidden = false;
