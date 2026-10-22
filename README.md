@@ -1,7 +1,29 @@
+<p align="center"><img src="assets/media/logo.svg" alt="Language Technologies Lab logo" width="96"></p>
+
 # Language Technologies Lab website
 
 This repository holds the source of the [Language Technologies Lab website](https://nlp.unibo.it/), the site of the Language Technologies Lab at the University of Bologna.
 Every page of the site is a text file in this repository.
+
+![The homepage hero: the lab logo, the headline, and one sentence on the lab's research](docs/img/home-hero.webp)
+
+## What the site contains
+
+The site uses a dark theme in the colours of the lab logo.
+The navigation menu leads to these sections:
+
+| Section | Content |
+| --- | --- |
+| Home | The hero, the research areas, the latest news, and the latest papers |
+| Research | One page per research area: argument mining, legal analytics, and speech processing |
+| Publications | Every paper of the lab, with a project page for selected papers |
+| Projects | A timeline of the lab's research projects, linked to their websites |
+| Tools | The lab's software and demos, linked to their websites |
+| People | Members, fellows, and former members, each with a profile page |
+| News | Lab news, grouped by year |
+| Work with us | Thesis proposals, grouped by topic, with a filter and a search box |
+
+Topic tags are shared across sections, with one label and one colour per topic.
 
 ## Where the site is published
 
