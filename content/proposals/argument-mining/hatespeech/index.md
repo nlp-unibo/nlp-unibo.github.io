@@ -1,5 +1,6 @@
 ---
 title: Hate Speech Detection with Argumentative Reasoning
+draft: true
 date: 2026-03-02
 summary: Use argumentative reasoning to make the implicit content of hate speech explicit.
 brief: Hate speech often relies on implicit content and subtle reasoning. This proposal applies argumentative reasoning to make that content explicit, toward hate speech detection systems that are more interpretable and more user-friendly.

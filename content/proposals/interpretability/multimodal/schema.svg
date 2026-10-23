@@ -1,0 +1,55 @@
+<svg viewBox="0 0 800 276" role="img" aria-labelledby="multimodal-title" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="multimodal-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="lt-s-head" d="M0 0 L10 5 L0 10 z"/></marker></defs>
+  <title id="multimodal-title">A Select-then-Predict Pipeline on text and audio. The input is the transcript "We must act now", with each word above the audio clip that speaks it. The generator selects one rationale per modality. The text rationale highlights "must" and "act"; the audio rationale highlights the clips of "act" and "now". The two rationales overlap on "act", and complement each other on "must", highlighted in the text only, and on "now", highlighted in the audio only. The predictor classifies both rationales and outputs a class, such as Claim.</title>
+  <text class="lt-s-sub" x="20" y="30">INPUT: TRANSCRIPT AND AUDIO</text>
+  <rect class="lt-s-tok" x="20" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt" x="51" y="64">We</text>
+  <rect class="lt-s-tok" x="20" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(19.74 70.57) scale(0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <rect class="lt-s-tok" x="90" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt" x="121" y="64">must</text>
+  <rect class="lt-s-tok" x="90" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(152.26 70.57) scale(-0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <rect class="lt-s-tok" x="160" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt" x="191" y="64">act</text>
+  <rect class="lt-s-tok" x="160" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(159.74 70.57) scale(0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <rect class="lt-s-tok" x="230" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt" x="261" y="64">now</text>
+  <rect class="lt-s-tok" x="230" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(292.26 70.57) scale(-0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <text class="lt-s-txt lt-s-small" x="156" y="158">each word above the audio that speaks it</text>
+  <path class="lt-s-arrow" marker-end="url(#multimodal-arrow)" d="M298 91 H326"/>
+  <rect class="lt-s-box lt-s-sel" x="330" y="63" width="140" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="400" y="87">Generator</text>
+  <text class="lt-s-txt lt-s-small" x="400" y="107">one per modality</text>
+  <path class="lt-s-arrow" marker-end="url(#multimodal-arrow)" d="M474 91 H502"/>
+  <text class="lt-s-sub" x="510" y="30">RATIONALES: TEXT AND AUDIO</text>
+  <rect class="lt-s-off" x="510" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="541" y="64">We</text>
+  <rect class="lt-s-off" x="510" y="86" width="62" height="52" rx="6"/>
+  <rect class="lt-s-on" x="580" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt lt-s-ontxt" x="611" y="64">must</text>
+  <rect class="lt-s-off" x="580" y="86" width="62" height="52" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="611" y="158">text only</text>
+  <rect class="lt-s-on" x="650" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt lt-s-ontxt" x="681" y="64">act</text>
+  <rect class="lt-s-on" x="650" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(649.74 70.57) scale(0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <text class="lt-s-txt lt-s-small" x="681" y="158">both</text>
+  <rect class="lt-s-off" x="720" y="44" width="62" height="30" rx="6"/>
+  <text class="lt-s-txt lt-s-small" x="751" y="64">now</text>
+  <rect class="lt-s-on" x="720" y="86" width="62" height="52" rx="6"/>
+  <g transform="translate(782.26 70.57) scale(-0.711 0.714)"><path class="lt-s-arrow" d="M6 58 L10 50 L14 66 L18 40 L22 76 L26 46 L30 70 L34 30 L38 86 L42 52 L46 64 L50 44 L54 72 L58 56 L62 60 L66 48 L70 68 L74 54 L78 62 L82 58" vector-effect="non-scaling-stroke"/></g>
+  <text class="lt-s-txt lt-s-small" x="751" y="158">audio only</text>
+  <path class="lt-s-arrow" marker-end="url(#multimodal-arrow)" d="M716 166 V196"/>
+  <rect class="lt-s-box lt-s-pred" x="582" y="200" width="200" height="56" rx="12"/>
+  <text class="lt-s-txt lt-s-strong" x="682" y="224">Predictor</text>
+  <text class="lt-s-txt lt-s-small" x="682" y="244">classifies both rationales</text>
+  <path class="lt-s-arrow" marker-end="url(#multimodal-arrow)" d="M578 228 H504"/>
+  <rect class="lt-s-label" x="400" y="212" width="100" height="32" rx="16"/>
+  <text class="lt-s-txt lt-s-labeltxt lt-s-strong" x="450" y="233">Claim</text>
+  <text class="lt-s-sub" x="20" y="206">READING THE RATIONALES</text>
+  <text class="lt-s-small" x="20" y="228">Both: the modalities agree.</text>
+  <text class="lt-s-small" x="20" y="248">Text or audio only: one modality adds evidence.</text>
+</svg>

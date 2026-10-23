@@ -1,5 +1,6 @@
 ---
 title: Text Classification with Guidelines Only
+draft: true
 date: 2026-03-02
 summary: Train text classifiers from annotation guidelines alone, without class labels.
 brief: Annotators label data by following guidelines, while models learn the same mapping from labels alone, so they can fit any mapping that matches the data. This proposal gives the guidelines directly to models, without access to class labels during training.

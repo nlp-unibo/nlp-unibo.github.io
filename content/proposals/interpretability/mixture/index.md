@@ -1,5 +1,6 @@
 ---
 title: Mixture of Experts for Rationalization
+draft: true
 date: 2026-03-02
 summary: Study whether a mixture of experts model can address interlocking in selective rationalization.
 brief: Selective rationalization models can suffer from interlocking, a poor interplay between the component that selects highlights and the one that predicts. In a mixture of experts, several models are trained on the same data, each specializing in a subset. This proposal studies whether such a model can address interlocking.

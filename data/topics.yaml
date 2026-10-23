@@ -57,3 +57,5 @@ sentiment:
   label: Sentiment and emotion
 education:
   label: Education
+outcome-prediction:
+  label: Outcome prediction on legal decisions
