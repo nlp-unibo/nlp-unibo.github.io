@@ -87,7 +87,7 @@ categories:
   - Conference
 aliases:
   - /publication_conferences/galli-etal-2022-outcomes/
-topics: [legal, benchmark]
+topics: [legal, benchmark, outcome-prediction]
 # Key in data/venues.yaml, whose rank decides the Highlights carousel
 venue_key: jurix
 ---
