@@ -31,8 +31,8 @@ email: 'francesca.lagioia@unibo.it'
 highlight_name: true
 
 user_groups:
-  - External Collaborators
-weight: 2
+  - Associate Fellows
+weight: 8
 
 # A People entry keeps its profile page; content/authors/_index.md hides every other author.
 build:
