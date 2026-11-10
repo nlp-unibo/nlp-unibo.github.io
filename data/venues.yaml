@@ -116,8 +116,8 @@ ai-and-law:
   source: SJR2025
 ijcol:
   name: "Italian Journal of Computational Linguistics (IJCoL)"
-  rank: ""
-  source: "TODO: verify the SJR2025 quartile"
+  rank: "Q3"
+  source: SJR2025
 eswa:
   name: "Expert Systems with Applications (ESWA)"
   rank: "Q1"
@@ -217,7 +217,7 @@ text2story:
   rank: ""
   source: ""
 wnut:
-  name: "Workshop on Natural User-generated Text"
+  name: "Workshop on Natural User-generated Text (W-NUT)"
   rank: ""
   source: ""
 akbc:

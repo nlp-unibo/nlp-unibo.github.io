@@ -1,7 +1,7 @@
 ---
 title: "GeNERscore: Semantic Alignment Metrics for Generative Named Entity Recognition"
 # Shown under the title on news previews.
-venue: "Workshop on Natural User-generated Text (EMNLP 2026)"
+venue: "Workshop on Natural User-generated Text (W-NUT 2026, EMNLP 2026)"
 date: 2026-10-01
 tags: ["news", "EMNLP", "paper", "accepted"]
 
