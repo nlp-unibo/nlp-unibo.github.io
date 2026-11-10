@@ -152,8 +152,12 @@ This action runs on a local copy of the repository, set up as in [the developers
 `--since` is required. It takes the earliest publication date to compare, as `YYYY-MM-DD`. Use the date of the previous run, or the first day of the year.
 
 **What it does:** for each person in `Members` with an ORCID link (the persistent researcher ID from orcid.org), it asks [OpenAlex](https://openalex.org/), an open catalogue of scholarly works, for the works of that ORCID.
+For each person with a Google Scholar link, it also reads the newest 100 works of that Scholar profile.
+Scholar lists some workshop papers that OpenAlex misses.
 It lists the works that match no publication page, first by DOI and then by title.
 A work by several members is listed once, under the first of them in People order.
+The `members` line under each work names every member among its authors, matched by first initial and last name.
+It shows the members whose ORCID OpenAlex does not attach to the work, and it can miss members when Scholar shortens a long author list.
 Datasets, supplementary materials, and preprint copies of a listed paper are left out.
 
 **Steps**
@@ -161,11 +165,15 @@ Datasets, supplementary materials, and preprint copies of a listed paper are lef
 1. Run the command. It needs no account and makes one request for each member.
 2. For each listed work, choose one of these:
    - A lab paper: [add the publication](#add-a-publication).
-   - Not a paper for the site, such as a deposit, a duplicate record, or a work by another person with the same name: add it to `data/publication_ignore.yaml` with its `id` (the DOI without `https://doi.org/`, or the OpenAlex ID `W...` printed for a work without a DOI) and a `reason`.
+   - Not a paper for the site, such as a deposit, a duplicate record, an edited proceedings volume, or a work by another person with the same name: add it to `data/publication_ignore.yaml` with its `id` and a `reason`. The `id` is the last value printed for the work: the DOI without `https://doi.org/`, the OpenAlex ID `W...` of a work without a DOI, or the Scholar ID `profile:key` of a Scholar work.
 3. Run the command again. Only the remaining works are listed.
 
 OpenAlex can miss some workshop papers, and it can take a few weeks to list a new paper.
-A member without an ORCID link is skipped, and the command prints a warning.
+OpenAlex can also merge a person with the same name into a member's ORCID.
+The command then prints `member affiliation without Bologna` under the work, with the affiliation of that authorship.
+Scholar works carry only a year, so `--since` keeps every Scholar work from its year onwards.
+Google Scholar can refuse automated requests; the command then prints a warning and skips Scholar for that person.
+A member without an ORCID link or a Scholar link skips that source, and the command prints a warning.
 
 ### Add a news item
 
@@ -219,7 +227,7 @@ Open `content/news/<slug>/index.md`. Edit `title`, `summary`, or the links. Chan
 1. `title` (full name exactly as in publications), `first_name`, `last_name`.
 2. `user_groups`: one of `Members`, `Associate Fellows`, `External Collaborators`, `Former Members`.
 3. `email` (required except for former members; used by proposal contacts), `bio` (one sentence), `weight` (lower comes first).
-4. `social` links: University page `university`/`fas`, email `envelope`/`fas`, website `globe`/`fas`, GitHub `github`/`fab`, LinkedIn `linkedin`/`fab`, Scholar `google-scholar`/`ai`, ORCID `orcid`/`ai` with the `https://orcid.org/...` link. Every member needs the ORCID link for [Find missing publications](#find-missing-publications).
+4. `social` links: University page `university`/`fas`, email `envelope`/`fas`, website `globe`/`fas`, GitHub `github`/`fab`, LinkedIn `linkedin`/`fab`, Scholar `google-scholar`/`ai`, ORCID `orcid`/`ai` with the `https://orcid.org/...` link. Every member needs the ORCID and Scholar links for [Find missing publications](#find-missing-publications).
 5. Upload one square `avatar.jpg` (or `.png`). Without it, the initials appear.
 6. Body: the longer biography for the profile page. Do not set `role` (head and deputy only).
 

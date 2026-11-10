@@ -19,6 +19,7 @@ import argparse
 from datetime import date, datetime
 import difflib
 import hashlib
+import html
 import json
 import os
 from pathlib import Path
@@ -262,7 +263,7 @@ def download(url: str, destination: Path) -> None:
 def read_url(url: str) -> str:
     request = urllib.request.Request(url, headers={"User-Agent": "ltlab-site-bootstrap"})
     with urllib.request.urlopen(request) as response:
-        return response.read().decode("utf-8")
+        return response.read().decode(response.headers.get_content_charset() or "utf-8")
 
 
 def verify_sha256(archive: Path, expected: str) -> None:
@@ -834,20 +835,66 @@ def openalex_works(orcid: str, since: date) -> list[dict]:
     works, cursor = [], "*"
     while cursor:
         page = json.loads(read_url(f"{OPENALEX_WORKS}?filter={filters}&per-page=200&cursor={cursor}"
-                                   "&select=id,doi,display_name,publication_date,type,primary_location"))
+                                   "&select=id,doi,display_name,publication_date,type,primary_location,authorships"))
         works += page["results"]
         cursor = page["meta"].get("next_cursor") if page["results"] else None
     return works
 
 
+SCHOLAR_ROW = re.compile(r'citation_for_view=([^"&]+)" class="gsc_a_at">(.*?)</a><div class="gs_gray">(.*?)</div>'
+                         r'<div class="gs_gray">(.*?)(?:<span class="gs_oph">.*?)?</div>.*?<td class="gsc_a_y">'
+                         r'<span[^>]*>(\d*)</span>')
+
+
+def scholar_rows(page: str, since: date) -> list[dict]:
+    """Parse a Google Scholar profile page into works shaped like OpenAlex works, keeping those dated since.year or later."""
+    works = []
+    for key, title, authors, venue, year in SCHOLAR_ROW.findall(page):
+        if year and int(year) >= since.year:
+            works.append({"id": key, "doi": None, "display_name": html.unescape(title), "type": "scholar",
+                          "authorships": [{"raw_author_name": name.strip()} for name in html.unescape(authors).split(",")],
+                          "publication_date": year, "primary_location": {"source": {"display_name": html.unescape(venue)}}})
+    return works
+
+
+def scholar_works(user: str, since: date) -> list[dict]:
+    # The newest 100 works of the profile; robots.txt disallows the cstart parameter that pages further.
+    page = read_url(f"https://scholar.google.com/citations?user={user}&hl=en&sortby=pubdate&pagesize=100")
+    if "gsc_a_tr" not in page:
+        raise urllib.error.URLError("no works in the page, possibly a CAPTCHA")
+    return scholar_rows(page, since)
+
+
+def foreign_affiliation(work: dict, orcid: str) -> str:
+    """The affiliation of the member's authorship when it names no Bologna institution, else an empty string."""
+    for authorship in work.get("authorships") or []:
+        if ((authorship.get("author") or {}).get("orcid") or "").endswith(orcid):
+            affiliations = authorship.get("raw_affiliation_strings") or []
+            if affiliations and not any("bologna" in text.lower() for text in affiliations):
+                return "; ".join(affiliations)
+    return ""
+
+
+def member_authors(work: dict, members: list[tuple]) -> list[str]:
+    """Names of the members among the authors of a work, matched by first initial and last name."""
+    authors = [content_slug(authorship.get("raw_author_name") or "") for authorship in work.get("authorships") or []]
+    return [name for _, name, first, last, _, _ in sorted(members)
+            if any(author.endswith(content_slug(last)) and author[:1] == content_slug(first)[:1] for author in authors)]
+
+
 def publication_report(since: date) -> None:
-    """Print, for each Members author with an ORCID link, the OpenAlex works missing from content/publication."""
+    """Print, for each Members author, the OpenAlex (by ORCID) and Google Scholar works missing from content/publication."""
     members = []
     for path in sorted((ROOT / "content" / "authors").glob("*/_index.md")):
         metadata, _ = read_page(path)
         if "Members" in (metadata.get("user_groups") or []):
-            links = [item.get("link", "") for item in metadata.get("social") or [] if item.get("icon") == "orcid"]
-            members.append((metadata.get("weight", 100), metadata["title"], links[0].rsplit("/", 1)[-1] if links else ""))
+            social = metadata.get("social") or []
+            orcids = [item.get("link", "") for item in social if item.get("icon") == "orcid"]
+            scholars = [re.search(r"user=([\w-]+)", item.get("link", "")) for item in social
+                        if item.get("icon") == "google-scholar"]
+            members.append((metadata.get("weight", 100), metadata["title"], str(metadata.get("first_name") or ""),
+                            str(metadata.get("last_name") or ""), orcids[0].rsplit("/", 1)[-1] if orcids else "",
+                            scholars[0].group(1) if scholars and scholars[0] else ""))
     site = []
     for path in (ROOT / "content" / "publication").glob("*/index.md"):
         metadata, _ = read_page(path)
@@ -855,22 +902,36 @@ def publication_report(since: date) -> None:
     entries = yaml.safe_load((ROOT / "data" / "publication_ignore.yaml").read_text(encoding="utf-8")) or []
     ignored = {doi_key(str(entry["id"])) for entry in entries}
     # A work co-authored by several members is listed once, under the first of them in People order.
+    # Scholar works have no DOI and a per-profile ID, so works already reported are also matched by title.
     reported: set[str] = set()
-    for _, name, orcid in sorted(members):
-        if not orcid:
-            print(f"{name}: no ORCID link in social; skipped.\n")
-            continue
-        try:
-            works = missing_works(openalex_works(orcid, since), site, ignored)
-        except urllib.error.URLError as error:
-            sys.exit(f"OpenAlex request failed for {name}: {error}")
-        works = [work for work in works if work_key(work) not in reported]
-        reported |= {work_key(work) for work in works}
-        print(f"{name} ({orcid}): {len(works)} missing")
+    for _, name, _, _, orcid, scholar in sorted(members):
+        works = []
+        if orcid:
+            try:
+                works += openalex_works(orcid, since)
+            except urllib.error.URLError as error:
+                sys.exit(f"OpenAlex request failed for {name}: {error}")
+        else:
+            print(f"{name}: no ORCID link in social; OpenAlex skipped.")
+        if scholar:
+            try:
+                works += scholar_works(scholar, since)
+            except urllib.error.URLError as error:
+                print(f"{name}: Google Scholar request failed ({error}); Scholar skipped.")
+        else:
+            print(f"{name}: no Google Scholar link in social; Scholar skipped.")
+        works = [work for work in missing_works(works, site, ignored)
+                 if work_key(work) not in reported and content_slug(work["display_name"] or "") not in reported]
+        reported |= {work_key(work) for work in works} | {content_slug(work["display_name"] or "") for work in works}
+        print(f"{name} ({orcid or 'no ORCID'}, Scholar {scholar or 'none'}): {len(works)} missing")
         for work in sorted(works, key=lambda work: work["publication_date"] or "", reverse=True):
-            venue = ((work.get("primary_location") or {}).get("source") or {}).get("display_name") or "no venue"
+            location = work.get("primary_location") or {}
+            venue = (location.get("source") or {}).get("display_name") or location.get("raw_source_name") or "no venue"
             link = work.get("doi") or work["id"]
             print(f"  {work['publication_date']}  {work['type']}  {work['display_name']}\n      {venue} | {link}")
+            print(f"      members: {', '.join(member_authors(work, members)) or 'none matched'}")
+            if orcid and (affiliation := foreign_affiliation(work, orcid)):
+                print(f"      member affiliation without Bologna: {affiliation}")
         print()
 
 

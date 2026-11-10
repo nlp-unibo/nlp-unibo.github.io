@@ -108,6 +108,27 @@ site = [("10.1/a", "Another title"), ("", "A paper title here.")]
 assert [w["id"][-2:] for w in missing_works(works, site, {"w8"})] == ["W3", "W6"], missing_works(works, site, {"w8"})
 assert work_key(works[0]) == "10.1/a" and work_key(works[1]) == "w2"
 
+# A Scholar profile row becomes a work with the year as date; rows before the year of --since are dropped.
+row = ('<tr class="gsc_a_tr"><td class="gsc_a_t"><a href="/citations?user=U&amp;citation_for_view=U:K1" class="gsc_a_at">'
+       'A &#39;Scholar&#39; Paper</a><div class="gs_gray">A Rossi</div><div class="gs_gray">Workshop X, 1-9<span class="gs_oph">, '
+       '2026</span></div></td><td class="gsc_a_c"></td><td class="gsc_a_y"><span class="gsc_a_h">{}</span></td>')
+rows = site_tools.scholar_rows(row.format(2026) + row.format(2025).replace("K1", "K2"), date(2026, 6, 1))
+assert [(w["id"], w["display_name"], w["publication_date"], w["primary_location"]["source"]["display_name"]) for w in rows] == [
+    ("U:K1", "A 'Scholar' Paper", "2026", "Workshop X, 1-9")], rows
+
+# Members are matched among the authors by first initial and last name, in People order.
+members = [(2, "Ada De Luca", "Ada", "De Luca", "", ""), (1, "Nicolò Donati", "Nicolò", "Donati", "", "")]
+assert site_tools.member_authors(rows[0] | {"authorships": [{"raw_author_name": n} for n in ["A De Luca", "N Donati", "B Donati"]]},
+                                 members) == ["Nicolò Donati", "Ada De Luca"]
+assert [a["raw_author_name"] for a in rows[0]["authorships"]] == ["A Rossi"]
+
+# An OpenAlex authorship of the member outside Bologna is reported, to spot a namesake merged into the ORCID.
+authored = {"authorships": [{"author": {"orcid": None}}, {"author": {"orcid": "https://orcid.org/0000-1"},
+                                                          "raw_affiliation_strings": ["Ranplan Group AB"]}]}
+assert site_tools.foreign_affiliation(authored, "0000-1") == "Ranplan Group AB"
+authored["authorships"][1]["raw_affiliation_strings"] = ["University of Bologna"]
+assert site_tools.foreign_affiliation(authored, "0000-1") == ""
+
 # One page is checked through page_errors, which reads nothing from disk: the vocabulary and the file test are passed in.
 page_errors, Vocabulary = site_tools.page_errors, site_tools.Vocabulary
 vocabulary = Vocabulary(venues={"acl": {"rank": "A*"}}, keywords=["argument mining"], topics={"nlp": {"label": "NLP"}},

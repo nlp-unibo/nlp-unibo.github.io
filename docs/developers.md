@@ -87,8 +87,8 @@ Both downloads are checked against their published SHA-256 checksums.
 | `uv run python scripts/site.py build` | Run `hugo --gc --minify --destination .build/public` with `HUGO_RESOURCEDIR=.build/resources` |
 | `uv run python scripts/site.py check` | Run `content`, `templates`, and `build` in that order |
 | `uv run python scripts/site.py clean` | Remove `.build/`; the tools in `.tools/` stay |
-| `uv run python scripts/site.py publications --since YYYY-MM-DD` | Ask OpenAlex for the works of each `Members` ORCID and list those that match no publication page by DOI or title, minus `data/publication_ignore.yaml`. It needs the network, so CI never runs it |
-| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, the rules of one page (`page_errors`), and the missing-publication matching |
+| `uv run python scripts/site.py publications --since YYYY-MM-DD` | Ask OpenAlex for the works of each `Members` ORCID, read the newest 100 works of each `Members` Google Scholar profile, and list those that match no publication page by DOI or title, minus `data/publication_ignore.yaml`. It needs the network, so CI never runs it |
+| `uv run python scripts/test_site.py` | Run the self-checks of the link parser, the front-matter loader, the category rule, the venue rank rule, the proposal rule, the research view validators, the rules of one page (`page_errors`), the missing-publication matching, the Scholar profile parser, the member author match, and the affiliation hint |
 | `uv run python scripts/test_render.py` | Build the content plus fixture pages into `.build/render-check` with `--buildFuture`, then check the rendered dates and carousel controls |
 | `uv run python scripts/test_browser.py` | Serve that fixture build and check the carousels, path links, filters, widget isolation, and reduced motion in headless Chromium; the first run needs `uv run playwright install chromium` |
 | `node --test scripts/test_ltcore.mjs` | Check the DOM-free helpers of `assets/js/lt-core.mjs` |
