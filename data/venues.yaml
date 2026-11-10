@@ -114,6 +114,10 @@ ai-and-law:
   name: "Artificial Intelligence and Law"
   rank: "Q1"
   source: SJR2025
+ijcol:
+  name: "Italian Journal of Computational Linguistics (IJCoL)"
+  rank: ""
+  source: "TODO: verify the SJR2025 quartile"
 eswa:
   name: "Expert Systems with Applications (ESWA)"
   rank: "Q1"
@@ -210,5 +214,13 @@ tafa:
   source: ""
 text2story:
   name: "Workshop on Narrative Extraction From Texts (Text2Story)"
+  rank: ""
+  source: ""
+wnut:
+  name: "Workshop on Natural User-generated Text"
+  rank: ""
+  source: ""
+akbc:
+  name: "Workshop on Automated Knowledge Base Construction (AKBC)"
   rank: ""
   source: ""
